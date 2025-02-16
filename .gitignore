@@ -1,0 +1,38 @@
+# Unreal Engine
+*.suo
+*.sdf
+*.opensdf
+*.VC.db
+*.vscode
+*.pdb
+*.idb
+*.obj
+*.log
+*.user
+*.tlog
+*.ipch
+*.aps
+*.ncb
+*.sln.cache
+
+# Binaries and Build Artifacts
+/TSE/Unreal/Binaries/
+/TSE/Unreal/Build/
+/TSE/Unreal/DerivedDataCache/
+/TSE/Unreal/Intermediate/
+/TSE/Unreal/Saved/
+/TSE/Unreal/*.xcodeproj
+/TSE/Unreal/*.xcworkspace
+
+# Config-specific files
+*.ini
+!DefaultEngine.ini
+!DefaultInput.ini
+!DefaultGame.ini
+!DefaultEditor.ini
+!DefaultEditorPerProjectUserSettings.ini
+
+# Unreal Engine Plugin Folders
+/TSE/Unreal/Plugins/*/Intermediate/
+/TSE/Unreal/Plugins/*/Binaries/
+/TSE/Unreal/Plugins/*/Saved/
