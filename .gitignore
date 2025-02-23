@@ -23,6 +23,7 @@
 /TSE/Unreal/Saved/
 /TSE/Unreal/*.xcodeproj
 /TSE/Unreal/*.xcworkspace
+/TSE/Unreal/.vs/
 
 # Config-specific files
 *.ini
