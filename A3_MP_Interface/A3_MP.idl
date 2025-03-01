@@ -1,0 +1,4 @@
+struct A3MP_Data {
+    int32 number;
+    string name;
+};
