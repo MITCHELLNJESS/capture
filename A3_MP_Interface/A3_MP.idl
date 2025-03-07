@@ -1,4 +1,18 @@
-struct A3MP_Data {
-    int32 number;
-    string name;
+struct A3MPDataMsg {
+    //timestamp
+    short hour;
+    short minute;
+    short second; 
+
+    //top left corner
+    double boundingBoxXCoord;
+    double boundingBoxYCoord;
+
+    //size of bounding box 
+    double boundingBoxLengthPixels;
+    double boundingBoxWidthPixels;
+    
+    //alignment status
+    boolean isAligned;
+
 };

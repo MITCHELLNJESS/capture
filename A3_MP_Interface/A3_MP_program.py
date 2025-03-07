@@ -13,8 +13,8 @@ import argparse
 import sys
 from dataclasses import dataclass
 
-from A3_MP_publisher import A3MP_DataPublisher
-from A3_MP_subscriber import A3MP_DataSubscriber
+from A3_MP_publisher import A3MPDataMsgPublisher
+from A3_MP_subscriber import A3MPDataMsgSubscriber
 
 @dataclass
 class ApplicationArguments:
@@ -28,13 +28,13 @@ def main():
     args: ApplicationArguments = parse_arguments()
 
     if args.pub:
-        print(f"Running A3MP_DataPublisher on domain {args.domain}")
-        A3MP_DataPublisher.run_publisher(
+        print(f"Running A3MPDataMsgPublisher on domain {args.domain}")
+        A3MPDataMsgPublisher.run_publisher(
             domain_id=args.domain,
             sample_count=args.sample_count)
     else:
-        print(f"Running A3MP_DataSubscriber on domain {args.domain}")
-        A3MP_DataSubscriber.run_subscriber(
+        print(f"Running A3MPDataMsgSubscriber on domain {args.domain}")
+        A3MPDataMsgSubscriber.run_subscriber(
             domain_id=args.domain,
             sample_count=args.sample_count)
 

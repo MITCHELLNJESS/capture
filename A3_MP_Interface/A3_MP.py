@@ -15,11 +15,13 @@ import sys
 import os
 
 
-@idl.struct(
-    member_annotations = {
-        'name': [idl.bound(255)],
-    }
-)
-class A3MP_Data:
-    number: idl.int32 = 0
-    name: str = ""
+@idl.struct
+class A3MPDataMsg:
+    hour: idl.int16 = 0
+    minute: idl.int16 = 0
+    second: idl.int16 = 0
+    boundingBoxXCoord: float = 0.0
+    boundingBoxYCoord: float = 0.0
+    boundingBoxLengthPixels: float = 0.0
+    boundingBoxWidthPixels: float = 0.0
+    isAligned: bool = False

@@ -12,12 +12,12 @@
 import time
 import sys
 import rti.connextdds as dds
-from A3_MP import A3MP_Data
+from A3_MP import A3MPDataMsg
 
-class A3MP_DataPublisher:
+class A3MPDataMsgPublisher:
 
     @staticmethod
-    def run_publisher(domain_id: int, objData_count: int):
+    def run_publisher(domain_id: int, sample_count: int):
 
         # A DomainParticipant allows an application to begin communicating in
         # a DDS domain. Typically there is one DomainParticipant per application.
@@ -25,22 +25,23 @@ class A3MP_DataPublisher:
         participant = dds.DomainParticipant(domain_id)
 
         # A Topic has a name and a datatype.
-        topic = dds.Topic(participant, "A3MP_Data", A3MP_Data)
+        topic = dds.Topic(participant, "Example A3MPDataMsg", A3MPDataMsg)
 
-        # This DataWriter will write data on Topic "A3MP_Data"
+        # This DataWriter will write data on Topic "Example A3MPDataMsg"
         # DataWriter QoS is configured in USER_QOS_PROFILES.xml
         writer = dds.DataWriter(participant.implicit_publisher, topic)
-        objData = A3MP_Data()        
+        sample = A3MPDataMsg()        
 
-        for count in range(objData_count):
+        for count in range(sample_count):
             # Catch control-C interrupt
             try:
-                # TODO - this data will come from A3, finalize fields
-                objData.number = count
-                objData.name = "test" + str(count) + ""
+                # Modify the data to be sent here
+                sample.hour = count
+                sample.minute = count
+                sample.second = count
                 
-                print(f"Writing A3MP_Data, count {count}")
-                writer.write(objData)
+                print(f"Writing A3MPDataMsg, count {count}")
+                writer.write(sample)
                 time.sleep(1)
             except KeyboardInterrupt:
                 break
@@ -49,6 +50,6 @@ class A3MP_DataPublisher:
 
 
 if __name__ == "__main__":
-    A3MP_DataPublisher.run_publisher(
+    A3MPDataMsgPublisher.run_publisher(
             domain_id=0,
-            objData_count=sys.maxsize)
+            sample_count=sys.maxsize)

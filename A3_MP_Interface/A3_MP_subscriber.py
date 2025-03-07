@@ -12,24 +12,23 @@
 import time
 import sys
 import rti.connextdds as dds
-from A3_MP import A3MP_Data
+from A3_MP import A3MPDataMsg
 
-class A3MP_DataSubscriber:
+class A3MPDataMsgSubscriber:
 
     @staticmethod
     def process_data(reader):
-        # take_data() returns copies of all the data objects in the reader
-        # and removes them. To also take the objectInfo meta-data, use take().
+        # take_data() returns copies of all the data samples in the reader
+        # and removes them. To also take the SampleInfo meta-data, use take().
         # To not remove the data from the reader, use read_data() or read().
-        objects = reader.take_data()
-        for object in objects:
-            print(f"Received: {object}")
-            print(object.name)
+        samples = reader.take_data()
+        for sample in samples:
+            print(f"Received: {sample}")
     
-        return len(objects)
+        return len(samples)
 
     @staticmethod
-    def run_subscriber(domain_id: int, object_count: int):
+    def run_subscriber(domain_id: int, sample_count: int):
 
         # A DomainParticipant allows an application to begin communicating in
         # a DDS domain. Typically there is one DomainParticipant per application.
@@ -37,22 +36,22 @@ class A3MP_DataSubscriber:
         participant = dds.DomainParticipant(domain_id)
 
         # A Topic has a name and a datatype.
-        topic = dds.Topic(participant, "A3MP_Data", A3MP_Data)
+        topic = dds.Topic(participant, "Example A3MPDataMsg", A3MPDataMsg)
 
-        # This DataReader reads data on Topic "A3MP_Data".
+        # This DataReader reads data on Topic "Example A3MPDataMsg".
         # DataReader QoS is configured in USER_QOS_PROFILES.xml
         reader = dds.DataReader(participant.implicit_subscriber, topic)
 
-        # Initialize objects_read to zero
-        objects_read = 0
+        # Initialize samples_read to zero
+        samples_read = 0
 
         # Associate a handler with the status condition. This will run when the
         # condition is triggered, in the context of the dispatch call (see below)
         # condition argument is not used
         def condition_handler(_):
-            nonlocal objects_read
+            nonlocal samples_read
             nonlocal reader
-            objects_read += A3MP_DataSubscriber.process_data(reader)
+            samples_read += A3MPDataMsgSubscriber.process_data(reader)
 
         # Obtain the DataReader's Status Condition
         status_condition = dds.StatusCondition(reader)
@@ -65,7 +64,7 @@ class A3MP_DataSubscriber:
         waitset = dds.WaitSet()
         waitset += status_condition
 
-        while objects_read < object_count:
+        while samples_read < sample_count:
             # Catch control-C interrupt
             try:
                 # Dispatch will call the handlers associated to the WaitSet conditions
@@ -80,6 +79,6 @@ class A3MP_DataSubscriber:
 
 
 if __name__ == "__main__":
-    A3MP_DataSubscriber.run_subscriber(
+    A3MPDataMsgSubscriber.run_subscriber(
             domain_id=0,
-            object_count=sys.maxsize)
+            sample_count=sys.maxsize)
