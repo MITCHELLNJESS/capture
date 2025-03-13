@@ -1,0 +1,15 @@
+C:\Users\barre\git\drakos-dynamics-c2-tse\C2\TcpTest\C2Test\C2Test\bin\Debug\net8.0\C2Test.exe
+C:\Users\barre\git\drakos-dynamics-c2-tse\C2\TcpTest\C2Test\C2Test\bin\Debug\net8.0\C2Test.deps.json
+C:\Users\barre\git\drakos-dynamics-c2-tse\C2\TcpTest\C2Test\C2Test\bin\Debug\net8.0\C2Test.runtimeconfig.json
+C:\Users\barre\git\drakos-dynamics-c2-tse\C2\TcpTest\C2Test\C2Test\bin\Debug\net8.0\C2Test.dll
+C:\Users\barre\git\drakos-dynamics-c2-tse\C2\TcpTest\C2Test\C2Test\bin\Debug\net8.0\C2Test.pdb
+C:\Users\barre\git\drakos-dynamics-c2-tse\C2\TcpTest\C2Test\C2Test\obj\Debug\net8.0\C2Test.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\barre\git\drakos-dynamics-c2-tse\C2\TcpTest\C2Test\C2Test\obj\Debug\net8.0\C2Test.AssemblyInfoInputs.cache
+C:\Users\barre\git\drakos-dynamics-c2-tse\C2\TcpTest\C2Test\C2Test\obj\Debug\net8.0\C2Test.AssemblyInfo.cs
+C:\Users\barre\git\drakos-dynamics-c2-tse\C2\TcpTest\C2Test\C2Test\obj\Debug\net8.0\C2Test.csproj.CoreCompileInputs.cache
+C:\Users\barre\git\drakos-dynamics-c2-tse\C2\TcpTest\C2Test\C2Test\obj\Debug\net8.0\C2Test.sourcelink.json
+C:\Users\barre\git\drakos-dynamics-c2-tse\C2\TcpTest\C2Test\C2Test\obj\Debug\net8.0\C2Test.dll
+C:\Users\barre\git\drakos-dynamics-c2-tse\C2\TcpTest\C2Test\C2Test\obj\Debug\net8.0\refint\C2Test.dll
+C:\Users\barre\git\drakos-dynamics-c2-tse\C2\TcpTest\C2Test\C2Test\obj\Debug\net8.0\C2Test.pdb
+C:\Users\barre\git\drakos-dynamics-c2-tse\C2\TcpTest\C2Test\C2Test\obj\Debug\net8.0\C2Test.genruntimeconfig.cache
+C:\Users\barre\git\drakos-dynamics-c2-tse\C2\TcpTest\C2Test\C2Test\obj\Debug\net8.0\ref\C2Test.dll
