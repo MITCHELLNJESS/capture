@@ -28,8 +28,6 @@
 *.lib
 *.sbr
 *.sdf
-*.opensdf
-*.resources
 *.res
 ipch/
 obj/

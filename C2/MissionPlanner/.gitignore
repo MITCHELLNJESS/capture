@@ -5,6 +5,7 @@ bin/
 obj/
 .vs/
 /Msi
+packages/
 *.psess
 *.pyc
 /ExtLibs/Mavlink/mavlink
