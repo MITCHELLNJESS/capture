@@ -183,10 +183,3 @@ $RECYCLE.BIN/
 
 # Visual Studio 2014 CTP
 **/*.sln.ide
-
-*.sh
-*.exe
-*.json
-*.md
-
-Dronelogbook/
