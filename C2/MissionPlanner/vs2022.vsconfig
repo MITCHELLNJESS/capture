@@ -56,6 +56,7 @@
     "Component.OpenJDK",
     "Component.Android.SDK.MAUI",
     "Microsoft.VisualStudio.Component.MonoDebugger",
+    "Microsoft.VisualStudio.Component.Merq",
     "Component.Xamarin.RemotedSimulator",
     "Microsoft.VisualStudio.ComponentGroup.WebToolsExtensions.TemplateEngine",
     "Component.Xamarin",
