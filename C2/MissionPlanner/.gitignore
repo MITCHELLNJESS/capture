@@ -16,7 +16,6 @@ packages/
 /Drivers/gencert.bat
 /Drivers/makecert.exe
 /Drivers/signing.url
-/ExtLibs/Zeroconf
 /ExtLibs/wasm/wwwroot/2018-09-09 18-15-17.txt
 /ExtLibs/Test
 /ExtLibs/AltitudeAngelWings/Keys.config
@@ -36,8 +35,6 @@ docs/
 *.Test/
 *.jar
 *.cache
-/Plugins/Dowding/server/node_modules
-/Plugins/Dowding/server/package-lock.json
 /ExtLibs/Tests
 *.p12
 *.pem
