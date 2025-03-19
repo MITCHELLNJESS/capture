@@ -41,3 +41,9 @@
 /C2/TcpTest/C2Test/C2Test/.vs
 /C2/TcpTest/C2Test/C2Test/bin
 /C2/TcpTest/C2Test/C2Test/obj
+
+# Leftover Mission Planner Build Artifacts
+/C2/MissionPlanner/ExtLibs/mono/mcs/class/lib/net_4_x-win32/netstandard2.0/Interfaces.dll
+/C2/MissionPlanner/ExtLibs/mono/mcs/class/lib/net_4_x-win32/netstandard2.0/MissionPlanner.Drawing.dll
+/C2/MissionPlanner/ExtLibs/mono/mcs/class/lib/net_4_x-win32/netstandard2.0/System.Drawing.dll
+/C2/MissionPlanner/ExtLibs/mono/mcs/class/lib/net_4_x-win32/netstandard2.0/System.Windows.Forms.dll
