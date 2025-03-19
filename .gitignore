@@ -36,3 +36,8 @@
 /TSE/Unreal/Plugins/*/Intermediate/
 /TSE/Unreal/Plugins/*/Binaries/
 /TSE/Unreal/Plugins/*/Saved/
+
+# TcpTest Application Build Artifacts
+/C2/TcpTest/C2Test/C2Test/.vs
+/C2/TcpTest/C2Test/C2Test/bin
+/C2/TcpTest/C2Test/C2Test/obj
