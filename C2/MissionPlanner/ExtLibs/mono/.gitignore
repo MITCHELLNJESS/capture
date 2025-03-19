@@ -9,7 +9,6 @@
 # Visual Studio / MonoDevelop
 *.[Oo]bj
 *.exe
-*.dll
 *.pdb
 *.user
 *.aps
@@ -28,8 +27,6 @@
 *.lib
 *.sbr
 *.sdf
-*.opensdf
-*.resources
 *.res
 ipch/
 obj/
