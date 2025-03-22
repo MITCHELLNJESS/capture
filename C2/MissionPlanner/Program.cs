@@ -91,7 +91,9 @@ namespace MissionPlanner
         [STAThread]
         public static void Main(string[] args)
         {
+            Console.WriteLine("hello world!");
             Start(args);
+            //Console.WriteLine("hello world 2!"); - never reaches
         }
 
         public static async void TraceMe(bool start = true)
@@ -123,6 +125,7 @@ namespace MissionPlanner
         [MethodImpl(MethodImplOptions.NoInlining)]
         public static void Start(string[] args)
         {
+            //Console.WriteLine("test HV"); never reaches
             Program.args = args;
             Console.WriteLine(
                 "If your error is about Microsoft.DirectX.DirectInput, please install the latest directx redist from here http://www.microsoft.com/en-us/download/details.aspx?id=35 \n\n");

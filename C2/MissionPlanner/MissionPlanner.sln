@@ -225,6 +225,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MockDroneID", "ExtLibs\Mock
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerrainMakerPlugin", "Plugins\TerrainMakerPlugin\TerrainMakerPlugin.csproj", "{DDD2FEA8-801E-463B-8913-9CCCDA2D9429}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DDS_Subscriber", "..\DDS_Subscriber\DDS_Subscriber.csproj", "{B9AF8309-8B95-4A55-B663-8ACA1C9C8226}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -556,6 +558,10 @@ Global
 		{DDD2FEA8-801E-463B-8913-9CCCDA2D9429}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDD2FEA8-801E-463B-8913-9CCCDA2D9429}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDD2FEA8-801E-463B-8913-9CCCDA2D9429}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9AF8309-8B95-4A55-B663-8ACA1C9C8226}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9AF8309-8B95-4A55-B663-8ACA1C9C8226}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9AF8309-8B95-4A55-B663-8ACA1C9C8226}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9AF8309-8B95-4A55-B663-8ACA1C9C8226}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

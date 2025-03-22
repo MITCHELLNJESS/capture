@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35828.75 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GDAL.NET", "GDAL.NET.csproj", "{2E2A89FD-B087-F644-34F2-061F61EB4ADB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2E2A89FD-B087-F644-34F2-061F61EB4ADB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E2A89FD-B087-F644-34F2-061F61EB4ADB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E2A89FD-B087-F644-34F2-061F61EB4ADB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E2A89FD-B087-F644-34F2-061F61EB4ADB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0516A274-091B-4590-9B38-492BC094824F}
+	EndGlobalSection
+EndGlobal

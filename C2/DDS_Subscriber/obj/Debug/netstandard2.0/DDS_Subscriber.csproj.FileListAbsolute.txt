@@ -1,0 +1,11 @@
+C:\Users\hvomm\Desktop\ELDP\capture\C2\DDS_Subscriber\bin\Debug\netstandard2.0\DDS_Subscriber.deps.json
+C:\Users\hvomm\Desktop\ELDP\capture\C2\DDS_Subscriber\bin\Debug\netstandard2.0\DDS_Subscriber.dll
+C:\Users\hvomm\Desktop\ELDP\capture\C2\DDS_Subscriber\bin\Debug\netstandard2.0\DDS_Subscriber.pdb
+C:\Users\hvomm\Desktop\ELDP\capture\C2\DDS_Subscriber\obj\Debug\netstandard2.0\DDS_Subscriber.csproj.AssemblyReference.cache
+C:\Users\hvomm\Desktop\ELDP\capture\C2\DDS_Subscriber\obj\Debug\netstandard2.0\DDS_Subscriber.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hvomm\Desktop\ELDP\capture\C2\DDS_Subscriber\obj\Debug\netstandard2.0\DDS_Subscriber.AssemblyInfoInputs.cache
+C:\Users\hvomm\Desktop\ELDP\capture\C2\DDS_Subscriber\obj\Debug\netstandard2.0\DDS_Subscriber.AssemblyInfo.cs
+C:\Users\hvomm\Desktop\ELDP\capture\C2\DDS_Subscriber\obj\Debug\netstandard2.0\DDS_Subscriber.csproj.CoreCompileInputs.cache
+C:\Users\hvomm\Desktop\ELDP\capture\C2\DDS_Subscriber\obj\Debug\netstandard2.0\DDS_Subscriber.sourcelink.json
+C:\Users\hvomm\Desktop\ELDP\capture\C2\DDS_Subscriber\obj\Debug\netstandard2.0\DDS_Subscriber.dll
+C:\Users\hvomm\Desktop\ELDP\capture\C2\DDS_Subscriber\obj\Debug\netstandard2.0\DDS_Subscriber.pdb
