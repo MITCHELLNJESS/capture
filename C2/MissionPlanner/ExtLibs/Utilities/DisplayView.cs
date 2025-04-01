@@ -48,6 +48,7 @@ namespace MissionPlanner.Utilities
 
         //flight Data view
         public Boolean displayAnenometer { get; set; }
+        public Boolean displayAssetTab { get; set; }
         public Boolean displayQuickTab { get; set; }
         public Boolean displayPreFlightTab { get; set; }
         public Boolean displayAdvActionsTab { get; set; }
@@ -143,6 +144,7 @@ namespace MissionPlanner.Utilities
 
             //flight Data view
             displayAnenometer = true;
+            displayAssetTab = true;
             displayQuickTab = true;
             displayPreFlightTab = true;
             displayAdvActionsTab = false;
@@ -276,6 +278,7 @@ namespace MissionPlanner.Utilities
 
                 //flight Data view
                 displayAnenometer = true,
+                displayAssetTab = true,
                 displayQuickTab = true,
                 displayPreFlightTab = true,
                 displayAdvActionsTab = false,
@@ -363,6 +366,7 @@ namespace MissionPlanner.Utilities
 
                 //flight Data view
                 displayAnenometer = true,
+                displayAssetTab = true,
                 displayQuickTab = true,
                 displayPreFlightTab = true,
                 displayAdvActionsTab = true,

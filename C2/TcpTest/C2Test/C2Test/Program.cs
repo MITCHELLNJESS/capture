@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq.Expressions;
+﻿using System.Net;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -29,7 +28,7 @@ class Program
             try
             {
                 // Connect to the Telnet server
-                client.Connect(ipAddress, port);
+                client.Connect(IPAddress.Loopback, port);
             }
             catch (Exception ex)
             {

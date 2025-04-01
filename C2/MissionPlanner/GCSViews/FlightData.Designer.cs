@@ -1,3 +1,4 @@
+using System;
 using System.Windows.Forms;
 
 namespace MissionPlanner.GCSViews
@@ -34,9 +35,12 @@ namespace MissionPlanner.GCSViews
             this.customizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.multiLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControlactions = new System.Windows.Forms.TabControl();
+            this.tabAsset = new System.Windows.Forms.TabPage();
             this.tabQuick = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanelAsset = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanelQuick = new System.Windows.Forms.TableLayoutPanel();
             this.quickView6 = new MissionPlanner.Controls.QuickView();
+            this.contextMenuStripAssetView = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.contextMenuStripQuickView = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.setViewCountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.undockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -240,6 +244,11 @@ namespace MissionPlanner.GCSViews
             this.scriptChecker = new System.Windows.Forms.Timer(this.components);
             this.Messagetabtimer = new System.Windows.Forms.Timer(this.components);
             this.bindingSourceStatusTab = new System.Windows.Forms.BindingSource(this.components);
+            this.assetLat = new MissionPlanner.Controls.QuickView();
+            this.assetLon = new MissionPlanner.Controls.QuickView();
+            this.assetAlt = new MissionPlanner.Controls.QuickView();
+            this.assetSeqNum = new MissionPlanner.Controls.QuickView();
+            this.updateAssetBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.MainH)).BeginInit();
             this.MainH.Panel1.SuspendLayout();
             this.MainH.Panel2.SuspendLayout();
@@ -252,8 +261,11 @@ namespace MissionPlanner.GCSViews
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceHud)).BeginInit();
             this.contextMenuStripactionstab.SuspendLayout();
             this.tabControlactions.SuspendLayout();
+            this.tabAsset.SuspendLayout();
             this.tabQuick.SuspendLayout();
+            this.tableLayoutPanelAsset.SuspendLayout();
             this.tableLayoutPanelQuick.SuspendLayout();
+            this.contextMenuStripAssetView.SuspendLayout();
             this.contextMenuStripQuickView.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceQuickTab)).BeginInit();
             this.tabActions.SuspendLayout();
@@ -591,6 +603,7 @@ namespace MissionPlanner.GCSViews
             // tabControlactions
             // 
             this.tabControlactions.ContextMenuStrip = this.contextMenuStripactionstab;
+            this.tabControlactions.Controls.Add(this.tabAsset);
             this.tabControlactions.Controls.Add(this.tabQuick);
             this.tabControlactions.Controls.Add(this.tabActions);
             this.tabControlactions.Controls.Add(this.tabPagemessages);
@@ -610,6 +623,78 @@ namespace MissionPlanner.GCSViews
             this.tabControlactions.SelectedIndex = 0;
             this.tabControlactions.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabControl1_DrawItem);
             this.tabControlactions.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
+            //
+            // tabAsset
+            //
+            resources.ApplyResources(this.tabAsset, "tabAsset");
+            this.tabAsset.Controls.Add(this.tableLayoutPanelAsset);
+            this.tabAsset.Name = "tabAsset";
+            this.tabAsset.UseVisualStyleBackColor = true;
+            //
+            // tableLayoutPanelAsset
+            //
+            resources.ApplyResources(this.tableLayoutPanelAsset, "tableLayoutPanelAsset");
+            this.tableLayoutPanelAsset.Controls.Add(this.updateAssetBtn, 0, 2);
+            this.tableLayoutPanelAsset.Controls.Add(this.assetSeqNum, 1, 1);
+            this.tableLayoutPanelAsset.Controls.Add(this.assetAlt, 0, 1);
+            this.tableLayoutPanelAsset.Controls.Add(this.assetLon, 1, 0);
+            this.tableLayoutPanelAsset.Controls.Add(this.assetLat, 0, 0);
+
+            this.tableLayoutPanelAsset.Name = "tableLayoutPanelAsset";
+
+            Console.WriteLine(tableLayoutPanelAsset.ToString());
+            //
+            // assetLat
+            //
+            this.assetLat.ContextMenuStrip = this.contextMenuStripAssetView;
+            this.assetLat.desc = "AssetLatitude";
+            resources.ApplyResources(this.assetLat, "assetLat");
+            this.assetLat.Name = "assetLat";
+            this.assetLat.number = 0D;
+            this.assetLat.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(252)))));
+            this.assetLat.numberColorBackup = System.Drawing.Color.Empty;
+            this.assetLat.numberformat = "0.0000";
+            //
+            // assetLon
+            //
+            this.assetLon.ContextMenuStrip = this.contextMenuStripAssetView;
+            this.assetLon.desc = "AssetLongitude";
+            resources.ApplyResources(this.assetLon, "assetLon");
+            this.assetLon.Name = "assetLon";
+            this.assetLon.number = 0D;
+            this.assetLon.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(254)))), ((int)(((byte)(86)))));
+            this.assetLon.numberColorBackup = System.Drawing.Color.Empty;
+            this.assetLon.numberformat = "0.0000";
+            //
+            // assetAlt
+            //
+            this.assetAlt.ContextMenuStrip = this.contextMenuStripAssetView;
+            this.assetAlt.desc = "AssetAltitude";
+            resources.ApplyResources(this.assetAlt, "assetAlt");
+            this.assetAlt.Name = "assetAlt";
+            this.assetAlt.number = 0D;
+            this.assetAlt.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(83)))));
+            this.assetAlt.numberColorBackup = System.Drawing.Color.Empty;
+            this.assetAlt.numberformat = "0.0000";
+            //
+            // assetSeqNum
+            //
+            this.assetSeqNum.ContextMenuStrip = this.contextMenuStripAssetView;
+            this.assetSeqNum.desc = "AssetSequenceNumber";
+            resources.ApplyResources(this.assetSeqNum, "assetSeqNum");
+            this.assetSeqNum.Name = "assetSeqNum";
+            this.assetSeqNum.number = 0D;
+            this.assetSeqNum.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(96)))), ((int)(((byte)(91)))));
+            this.assetSeqNum.numberColorBackup = System.Drawing.Color.Empty;
+            this.assetSeqNum.numberformat = "000000";
+            //
+            // updateAssetBtn
+            //
+            resources.ApplyResources(this.updateAssetBtn, "updateAssetBtn");
+            this.updateAssetBtn.Text = "Update";
+            this.updateAssetBtn.Name = "updateAssetBtn";
+            this.updateAssetBtn.UseVisualStyleBackColor = true;
+            this.updateAssetBtn.Click += new System.EventHandler(this.updateAssetBtn_Click);
             // 
             // tabQuick
             // 
@@ -629,6 +714,8 @@ namespace MissionPlanner.GCSViews
             this.tableLayoutPanelQuick.Controls.Add(this.quickView2, 1, 0);
             this.tableLayoutPanelQuick.Controls.Add(this.quickView1, 0, 0);
             this.tableLayoutPanelQuick.Name = "tableLayoutPanelQuick";
+
+            Console.WriteLine(tableLayoutPanelQuick.ToString());
             // 
             // quickView6
             // 
@@ -2918,7 +3005,9 @@ namespace MissionPlanner.GCSViews
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceHud)).EndInit();
             this.contextMenuStripactionstab.ResumeLayout(false);
             this.tabControlactions.ResumeLayout(false);
+            this.tabAsset.ResumeLayout(false);
             this.tabQuick.ResumeLayout(false);
+            this.tableLayoutPanelAsset.ResumeLayout(false);
             this.tableLayoutPanelQuick.ResumeLayout(false);
             this.contextMenuStripQuickView.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceQuickTab)).EndInit();
@@ -3028,6 +3117,7 @@ namespace MissionPlanner.GCSViews
         private Controls.HSI Gheading;
         private Label lbl_playbackspeed;
         private System.Windows.Forms.ToolStripMenuItem setAspectRatioToolStripMenuItem;
+        public System.Windows.Forms.TabPage tabAsset;
         public System.Windows.Forms.TabPage tabQuick;
         private Controls.QuickView quickView3;
         private Controls.QuickView quickView2;
@@ -3059,6 +3149,7 @@ namespace MissionPlanner.GCSViews
         private Controls.ServoOptions servoOptions11;
         private Controls.ServoOptions servoOptions12;
         private System.Windows.Forms.BindingSource bindingSourceHud;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelAsset;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelQuick;
         private System.Windows.Forms.Panel panel2;
         private Controls.MyButton BUT_speed10;
@@ -3130,6 +3221,7 @@ namespace MissionPlanner.GCSViews
         private System.Windows.Forms.ToolStripMenuItem PointCameraCoordsToolStripMenuItem1;
         private Controls.ModifyandSet modifyandSetLoiterRad;
         private System.Windows.Forms.ToolStripMenuItem onOffCameraOverlapToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripAssetView;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripQuickView;
         private System.Windows.Forms.ToolStripMenuItem setViewCountToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem setGStreamerSourceToolStripMenuItem;
@@ -3210,5 +3302,10 @@ namespace MissionPlanner.GCSViews
         private ToolStripMenuItem gimbalVideoFullSizedToolStripMenuItem;
         private ToolStripMenuItem gimbalVideoMiniToolStripMenuItem;
         private ToolStripMenuItem gimbalVideoPopOutToolStripMenuItem;
+        private Controls.QuickView assetLat;
+        private Controls.QuickView assetLon;
+        private Controls.QuickView assetAlt;
+        private Controls.QuickView assetSeqNum;
+        private System.Windows.Forms.Button updateAssetBtn;
     }
 }
