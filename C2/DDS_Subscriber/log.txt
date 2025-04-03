@@ -1,0 +1,94 @@
+2025-04-02 07:27:28 - Hello world!--------------------------------
+2025-04-02 07:27:28 - StartDDSSub()!
+2025-04-02 07:27:28 - run DDS Sub()!
+2025-04-02 07:27:29 - Error: Cannot create a Topic<A3MPDataMsg> because DDS_Subscriber.A3MPDataMsgSupport can't be found in A3MPDataMsg's assembly
+2025-04-02 07:38:28 - Hello world!--------------------------------
+2025-04-02 07:38:28 - StartDDSSub()!
+2025-04-02 07:38:28 - run DDS Sub()!
+2025-04-02 07:38:28 - Error: Cannot create a Topic<A3MPDataMsg> because DDS_Subscriber.A3MPDataMsgSupport can't be found in A3MPDataMsg's assembly
+2025-04-02 08:06:34 - Hello world!--------------------------------
+2025-04-02 08:06:34 - StartDDSSub()!
+2025-04-02 08:06:34 - run DDS Sub()!
+2025-04-02 08:06:35 - Waiting for DDS STRING messages...
+2025-04-02 08:13:44 - Hello world!--------------------------------
+2025-04-02 08:13:44 - StartDDSSub()!
+2025-04-02 08:13:44 - run DDS Sub()!
+2025-04-02 08:13:45 - Error: Cannot create a Topic<A3MPDataMsg> because DDS_Subscriber.A3MPDataMsgSupport can't be found in A3MPDataMsg's assembly
+2025-04-02 08:29:47 - Hello world!--------------------------------
+2025-04-02 08:29:47 - StartDDSSub()!
+2025-04-02 08:29:47 - run DDS Sub()!
+2025-04-02 08:29:48 - Error: Cannot create a Topic<A3MPDataMsg> because DDS_Subscriber.A3MPDataMsgSupport can't be found in A3MPDataMsg's assembly
+2025-04-02 08:52:48 - Hello world!--------------------------------
+2025-04-02 08:52:48 - StartDDSSub()!
+2025-04-02 08:52:48 - run DDS Sub()!
+2025-04-02 08:52:48 - Waiting for DDS STRING messages...
+2025-04-02 09:03:17 - Hello world!--------------------------------
+2025-04-02 09:03:17 - StartDDSSub()!
+2025-04-02 09:03:17 - run DDS Sub()!
+2025-04-02 09:33:51 - Hello world!--------------------------------
+2025-04-02 09:33:51 - StartDDSSub()!
+2025-04-02 09:33:51 - run DDS Sub()!
+2025-04-02 09:41:11 - Hello world!--------------------------------
+2025-04-02 09:41:11 - StartDDSSub()!
+2025-04-02 09:41:11 - run DDS Sub()!
+2025-04-02 09:48:49 - Hello world!--------------------------------
+2025-04-02 09:48:49 - StartDDSSub()!
+2025-04-02 09:48:49 - run DDS Sub()!
+2025-04-02 10:32:33 - Hello world!--------------------------------
+2025-04-02 10:32:33 - StartDDSSub()!
+2025-04-02 10:32:33 - run DDS Sub()!
+2025-04-02 10:37:54 - Hello world!--------------------------------
+2025-04-02 10:37:54 - StartDDSSub()!
+2025-04-02 10:37:54 - run DDS Sub()!
+2025-04-02 10:48:31 - Hello world!--------------------------------
+2025-04-02 10:48:31 - StartDDSSub()!
+2025-04-02 10:48:31 - run DDS Sub()!
+2025-04-02 10:48:32 - Error: Cannot create a Topic<A3MPDataMsg> because DDS_Subscriber.A3MPDataMsgSupport can't be found in A3MPDataMsg's assembly
+2025-04-02 10:52:54 - Hello world!--------------------------------
+2025-04-02 10:52:54 - StartDDSSub()!
+2025-04-02 10:52:54 - run DDS Sub()!
+2025-04-02 10:52:55 - Error: Cannot create a Topic<A3MPDataMsg> because DDS_Subscriber.A3MPDataMsgSupport can't be found in A3MPDataMsg's assembly
+2025-04-02 19:06:36 - Hello world!--------------------------------
+2025-04-02 19:06:36 - StartDDSSub()!
+2025-04-02 19:06:36 - run DDS Sub()!
+2025-04-02 19:06:37 - Error: Cannot create a Topic<A3MPDataMsg> because DDS_Subscriber.A3MPDataMsgSupport can't be found in A3MPDataMsg's assembly
+2025-04-02 19:13:34 - Hello world!--------------------------------
+2025-04-02 19:13:34 - StartDDSSub()!
+2025-04-02 19:13:34 - run DDS Sub()!
+2025-04-02 19:13:36 - Error: Cannot create a Topic<A3MPDataMsg> because DDS_Subscriber.A3MPDataMsgSupport can't be found in A3MPDataMsg's assembly
+2025-04-02 20:56:20 - Hello world!--------------------------------
+2025-04-02 20:56:20 - StartDDSSub()!
+2025-04-02 20:56:20 - run DDS Sub()!
+2025-04-02 20:56:22 - Waiting for messages...
+2025-04-02 20:59:13 - Hello world!--------------------------------
+2025-04-02 20:59:13 - StartDDSSub()!
+2025-04-02 20:59:13 - run DDS Sub()!
+2025-04-02 20:59:14 - Waiting for messages...
+2025-04-02 21:04:53 - Hello world!--------------------------------
+2025-04-02 21:04:53 - StartDDSSub()!
+2025-04-02 21:04:53 - run DDS Sub()!
+2025-04-02 21:04:54 - Waiting for messages...
+2025-04-02 21:04:55 - Received message:    data: "pls work"
+
+2025-04-02 21:20:17 - Hello world!--------------------------------
+2025-04-02 21:20:17 - StartDDSSub()!
+2025-04-02 21:20:17 - run DDS Sub()!
+2025-04-02 21:20:18 - Waiting for messages...
+2025-04-02 21:26:44 - Hello world!--------------------------------
+2025-04-02 21:26:44 - StartDDSSub()!
+2025-04-02 21:26:44 - run DDS Sub()!
+2025-04-02 21:26:44 - Waiting for messages...
+2025-04-02 21:26:45 - Received message:    data: "pls work0123456789101112131415161718192021222324252627282930"
+
+2025-04-02 21:26:46 - Received message:    data: "pls work012345678910111213141516171819202122232425262728293031"
+
+2025-04-02 21:26:47 - Received message:    data: "pls work01234567891011121314151617181920212223242526272829303132"
+
+2025-04-02 21:27:00 - Received message:    data: "pls work01234567891011121314151617181920212223242526272829303132333435363738394041424344"
+
+2025-04-02 21:27:01 - Received message:    data: "pls work0123456789101112131415161718192021222324252627282930313233343536373839404142434445"
+
+2025-04-02 21:27:02 - Received message:    data: "pls work012345678910111213141516171819202122232425262728293031323334353637383940414243444546"
+
+2025-04-02 21:27:02 - Received message:    data: ""
+

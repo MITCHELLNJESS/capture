@@ -71,6 +71,7 @@ namespace MissionPlanner
 
         public static string[] names = new string[] {"VVVVZ"};
         public static bool MONO = false;
+        public static Logger logger = new Logger();
 
         static Program()
         {
@@ -92,6 +93,9 @@ namespace MissionPlanner
         public static void Main(string[] args)
         {
             Start(args);
+            logger.WriteDebug("Hello world!--------------------------------");
+            DDS_Integration ddsIntegration = new DDS_Integration();
+            ddsIntegration.StartDDSSubscriber();
         }
 
         public static async void TraceMe(bool start = true)
