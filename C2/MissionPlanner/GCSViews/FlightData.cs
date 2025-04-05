@@ -6266,11 +6266,10 @@ namespace MissionPlanner.GCSViews
             public double alt;
         }
 
-        private void updateAssetBtn_Click(object sender, EventArgs e)
+        public static void updateAssetBtn_Click(object sender, EventArgs e)
         {
             int port = 23;
 
-            Console.WriteLine("I'm working!");
             // Create a new TcpClient object
             TcpClient client = new TcpClient();
 
@@ -6318,16 +6317,26 @@ namespace MissionPlanner.GCSViews
 
                     Console.WriteLine("SeqNum: " + positionData.seqNum + " Lat: " + positionData.lat + " Lon: " + positionData.lon + " Alt: " + positionData.alt);
 
-                    this.assetLat.number = positionData.lat;
-                    this.assetLon.number = positionData.lon;
-                    this.assetAlt.number = positionData.alt;
-                    this.assetSeqNum.number = positionData.seqNum;
+                    assetLat.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(83)))));
+                    assetLon.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(83)))));
+                    assetAlt.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(83)))));
+                    assetSeqNum.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(83)))));
+
+                    assetLat.number = positionData.lat;
+                    assetLon.number = positionData.lon;
+                    assetAlt.number = positionData.alt;
+                    assetSeqNum.number = positionData.seqNum;
 
                     // Close the connection
                     stream.Close();
                 }
                 else
                 {
+                    assetLat.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(96)))), ((int)(((byte)(91)))));
+                    assetLon.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(96)))), ((int)(((byte)(91)))));
+                    assetAlt.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(96)))), ((int)(((byte)(91)))));
+                    assetSeqNum.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(96)))), ((int)(((byte)(91)))));
+
                     Console.WriteLine("Client failed to connect!");
                 }
 
@@ -6337,6 +6346,11 @@ namespace MissionPlanner.GCSViews
             }
             catch (Exception ex)
             {
+                assetLat.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(96)))), ((int)(((byte)(91)))));
+                assetLon.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(96)))), ((int)(((byte)(91)))));
+                assetAlt.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(96)))), ((int)(((byte)(91)))));
+                assetSeqNum.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(96)))), ((int)(((byte)(91)))));
+
                 // Print any errors
                 Console.WriteLine("Error: " + ex.Message);
             }

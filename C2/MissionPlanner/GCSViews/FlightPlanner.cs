@@ -548,6 +548,16 @@ namespace MissionPlanner.GCSViews
             return selectedrow;
         }
 
+        public void AddWPDD(double lat, double lon, int alt)
+        {
+            selectedrow = Commands.Rows.Add();
+            Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.WAYPOINT.ToString();
+            ChangeColumnHeader(MAVLink.MAV_CMD.WAYPOINT.ToString());
+
+            updateUndoBuffer(false);
+            setfromMap(lat, lon, alt);
+        }
+
         /// <summary>
         /// Used to create a new WP
         /// </summary>
@@ -724,6 +734,25 @@ namespace MissionPlanner.GCSViews
             frmProgressReporter.Dispose();
 
             MainMap.Focus();
+        }
+
+        public void BUT_ToAssetCreate_Click(object sender, EventArgs e)
+        {
+            FlightData.updateAssetBtn_Click(null, null);
+
+            if (CustomMessageBox.Show("Clear current waypoints?", "Confirm",
+                           MessageBoxButtons.YesNo) == (int)DialogResult.Yes)
+            {
+                clearMissionToolStripMenuItem_Click(null, null);  // perhaps not best practice to directly call "click" events
+            }
+            Console.Write("Asset position from data window - lat: ");
+            Console.Write(FlightData.assetLat.number);
+            Console.Write(" lon: ");
+            Console.Write(FlightData.assetLon.number);
+            Console.Write(" alt: ");
+            Console.WriteLine(FlightData.assetAlt.number);
+            AddTakeoff(25);
+            AddWPDD(FlightData.assetLat.number, FlightData.assetLon.number, 25);
         }
 
         /// <summary>
@@ -6570,6 +6599,19 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             Commands.Rows[selectedrow].Cells[Param1.Index].Value = topi;
 
             Commands.Rows[selectedrow].Cells[Alt.Index].Value = alti;
+
+            ChangeColumnHeader(MAVLink.MAV_CMD.TAKEOFF.ToString());
+
+            writeKML();
+        }
+
+        public void AddTakeoff(int alt)
+        {
+            selectedrow = Commands.Rows.Add();
+
+            Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.TAKEOFF.ToString();
+
+            Commands.Rows[selectedrow].Cells[Alt.Index].Value = alt;
 
             ChangeColumnHeader(MAVLink.MAV_CMD.TAKEOFF.ToString());
 

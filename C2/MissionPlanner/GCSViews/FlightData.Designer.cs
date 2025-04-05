@@ -244,10 +244,10 @@ namespace MissionPlanner.GCSViews
             this.scriptChecker = new System.Windows.Forms.Timer(this.components);
             this.Messagetabtimer = new System.Windows.Forms.Timer(this.components);
             this.bindingSourceStatusTab = new System.Windows.Forms.BindingSource(this.components);
-            this.assetLat = new MissionPlanner.Controls.QuickView();
-            this.assetLon = new MissionPlanner.Controls.QuickView();
-            this.assetAlt = new MissionPlanner.Controls.QuickView();
-            this.assetSeqNum = new MissionPlanner.Controls.QuickView();
+            assetLat = new MissionPlanner.Controls.QuickView();
+            assetLon = new MissionPlanner.Controls.QuickView();
+            assetAlt = new MissionPlanner.Controls.QuickView();
+            assetSeqNum = new MissionPlanner.Controls.QuickView();
             this.updateAssetBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.MainH)).BeginInit();
             this.MainH.Panel1.SuspendLayout();
@@ -635,10 +635,10 @@ namespace MissionPlanner.GCSViews
             //
             resources.ApplyResources(this.tableLayoutPanelAsset, "tableLayoutPanelAsset");
             this.tableLayoutPanelAsset.Controls.Add(this.updateAssetBtn, 0, 2);
-            this.tableLayoutPanelAsset.Controls.Add(this.assetSeqNum, 1, 1);
-            this.tableLayoutPanelAsset.Controls.Add(this.assetAlt, 0, 1);
-            this.tableLayoutPanelAsset.Controls.Add(this.assetLon, 1, 0);
-            this.tableLayoutPanelAsset.Controls.Add(this.assetLat, 0, 0);
+            this.tableLayoutPanelAsset.Controls.Add(assetSeqNum, 1, 1);
+            this.tableLayoutPanelAsset.Controls.Add(assetAlt, 0, 1);
+            this.tableLayoutPanelAsset.Controls.Add(assetLon, 1, 0);
+            this.tableLayoutPanelAsset.Controls.Add(assetLat, 0, 0);
 
             this.tableLayoutPanelAsset.Name = "tableLayoutPanelAsset";
 
@@ -646,47 +646,47 @@ namespace MissionPlanner.GCSViews
             //
             // assetLat
             //
-            this.assetLat.ContextMenuStrip = this.contextMenuStripAssetView;
-            this.assetLat.desc = "AssetLatitude";
-            resources.ApplyResources(this.assetLat, "assetLat");
-            this.assetLat.Name = "assetLat";
-            this.assetLat.number = 0D;
-            this.assetLat.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(252)))));
-            this.assetLat.numberColorBackup = System.Drawing.Color.Empty;
-            this.assetLat.numberformat = "0.0000";
+            assetLat.ContextMenuStrip = this.contextMenuStripAssetView;
+            assetLat.desc = "AssetLatitude";
+            resources.ApplyResources(assetLat, "assetLat");
+            assetLat.Name = "assetLat";
+            assetLat.number = 0D;
+            assetLat.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(254)))), ((int)(((byte)(86)))));
+            assetLat.numberColorBackup = System.Drawing.Color.Empty;
+            assetLat.numberformat = "0.0000";
             //
             // assetLon
             //
-            this.assetLon.ContextMenuStrip = this.contextMenuStripAssetView;
-            this.assetLon.desc = "AssetLongitude";
-            resources.ApplyResources(this.assetLon, "assetLon");
-            this.assetLon.Name = "assetLon";
-            this.assetLon.number = 0D;
-            this.assetLon.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(254)))), ((int)(((byte)(86)))));
-            this.assetLon.numberColorBackup = System.Drawing.Color.Empty;
-            this.assetLon.numberformat = "0.0000";
+            assetLon.ContextMenuStrip = this.contextMenuStripAssetView;
+            assetLon.desc = "AssetLongitude";
+            resources.ApplyResources(assetLon, "assetLon");
+            assetLon.Name = "assetLon";
+            assetLon.number = 0D;
+            assetLon.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(254)))), ((int)(((byte)(86)))));
+            assetLon.numberColorBackup = System.Drawing.Color.Empty;
+            assetLon.numberformat = "0.0000";
             //
             // assetAlt
             //
-            this.assetAlt.ContextMenuStrip = this.contextMenuStripAssetView;
-            this.assetAlt.desc = "AssetAltitude";
-            resources.ApplyResources(this.assetAlt, "assetAlt");
-            this.assetAlt.Name = "assetAlt";
-            this.assetAlt.number = 0D;
-            this.assetAlt.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(83)))));
-            this.assetAlt.numberColorBackup = System.Drawing.Color.Empty;
-            this.assetAlt.numberformat = "0.0000";
+            assetAlt.ContextMenuStrip = this.contextMenuStripAssetView;
+            assetAlt.desc = "AssetAltitude";
+            resources.ApplyResources(assetAlt, "assetAlt");
+            assetAlt.Name = "assetAlt";
+            assetAlt.number = 0D;
+            assetAlt.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(254)))), ((int)(((byte)(86)))));
+            assetAlt.numberColorBackup = System.Drawing.Color.Empty;
+            assetAlt.numberformat = "0.0000";
             //
             // assetSeqNum
             //
-            this.assetSeqNum.ContextMenuStrip = this.contextMenuStripAssetView;
-            this.assetSeqNum.desc = "AssetSequenceNumber";
-            resources.ApplyResources(this.assetSeqNum, "assetSeqNum");
-            this.assetSeqNum.Name = "assetSeqNum";
-            this.assetSeqNum.number = 0D;
-            this.assetSeqNum.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(96)))), ((int)(((byte)(91)))));
-            this.assetSeqNum.numberColorBackup = System.Drawing.Color.Empty;
-            this.assetSeqNum.numberformat = "000000";
+            assetSeqNum.ContextMenuStrip = this.contextMenuStripAssetView;
+            assetSeqNum.desc = "AssetSequenceNumber";
+            resources.ApplyResources(assetSeqNum, "assetSeqNum");
+            assetSeqNum.Name = "assetSeqNum";
+            assetSeqNum.number = 0D;
+            assetSeqNum.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(254)))), ((int)(((byte)(86)))));
+            assetSeqNum.numberColorBackup = System.Drawing.Color.Empty;
+            assetSeqNum.numberformat = "000000";
             //
             // updateAssetBtn
             //
@@ -694,7 +694,7 @@ namespace MissionPlanner.GCSViews
             this.updateAssetBtn.Text = "Update";
             this.updateAssetBtn.Name = "updateAssetBtn";
             this.updateAssetBtn.UseVisualStyleBackColor = true;
-            this.updateAssetBtn.Click += new System.EventHandler(this.updateAssetBtn_Click);
+            this.updateAssetBtn.Click += new System.EventHandler(updateAssetBtn_Click);
             // 
             // tabQuick
             // 
@@ -3302,10 +3302,10 @@ namespace MissionPlanner.GCSViews
         private ToolStripMenuItem gimbalVideoFullSizedToolStripMenuItem;
         private ToolStripMenuItem gimbalVideoMiniToolStripMenuItem;
         private ToolStripMenuItem gimbalVideoPopOutToolStripMenuItem;
-        private Controls.QuickView assetLat;
-        private Controls.QuickView assetLon;
-        private Controls.QuickView assetAlt;
-        private Controls.QuickView assetSeqNum;
+        public static Controls.QuickView assetLat;
+        public static Controls.QuickView assetLon;
+        public static Controls.QuickView assetAlt;
+        public static Controls.QuickView assetSeqNum;
         private System.Windows.Forms.Button updateAssetBtn;
     }
 }
