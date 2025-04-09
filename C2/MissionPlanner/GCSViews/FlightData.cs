@@ -6269,6 +6269,7 @@ namespace MissionPlanner.GCSViews
         public static void updateAssetBtn_Click(object sender, EventArgs e)
         {
             int port = 23;
+            string ipAddress = "192.168.0.100";
 
             // Create a new TcpClient object
             TcpClient client = new TcpClient();
@@ -6276,7 +6277,7 @@ namespace MissionPlanner.GCSViews
             try
             {
                 // Connect to the Telnet server
-                client.Connect(IPAddress.Loopback, port);
+                client.Connect(ipAddress, port);
             }
             catch (Exception ex)
             {

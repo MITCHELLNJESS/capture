@@ -39,9 +39,9 @@ String currentLineRTK = "";
 void setup() {
   // Test position data to send to Mission Planner
   assetPos.seqNum = 0;
-  assetPos.lat = 3.1415;
-  assetPos.lon = 9.2653;
-  assetPos.alt = 5.8979;
+  assetPos.lat = 38.7509174;
+  assetPos.lon = -77.4971858;
+  assetPos.alt = 0;
   
   // initialize serial communication
   Serial.begin(9600);

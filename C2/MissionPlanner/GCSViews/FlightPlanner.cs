@@ -751,8 +751,8 @@ namespace MissionPlanner.GCSViews
             Console.Write(FlightData.assetLon.number);
             Console.Write(" alt: ");
             Console.WriteLine(FlightData.assetAlt.number);
-            AddTakeoff(25);
-            AddWPDD(FlightData.assetLat.number, FlightData.assetLon.number, 25);
+            AddTakeoff(8);
+            AddWPDD(FlightData.assetLat.number, FlightData.assetLon.number, 8);
         }
 
         /// <summary>
