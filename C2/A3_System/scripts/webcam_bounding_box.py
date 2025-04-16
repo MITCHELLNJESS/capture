@@ -6,7 +6,12 @@ import os
 # Setup log directory
 log_dir = "/Users/jfm/A3_system_project/capture/C2/A3_System/logs"
 os.makedirs(log_dir, exist_ok=True)
-log_file = os.path.join(log_dir, "bounding_box_log.csv")
+log_file = os.path.join(log_dir, "bounding_box_log_3.csv")
+
+# Video saving setup
+video_output = os.path.join(log_dir, "output_video_inside.mp4")
+fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+out = None
 
 # Webcam setup
 camera = cv2.VideoCapture(0)
@@ -19,7 +24,7 @@ bbox = None
 # Create and open log file
 with open(log_file, mode='w', newline='') as file:
     writer = csv.writer(file)
-    writer.writerow(['Timestamp', 'BBox_X', 'BBox_Y', 'BBox_Width', 'BBox_Height', 'Latency(ms)'])
+    writer.writerow(['Timestamp', 'BBox_X', 'BBox_Y', 'BBox_Width', 'BBox_Height', 'Center_X', 'Center_Y', 'Latency(ms)'])
 
     while True:
         frame_start_time = time.time()
@@ -30,6 +35,11 @@ with open(log_file, mode='w', newline='') as file:
             print("Failed to capture frame")
             break
 
+        # Initialize video writer once frame dimensions are known
+        if out is None:
+            height, width = frame.shape[:2]
+            out = cv2.VideoWriter(video_output, fourcc, 20.0, (width, height))
+
         # Instruction if bbox isn't set
         if bbox is None:
             cv2.putText(frame, "Press 's' to select bounding box, 'q' to quit.", (10, 30),
@@ -37,30 +47,44 @@ with open(log_file, mode='w', newline='') as file:
         else:
             # Draw bounding box
             x, y, w, h = map(int, bbox)
-            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+
+            # Adjust bounding box to be square
+            side = max(w, h)
+            w, h = side, side
+
+            # Calculate center point
+            center_x, center_y = x + w // 2, y + h // 2
+
+            # Draw adjusted bounding box and center point
+            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 3)
+            cv2.circle(frame, (center_x, center_y), 5, (255, 0, 0), -1)
 
             # Calculate timestamp and latency
             timestamp = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
             latency = (time.time() - frame_start_time) * 1000  # milliseconds
 
             # Log details
-            writer.writerow([timestamp, x, y, w, h, f"{latency:.2f}"])
+            writer.writerow([timestamp, x, y, w, h, center_x, center_y, f"{latency:.2f}"])
             file.flush()
 
             # Print bounding box details
-            print(f"Timestamp: {timestamp}, X: {x}, Y: {y}, Width: {w}, Height: {h}, Latency: {latency:.2f} ms")
+            print(f"Timestamp: {timestamp}, X: {x}, Y: {y}, Width: {w}, Height: {h}, Center: ({center_x},{center_y}), Latency: {latency:.2f} ms")
+
+        # Write frame to video file
+        out.write(frame)
 
         # Display frame
-        cv2.imshow('A3 Asset Bounding Box', frame)
+        cv2.imshow('A3 System', frame)
 
         # Keyboard interaction
         key = cv2.waitKey(1) & 0xFF
         if key == ord('q'):
             break
         elif key == ord('s'):
-            bbox = cv2.selectROI('A3 Asset Bounding Box', frame, fromCenter=False, showCrosshair=True)
+            bbox = cv2.selectROI('A3 System', frame, fromCenter=False, showCrosshair=True)
             cv2.destroyWindow('ROI selector')
 
 # Cleanup
 camera.release()
+out.release()
 cv2.destroyAllWindows()
