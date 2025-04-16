@@ -5824,6 +5824,120 @@
   <data name="&gt;&gt;windDir1.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
+    <data name="labelInBounds.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left</value>
+  </data>
+  <data name="labelInBounds.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="labelInBounds.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="labelInBounds.Location" type="System.Drawing.Point, System.Drawing">
+    <value>66, 25</value>
+  </data>
+  <data name="labelInBounds.Size" type="System.Drawing.Size, System.Drawing">
+    <value>490, 40</value>
+  </data>
+  <data name="labelInBounds.TabIndex" type="System.Int32, mscorlib">
+    <value>74</value>
+  </data>
+  <data name="labelInBounds.Text" xml:space="preserve">
+    <value>ARV Position: Awaiting Coordinates</value>
+  </data>
+  <data name="&gt;&gt;labelInBounds.Name" xml:space="preserve">
+    <value>labelInBounds</value>
+  </data>
+  <data name="&gt;&gt;labelInBounds.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;labelInBounds.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;labelInBounds.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+   <data name="BUT_SwitchColors.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_SwitchColors.Location" type="System.Drawing.Point, System.Drawing">
+    <value>650, 25</value>
+  </data>
+  <data name="BUT_SwitchColors.Size" type="System.Drawing.Size, System.Drawing">
+    <value>87, 40</value>
+  </data>
+  <data name="BUT_SwitchColors.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="BUT_SwitchColors.Text" xml:space="preserve">
+    <value>Switch Colors</value>
+  </data>
+  <data name="&gt;&gt;BUT_SwitchColors.Name" xml:space="preserve">
+    <value>BUT_SwitchColors</value>
+  </data>
+  <data name="&gt;&gt;BUT_SwitchColors.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_SwitchColors.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;BUT_SwitchColors.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="CMB_team.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 14pt</value>
+  </data>
+  <data name="CMB_team.Location" type="System.Drawing.Point, System.Drawing">
+    <value>740, 25</value>
+  </data>
+  <data name="CMB_team.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 40</value>
+  </data>
+  <data name="CMB_team.TabIndex" type="System.Int32, mscorlib">
+    <value>59</value>
+  </data>
+  <data name="&gt;&gt;CMB_team.Name" xml:space="preserve">
+    <value>CMB_team</value>
+  </data>
+  <data name="&gt;&gt;CMB_team.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CMB_team.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;CMB_team.BackColor" type="System.Drawing.Color, System.Drawing">
+    <value>Red</value>
+  </data>
+  <data name="&gt;&gt;CMB_team.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="BUT_ToggleDemoFieldOverlay.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_ToggleDemoFieldOverlay.Location" type="System.Drawing.Point, System.Drawing">
+    <value>560, 25</value>
+  </data>
+  <data name="BUT_ToggleDemoFieldOverlay.Size" type="System.Drawing.Size, System.Drawing">
+    <value>87, 40</value>
+  </data>
+  <data name="BUT_ToggleDemoFieldOverlay.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="BUT_ToggleDemoFieldOverlay.Text" xml:space="preserve">
+    <value>Toggle Demo Field Overlay</value>
+  </data>
+  <data name="&gt;&gt;BUT_ToggleDemoFieldOverlay.Name" xml:space="preserve">
+    <value>BUT_ToggleDemoFieldOverlay</value>
+  </data>
+  <data name="&gt;&gt;BUT_ToggleDemoFieldOverlay.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_ToggleDemoFieldOverlay.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;BUT_ToggleDemoFieldOverlay.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
   <data name="label6.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
   </data>
@@ -6060,6 +6174,9 @@
   </data>
   <data name="&gt;&gt;splitContainer1.Panel2.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <data name="splitContainer1.Panel2.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
   </data>
   <data name="splitContainer1.Size" type="System.Drawing.Size, System.Drawing">
     <value>595, 411</value>

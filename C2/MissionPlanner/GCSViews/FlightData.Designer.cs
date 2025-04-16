@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace MissionPlanner.GCSViews
@@ -57,6 +58,7 @@ namespace MissionPlanner.GCSViews
             this.modifyandSetLoiterRad = new MissionPlanner.Controls.ModifyandSet();
             this.BUT_clear_track = new MissionPlanner.Controls.MyButton();
             this.CMB_action = new System.Windows.Forms.ComboBox();
+            this.CMB_team = new System.Windows.Forms.ComboBox();
             this.BUTactiondo = new MissionPlanner.Controls.MyButton();
             this.BUT_resumemis = new MissionPlanner.Controls.MyButton();
             this.modifyandSetAlt = new MissionPlanner.Controls.ModifyandSet();
@@ -227,6 +229,9 @@ namespace MissionPlanner.GCSViews
             this.TRK_zoom = new MissionPlanner.Controls.MyTrackBar();
             this.windDir1 = new MissionPlanner.Controls.WindDir();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            labelInBounds = new System.Windows.Forms.Label();
+            BUT_SwitchColors = new MissionPlanner.Controls.MyButton();
+            BUT_ToggleDemoFieldOverlay = new MissionPlanner.Controls.MyButton();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -235,7 +240,7 @@ namespace MissionPlanner.GCSViews
             this.lbl_sats = new MissionPlanner.Controls.MyLabel();
             this.gMapControl1 = new MissionPlanner.Controls.myGMAP();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.coords1 = new MissionPlanner.Controls.Coords();
+            coords1 = new MissionPlanner.Controls.Coords();
             this.CHK_autopan = new System.Windows.Forms.CheckBox();
             this.CB_tuning = new System.Windows.Forms.CheckBox();
             this.ZedGraphTimer = new System.Windows.Forms.Timer(this.components);
@@ -2577,6 +2582,10 @@ namespace MissionPlanner.GCSViews
             this.splitContainer1.Panel2.Controls.Add(this.distanceBar1);
             this.splitContainer1.Panel2.Controls.Add(this.TRK_zoom);
             this.splitContainer1.Panel2.Controls.Add(this.windDir1);
+            this.splitContainer1.Panel2.Controls.Add(labelInBounds);
+            this.splitContainer1.Panel2.Controls.Add(BUT_SwitchColors);
+            this.splitContainer1.Panel2.Controls.Add(CMB_team);
+            this.splitContainer1.Panel2.Controls.Add(BUT_ToggleDemoFieldOverlay);
             this.splitContainer1.Panel2.Controls.Add(this.label6);
             this.splitContainer1.Panel2.Controls.Add(this.label5);
             this.splitContainer1.Panel2.Controls.Add(this.label3);
@@ -2839,6 +2848,48 @@ namespace MissionPlanner.GCSViews
             // bindingSource1
             // 
             this.bindingSource1.DataSource = typeof(MissionPlanner.CurrentState);
+            //
+            // labelInBounds
+            //
+            resources.ApplyResources(labelInBounds, "labelInBounds");
+            labelInBounds.BackColor = System.Drawing.Color.Yellow;
+            labelInBounds.ForeColor = System.Drawing.Color.Black;
+            labelInBounds.Name = "labelInBounds";
+            labelInBounds.Tag = "custom";
+            labelInBounds.Font = new Font(labelInBounds.Font.FontFamily, 18, FontStyle.Bold);
+            labelInBounds.Padding = new Padding(5);
+            //
+            // BUT_SwitchColors
+            //
+            BUT_SwitchColors.ColorMouseDown = System.Drawing.Color.Empty;
+            BUT_SwitchColors.ColorMouseOver = System.Drawing.Color.Empty;
+            BUT_SwitchColors.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(BUT_SwitchColors, "BUT_SwitchColors");
+            BUT_SwitchColors.Name = "BUT_SwitchColors";
+            BUT_SwitchColors.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            BUT_SwitchColors.UseVisualStyleBackColor = true;
+            BUT_SwitchColors.Click += new System.EventHandler(BUT_SwitchColors_Click);
+            //
+            // BUT_ToggleDemoFieldOverlay
+            //
+            BUT_ToggleDemoFieldOverlay.ColorMouseDown = System.Drawing.Color.Empty;
+            BUT_ToggleDemoFieldOverlay.ColorMouseOver = System.Drawing.Color.Empty;
+            BUT_ToggleDemoFieldOverlay.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(BUT_ToggleDemoFieldOverlay, "BUT_ToggleDemoFieldOverlay");
+            BUT_ToggleDemoFieldOverlay.Name = "BUT_ToggleDemoFieldOverlay";
+            BUT_ToggleDemoFieldOverlay.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            BUT_ToggleDemoFieldOverlay.UseVisualStyleBackColor = true;
+            BUT_ToggleDemoFieldOverlay.Click += new System.EventHandler(BUT_ToggleDemoFieldOverlay_Click);
+            //
+            // CMB_team
+            //
+            resources.ApplyResources(this.CMB_team, "CMB_team");
+            this.CMB_team.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CMB_team.DropDownWidth = 250;
+            this.CMB_team.FormattingEnabled = true;
+            this.CMB_team.Name = "CMB_team";
+            this.CMB_team.DataSource = new string[] { "Red Team", "Blue Team" };
+            this.CMB_team.SelectedIndexChanged += TeamSelectionChanged;
             // 
             // label6
             // 
@@ -2920,24 +2971,25 @@ namespace MissionPlanner.GCSViews
             // panel1
             // 
             resources.ApplyResources(this.panel1, "panel1");
-            this.panel1.Controls.Add(this.coords1);
+            this.panel1.Controls.Add(coords1);
             this.panel1.Controls.Add(this.CHK_autopan);
             this.panel1.Controls.Add(this.CB_tuning);
             this.panel1.Name = "panel1";
+            this.panel1.BackColor = Color.Red;
             // 
             // coords1
             // 
-            this.coords1.Alt = 0D;
-            this.coords1.AltSource = "";
-            this.coords1.AltUnit = "m";
-            this.coords1.DataBindings.Add(new System.Windows.Forms.Binding("Alt", this.bindingSource1, "alt", true));
-            this.coords1.DataBindings.Add(new System.Windows.Forms.Binding("Lat", this.bindingSource1, "lat", true));
-            this.coords1.DataBindings.Add(new System.Windows.Forms.Binding("Lng", this.bindingSource1, "lng", true));
-            this.coords1.Lat = 0D;
-            this.coords1.Lng = 0D;
-            resources.ApplyResources(this.coords1, "coords1");
-            this.coords1.Name = "coords1";
-            this.coords1.Vertical = false;
+            coords1.Alt = 0D;
+            coords1.AltSource = "";
+            coords1.AltUnit = "m";
+            coords1.DataBindings.Add(new System.Windows.Forms.Binding("Alt", this.bindingSource1, "alt", true));
+            coords1.DataBindings.Add(new System.Windows.Forms.Binding("Lat", this.bindingSource1, "lat", true));
+            coords1.DataBindings.Add(new System.Windows.Forms.Binding("Lng", this.bindingSource1, "lng", true));
+            coords1.Lat = 0D;
+            coords1.Lng = 0D;
+            resources.ApplyResources(coords1, "coords1");
+            coords1.Name = "coords1";
+            coords1.Vertical = false;
             // 
             // CHK_autopan
             // 
@@ -3080,6 +3132,7 @@ namespace MissionPlanner.GCSViews
         private Controls.MyButton BUTactiondo;
         private Controls.MyButton BUTrestartmission;
         private System.Windows.Forms.ComboBox CMB_action;
+        public System.Windows.Forms.ComboBox CMB_team;
         private Controls.MyButton BUT_Homealt;
         private System.Windows.Forms.TrackBar tracklog;
         private Controls.MyButton BUT_playlog;
@@ -3162,6 +3215,9 @@ namespace MissionPlanner.GCSViews
         private System.Windows.Forms.Label label2;
         public System.Windows.Forms.TabPage tablogbrowse;
         private Controls.MyButton BUT_logbrowse;
+        public static System.Windows.Forms.Label labelInBounds;
+        public static Controls.MyButton BUT_SwitchColors;
+        public static Controls.MyButton BUT_ToggleDemoFieldOverlay;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label3;
@@ -3183,7 +3239,7 @@ namespace MissionPlanner.GCSViews
         private System.Windows.Forms.BindingSource bindingSourceStatusTab;
         private System.Windows.Forms.BindingSource bindingSourceGaugesTab;
         private System.Windows.Forms.ToolStripMenuItem setHomeHereToolStripMenuItem;
-        private MissionPlanner.Controls.Coords coords1;
+        public static MissionPlanner.Controls.Coords coords1;
         private Controls.MyButton BUT_matlab;
         private System.Windows.Forms.ComboBox CMB_mountmode;
         private Controls.MyButton BUT_mountmode;

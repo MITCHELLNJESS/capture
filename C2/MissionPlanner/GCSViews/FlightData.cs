@@ -55,6 +55,28 @@ namespace MissionPlanner.GCSViews
         internal static GMapOverlay rallypointoverlay;
         internal static GMapOverlay tfrpolygons;
         internal GMapMarker CurrentGMapMarker;
+        internal static GMapOverlay demoFieldOverlay;
+
+        internal static Color colorNW = Color.FromArgb(50, 255, 0, 0);
+        internal static Color colorSE = Color.FromArgb(50, 0, 0, 255);
+        internal static bool isRedTeam = true;
+        internal static bool isNWHome = true;
+        internal static bool isNWRed = true;
+        internal static double fieldCenterLat = 38.7507333;
+        internal static double fieldCenterLng = -77.4971911;
+        internal static GMapPolygon outerBoundNW_Red;
+        internal static GMapPolygon outerBoundNW_Blue;
+        internal static GMapPolygon outerBoundSE_Red;
+        internal static GMapPolygon outerBoundSE_Blue;
+        internal static GMapPolygon outerBound;
+        internal static GMapPolygon innerBound;
+        internal static GMapRoute boundaryLine;
+        internal static GMapPolygon FOBNW_Red;
+        internal static GMapPolygon FOBNW_Blue;
+        internal static GMapPolygon FOBSE_Red;
+        internal static GMapPolygon FOBSE_Blue;
+        internal static bool isDemoFieldShown = false;
+        internal static bool isDemoFieldGenerated = false;
 
         internal PointLatLng MouseDownStart;
 
@@ -234,11 +256,343 @@ namespace MissionPlanner.GCSViews
 
         private bool transponderNeverConnected = true;
 
+        static void PrintUavCoordsThread()
+        {
+            while(true)
+            {
+                System.Threading.Thread.Sleep(500);
+
+                if (FlightData.coords1.Lat == 0 && FlightData.coords1.Lng == 0)
+                {
+                    FlightData.labelInBounds.Text = "ARV Position: Awaiting Data";
+                    FlightData.labelInBounds.BackColor = System.Drawing.Color.Black;
+                    FlightData.labelInBounds.ForeColor = System.Drawing.Color.White;
+                }
+                else
+                {
+                    if (IsPointInCircle(FlightData.coords1.Lat, FlightData.coords1.Lng, 38.7507333, -77.4971911, 72.5))
+                    {
+                        if (IsInNorthwestTerritory(FlightData.coords1.Lat, FlightData.coords1.Lng, 38.7507333, -77.4971911, 72.5))
+                        {
+                            if (FlightData.isNWHome)
+                            {
+                                FlightData.labelInBounds.Text = "ARV Position: In Friendly Territory";
+                                FlightData.labelInBounds.BackColor = System.Drawing.Color.Green;
+                                FlightData.labelInBounds.ForeColor = System.Drawing.Color.White;
+                                Console.WriteLine("In Friendly Territory");
+                            }
+                            else
+                            {
+                                FlightData.labelInBounds.Text = "ARV Position: In Opponents' Territory";
+                                FlightData.labelInBounds.BackColor = System.Drawing.Color.Yellow;
+                                FlightData.labelInBounds.ForeColor = System.Drawing.Color.Black;
+                                Console.WriteLine("In Opponents' Territory");
+                            }
+                        }
+                        else
+                        {
+                            if (!FlightData.isNWHome)
+                            {
+                                FlightData.labelInBounds.Text = "ARV Position: In Friendly Territory";
+                                FlightData.labelInBounds.BackColor = System.Drawing.Color.Green;
+                                FlightData.labelInBounds.ForeColor = System.Drawing.Color.White;
+                                Console.WriteLine("In Friendly Territory");
+                            }
+                            else
+                            {
+                                FlightData.labelInBounds.Text = "ARV Position: In Opponents' Territory";
+                                FlightData.labelInBounds.BackColor = System.Drawing.Color.Yellow;
+                                FlightData.labelInBounds.ForeColor = System.Drawing.Color.Black;
+                                Console.WriteLine("In Opponents' Territory");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        FlightData.labelInBounds.Text = "ARV Position: Outside Demo Boundaries";
+                        FlightData.labelInBounds.BackColor = System.Drawing.Color.Red;
+                        FlightData.labelInBounds.ForeColor = System.Drawing.Color.White;
+                        Console.WriteLine("Outside demo field");
+                    }
+                }
+            }
+        }
+
+        static bool IsPointInCircle(double uav_lat, double uav_lon, double center_lat, double center_lon, double radius)
+        {
+            double earth_radius_m = 6371000;
+            double lat_dist_rad = (center_lat - uav_lat) * Math.PI / 180;
+            double lon_dist_rad = (center_lon - uav_lon) * Math.PI / 180;
+            double uav_lat_rad = uav_lat * Math.PI / 180;
+            double center_lat_rad = center_lat * Math.PI / 180;
+
+            double a = Math.Sin(lat_dist_rad / 2) * Math.Sin(lat_dist_rad / 2) + Math.Sin(lon_dist_rad / 2) * Math.Sin(lon_dist_rad / 2) * Math.Cos(uav_lat_rad) * Math.Cos(center_lat_rad);
+            double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+            double distance_m = earth_radius_m * c;
+            double distance_ft = distance_m * 3.28084;
+
+            return distance_ft <= radius;
+        }
+
+        static bool IsInNorthwestTerritory(double uav_lat, double uav_lon, double center_lat, double center_lon, double radius)
+        {
+            double lon_dist_rad = (center_lon - uav_lon) * Math.PI / 180;
+            double uav_lat_rad = uav_lat * Math.PI / 180;
+            double center_lat_rad = center_lat * Math.PI / 180;
+
+            double y = Math.Sin(lon_dist_rad) * Math.Cos(center_lat_rad);
+            double x = Math.Cos(uav_lat_rad) * Math.Sin(center_lat_rad) - Math.Sin(uav_lat_rad) * Math.Cos(center_lat_rad) * Math.Cos(lon_dist_rad);
+
+            double bearing_deg = Math.Atan2(y, x) * 180 / Math.PI;
+
+            if (bearing_deg < 0)
+            {
+                bearing_deg += 360;
+            }
+
+            Console.WriteLine(bearing_deg);
+
+            return bearing_deg >= 45 && bearing_deg <= 225;
+        }
+
+        public static List<PointLatLng> GenerateCirclePointsSE(double lat, double lng, double rad, int numPoints)
+        {
+            List<PointLatLng> points = new List<PointLatLng>();
+
+            double angleIncrement = 2 * Math.PI / numPoints;
+
+            for (int i = 0; i < numPoints; i++)
+            {
+                double angle = i * angleIncrement;
+
+                if ((angle * 180 / Math.PI) >= 45 && (angle * 180 / Math.PI) < 225)
+                {
+                    double metersPerDegreeLat = 111319.491;
+                    double metersPerDegreeLng = 111319.491 * Math.Cos(lat * Math.PI / 180);
+
+                    double latOffset = rad * Math.Cos(angle) / metersPerDegreeLat;
+                    double lngOFfset = rad * Math.Sin(angle) / metersPerDegreeLng;
+
+                    double pointLat = lat + latOffset;
+                    double pointLng = lng + lngOFfset;
+
+                    points.Add(new PointLatLng(pointLat, pointLng));
+                }
+            }
+
+            return points;
+        }
+
+        public static List<PointLatLng> GenerateCirclePointsNW(double lat, double lng, double rad, int numPoints)
+        {
+            List<PointLatLng> points = new List<PointLatLng>();
+
+            double angleIncrement = 2 * Math.PI / numPoints;
+
+            for (int i = 0; i < numPoints; i++)
+            {
+                double angle = i * angleIncrement;
+
+                if ((angle * 180 / Math.PI) >= 225 || (angle * 180 / Math.PI) < 45)
+                {
+                    double metersPerDegreeLat = 111319.491;
+                    double metersPerDegreeLng = 111319.491 * Math.Cos(lat * Math.PI / 180);
+
+                    double latOffset = rad * Math.Cos(angle) / metersPerDegreeLat;
+                    double lngOFfset = rad * Math.Sin(angle) / metersPerDegreeLng;
+
+                    double pointLat = lat + latOffset;
+                    double pointLng = lng + lngOFfset;
+
+                    points.Add(new PointLatLng(pointLat, pointLng));
+                }
+            }
+
+            return points;
+        }
+
+        public static List<PointLatLng> GenerateCirclePointsBounds(double lat, double lng, double rad, int numPoints)
+        {
+            List<PointLatLng> points = new List<PointLatLng>();
+
+            double angleIncrement = 2 * Math.PI / numPoints;
+
+            for (int i = 0; i < numPoints; i++)
+            {
+                double angle = i * angleIncrement;
+
+                double metersPerDegreeLat = 111319.491;
+                double metersPerDegreeLng = 111319.491 * Math.Cos(lat * Math.PI / 180);
+
+                double latOffset = rad * Math.Cos(angle) / metersPerDegreeLat;
+                double lngOFfset = rad * Math.Sin(angle) / metersPerDegreeLng;
+
+                double pointLat = lat + latOffset;
+                double pointLng = lng + lngOFfset;
+
+                points.Add(new PointLatLng(pointLat, pointLng));
+            }
+
+            return points;
+        }
+
+        public static List<PointLatLng> GenerateBoundaryLine(double lat, double lng, double rad)
+        {
+            List<PointLatLng> points = new List<PointLatLng>();
+
+            double metersPerDegreeLat = 111319.491;
+            double metersPerDegreeLng = 111319.491 * Math.Cos(lat * Math.PI / 180);
+            double radiusInDegreesLat = rad / metersPerDegreeLat;
+            double radiusInDegreesLng = rad / metersPerDegreeLng;
+
+            double deltaLatNE = radiusInDegreesLat * Math.Cos(45 * Math.PI / 180);
+            double deltaLngNE = radiusInDegreesLng * Math.Sin(45 * Math.PI / 180);
+            double deltaLatSW = radiusInDegreesLat * Math.Cos(225 * Math.PI / 180);
+            double deltaLngSW = radiusInDegreesLng * Math.Sin(225 * Math.PI / 180);
+
+            points.Add(new PointLatLng(deltaLatNE + lat, deltaLngNE + lng));
+            points.Add(new PointLatLng(deltaLatSW + lat, deltaLngSW + lng));
+
+            return points;
+        }
+
+        public static List<PointLatLng> GenerateFOB(double lat, double lng, double rad, double angle_deg)
+        {
+            double innerRadius = rad - 6.1;
+            double angle_rad = angle_deg * Math.PI / 180;
+            double metersPerDegreeLat = 111319.491;
+            double metersPerDegreeLng = 111319.491 * Math.Cos(lat * Math.PI / 180);
+            double OuterCenterLat = lat + innerRadius * Math.Cos(angle_rad) / metersPerDegreeLat;
+            double OuterCenterLng = lng + innerRadius * Math.Sin(angle_rad) / metersPerDegreeLng;
+            double InnerCenterLat = lat + (innerRadius - 1.2192) * Math.Cos(angle_rad) / metersPerDegreeLat;
+            double InnerCenterLng = lng + (innerRadius - 1.2192) * Math.Sin(angle_rad) / metersPerDegreeLng;
+
+            double perpendicularAngle = angle_rad + Math.PI / 2;
+
+            double FOBWidth_m = 8 * 0.3048;
+
+            double lineLength_degLat = FOBWidth_m / 2 / metersPerDegreeLat;
+            double lineLength_degLng = FOBWidth_m / 2 / metersPerDegreeLng;
+
+            double lat1 = OuterCenterLat + lineLength_degLat * Math.Cos(perpendicularAngle);
+            double lng1 = OuterCenterLng + lineLength_degLng * Math.Sin(perpendicularAngle);
+            double lat2 = OuterCenterLat - lineLength_degLat * Math.Cos(perpendicularAngle);
+            double lng2 = OuterCenterLng - lineLength_degLng * Math.Sin(perpendicularAngle);
+            double lat4 = InnerCenterLat + lineLength_degLat * Math.Cos(perpendicularAngle);
+            double lng4 = InnerCenterLng + lineLength_degLng * Math.Sin(perpendicularAngle);
+            double lat3 = InnerCenterLat - lineLength_degLat * Math.Cos(perpendicularAngle);
+            double lng3 = InnerCenterLng - lineLength_degLng * Math.Sin(perpendicularAngle);
+
+            PointLatLng point1 = new PointLatLng(lat1, lng1);
+            PointLatLng point2 = new PointLatLng(lat2, lng2);
+            PointLatLng point3 = new PointLatLng(lat3, lng3);
+            PointLatLng point4 = new PointLatLng(lat4, lng4);
+
+            return new List<PointLatLng> { point1, point2, point3, point4 };
+        }
+
+        public void GenerateDemoFieldOverlay(double lat, double lng)
+        {
+            int numPoints = 300;
+
+            // Outer Bound NW
+            List<PointLatLng> outerBoundNWPoints = GenerateCirclePointsNW(lat, lng, 22.098, numPoints);
+            outerBoundNW_Red = new GMapPolygon(outerBoundNWPoints, "outerBoundNW_Red");
+            outerBoundNW_Red.Stroke = new Pen(Color.Transparent, 2);
+            outerBoundNW_Red.Fill = new SolidBrush(Color.FromArgb(50, 255, 0, 0));
+            outerBoundNW_Blue = new GMapPolygon(outerBoundNWPoints, "outerBoundNW_Blue");
+            outerBoundNW_Blue.Stroke = new Pen(Color.Transparent, 2);
+            outerBoundNW_Blue.Fill = new SolidBrush(Color.FromArgb(50, 0, 0, 255));
+
+            // Outer Bound SE
+            List<PointLatLng> outerBoundSEPoints = GenerateCirclePointsSE(lat, lng, 22.098, numPoints);
+            outerBoundSE_Red = new GMapPolygon(outerBoundSEPoints, "outerBoundSE_Red");
+            outerBoundSE_Red.Stroke = new Pen(Color.Transparent, 2);
+            outerBoundSE_Red.Fill = new SolidBrush(Color.FromArgb(50, 255, 0, 0));
+            outerBoundSE_Blue = new GMapPolygon(outerBoundSEPoints, "outerBoundSE_Blue");
+            outerBoundSE_Blue.Stroke = new Pen(Color.Transparent, 2);
+            outerBoundSE_Blue.Fill = new SolidBrush(Color.FromArgb(50, 0, 0, 255));
+
+            // Outer Bound Full
+            List<PointLatLng> outerBoundPoints = GenerateCirclePointsBounds(lat, lng, 22.098, numPoints);
+            outerBound = new GMapPolygon(outerBoundPoints, "outerBound");
+            outerBound.Fill = new SolidBrush(Color.Transparent);
+            outerBound.Stroke = new Pen(Color.Black, 2);
+
+            // Inner Bound
+            List<PointLatLng> innerBoundPoints = GenerateCirclePointsBounds(lat, lng, 21.336, numPoints);
+            innerBound = new GMapPolygon(innerBoundPoints, "innerBound");
+            innerBound.Fill = new SolidBrush(Color.Transparent);
+            innerBound.Stroke = new Pen(Color.Black, 2) { DashStyle = DashStyle.Dot };
+
+            // Boundary Line
+            List<PointLatLng> boundaryLinePoints = GenerateBoundaryLine(lat, lng, 22.098);
+            boundaryLine = new GMapRoute(boundaryLinePoints, "boundaryLine");
+            boundaryLine.Stroke = new Pen(Color.Yellow, 5) { DashStyle = DashStyle.Dot };
+
+            // NW FOB
+            List<PointLatLng> FOBNWPoints = GenerateFOB(lat, lng, 21.336, 315);
+            FOBNW_Red = new GMapPolygon(FOBNWPoints, "FOBNW_Red");
+            FOBNW_Red.Stroke = new Pen(Color.Black, 2);
+            FOBNW_Red.Fill = new SolidBrush(Color.Red);
+            FOBNW_Blue = new GMapPolygon(FOBNWPoints, "FOBNW_Blue");
+            FOBNW_Blue.Stroke = new Pen(Color.Black, 2);
+            FOBNW_Blue.Fill = new SolidBrush(Color.Blue);
+
+            // NW FOB
+            List<PointLatLng> FOBSEPoints = GenerateFOB(lat, lng, 21.336, 135);
+            FOBSE_Red = new GMapPolygon(FOBSEPoints, "FOBSE_Red");
+            FOBSE_Red.Stroke = new Pen(Color.Black, 2);
+            FOBSE_Red.Fill = new SolidBrush(Color.Red);
+            FOBSE_Blue = new GMapPolygon(FOBSEPoints, "FOBSE_Blue");
+            FOBSE_Blue.Stroke = new Pen(Color.Black, 2);
+            FOBSE_Blue.Fill = new SolidBrush(Color.Blue);
+        }
+
+        public void ClearDemoFieldOverlay()
+        {
+            isDemoFieldShown = false;
+            demoFieldOverlay.Polygons.Clear();
+            demoFieldOverlay.Routes.Clear();
+        }
+
+        public void ShowDemoFieldOverlay()
+        {
+            if (!isDemoFieldGenerated) {
+                GenerateDemoFieldOverlay(fieldCenterLat, fieldCenterLng);
+            }
+
+            if (!isDemoFieldShown)
+            {
+                if (isNWRed)
+                {
+                    demoFieldOverlay.Polygons.Add(outerBoundNW_Red);
+                    demoFieldOverlay.Polygons.Add(outerBoundSE_Blue);
+                    demoFieldOverlay.Polygons.Add(FOBNW_Red);
+                    demoFieldOverlay.Polygons.Add(FOBSE_Blue);
+                }
+                else
+                {
+                    demoFieldOverlay.Polygons.Add(outerBoundNW_Blue);
+                    demoFieldOverlay.Polygons.Add(outerBoundSE_Red);
+                    demoFieldOverlay.Polygons.Add(FOBNW_Blue);
+                    demoFieldOverlay.Polygons.Add(FOBSE_Red);
+                }
+                isDemoFieldShown = true;
+                demoFieldOverlay.Polygons.Add(outerBound);
+                demoFieldOverlay.Polygons.Add(innerBound);
+                demoFieldOverlay.Routes.Add(boundaryLine);
+            }
+        }
+
         public FlightData()
         {
             log.Info("Ctor Start");
 
             InitializeComponent();
+            Thread thread = new Thread(PrintUavCoordsThread);
+            thread.IsBackground = true;
+            thread.Start();
 
             log.Info("Components Done");
 
@@ -403,6 +757,10 @@ namespace MissionPlanner.GCSViews
 
             gMapControl1.Overlays.Add(poioverlay);
 
+            demoFieldOverlay = new GMapOverlay("demoFieldOverlay");
+
+            gMapControl1.Overlays.Insert(0, demoFieldOverlay);
+
             float gspeedMax = Settings.Instance.GetFloat("GspeedMAX");
             if (gspeedMax != 0)
             {
@@ -545,6 +903,27 @@ namespace MissionPlanner.GCSViews
             updateDisplayView();
 
             hud1.doResize();
+        }
+
+        private void BUT_SwitchColors_Click(object sender, EventArgs e)
+        {
+            isNWHome = !isNWHome;
+            isNWRed = !isNWRed;
+
+            ClearDemoFieldOverlay();
+            ShowDemoFieldOverlay();
+        }
+
+        private void BUT_ToggleDemoFieldOverlay_Click(object sender, EventArgs e)
+        {
+            if (isDemoFieldShown)
+            {
+                ClearDemoFieldOverlay();
+            }
+            else
+            {
+                ShowDemoFieldOverlay();
+            }
         }
 
         public void BUT_playlog_Click(object sender, EventArgs e)
@@ -1661,6 +2040,20 @@ namespace MissionPlanner.GCSViews
         {
             LogPlayBackSpeed = double.Parse(((MyButton) sender).Tag.ToString(), CultureInfo.InvariantCulture);
             lbl_playbackspeed.Text = "x " + LogPlayBackSpeed;
+        }
+
+        private void TeamSelectionChanged(object sender, EventArgs e)
+        {
+            if ((string)CMB_team.SelectedItem == "Red Team")
+            {
+                isRedTeam = true;
+                isNWHome = isNWRed;
+            }
+            else
+            {
+                isRedTeam = false;
+                isNWHome = !isNWRed;
+            }
         }
 
         private void BUTactiondo_Click(object sender, EventArgs e)
