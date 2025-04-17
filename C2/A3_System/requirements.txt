@@ -2,9 +2,8 @@ numpy
 opencv-python-headless
 torch
 torchvision
-tensorflow-macos
+tensorflow
 keras
 pymavlink
 ultralytics
 pyyaml
-time

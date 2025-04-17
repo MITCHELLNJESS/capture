@@ -4,12 +4,13 @@ import csv
 import os
 
 # Setup log directory
-log_dir = "/Users/jfm/A3_system_project/capture/C2/A3_System/logs"
+log_dir=r"C:\Users\hvomm\Desktop\ELDP\capture\C2\A3_System" 
+#log_dir = "C:\Users\hvomm\Desktop\ELDP\capture\C2\A3_System"
 os.makedirs(log_dir, exist_ok=True)
-log_file = os.path.join(log_dir, "bounding_box_log_3.csv")
+log_file = os.path.join(log_dir, "bounding_box_log_3A.csv")
 
 # Video saving setup
-video_output = os.path.join(log_dir, "output_video_inside.mp4")
+video_output = os.path.join(log_dir, "output_video_insideA.mp4")
 fourcc = cv2.VideoWriter_fourcc(*'mp4v')
 out = None
 
@@ -82,7 +83,7 @@ with open(log_file, mode='w', newline='') as file:
             break
         elif key == ord('s'):
             bbox = cv2.selectROI('A3 System', frame, fromCenter=False, showCrosshair=True)
-            cv2.destroyWindow('ROI selector')
+            #cv2.destroyWindow('ROI selector') #this may need to be commented out to avoid null pointer on Windows
 
 # Cleanup
 camera.release()
