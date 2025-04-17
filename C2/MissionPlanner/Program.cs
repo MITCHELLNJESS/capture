@@ -93,7 +93,7 @@ namespace MissionPlanner
         public static void Main(string[] args)
         {
             Start(args);
-            logger.WriteDebug("Hello world!--------------------------------");
+            logger.WriteDebug("A3-MP INTERFACE RUNNING!--------------------------------");
             DDS_Integration ddsIntegration = new DDS_Integration();
             ddsIntegration.StartDDSSubscriber();
         }
