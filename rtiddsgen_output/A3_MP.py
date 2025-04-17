@@ -21,4 +21,4 @@ import os
     }
 )
 class A3MPDataMsg:
-    data: str = "pls work"
+    data: str = "hour=16\nminute=17\nsecond=2\nboundingBoxX=32\nboundingBoxY=32\nboundingBoxWidth=5\nboundingBoxLength=5"

@@ -36,9 +36,11 @@ class A3MPDataMsgPublisher:
             # Catch control-C interrupt
             try:
                 # Modify the data to be sent here
-                print(sample.data)
-                print(f"Writing A3MPDataMsg, count {count}")
-                sample.data += str(count)
+                #print(sample.data)
+                #print(f"Writing A3MPDataMsg, count {count}")
+                msgHeader = "update #"+ str(count) + ": \n--------------\n" 
+                msg = msgHeader + sample.data + "\n--------------\n"
+                print(msg)
                 writer.write(sample)
                 time.sleep(1)
             except KeyboardInterrupt:
