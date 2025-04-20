@@ -1,7 +1,7 @@
 import time
 from pymavlink import mavutil, mavwp
 
-master = mavutil.mavlink_connection("udpin:172.21.64.1:14550")
+master = mavutil.mavlink_connection("udpin:WSL IP:14550") # Update WSL IP
 print("Waiting for heartbeat from SITL...")
 master.wait_heartbeat()
 print("Heartbeat received from system (system %u component %u)" % (master.target_system, master.target_component))
