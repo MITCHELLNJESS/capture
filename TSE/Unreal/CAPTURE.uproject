@@ -7,17 +7,31 @@
 		{
 			"Name": "CAPTURE",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine"
+			]
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "AirSim",
+			"Enabled": true
+		},
+		{
+			"Name": "DatasmithImporter",
+			"Enabled": true
+		},
+		{
+			"Name": "DatasmithCADImporter",
+			"Enabled": true,
+			"SupportedTargetPlatforms": [
+				"Win64"
+			]
 		}
 	],
 	"TargetPlatforms": [
-        "MacNoEditor",
-        "WindowsNoEditor"
-    	],
-    	"Plugins": [
-        {
-            "Name": "AirSim",
-            "Enabled": true
-        }
-    ]
+		"MacNoEditor",
+		"WindowsNoEditor"
+	]
 }
