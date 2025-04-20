@@ -6,19 +6,21 @@
   "Vehicles": {
     "Copter": {
       "VehicleType": "ArduCopter",
-      "X": 0, "Y": 0, "Z": 0,
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
       "Yaw": 0,
       "UseSerial": false,
-      "LocalHostIp": "172.21.64.1",
-      "UdpIp": "172.21.70.112",
+      "LocalHostIp": "Insert IP WSL2 views local host as",
+      "UdpIp": "Insert IP local host views WSL2 as",
       "UdpPort": 9003,
       "ControlPort": 9002
     }
   },
   "OriginGeopoint": {
-    "Latitude": 38.751252944670334,
-    "Longitude": -77.49664677975383,
-    "Altitude": 81.5
+    "Latitude": 38.75080920,
+    "Longitude": -77.49733298,
+    "Altitude": 78.6
   },
   "PawnPaths": {
     "BareboneCar": {
@@ -33,5 +35,8 @@
     "DefaultComputerVision": {
       "PawnBP": "Class'/AirSim/Blueprints/BP_ComputerVisionPawn.BP_ComputerVisionPawn_C'"
     }
+  },
+  "Weather": {
+    "Enabled": false
   }
 }
