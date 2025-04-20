@@ -57,6 +57,7 @@ Thumbs.db
 desktop.ini
 
 # AirSim build artifacts
+/TSE/Unreal/Plugins/AirSim/Binaries/
 /TSE/Unreal/Plugins/AirSim/Build/
 /TSE/Unreal/Plugins/AirSim/Debug/
 /TSE/Unreal/Plugins/AirSim/Intermediate/
