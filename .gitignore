@@ -1,38 +1,93 @@
-# Unreal Engine
-*.suo
-*.sdf
-*.opensdf
-*.VC.db
-*.vscode
-*.pdb
-*.idb
-*.obj
-*.log
-*.user
-*.tlog
-*.ipch
-*.aps
-*.ncb
-*.sln.cache
-
-# Binaries and Build Artifacts
+# --------------------------
+# TSE General Excludes
+# --------------------------
+# Binary and intermediate files
 /TSE/Unreal/Binaries/
-/TSE/Unreal/Build/
 /TSE/Unreal/DerivedDataCache/
 /TSE/Unreal/Intermediate/
 /TSE/Unreal/Saved/
-/TSE/Unreal/*.xcodeproj
-/TSE/Unreal/*.xcworkspace
+/TSE/Unreal/.vscode/
+/TSE/Unreal/.vs/
 
-# Config-specific files
-*.ini
-!DefaultEngine.ini
-!DefaultInput.ini
-!DefaultGame.ini
-!DefaultEditor.ini
-!DefaultEditorPerProjectUserSettings.ini
+# Build-specific files
+/TSE/Unreal/Build/**/*.xcodeproj
+/TSE/Unreal/Build/**/*.sln
+/TSE/Unreal/Build/**/*.opensdf
+/TSE/Unreal/Build/**/*.sdf
+/TSE/Unreal/Build/**/*.suo
+/TSE/Unreal/Build/**/*.user
+/TSE/Unreal/Build/**/*.userosscache
+/TSE/Unreal/Build/**/*.VC.db
+/TSE/Unreal/Build/**/*.VC.opendb
 
-# Unreal Engine Plugin Folders
-/TSE/Unreal/Plugins/*/Intermediate/
-/TSE/Unreal/Plugins/*/Binaries/
-/TSE/Unreal/Plugins/*/Saved/
+# Ignore config files that are user-specific
+*.VC.db
+*.VC.opendb
+
+# Compiled source files
+*.pdb
+*.obj
+*.exe
+*.dll
+*.app
+*.dylib
+*.lib
+*.so
+
+# Precompiled headers and cache
+*.pch
+*.idb
+
+# Crash reports
+*.log
+
+# Auto-generated project files
+*.xcodeproj
+*.xcworkspace
+*.sln
+*.suo
+*.opensdf
+*.sdf
+*.cache
+*.CMakeLists.txt
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# AirSim build artifacts
+/TSE/Unreal/Plugins/AirSim/Build/
+/TSE/Unreal/Plugins/AirSim/Debug/
+/TSE/Unreal/Plugins/AirSim/Intermediate/
+/TSE/Unreal/AirSim/Plugins/*/Intermediate/
+/TSE/Unreal/AirSim/Plugins/*/Binaries/
+
+# CMake and external dependencies
+/TSE/Unreal/Plugins/AirSim/external/
+/TSE/Unreal/Plugins/AirSim/cmake/
+/TSE/Unreal/Plugins/AirSim/*.sln
+/TSE/Unreal/Plugins/AirSim/*.vcxproj*
+/TSE/Unreal/Plugins/AirSim/*.cmake
+/TSE/Unreal/Plugins/AirSim/CMakeLists.txt.user
+/TSE/Unreal/Plugins/AirSim/airsim.sln
+/TSE/Unreal/Plugins/AirSim/.vs/
+/TSE/Unreal/Plugins/AirSim/.vscode/
+
+# Git LFS tracking
+*.uasset filter=lfs diff=lfs merge=lfs -text
+*.umap filter=lfs diff=lfs merge=lfs -text
+
+# --------------------------
+# C2 General Excludes
+# --------------------------
+# TcpTest Application Build Artifacts
+/C2/TcpTest/C2Test/C2Test/.vs
+/C2/TcpTest/C2Test/C2Test/bin
+/C2/TcpTest/C2Test/C2Test/obj
+
+# Leftover Mission Planner Build Artifacts
+/C2/MissionPlanner/ExtLibs/mono/mcs/class/lib/net_4_x-win32/netstandard2.0/Interfaces.dll
+/C2/MissionPlanner/ExtLibs/mono/mcs/class/lib/net_4_x-win32/netstandard2.0/MissionPlanner.Drawing.dll
+/C2/MissionPlanner/ExtLibs/mono/mcs/class/lib/net_4_x-win32/netstandard2.0/System.Drawing.dll
+/C2/MissionPlanner/ExtLibs/mono/mcs/class/lib/net_4_x-win32/netstandard2.0/System.Windows.Forms.dll
