@@ -62,8 +62,9 @@ namespace MissionPlanner.GCSViews
         internal static bool isRedTeam = true;
         internal static bool isNWHome = true;
         internal static bool isNWRed = true;
-        internal static double fieldCenterLat = 38.7507333;
-        internal static double fieldCenterLng = -77.4971911;
+        internal static double fieldCenterLat = 0;
+        internal static double fieldCenterLng = 0;
+        internal static double adjustAngle_deg = 0;
         internal static GMapPolygon outerBoundNW_Red;
         internal static GMapPolygon outerBoundNW_Blue;
         internal static GMapPolygon outerBoundSE_Red;
@@ -75,6 +76,30 @@ namespace MissionPlanner.GCSViews
         internal static GMapPolygon FOBNW_Blue;
         internal static GMapPolygon FOBSE_Red;
         internal static GMapPolygon FOBSE_Blue;
+        internal static GMapPolygon assetsNW_red_1;
+        internal static GMapPolygon assetsNW_red_2;
+        internal static GMapPolygon assetsNW_red_3;
+        internal static GMapPolygon assetsNW_red_4;
+        internal static GMapPolygon assetsNW_red_5;
+        internal static GMapPolygon assetsNW_red_6;
+        internal static GMapPolygon assetsNW_blue_1;
+        internal static GMapPolygon assetsNW_blue_2;
+        internal static GMapPolygon assetsNW_blue_3;
+        internal static GMapPolygon assetsNW_blue_4;
+        internal static GMapPolygon assetsNW_blue_5;
+        internal static GMapPolygon assetsNW_blue_6;
+        internal static GMapPolygon assetsSE_red_1;
+        internal static GMapPolygon assetsSE_red_2;
+        internal static GMapPolygon assetsSE_red_3;
+        internal static GMapPolygon assetsSE_red_4;
+        internal static GMapPolygon assetsSE_red_5;
+        internal static GMapPolygon assetsSE_red_6;
+        internal static GMapPolygon assetsSE_blue_1;
+        internal static GMapPolygon assetsSE_blue_2;
+        internal static GMapPolygon assetsSE_blue_3;
+        internal static GMapPolygon assetsSE_blue_4;
+        internal static GMapPolygon assetsSE_blue_5;
+        internal static GMapPolygon assetsSE_blue_6;
         internal static bool isDemoFieldShown = false;
         internal static bool isDemoFieldGenerated = false;
 
@@ -270,9 +295,9 @@ namespace MissionPlanner.GCSViews
                 }
                 else
                 {
-                    if (IsPointInCircle(FlightData.coords1.Lat, FlightData.coords1.Lng, 38.7507333, -77.4971911, 72.5))
+                    if (IsPointInCircle(FlightData.coords1.Lat, FlightData.coords1.Lng, fieldCenterLat, fieldCenterLng, 72.5))
                     {
-                        if (IsInNorthwestTerritory(FlightData.coords1.Lat, FlightData.coords1.Lng, 38.7507333, -77.4971911, 72.5))
+                        if (IsInNorthwestTerritory(FlightData.coords1.Lat, FlightData.coords1.Lng, fieldCenterLat, fieldCenterLng, 72.5))
                         {
                             if (FlightData.isNWHome)
                             {
@@ -350,9 +375,7 @@ namespace MissionPlanner.GCSViews
                 bearing_deg += 360;
             }
 
-            Console.WriteLine(bearing_deg);
-
-            return bearing_deg >= 45 && bearing_deg <= 225;
+            return bearing_deg >= (45 + adjustAngle_deg  ) && bearing_deg <= (225 + adjustAngle_deg   );
         }
 
         public static List<PointLatLng> GenerateCirclePointsSE(double lat, double lng, double rad, int numPoints)
@@ -365,7 +388,7 @@ namespace MissionPlanner.GCSViews
             {
                 double angle = i * angleIncrement;
 
-                if ((angle * 180 / Math.PI) >= 45 && (angle * 180 / Math.PI) < 225)
+                if ((angle * 180 / Math.PI) >= (45 + adjustAngle_deg   ) && (angle * 180 / Math.PI) < (225 + adjustAngle_deg   ))
                 {
                     double metersPerDegreeLat = 111319.491;
                     double metersPerDegreeLng = 111319.491 * Math.Cos(lat * Math.PI / 180);
@@ -393,7 +416,7 @@ namespace MissionPlanner.GCSViews
             {
                 double angle = i * angleIncrement;
 
-                if ((angle * 180 / Math.PI) >= 225 || (angle * 180 / Math.PI) < 45)
+                if ((angle * 180 / Math.PI) >= (225 + adjustAngle_deg) || (angle * 180 / Math.PI) < (45 + adjustAngle_deg))
                 {
                     double metersPerDegreeLat = 111319.491;
                     double metersPerDegreeLng = 111319.491 * Math.Cos(lat * Math.PI / 180);
@@ -445,10 +468,10 @@ namespace MissionPlanner.GCSViews
             double radiusInDegreesLat = rad / metersPerDegreeLat;
             double radiusInDegreesLng = rad / metersPerDegreeLng;
 
-            double deltaLatNE = radiusInDegreesLat * Math.Cos(45 * Math.PI / 180);
-            double deltaLngNE = radiusInDegreesLng * Math.Sin(45 * Math.PI / 180);
-            double deltaLatSW = radiusInDegreesLat * Math.Cos(225 * Math.PI / 180);
-            double deltaLngSW = radiusInDegreesLng * Math.Sin(225 * Math.PI / 180);
+            double deltaLatNE = radiusInDegreesLat * Math.Cos((45 + adjustAngle_deg   ) * Math.PI / 180);
+            double deltaLngNE = radiusInDegreesLng * Math.Sin((45 + adjustAngle_deg   ) * Math.PI / 180);
+            double deltaLatSW = radiusInDegreesLat * Math.Cos((225 + adjustAngle_deg   ) * Math.PI / 180);
+            double deltaLngSW = radiusInDegreesLng * Math.Sin((225 + adjustAngle_deg   ) * Math.PI / 180);
 
             points.Add(new PointLatLng(deltaLatNE + lat, deltaLngNE + lng));
             points.Add(new PointLatLng(deltaLatSW + lat, deltaLngSW + lng));
@@ -470,6 +493,41 @@ namespace MissionPlanner.GCSViews
             double perpendicularAngle = angle_rad + Math.PI / 2;
 
             double FOBWidth_m = 8 * 0.3048;
+
+            double lineLength_degLat = FOBWidth_m / 2 / metersPerDegreeLat;
+            double lineLength_degLng = FOBWidth_m / 2 / metersPerDegreeLng;
+
+            double lat1 = OuterCenterLat + lineLength_degLat * Math.Cos(perpendicularAngle);
+            double lng1 = OuterCenterLng + lineLength_degLng * Math.Sin(perpendicularAngle);
+            double lat2 = OuterCenterLat - lineLength_degLat * Math.Cos(perpendicularAngle);
+            double lng2 = OuterCenterLng - lineLength_degLng * Math.Sin(perpendicularAngle);
+            double lat4 = InnerCenterLat + lineLength_degLat * Math.Cos(perpendicularAngle);
+            double lng4 = InnerCenterLng + lineLength_degLng * Math.Sin(perpendicularAngle);
+            double lat3 = InnerCenterLat - lineLength_degLat * Math.Cos(perpendicularAngle);
+            double lng3 = InnerCenterLng - lineLength_degLng * Math.Sin(perpendicularAngle);
+
+            PointLatLng point1 = new PointLatLng(lat1, lng1);
+            PointLatLng point2 = new PointLatLng(lat2, lng2);
+            PointLatLng point3 = new PointLatLng(lat3, lng3);
+            PointLatLng point4 = new PointLatLng(lat4, lng4);
+
+            return new List<PointLatLng> { point1, point2, point3, point4 };
+        }
+
+        public static List<PointLatLng> GenerateAsset(double lat, double lng, double rad, double angle_deg)
+        {
+            double innerRadius = rad - 0.2286;
+            double angle_rad = angle_deg * Math.PI / 180;
+            double metersPerDegreeLat = 111319.491;
+            double metersPerDegreeLng = 111319.491 * Math.Cos(lat * Math.PI / 180);
+            double OuterCenterLat = lat + innerRadius * Math.Cos(angle_rad) / metersPerDegreeLat;
+            double OuterCenterLng = lng + innerRadius * Math.Sin(angle_rad) / metersPerDegreeLng;
+            double InnerCenterLat = lat + (innerRadius - 0.3048) * Math.Cos(angle_rad) / metersPerDegreeLat;
+            double InnerCenterLng = lng + (innerRadius - 0.3048) * Math.Sin(angle_rad) / metersPerDegreeLng;
+
+            double perpendicularAngle = angle_rad + Math.PI / 2;
+
+            double FOBWidth_m = 1 * 0.3048;
 
             double lineLength_degLat = FOBWidth_m / 2 / metersPerDegreeLat;
             double lineLength_degLng = FOBWidth_m / 2 / metersPerDegreeLng;
@@ -531,7 +589,7 @@ namespace MissionPlanner.GCSViews
             boundaryLine.Stroke = new Pen(Color.Yellow, 5) { DashStyle = DashStyle.Dot };
 
             // NW FOB
-            List<PointLatLng> FOBNWPoints = GenerateFOB(lat, lng, 21.336, 315);
+            List<PointLatLng> FOBNWPoints = GenerateFOB(lat, lng, 21.336, 315 + adjustAngle_deg);
             FOBNW_Red = new GMapPolygon(FOBNWPoints, "FOBNW_Red");
             FOBNW_Red.Stroke = new Pen(Color.Black, 2);
             FOBNW_Red.Fill = new SolidBrush(Color.Red);
@@ -540,13 +598,110 @@ namespace MissionPlanner.GCSViews
             FOBNW_Blue.Fill = new SolidBrush(Color.Blue);
 
             // NW FOB
-            List<PointLatLng> FOBSEPoints = GenerateFOB(lat, lng, 21.336, 135);
+            List<PointLatLng> FOBSEPoints = GenerateFOB(lat, lng, 21.336, 135 + adjustAngle_deg);
             FOBSE_Red = new GMapPolygon(FOBSEPoints, "FOBSE_Red");
             FOBSE_Red.Stroke = new Pen(Color.Black, 2);
             FOBSE_Red.Fill = new SolidBrush(Color.Red);
             FOBSE_Blue = new GMapPolygon(FOBSEPoints, "FOBSE_Blue");
             FOBSE_Blue.Stroke = new Pen(Color.Black, 2);
             FOBSE_Blue.Fill = new SolidBrush(Color.Blue);
+
+            // Asset locations
+            List<PointLatLng> assetLocNWPoints_5 = GenerateAsset(lat, lng, 22.098, 0 + adjustAngle_deg);
+            assetsNW_red_5 = new GMapPolygon(assetLocNWPoints_5, "assetLoc_red_5");
+            assetsNW_red_5.Stroke = new Pen(Color.Black, 2);
+            assetsNW_red_5.Fill = new SolidBrush(Color.Red);
+            assetsNW_blue_5 = new GMapPolygon(assetLocNWPoints_5, "assetsNW_blue_5");
+            assetsNW_blue_5.Stroke = new Pen(Color.Black, 2);
+            assetsNW_blue_5.Fill = new SolidBrush(Color.Blue);
+
+            List<PointLatLng> assetLocNWPoints_6 = GenerateAsset(lat, lng, 22.098, 30 + adjustAngle_deg);
+            assetsNW_red_6 = new GMapPolygon(assetLocNWPoints_6, "assetsNW_red_6");
+            assetsNW_red_6.Stroke = new Pen(Color.Black, 2);
+            assetsNW_red_6.Fill = new SolidBrush(Color.Red);
+            assetsNW_blue_6 = new GMapPolygon(assetLocNWPoints_6, "assetsNW_blue_6");
+            assetsNW_blue_6.Stroke = new Pen(Color.Black, 2);
+            assetsNW_blue_6.Fill = new SolidBrush(Color.Blue);
+
+            List<PointLatLng> assetLocSEPoints_1 = GenerateAsset(lat, lng, 22.098, 60 + adjustAngle_deg);
+            assetsSE_red_1 = new GMapPolygon(assetLocSEPoints_1, "assetLoc_red_1");
+            assetsSE_red_1.Stroke = new Pen(Color.Black, 2);
+            assetsSE_red_1.Fill = new SolidBrush(Color.Red);
+            assetsSE_blue_1 = new GMapPolygon(assetLocSEPoints_1, "assetsSE_blue_1");
+            assetsSE_blue_1.Stroke = new Pen(Color.Black, 2);
+            assetsSE_blue_1.Fill = new SolidBrush(Color.Blue);
+
+            List<PointLatLng> assetLocSEPoints_2 = GenerateAsset(lat, lng, 22.098, 90 + adjustAngle_deg);
+            assetsSE_red_2 = new GMapPolygon(assetLocSEPoints_2, "assetsSE_red_2");
+            assetsSE_red_2.Stroke = new Pen(Color.Black, 2);
+            assetsSE_red_2.Fill = new SolidBrush(Color.Red);
+            assetsSE_blue_2 = new GMapPolygon(assetLocSEPoints_2, "assetsSE_blue_2");
+            assetsSE_blue_2.Stroke = new Pen(Color.Black, 2);
+            assetsSE_blue_2.Fill = new SolidBrush(Color.Blue);
+
+            List<PointLatLng> assetLocSEPoints_3 = GenerateAsset(lat, lng, 22.098, 120 + adjustAngle_deg);
+            assetsSE_red_3 = new GMapPolygon(assetLocSEPoints_3, "assetsSE_red_3");
+            assetsSE_red_3.Stroke = new Pen(Color.Black, 2);
+            assetsSE_red_3.Fill = new SolidBrush(Color.Red);
+            assetsSE_blue_3 = new GMapPolygon(assetLocSEPoints_3, "assetsSE_blue_3");
+            assetsSE_blue_3.Stroke = new Pen(Color.Black, 2);
+            assetsSE_blue_3.Fill = new SolidBrush(Color.Blue);
+
+            List<PointLatLng> assetLocSEPoints_4 = GenerateAsset(lat, lng, 22.098, 150 + adjustAngle_deg);
+            assetsSE_red_4 = new GMapPolygon(assetLocSEPoints_4, "assetsSE_red_4");
+            assetsSE_red_4.Stroke = new Pen(Color.Black, 2);
+            assetsSE_red_4.Fill = new SolidBrush(Color.Red);
+            assetsSE_blue_4 = new GMapPolygon(assetLocSEPoints_4, "assetsSE_blue_4");
+            assetsSE_blue_4.Stroke = new Pen(Color.Black, 2);
+            assetsSE_blue_4.Fill = new SolidBrush(Color.Blue);
+
+            List<PointLatLng> assetLocSEPoints_5 = GenerateAsset(lat, lng, 22.098, 180 + adjustAngle_deg);
+            assetsSE_red_5 = new GMapPolygon(assetLocSEPoints_5, "assetsSE_red_5");
+            assetsSE_red_5.Stroke = new Pen(Color.Black, 2);
+            assetsSE_red_5.Fill = new SolidBrush(Color.Red);
+            assetsSE_blue_5 = new GMapPolygon(assetLocSEPoints_5, "assetsSE_blue_5");
+            assetsSE_blue_5.Stroke = new Pen(Color.Black, 2);
+            assetsSE_blue_5.Fill = new SolidBrush(Color.Blue);
+
+            List<PointLatLng> assetLocSEPoints_6 = GenerateAsset(lat, lng, 22.098, 210 + adjustAngle_deg);
+            assetsSE_red_6 = new GMapPolygon(assetLocSEPoints_6, "assetsSE_red_6");
+            assetsSE_red_6.Stroke = new Pen(Color.Black, 2);
+            assetsSE_red_6.Fill = new SolidBrush(Color.Red);
+            assetsSE_blue_6 = new GMapPolygon(assetLocSEPoints_6, "assetsSE_blue_6");
+            assetsSE_blue_6.Stroke = new Pen(Color.Black, 2);
+            assetsSE_blue_6.Fill = new SolidBrush(Color.Blue);
+
+            List<PointLatLng> assetLocNWPoints_1 = GenerateAsset(lat, lng, 22.098, 240 + adjustAngle_deg);
+            assetsNW_red_1 = new GMapPolygon(assetLocNWPoints_1, "assetsNW_red_1");
+            assetsNW_red_1.Stroke = new Pen(Color.Black, 2);
+            assetsNW_red_1.Fill = new SolidBrush(Color.Red);
+            assetsNW_blue_1 = new GMapPolygon(assetLocNWPoints_1, "assetsNW_blue_1");
+            assetsNW_blue_1.Stroke = new Pen(Color.Black, 2);
+            assetsNW_blue_1.Fill = new SolidBrush(Color.Blue);
+
+            List<PointLatLng> assetLocNWPoints_2 = GenerateAsset(lat, lng, 22.098, 270 + adjustAngle_deg);
+            assetsNW_red_2 = new GMapPolygon(assetLocNWPoints_2, "assetsNW_red_2");
+            assetsNW_red_2.Stroke = new Pen(Color.Black, 2);
+            assetsNW_red_2.Fill = new SolidBrush(Color.Red);
+            assetsNW_blue_2 = new GMapPolygon(assetLocNWPoints_2, "assetsNW_blue_2");
+            assetsNW_blue_2.Stroke = new Pen(Color.Black, 2);
+            assetsNW_blue_2.Fill = new SolidBrush(Color.Blue);
+
+            List<PointLatLng> assetLocNWPoints_3 = GenerateAsset(lat, lng, 22.098, 300 + adjustAngle_deg);
+            assetsNW_red_3 = new GMapPolygon(assetLocNWPoints_3, "assetsNW_red_3");
+            assetsNW_red_3.Stroke = new Pen(Color.Black, 2);
+            assetsNW_red_3.Fill = new SolidBrush(Color.Red);
+            assetsNW_blue_3 = new GMapPolygon(assetLocNWPoints_3, "assetsNW_blue_3");
+            assetsNW_blue_3.Stroke = new Pen(Color.Black, 2);
+            assetsNW_blue_3.Fill = new SolidBrush(Color.Blue);
+
+            List<PointLatLng> assetLocNWPoints_4 = GenerateAsset(lat, lng, 22.098, 330 + adjustAngle_deg);
+            assetsNW_red_4 = new GMapPolygon(assetLocNWPoints_4, "assetsNW_red_4");
+            assetsNW_red_4.Stroke = new Pen(Color.Black, 2);
+            assetsNW_red_4.Fill = new SolidBrush(Color.Red);
+            assetsNW_blue_4 = new GMapPolygon(assetLocNWPoints_4, "assetsNW_blue_4");
+            assetsNW_blue_4.Stroke = new Pen(Color.Black, 2);
+            assetsNW_blue_4.Fill = new SolidBrush(Color.Blue);
         }
 
         public void ClearDemoFieldOverlay()
@@ -570,6 +725,18 @@ namespace MissionPlanner.GCSViews
                     demoFieldOverlay.Polygons.Add(outerBoundSE_Blue);
                     demoFieldOverlay.Polygons.Add(FOBNW_Red);
                     demoFieldOverlay.Polygons.Add(FOBSE_Blue);
+                    demoFieldOverlay.Polygons.Add(assetsNW_blue_1);
+                    demoFieldOverlay.Polygons.Add(assetsNW_blue_2);
+                    demoFieldOverlay.Polygons.Add(assetsNW_blue_3);
+                    demoFieldOverlay.Polygons.Add(assetsNW_blue_4);
+                    demoFieldOverlay.Polygons.Add(assetsNW_blue_5);
+                    demoFieldOverlay.Polygons.Add(assetsNW_blue_6);
+                    demoFieldOverlay.Polygons.Add(assetsSE_red_1);
+                    demoFieldOverlay.Polygons.Add(assetsSE_red_2);
+                    demoFieldOverlay.Polygons.Add(assetsSE_red_3);
+                    demoFieldOverlay.Polygons.Add(assetsSE_red_4);
+                    demoFieldOverlay.Polygons.Add(assetsSE_red_5);
+                    demoFieldOverlay.Polygons.Add(assetsSE_red_6);
                 }
                 else
                 {
@@ -577,6 +744,18 @@ namespace MissionPlanner.GCSViews
                     demoFieldOverlay.Polygons.Add(outerBoundSE_Red);
                     demoFieldOverlay.Polygons.Add(FOBNW_Blue);
                     demoFieldOverlay.Polygons.Add(FOBSE_Red);
+                    demoFieldOverlay.Polygons.Add(assetsNW_red_1);
+                    demoFieldOverlay.Polygons.Add(assetsNW_red_2);
+                    demoFieldOverlay.Polygons.Add(assetsNW_red_3);
+                    demoFieldOverlay.Polygons.Add(assetsNW_red_4);
+                    demoFieldOverlay.Polygons.Add(assetsNW_red_5);
+                    demoFieldOverlay.Polygons.Add(assetsNW_red_6);
+                    demoFieldOverlay.Polygons.Add(assetsSE_blue_1);
+                    demoFieldOverlay.Polygons.Add(assetsSE_blue_2);
+                    demoFieldOverlay.Polygons.Add(assetsSE_blue_3);
+                    demoFieldOverlay.Polygons.Add(assetsSE_blue_4);
+                    demoFieldOverlay.Polygons.Add(assetsSE_blue_5);
+                    demoFieldOverlay.Polygons.Add(assetsSE_blue_6);
                 }
                 isDemoFieldShown = true;
                 demoFieldOverlay.Polygons.Add(outerBound);
@@ -911,6 +1090,44 @@ namespace MissionPlanner.GCSViews
             isNWRed = !isNWRed;
 
             ClearDemoFieldOverlay();
+            ShowDemoFieldOverlay();
+        }
+
+        private void BUT_GenerateMap_Click(object sender, EventArgs e)
+        {
+            ClearDemoFieldOverlay();
+
+            NumberFormatInfo provider = new NumberFormatInfo();
+            provider.NumberDecimalSeparator = ".";
+
+            double dist = 14.6304;
+            double latOffset = 0;
+            double lngOffset = 0;
+            adjustAngle_deg = Convert.ToDouble(this.angDiff_deg_tb.Text, provider);
+
+            // Calibrating from the NW FOB
+            if (isNWHome)
+            {
+                Console.WriteLine("Calibrating from NW");
+                double angle = (315 - adjustAngle_deg) * Math.PI / 180;
+
+                latOffset = dist * Math.Sin(angle) / 111319.491;
+                lngOffset = dist * Math.Cos(angle) / (111319.491 * Math.Cos(FlightData.coords1.Lat * Math.PI / 180));
+            }
+            // Calibrating from the SE FOB
+            else
+            {
+                Console.WriteLine("Calibrating from SE");
+                double angle = (135 - adjustAngle_deg) * Math.PI / 180;
+
+                latOffset = dist * Math.Sin(angle) / 111319.491;
+                lngOffset = dist * Math.Cos(angle) / (111319.491 * Math.Cos(FlightData.coords1.Lat * Math.PI / 180));
+            }
+
+            fieldCenterLat = FlightData.coords1.Lat + latOffset;
+            fieldCenterLng = FlightData.coords1.Lng + lngOffset;
+
+            isDemoFieldGenerated = false;
             ShowDemoFieldOverlay();
         }
 
@@ -6670,7 +6887,7 @@ namespace MissionPlanner.GCSViews
             try
             {
                 // Connect to the Telnet server
-                client.Connect(ipAddress, port);
+                client.Connect(IPAddress.Loopback, port);
             }
             catch (Exception ex)
             {

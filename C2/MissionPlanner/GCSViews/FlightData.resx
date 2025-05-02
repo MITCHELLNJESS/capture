@@ -5834,7 +5834,7 @@
     <value>NoControl</value>
   </data>
   <data name="labelInBounds.Location" type="System.Drawing.Point, System.Drawing">
-    <value>66, 25</value>
+    <value>66, 75</value>
   </data>
   <data name="labelInBounds.Size" type="System.Drawing.Size, System.Drawing">
     <value>490, 40</value>
@@ -5857,11 +5857,11 @@
   <data name="&gt;&gt;labelInBounds.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
-   <data name="BUT_SwitchColors.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="BUT_SwitchColors.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="BUT_SwitchColors.Location" type="System.Drawing.Point, System.Drawing">
-    <value>650, 25</value>
+    <value>305, 25</value>
   </data>
   <data name="BUT_SwitchColors.Size" type="System.Drawing.Size, System.Drawing">
     <value>87, 40</value>
@@ -5888,7 +5888,7 @@
     <value>Microsoft Sans Serif, 14pt</value>
   </data>
   <data name="CMB_team.Location" type="System.Drawing.Point, System.Drawing">
-    <value>740, 25</value>
+    <value>66, 25</value>
   </data>
   <data name="CMB_team.Size" type="System.Drawing.Size, System.Drawing">
     <value>130, 40</value>
@@ -5911,20 +5911,209 @@
   <data name="&gt;&gt;CMB_team.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
+  <data name="latDiff_m_tb.Location" type="System.Drawing.Point, System.Drawing">
+    <value>485, 45</value>
+  </data>
+  <data name="latDiff_m_tb.Size" type="System.Drawing.Size, System.Drawing">
+    <value>150, 30</value>
+  </data>
+  <data name="latDiff_m_tb.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;latDiff_m_tb.Name" xml:space="preserve">
+    <value>latDiff_m_tb</value>
+  </data>
+  <data name="&gt;&gt;latDiff_m_tb.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;latDiff_m_tb.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="latDiff_m_tb.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="latDiff_m_tb.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="latDiff_m_lbl.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="latDiff_m_lbl.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="latDiff_m_lbl.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="latDiff_m_lbl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>485, 25</value>
+  </data>
+  <data name="latDiff_m_lbl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>150, 20</value>
+  </data>
+  <data name="latDiff_m_lbl.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="latDiff_m_lbl.Text" xml:space="preserve">
+    <value>Lat Offset (deg)</value>
+  </data>
+  <data name="&gt;&gt;latDiff_m_lbl.Name" xml:space="preserve">
+    <value>latDiff_m_lbl</value>
+  </data>
+  <data name="&gt;&gt;latDiff_m_lbl.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;latDiff_m_lbl.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="lngDiff_m_tb.Location" type="System.Drawing.Point, System.Drawing">
+    <value>640, 45</value>
+  </data>
+  <data name="lngDiff_m_tb.Size" type="System.Drawing.Size, System.Drawing">
+    <value>150, 30</value>
+  </data>
+  <data name="lngDiff_m_tb.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;lngDiff_m_tb.Name" xml:space="preserve">
+    <value>lngDiff_m_tb</value>
+  </data>
+  <data name="&gt;&gt;lngDiff_m_tb.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lngDiff_m_tb.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="lngDiff_m_tb.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="lngDiff_m_tb.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="lngDiff_m_lbl.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="lngDiff_m_lbl.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="lngDiff_m_lbl.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lngDiff_m_lbl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>640, 25</value>
+  </data>
+  <data name="lngDiff_m_lbl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>150, 20</value>
+  </data>
+  <data name="lngDiff_m_lbl.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="lngDiff_m_lbl.Text" xml:space="preserve">
+    <value>Lng Offset (deg)</value>
+  </data>
+  <data name="&gt;&gt;lngDiff_m_lbl.Name" xml:space="preserve">
+    <value>lngDiff_m_lbl</value>
+  </data>
+  <data name="&gt;&gt;lngDiff_m_lbl.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lngDiff_m_lbl.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="angDiff_deg_tb.Location" type="System.Drawing.Point, System.Drawing">
+    <value>485, 45</value>
+  </data>
+  <data name="angDiff_deg_tb.Size" type="System.Drawing.Size, System.Drawing">
+    <value>150, 30</value>
+  </data>
+  <data name="angDiff_deg_tb.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;angDiff_deg_tb.Name" xml:space="preserve">
+    <value>angDiff_deg_tb</value>
+  </data>
+  <data name="&gt;&gt;angDiff_deg_tb.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;angDiff_deg_tb.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="angDiff_deg_tb.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="angDiff_deg_tb.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="angDiff_deg_lbl.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="angDiff_deg_lbl.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="angDiff_deg_lbl.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="angDiff_deg_lbl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>485, 25</value>
+  </data>
+  <data name="angDiff_deg_lbl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>150, 20</value>
+  </data>
+  <data name="angDiff_deg_lbl.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="angDiff_deg_lbl.Text" xml:space="preserve">
+    <value>Angle Offset (deg):</value>
+  </data>
+  <data name="&gt;&gt;angDiff_deg_lbl.Name" xml:space="preserve">
+    <value>angDiff_deg_lbl</value>
+  </data>
+  <data name="&gt;&gt;angDiff_deg_lbl.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;angDiff_deg_lbl.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
   <data name="BUT_ToggleDemoFieldOverlay.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="BUT_ToggleDemoFieldOverlay.Location" type="System.Drawing.Point, System.Drawing">
-    <value>560, 25</value>
+    <value>200, 25</value>
   </data>
   <data name="BUT_ToggleDemoFieldOverlay.Size" type="System.Drawing.Size, System.Drawing">
-    <value>87, 40</value>
+    <value>100, 40</value>
   </data>
   <data name="BUT_ToggleDemoFieldOverlay.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
   <data name="BUT_ToggleDemoFieldOverlay.Text" xml:space="preserve">
     <value>Toggle Demo Field Overlay</value>
+  </data>
+  <data name="BUT_GenerateMap.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_GenerateMap.Location" type="System.Drawing.Point, System.Drawing">
+    <value>395, 25</value>
+  </data>
+  <data name="BUT_GenerateMap.Size" type="System.Drawing.Size, System.Drawing">
+    <value>87, 40</value>
+  </data>
+  <data name="BUT_GenerateMap.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="BUT_GenerateMap.Text" xml:space="preserve">
+    <value>Regenerate Map</value>
+  </data>
+  <data name="&gt;&gt;BUT_GenerateMap.Name" xml:space="preserve">
+    <value>BUT_GenerateMap</value>
+  </data>
+  <data name="&gt;&gt;BUT_GenerateMap.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_GenerateMap.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;BUT_GenerateMap.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="&gt;&gt;BUT_ToggleDemoFieldOverlay.Name" xml:space="preserve">
     <value>BUT_ToggleDemoFieldOverlay</value>

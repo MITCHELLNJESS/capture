@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Org.BouncyCastle.Asn1.Crmf;
 
 namespace MissionPlanner.GCSViews
 {
@@ -94,6 +95,12 @@ namespace MissionPlanner.GCSViews
             this.tabTransponder = new System.Windows.Forms.TabPage();
             this.NACp_tb = new System.Windows.Forms.TextBox();
             this.NIC_tb = new System.Windows.Forms.TextBox();
+            this.latDiff_m_lbl = new System.Windows.Forms.Label();
+            this.latDiff_m_tb = new System.Windows.Forms.TextBox();
+            this.lngDiff_m_lbl = new System.Windows.Forms.Label();
+            this.lngDiff_m_tb = new System.Windows.Forms.TextBox();
+            this.angDiff_deg_lbl = new System.Windows.Forms.Label();
+            this.angDiff_deg_tb = new System.Windows.Forms.TextBox();
             this.NACp_lbl = new System.Windows.Forms.Label();
             this.NIC_lbl = new System.Windows.Forms.Label();
             this.Squawk_nud = new System.Windows.Forms.NumericUpDown();
@@ -232,6 +239,7 @@ namespace MissionPlanner.GCSViews
             labelInBounds = new System.Windows.Forms.Label();
             BUT_SwitchColors = new MissionPlanner.Controls.MyButton();
             BUT_ToggleDemoFieldOverlay = new MissionPlanner.Controls.MyButton();
+            BUT_GenerateMap = new MissionPlanner.Controls.MyButton();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -2586,6 +2594,13 @@ namespace MissionPlanner.GCSViews
             this.splitContainer1.Panel2.Controls.Add(BUT_SwitchColors);
             this.splitContainer1.Panel2.Controls.Add(CMB_team);
             this.splitContainer1.Panel2.Controls.Add(BUT_ToggleDemoFieldOverlay);
+            this.splitContainer1.Panel2.Controls.Add(BUT_GenerateMap);
+            //this.splitContainer1.Panel2.Controls.Add(latDiff_m_lbl);
+            //this.splitContainer1.Panel2.Controls.Add(latDiff_m_tb);
+            //this.splitContainer1.Panel2.Controls.Add(lngDiff_m_lbl);
+            //this.splitContainer1.Panel2.Controls.Add(lngDiff_m_tb);
+            this.splitContainer1.Panel2.Controls.Add(angDiff_deg_lbl);
+            this.splitContainer1.Panel2.Controls.Add(angDiff_deg_tb);
             this.splitContainer1.Panel2.Controls.Add(this.label6);
             this.splitContainer1.Panel2.Controls.Add(this.label5);
             this.splitContainer1.Panel2.Controls.Add(this.label3);
@@ -2881,6 +2896,17 @@ namespace MissionPlanner.GCSViews
             BUT_ToggleDemoFieldOverlay.UseVisualStyleBackColor = true;
             BUT_ToggleDemoFieldOverlay.Click += new System.EventHandler(BUT_ToggleDemoFieldOverlay_Click);
             //
+            // BUT_GenerateMap
+            //
+            BUT_GenerateMap.ColorMouseDown = System.Drawing.Color.Empty;
+            BUT_GenerateMap.ColorMouseOver = System.Drawing.Color.Empty;
+            BUT_GenerateMap.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(BUT_GenerateMap, "BUT_GenerateMap");
+            BUT_GenerateMap.Name = "BUT_GenerateMap";
+            BUT_GenerateMap.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            BUT_GenerateMap.UseVisualStyleBackColor = true;
+            BUT_GenerateMap.Click += new System.EventHandler(BUT_GenerateMap_Click);
+            //
             // CMB_team
             //
             resources.ApplyResources(this.CMB_team, "CMB_team");
@@ -2890,6 +2916,39 @@ namespace MissionPlanner.GCSViews
             this.CMB_team.Name = "CMB_team";
             this.CMB_team.DataSource = new string[] { "Red Team", "Blue Team" };
             this.CMB_team.SelectedIndexChanged += TeamSelectionChanged;
+            // 
+            // latDiff_m_lbl
+            // 
+            resources.ApplyResources(this.latDiff_m_lbl, "latDiff_m_lbl");
+            this.latDiff_m_lbl.Name = "latDiff_m_lbl";
+            // 
+            // latDiff_m_tb
+            // 
+            resources.ApplyResources(this.latDiff_m_tb, "latDiff_m_tb");
+            this.latDiff_m_tb.Name = "latDiff_m_tb";
+            this.latDiff_m_tb.ReadOnly = false;
+            // 
+            // lngDiff_m_lbl
+            // 
+            resources.ApplyResources(this.lngDiff_m_lbl, "lngDiff_m_lbl");
+            this.lngDiff_m_lbl.Name = "lngDiff_m_lbl";
+            // 
+            // lngDiff_m_tb
+            // 
+            resources.ApplyResources(this.lngDiff_m_tb, "lngDiff_m_tb");
+            this.lngDiff_m_tb.Name = "lngDiff_m_tb";
+            this.lngDiff_m_tb.ReadOnly = false;
+            // 
+            // angDiff_deg_lbl
+            // 
+            resources.ApplyResources(this.angDiff_deg_lbl, "angDiff_deg_lbl");
+            this.angDiff_deg_lbl.Name = "angDiff_deg_lbl";
+            // 
+            // angDiff_deg_tb
+            // 
+            resources.ApplyResources(this.angDiff_deg_tb, "angDiff_deg_tb");
+            this.angDiff_deg_tb.Name = "angDiff_deg_tb";
+            this.angDiff_deg_tb.ReadOnly = false;
             // 
             // label6
             // 
@@ -3218,6 +3277,7 @@ namespace MissionPlanner.GCSViews
         public static System.Windows.Forms.Label labelInBounds;
         public static Controls.MyButton BUT_SwitchColors;
         public static Controls.MyButton BUT_ToggleDemoFieldOverlay;
+        public static Controls.MyButton BUT_GenerateMap;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label3;
@@ -3330,6 +3390,12 @@ namespace MissionPlanner.GCSViews
         private System.Windows.Forms.Label NIC_lbl;
         private System.Windows.Forms.TextBox NACp_tb;
         private System.Windows.Forms.TextBox NIC_tb;
+        private System.Windows.Forms.Label latDiff_m_lbl;
+        private System.Windows.Forms.TextBox latDiff_m_tb;
+        private System.Windows.Forms.Label lngDiff_m_lbl;
+        private System.Windows.Forms.TextBox lngDiff_m_tb;
+        private System.Windows.Forms.Label angDiff_deg_lbl;
+        private System.Windows.Forms.TextBox angDiff_deg_tb;
         private ToolStripMenuItem showIconsToolStripMenuItem;
         private ToolStripMenuItem multiLineToolStripMenuItem;
         private Controls.MyButton BUT_SendMSG;
