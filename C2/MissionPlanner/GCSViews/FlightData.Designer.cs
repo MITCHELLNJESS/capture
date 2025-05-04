@@ -239,6 +239,8 @@ namespace MissionPlanner.GCSViews
             labelInBounds = new System.Windows.Forms.Label();
             BUT_SwitchColors = new MissionPlanner.Controls.MyButton();
             BUT_ToggleDemoFieldOverlay = new MissionPlanner.Controls.MyButton();
+            BUT_ToAsset = new MissionPlanner.Controls.MyButton();
+            BUT_Execute = new MissionPlanner.Controls.MyButton();
             BUT_GenerateMap = new MissionPlanner.Controls.MyButton();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -2601,6 +2603,8 @@ namespace MissionPlanner.GCSViews
             //this.splitContainer1.Panel2.Controls.Add(lngDiff_m_tb);
             this.splitContainer1.Panel2.Controls.Add(angDiff_deg_lbl);
             this.splitContainer1.Panel2.Controls.Add(angDiff_deg_tb);
+            this.splitContainer1.Panel2.Controls.Add(BUT_ToAsset);
+            this.splitContainer1.Panel2.Controls.Add(BUT_Execute);
             this.splitContainer1.Panel2.Controls.Add(this.label6);
             this.splitContainer1.Panel2.Controls.Add(this.label5);
             this.splitContainer1.Panel2.Controls.Add(this.label3);
@@ -2949,6 +2953,28 @@ namespace MissionPlanner.GCSViews
             resources.ApplyResources(this.angDiff_deg_tb, "angDiff_deg_tb");
             this.angDiff_deg_tb.Name = "angDiff_deg_tb";
             this.angDiff_deg_tb.ReadOnly = false;
+            //
+            // BUT_ToAsset
+            //
+            BUT_ToAsset.ColorMouseDown = System.Drawing.Color.Empty;
+            BUT_ToAsset.ColorMouseOver = System.Drawing.Color.Empty;
+            BUT_ToAsset.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(BUT_ToAsset, "BUT_ToAsset");
+            BUT_ToAsset.Name = "BUT_ToAsset";
+            BUT_ToAsset.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            BUT_ToAsset.UseVisualStyleBackColor = true;
+            BUT_ToAsset.Click += new System.EventHandler(BUT_ToAsset_Click);
+            //
+            // BUT_Execute
+            //
+            BUT_Execute.ColorMouseDown = System.Drawing.Color.Empty;
+            BUT_Execute.ColorMouseOver = System.Drawing.Color.Empty;
+            BUT_Execute.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(BUT_Execute, "BUT_Execute");
+            BUT_Execute.Name = "BUT_Execute";
+            BUT_Execute.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            BUT_Execute.UseVisualStyleBackColor = true;
+            BUT_Execute.Click += new System.EventHandler(BUT_Execute_Click);
             // 
             // label6
             // 
@@ -3278,6 +3304,8 @@ namespace MissionPlanner.GCSViews
         public static Controls.MyButton BUT_SwitchColors;
         public static Controls.MyButton BUT_ToggleDemoFieldOverlay;
         public static Controls.MyButton BUT_GenerateMap;
+        public static Controls.MyButton BUT_ToAsset;
+        public static Controls.MyButton BUT_Execute;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label3;

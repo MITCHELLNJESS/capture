@@ -6103,6 +6103,60 @@
   <data name="BUT_GenerateMap.Text" xml:space="preserve">
     <value>Regenerate Map</value>
   </data>
+    <data name="BUT_ToAsset.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_ToAsset.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 125</value>
+  </data>
+  <data name="BUT_ToAsset.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 40</value>
+  </data>
+  <data name="BUT_ToAsset.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="BUT_ToAsset.Text" xml:space="preserve">
+    <value>Plot Course To Asset</value>
+  </data>
+  <data name="&gt;&gt;BUT_ToAsset.Name" xml:space="preserve">
+    <value>BUT_ToAsset</value>
+  </data>
+  <data name="&gt;&gt;BUT_ToAsset.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_ToAsset.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;BUT_ToAsset.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+      <data name="BUT_Execute.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_Execute.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 175</value>
+  </data>
+  <data name="BUT_Execute.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 40</value>
+  </data>
+  <data name="BUT_Execute.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="BUT_Execute.Text" xml:space="preserve">
+    <value>Execute Flight Plan</value>
+  </data>
+  <data name="&gt;&gt;BUT_Execute.Name" xml:space="preserve">
+    <value>BUT_Execute</value>
+  </data>
+  <data name="&gt;&gt;BUT_Execute.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_Execute.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;BUT_Execute.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
   <data name="&gt;&gt;BUT_GenerateMap.Name" xml:space="preserve">
     <value>BUT_GenerateMap</value>
   </data>

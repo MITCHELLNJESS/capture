@@ -102,6 +102,7 @@ namespace MissionPlanner.GCSViews
         internal static GMapPolygon assetsSE_blue_6;
         internal static bool isDemoFieldShown = false;
         internal static bool isDemoFieldGenerated = false;
+        internal static bool isFlightPlanReady = false;
 
         internal PointLatLng MouseDownStart;
 
@@ -226,6 +227,8 @@ namespace MissionPlanner.GCSViews
         object updateBindingSourcelock = new object();
 
         string updateBindingSourceThreadName = "";
+
+        private MyButton BUT_close;
 
         public enum actions
         {
@@ -959,6 +962,13 @@ namespace MissionPlanner.GCSViews
 
             tabControlactions.Multiline = Settings.Instance.GetBoolean("tabControlactions_Multiline", false);
 
+            BUT_close = new MyButton
+            {
+                Location = new Point(splitContainer1.Panel2.Width / 2, 0),
+                Text = "Close"
+            };
+            BUT_close.Click += but_Click;
+
         }
 
         public void Activate()
@@ -1141,6 +1151,38 @@ namespace MissionPlanner.GCSViews
             {
                 ShowDemoFieldOverlay();
             }
+        }
+
+        private void BUT_ToAsset_Click(object sender, EventArgs e)
+        {
+            // Set home position to current ARV position
+            setHomeSilent();
+
+            flightPlannerToolStripMenuItem_Click(null, null);
+            but_Click(BUT_close, null);
+            FlightPlanner.instance.BUT_ToAssetCreate_Click(null, null);
+
+            isFlightPlanReady = true;
+        }
+
+        private void BUT_Execute_Click(object sender, EventArgs e)
+        {
+            if (isFlightPlanReady)
+            {
+                CMB_action.Text = actions.Mission_Start.ToString();
+                if (!MainV2.comPort.MAV.cs.armed)
+                {
+                    BUT_ARM_Click(null, null);
+                }
+                actiondoSilent(BUTactiondo);
+                isFlightPlanReady = false;
+            }
+            else
+            {
+                CustomMessageBox.Show("Please load a flight plan first.", Strings.ERROR);
+                return;
+            }
+
         }
 
         public void BUT_playlog_Click(object sender, EventArgs e)
@@ -2436,6 +2478,165 @@ namespace MissionPlanner.GCSViews
             }
         }
 
+        private void actiondoSilent(object sender)
+        {
+            try
+            {
+                if (CMB_action.Text == actions.Trigger_Camera.ToString())
+                {
+                    MainV2.comPort.setDigicamControl(true);
+                    return;
+                }
+            }
+            catch
+            {
+                CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
+                return;
+            }
+
+            if (CMB_action.Text == actions.Scripting_cmd_stop_and_restart.ToString())
+            {
+                try
+                {
+                    MainV2.comPort.doCommandInt(MainV2.comPort.MAV.sysid, MainV2.comPort.MAV.compid, MAVLink.MAV_CMD.SCRIPTING, (int)MAVLink.SCRIPTING_CMD.STOP_AND_RESTART, 0, 0, 0, 0, 0, 0);
+                    return;
+                }
+                catch
+                {
+                    CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
+                    return;
+                }
+            }
+
+            if (CMB_action.Text == actions.Scripting_cmd_stop.ToString())
+            {
+                try
+                {
+                    MainV2.comPort.doCommandInt(MainV2.comPort.MAV.sysid, MainV2.comPort.MAV.compid, MAVLink.MAV_CMD.SCRIPTING, (int)MAVLink.SCRIPTING_CMD.STOP, 0, 0, 0, 0, 0, 0);
+                    return;
+                }
+                catch
+                {
+                    CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
+                    return;
+                }
+            }
+
+            if (CMB_action.Text == actions.System_Time.ToString())
+            {
+                var now = DateTime.UtcNow;
+                var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+                ulong time_unix_us = Convert.ToUInt64((now - epoch).TotalMilliseconds * 1000);
+                try
+                {
+                    MainV2.comPort.sendPacket(
+                        new MAVLink.mavlink_system_time_t() { time_unix_usec = time_unix_us, time_boot_ms = 0 },
+                        MainV2.comPort.sysidcurrent, MainV2.comPort.compidcurrent);
+                }
+                catch
+                {
+                    CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
+                }
+
+                return;
+            }
+
+            try
+            {
+                ((Control)sender).Enabled = false;
+
+                int param1 = 0;
+                int param2 = 0;
+                int param3 = 1;
+
+                // request gyro
+                if (CMB_action.Text == actions.Preflight_Calibration.ToString())
+                {
+                    if (MainV2.comPort.MAV.cs.firmware == Firmwares.ArduCopter2)
+                        param1 = 1; // gyro
+                    param3 = 1; // baro / airspeed
+                }
+
+                if (CMB_action.Text == actions.Preflight_Reboot_Shutdown.ToString())
+                {
+                    MainV2.comPort.doReboot();
+                    ((Control)sender).Enabled = true;
+                    return;
+                }
+                if (CMB_action.Text == actions.HighLatency_Enable.ToString())
+                {
+                    MainV2.comPort.doHighLatency(true);
+                    ((Control)sender).Enabled = true;
+                    return;
+                }
+                if (CMB_action.Text == actions.HighLatency_Disable.ToString())
+                {
+                    MainV2.comPort.doHighLatency(false);
+                    ((Control)sender).Enabled = true;
+                    return;
+                }
+                if (CMB_action.Text == actions.Toggle_Safety_Switch.ToString())
+                {
+                    var target_system = (byte)MainV2.comPort.sysidcurrent;
+                    if (target_system == 0)
+                    {
+                        log.Info("Not toggling safety on sysid 0");
+                        return;
+                    }
+                    var custom_mode = (MainV2.comPort.MAV.cs.sensors_enabled.motor_control && MainV2.comPort.MAV.cs.sensors_enabled.seen) ? 1u : 0u;
+                    var mode = new MAVLink.mavlink_set_mode_t() { custom_mode = custom_mode, target_system = target_system };
+                    MainV2.comPort.setMode(mode, MAVLink.MAV_MODE_FLAG.SAFETY_ARMED);
+                    ((Control)sender).Enabled = true;
+                    return;
+                }
+                if (CMB_action.Text == actions.Engine_Start.ToString())
+                {
+                    MainV2.comPort.doEngineControl((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, true);
+                    ((Control)sender).Enabled = true;
+                    return;
+                }
+                if (CMB_action.Text == actions.Engine_Stop.ToString())
+                {
+                    MainV2.comPort.doEngineControl((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, false);
+                    ((Control)sender).Enabled = true;
+                    return;
+                }
+
+                if (CMB_action.Text == actions.Battery_Reset.ToString())
+                {
+                    param1 = 0xff; // batt 1
+                    param2 = 100; // 100%
+                    param3 = 0;
+                }
+
+                MAVLink.MAV_CMD cmd;
+                try
+                {
+                    cmd = (MAVLink.MAV_CMD)Enum.Parse(typeof(MAVLink.MAV_CMD), CMB_action.Text.ToUpper(CultureInfo.InvariantCulture));
+                }
+                catch (ArgumentException ex)
+                {
+                    cmd = (MAVLink.MAV_CMD)Enum.Parse(typeof(MAVLink.MAV_CMD),
+                        "DO_START_" + CMB_action.Text.ToUpper(CultureInfo.InvariantCulture));
+                }
+
+                if (MainV2.comPort.doCommand(cmd, param1, param2, param3, 0, 0, 0, 0))
+                {
+
+                }
+                else
+                {
+                    CustomMessageBox.Show(Strings.CommandFailed + " " + cmd, Strings.ERROR);
+                }
+            }
+            catch
+            {
+                CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
+            }
+
+            ((Control)sender).Enabled = true;
+        }
+
         private void BUTrestartmission_Click(object sender, EventArgs e)
         {
             try
@@ -3437,14 +3638,7 @@ namespace MissionPlanner.GCSViews
             {
                 if (sc.Name == "FlightPlanner")
                 {
-                    MyButton but = new MyButton
-                    {
-                        Location = new Point(splitContainer1.Panel2.Width / 2, 0),
-                        Text = "Close"
-                    };
-                    but.Click += but_Click;
-
-                    splitContainer1.Panel2.Controls.Add(but);
+                    splitContainer1.Panel2.Controls.Add(BUT_close);
                     splitContainer1.Panel2.Controls.Add(sc.Control);
                     ThemeManager.ApplyThemeTo(sc.Control);
                     ThemeManager.ApplyThemeTo(this);
@@ -3457,7 +3651,7 @@ namespace MissionPlanner.GCSViews
                         ((IActivate) (sc.Control)).Activate();
                     }
 
-                    but.BringToFront();
+                    BUT_close.BringToFront();
                     break;
                 }
             }
@@ -5429,6 +5623,35 @@ namespace MissionPlanner.GCSViews
 
                     await MainV2.comPort.getHomePositionAsync((byte) MainV2.comPort.sysidcurrent,
                         (byte) MainV2.comPort.compidcurrent);
+                }
+                catch
+                {
+                    CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
+                }
+            }
+        }
+
+        private async void setHomeSilent()
+        {
+            if (MainV2.comPort.BaseStream.IsOpen)
+            {
+                try
+                {
+                    var alt = srtm.getAltitude(coords1.Lat, coords1.Lng);
+
+                    if (alt.currenttype != srtm.tiletype.valid && alt.currenttype != srtm.tiletype.ocean)
+                    {
+                        CustomMessageBox.Show("No SRTM data for this area", Strings.ERROR);
+                        return;
+                    }
+
+                    MainV2.comPort.doCommandInt((byte)MainV2.comPort.sysidcurrent,
+                        (byte)MainV2.comPort.compidcurrent,
+                        MAVLink.MAV_CMD.DO_SET_HOME, 0, 0, 0, 0, (int)(coords1.Lat * 1e7),
+                        (int)(coords1.Lng * 1e7), (float)(alt.alt));
+
+                    await MainV2.comPort.getHomePositionAsync((byte)MainV2.comPort.sysidcurrent,
+                        (byte)MainV2.comPort.compidcurrent);
                 }
                 catch
                 {

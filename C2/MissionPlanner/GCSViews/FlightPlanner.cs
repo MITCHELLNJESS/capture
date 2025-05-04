@@ -647,6 +647,24 @@ namespace MissionPlanner.GCSViews
             frmProgressReporter.Dispose();
         }
 
+        public void readSilent()
+        {
+            IProgressReporterDialogue frmProgressReporter = new ProgressReporterDialogue
+            {
+                StartPosition = FormStartPosition.CenterScreen,
+                Text = "Receiving WP's"
+            };
+
+            frmProgressReporter.DoWork += getWPs;
+            frmProgressReporter.UpdateProgressAndStatus(-1, "Receiving WP's");
+
+            ThemeManager.ApplyThemeTo(frmProgressReporter);
+
+            frmProgressReporter.RunBackgroundOperationAsync();
+
+            frmProgressReporter.Dispose();
+        }
+
         /// <summary>
         /// Writes the mission from the datagrid and values to the EEPROM
         /// </summary>
@@ -739,12 +757,8 @@ namespace MissionPlanner.GCSViews
         public void BUT_ToAssetCreate_Click(object sender, EventArgs e)
         {
             FlightData.updateAssetBtn_Click(null, null);
+            clearMissionToolStripMenuItem_Click(null, null);
 
-            if (CustomMessageBox.Show("Clear current waypoints?", "Confirm",
-                           MessageBoxButtons.YesNo) == (int)DialogResult.Yes)
-            {
-                clearMissionToolStripMenuItem_Click(null, null);  // perhaps not best practice to directly call "click" events
-            }
             Console.Write("Asset position from data window - lat: ");
             Console.Write(FlightData.assetLat.number);
             Console.Write(" lon: ");
@@ -753,6 +767,10 @@ namespace MissionPlanner.GCSViews
             Console.WriteLine(FlightData.assetAlt.number);
             AddTakeoff(8);
             AddWPDD(FlightData.assetLat.number, FlightData.assetLon.number, 8);
+            AddWPDD(FlightData.assetLat.number, FlightData.assetLon.number, 1);
+
+            BUT_write_Click(null, null);
+            readSilent();
         }
 
         /// <summary>
