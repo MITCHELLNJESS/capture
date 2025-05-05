@@ -2,6 +2,9 @@ import cv2
 import time
 import csv
 import os
+import sys
+import rti.connextdds as dds
+from A3_MP import A3MPDataMsg
 
 # Setup log directory
 log_dir=r"C:\Users\hvomm\Desktop\ELDP\capture\C2\A3_System" 
@@ -21,6 +24,24 @@ if not camera.isOpened():
     exit()
 
 bbox = None
+
+#RTI DDS Publisher: 
+
+domain_id = 0
+# A DomainParticipant allows an application to begin communicating in
+# a DDS domain. Typically there is one DomainParticipant per application.
+# DomainParticipant QoS is configured in USER_QOS_PROFILES.xml
+participant = dds.DomainParticipant(domain_id)
+
+# A Topic has a name and a datatype.
+topic = dds.Topic(participant, "A3MPDataMsg", A3MPDataMsg)
+
+# This DataWriter will write data on Topic "Example A3MPDataMsg"
+# DataWriter QoS is configured in USER_QOS_PROFILES.xml
+ddsWriter = dds.DataWriter(participant.implicit_publisher, topic)
+sample = A3MPDataMsg()     
+
+print("DDS WRITER CREATED")
 
 # Create and open log file
 with open(log_file, mode='w', newline='') as file:
@@ -65,11 +86,16 @@ with open(log_file, mode='w', newline='') as file:
             latency = (time.time() - frame_start_time) * 1000  # milliseconds
 
             # Log details
-            writer.writerow([timestamp, x, y, w, h, center_x, center_y, f"{latency:.2f}"])
+            sample.data =f"Timestamp: {timestamp}, X: {x}, Y: {y}, Width: {w}, Height: {h}, Center: ({center_x},{center_y}), Latency: {latency:.2f} ms" #data to send over DDS
+            writer.writerow([timestamp, x, y, w, h, center_x, center_y, f"{latency:.2f}"]) #writing to csv
             file.flush()
 
             # Print bounding box details
             print(f"Timestamp: {timestamp}, X: {x}, Y: {y}, Width: {w}, Height: {h}, Center: ({center_x},{center_y}), Latency: {latency:.2f} ms")
+
+            #Publish sample data over DDS: 
+            ddsWriter.write(sample)
+            print(sample.data)
 
         # Write frame to video file
         out.write(frame)
