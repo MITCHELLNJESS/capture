@@ -33,6 +33,8 @@
 !DefaultEditorPerProjectUserSettings.ini
 
 # Unreal Engine Plugin Folders
+#ignoring tse stuff completely
+/TSE/Unreal/
 /TSE/Unreal/Plugins/*/Intermediate/
 /TSE/Unreal/Plugins/*/Binaries/
 /TSE/Unreal/Plugins/*/Saved/
