@@ -38,3 +38,6 @@
 /TSE/Unreal/Plugins/*/Intermediate/
 /TSE/Unreal/Plugins/*/Binaries/
 /TSE/Unreal/Plugins/*/Saved/
+
+#Not uploading vidoes
+/Users/jfm/A3_system_project/capture/C2/A3_System/logs/*.mp4
