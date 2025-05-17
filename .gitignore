@@ -60,8 +60,9 @@ exp/
 /C2/A3_System/data/train/
 /C2/A3_System/data/val/
 /C2/A3_System/labels/train/
+/C2/A3_System/labels/
 /C2/A3_System/labels/val/
-/C2/A3_System/data/labels/
+/C2/A3_System/labels/*.txt
 /C2/A3_System/scripts/test/rename_images.py
 
 # Ignore weights and model outputs
