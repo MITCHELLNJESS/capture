@@ -54,12 +54,13 @@ exp/
 *.log
 
 # Ignore datasets and images
-capture/C2/A3_System/data/raw/
-capture/C2/A3_System/data/raw_combined/
-capture/C2/A3_System/data/train/
-capture/C2/A3_System/data/val/
-capture/C2/A3_System/labels/train/
-capture/C2/A3_System/labels/val/
+/C2/A3_System/data/raw/
+/C2/A3_System/data/raw_combined/
+/C2/A3_System/data/train/
+/C2/A3_System/data/val/
+/C2/A3_System/labels/train/
+/C2/A3_System/labels/val/
+/C2/A3_System/data/labels/
 
 # Ignore weights and model outputs
 *.pt
@@ -71,7 +72,7 @@ capture/C2/A3_System/models/
 .ipynb_checkpoints/
 
 # Ignore YOLO repo files (if cloned inside your project)
-capture/C2/A3_System/yolo/
+/C2/A3_System/yolo/
 
 # Ignore environment files (optional)
 .env
