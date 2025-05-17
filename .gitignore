@@ -55,12 +55,14 @@ exp/
 
 # Ignore datasets and images
 /C2/A3_System/data/raw/
+/C2/A3_System/data/archived_raw
 /C2/A3_System/data/raw_combined/
 /C2/A3_System/data/train/
 /C2/A3_System/data/val/
 /C2/A3_System/labels/train/
 /C2/A3_System/labels/val/
 /C2/A3_System/data/labels/
+/C2/A3_System/scripts/test/rename_images.py
 
 # Ignore weights and model outputs
 *.pt

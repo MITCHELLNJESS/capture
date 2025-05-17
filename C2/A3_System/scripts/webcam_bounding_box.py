@@ -5,7 +5,7 @@ import os
 
 # Setup log directory
 log_dir=r"C:\Users\hvomm\Desktop\ELDP\capture\C2\A3_System" 
-#log_dir = "C:\Users\hvomm\Desktop\ELDP\capture\C2\A3_System"
+#log_dir = "/Users/jfm/A3_system_project/capture/C2/A3_System/logs"
 os.makedirs(log_dir, exist_ok=True)
 log_file = os.path.join(log_dir, "bounding_box_log_3A.csv")
 
