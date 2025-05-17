@@ -42,3 +42,42 @@
 #Not uploading vidoes
 /Users/jfm/A3_system_project/capture/C2/A3_System/logs/*.mp4
 *.mp4
+
+# Ignore Python cache
+__pycache__/
+*.py[cod]
+*.so
+
+# Ignore training logs and outputs
+runs/
+exp/
+*.log
+
+# Ignore datasets and images
+capture/C2/A3_System/data/raw/
+capture/C2/A3_System/data/raw_combined/
+capture/C2/A3_System/data/train/
+capture/C2/A3_System/data/val/
+capture/C2/A3_System/labels/train/
+capture/C2/A3_System/labels/val/
+
+# Ignore weights and model outputs
+*.pt
+*.onnx
+*.engine
+capture/C2/A3_System/models/
+
+# Ignore notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore YOLO repo files (if cloned inside your project)
+capture/C2/A3_System/yolo/
+
+# Ignore environment files (optional)
+.env
+*.env
+
+# VSCode and system files
+.vscode/
+*.DS_Store
+Thumbs.db
