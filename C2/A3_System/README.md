@@ -13,3 +13,6 @@ Troubleshooting:
 if the initial requirements.txt install does not work with torch attempt this command
 
 pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu
+
+
+Weights are not committed to GitLab. For access, contact Jessica or use https://drive.google.com/file/d/17j6hJ9RH1YQsoj40kcSW2N2lGlsUUZ3j/view?usp=drive_link.

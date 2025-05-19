@@ -54,11 +54,11 @@ exp/
 *.log
 
 # Ignore datasets and images
-/C2/A3_System/data/raw/
-/C2/A3_System/data/archived_raw
-/C2/A3_System/data/raw_combined/
-/C2/A3_System/data/train/
-/C2/A3_System/data/val/
+/C2/A3_System/images/raw/
+/C2/A3_System/images/archived_raw
+/C2/A3_System/images/raw_combined/
+/C2/A3_System/images/train/
+/C2/A3_System/images/val/
 /C2/A3_System/labels/train/
 /C2/A3_System/labels/
 /C2/A3_System/labels/val/

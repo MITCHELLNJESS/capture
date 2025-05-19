@@ -1,4 +1,4 @@
-train: /Users/jfm/A3_system_project/capture/C2/A3_System/data/train
-val: /Users/jfm/A3_system_project/capture/C2/A3_System/data/val
+train: /Users/jfm/A3_system_project/capture/C2/A3_System/images/train
+val: /Users/jfm/A3_system_project/capture/C2/A3_System/images/val
 nc: 2
 names: ['friendly_asset', 'enemy_asset']
