@@ -15,4 +15,7 @@ if the initial requirements.txt install does not work with torch attempt this co
 pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu
 
 
-Weights are not committed to GitLab. For access, contact Jessica or use https://drive.google.com/file/d/17j6hJ9RH1YQsoj40kcSW2N2lGlsUUZ3j/view?usp=drive_link.
+## Trained Model Weights
+Final YOLOv5s model after 100 epochs:
+- Download: https://drive.google.com/file/d/17j6hJ9RH1YQsoj40kcSW2N2lGlsUUZ3j/view?usp=sharing
+- File: best.pt (14.3MB)
