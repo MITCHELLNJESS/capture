@@ -5,7 +5,13 @@ $ip = Get-NetIPAddress -InterfaceAlias "vEthernet (WSL (Hyper-V firewall))" -Add
 if ($ip) {
     Write-Output "In Misison Planner connect to Ardupilot SITL using TCP: [IP = $ip Port = 5760]"
 } else {
-    Write-Output "No IPv4 address found for 'vEthernet (WSL (Hyper-V firewall))'."
+    $ip = Get-NetIPAddress -InterfaceAlias "vEthernet (WSL)" -AddressFamily IPv4 | Select-Object -ExpandProperty IPAddress
+    if ($ip) {
+    Write-Output "In Misison Planner connect to Ardupilot SITL using TCP: [IP = $ip Port = 5760]"
+    } else
+    {
+        Write-Output "No IPv4 address found for WSL."
+    }
 }
 
 
