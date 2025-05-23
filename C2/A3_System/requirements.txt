@@ -1,10 +1,11 @@
 numpy
 opencv-python-headless
+opencv-python
 torch
 torchvision
 tensorflow
+#tensorflow-macos
 keras
 pymavlink
 ultralytics
 pyyaml
-rti-connext
