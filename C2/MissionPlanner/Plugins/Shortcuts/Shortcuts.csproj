@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -9,9 +10,19 @@
 	  <NoWarn>1701;1702;NU1605</NoWarn>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <WarningsAsErrors>$(WarningsAsErrors)</WarningsAsErrors>
+    <NoWarn>1701;1702;NU1605</NoWarn>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <WarningsAsErrors>$(WarningsAsErrors)</WarningsAsErrors>
 	  <NoWarn>1701;1702;NU1605</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <WarningsAsErrors>$(WarningsAsErrors)</WarningsAsErrors>
+    <NoWarn>1701;1702;NU1605</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

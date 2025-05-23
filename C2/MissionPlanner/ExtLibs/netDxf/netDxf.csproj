@@ -9,6 +9,7 @@
     <DebugType>portable</DebugType>
     <DebugSymbols>True</DebugSymbols>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

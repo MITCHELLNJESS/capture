@@ -36,3 +36,6 @@
 /TSE/Unreal/Plugins/*/Intermediate/
 /TSE/Unreal/Plugins/*/Binaries/
 /TSE/Unreal/Plugins/*/Saved/
+
+#DDS Subscriber obj
+/C2/DDS_Subscriber/obj/

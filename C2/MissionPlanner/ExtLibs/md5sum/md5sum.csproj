@@ -12,6 +12,8 @@
     <OutputType>Exe</OutputType>
  
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+ 
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -19,7 +21,17 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutputPath>..\..\bin\Release\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\..\bin\Debug\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutputPath>..\..\bin\Debug\</OutputPath>
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
