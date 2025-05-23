@@ -5,7 +5,6 @@ using MissionPlanner;
 using Rti.Dds.Core;
 using DDS_Subscriber;
 using System.Diagnostics;
-using DDS_Subscriber;
 
 public class DDS_Integration
 {
@@ -20,12 +19,11 @@ public class DDS_Integration
     }
 
     // Start DDS Subscriber in a new thread
-    public void StartDDSSubscriber() //TODO - where is this getting called?
+    public void StartDDSSubscriber() 
     {
         if (isRunning) return; //closes if another process is running
         logger.WriteDebug("StartDDSSub()!");
         isRunning = true;
-        //a3MPDataMsgSubscriber = new A3MPDataMsgSubscriber();  // Initialize the A3MPDataSubscriber
         ddsThread = new Thread(RunDDSSubscriber);
         ddsThread.Start();
     }
@@ -37,7 +35,6 @@ public class DDS_Integration
 
         isRunning = false;
         ddsThread?.Join();  // Ensure the thread stops properly
-        //a3MPDataMsgSubscriber.StopSubscriber();  // Gracefully stop the subscriber
     }
 
     // Run the DDS Subscriber (using A3MPDataSubscriber's method)
