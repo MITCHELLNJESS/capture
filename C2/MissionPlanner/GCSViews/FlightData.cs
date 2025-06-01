@@ -39,6 +39,24 @@ using System.Net.Sockets;
 
 namespace MissionPlanner.GCSViews
 {
+    public enum teMission
+    {
+        eeNone,
+        eeMarked,
+        eeFob,
+        eeAssetOne,
+        eeAssetTwo,
+        eeAssetThree,
+        eeAssetFour,
+        eeAssetFive,
+        eeAssetSix,
+        eeAssetSeven,
+        eeAssetEight,
+        eeAssetNine,
+        eeAssetTen,
+        eeAssetEleven,
+        eeAssetTwelve
+    }
     public partial class FlightData : MyUserControl, IActivate, IDeactivate
     {
         public static FlightData instance;
@@ -103,6 +121,39 @@ namespace MissionPlanner.GCSViews
         internal static bool isDemoFieldShown = false;
         internal static bool isDemoFieldGenerated = false;
         internal static bool isFlightPlanReady = false;
+        internal static bool isFlightPlannerReady = false;
+        internal static double fobLatNW = 0;
+        internal static double fobLngNW = 0;
+        internal static double fobLatSE = 0;
+        internal static double fobLngSE = 0;
+        internal static double assetLatOne = 0;
+        internal static double assetLngOne = 0;
+        internal static double assetLatTwo = 0;
+        internal static double assetLngTwo = 0;
+        internal static double assetLatThree = 0;
+        internal static double assetLngThree = 0;
+        internal static double assetLatFour = 0;
+        internal static double assetLngFour = 0;
+        internal static double assetLatFive = 0;
+        internal static double assetLngFive = 0;
+        internal static double assetLatSix = 0;
+        internal static double assetLngSix = 0;
+        internal static double assetLatSeven = 0;
+        internal static double assetLngSeven = 0;
+        internal static double assetLatEight = 0;
+        internal static double assetLngEight = 0;
+        internal static double assetLatNine = 0;
+        internal static double assetLngNine = 0;
+        internal static double assetLatTen = 0;
+        internal static double assetLngTen = 0;
+        internal static double assetLatEleven = 0;
+        internal static double assetLngEleven = 0;
+        internal static double assetLatTwelve = 0;
+        internal static double assetLngTwelve = 0;
+        internal static teMission mission = teMission.eeNone;
+
+        internal static PointLatLng redFob = new PointLatLng(0, 0);
+        internal static PointLatLng blueFob = new PointLatLng(0, 0);
 
         internal PointLatLng MouseDownStart;
 
@@ -593,6 +644,10 @@ namespace MissionPlanner.GCSViews
 
             // NW FOB
             List<PointLatLng> FOBNWPoints = GenerateFOB(lat, lng, 21.336, 315 + adjustAngle_deg);
+            double sumLat = FOBNWPoints.Sum(p => p.Lat);
+            double sumLng = FOBNWPoints.Sum(p => p.Lng);
+            fobLatNW = sumLat / FOBNWPoints.Count;
+            fobLngNW = sumLng / FOBNWPoints.Count;
             FOBNW_Red = new GMapPolygon(FOBNWPoints, "FOBNW_Red");
             FOBNW_Red.Stroke = new Pen(Color.Black, 2);
             FOBNW_Red.Fill = new SolidBrush(Color.Red);
@@ -600,8 +655,12 @@ namespace MissionPlanner.GCSViews
             FOBNW_Blue.Stroke = new Pen(Color.Black, 2);
             FOBNW_Blue.Fill = new SolidBrush(Color.Blue);
 
-            // NW FOB
+            // SE FOB
             List<PointLatLng> FOBSEPoints = GenerateFOB(lat, lng, 21.336, 135 + adjustAngle_deg);
+            sumLat = FOBSEPoints.Sum(p => p.Lat);
+            sumLng = FOBSEPoints.Sum(p => p.Lng);
+            fobLatSE = sumLat / FOBSEPoints.Count;
+            fobLngSE = sumLng / FOBSEPoints.Count;
             FOBSE_Red = new GMapPolygon(FOBSEPoints, "FOBSE_Red");
             FOBSE_Red.Stroke = new Pen(Color.Black, 2);
             FOBSE_Red.Fill = new SolidBrush(Color.Red);
@@ -611,6 +670,10 @@ namespace MissionPlanner.GCSViews
 
             // Asset locations
             List<PointLatLng> assetLocNWPoints_5 = GenerateAsset(lat, lng, 22.098, 0 + adjustAngle_deg);
+            sumLat = assetLocNWPoints_5.Sum(p => p.Lat);
+            sumLng = assetLocNWPoints_5.Sum(p => p.Lng);
+            assetLatFive = sumLat / assetLocNWPoints_5.Count;
+            assetLngFive = sumLng / assetLocNWPoints_5.Count;
             assetsNW_red_5 = new GMapPolygon(assetLocNWPoints_5, "assetLoc_red_5");
             assetsNW_red_5.Stroke = new Pen(Color.Black, 2);
             assetsNW_red_5.Fill = new SolidBrush(Color.Red);
@@ -619,6 +682,10 @@ namespace MissionPlanner.GCSViews
             assetsNW_blue_5.Fill = new SolidBrush(Color.Blue);
 
             List<PointLatLng> assetLocNWPoints_6 = GenerateAsset(lat, lng, 22.098, 30 + adjustAngle_deg);
+            sumLat = assetLocNWPoints_6.Sum(p => p.Lat);
+            sumLng = assetLocNWPoints_6.Sum(p => p.Lng);
+            assetLatSix = sumLat / assetLocNWPoints_6.Count;
+            assetLngSix = sumLng / assetLocNWPoints_6.Count;
             assetsNW_red_6 = new GMapPolygon(assetLocNWPoints_6, "assetsNW_red_6");
             assetsNW_red_6.Stroke = new Pen(Color.Black, 2);
             assetsNW_red_6.Fill = new SolidBrush(Color.Red);
@@ -627,6 +694,10 @@ namespace MissionPlanner.GCSViews
             assetsNW_blue_6.Fill = new SolidBrush(Color.Blue);
 
             List<PointLatLng> assetLocSEPoints_1 = GenerateAsset(lat, lng, 22.098, 60 + adjustAngle_deg);
+            sumLat = assetLocSEPoints_1.Sum(p => p.Lat);
+            sumLng = assetLocSEPoints_1.Sum(p => p.Lng);
+            assetLatSeven = sumLat / assetLocSEPoints_1.Count;
+            assetLngSeven = sumLng / assetLocSEPoints_1.Count;
             assetsSE_red_1 = new GMapPolygon(assetLocSEPoints_1, "assetLoc_red_1");
             assetsSE_red_1.Stroke = new Pen(Color.Black, 2);
             assetsSE_red_1.Fill = new SolidBrush(Color.Red);
@@ -635,6 +706,10 @@ namespace MissionPlanner.GCSViews
             assetsSE_blue_1.Fill = new SolidBrush(Color.Blue);
 
             List<PointLatLng> assetLocSEPoints_2 = GenerateAsset(lat, lng, 22.098, 90 + adjustAngle_deg);
+            sumLat = assetLocSEPoints_2.Sum(p => p.Lat);
+            sumLng = assetLocSEPoints_2.Sum(p => p.Lng);
+            assetLatEight = sumLat / assetLocSEPoints_2.Count;
+            assetLngEight = sumLng / assetLocSEPoints_2.Count;
             assetsSE_red_2 = new GMapPolygon(assetLocSEPoints_2, "assetsSE_red_2");
             assetsSE_red_2.Stroke = new Pen(Color.Black, 2);
             assetsSE_red_2.Fill = new SolidBrush(Color.Red);
@@ -643,6 +718,10 @@ namespace MissionPlanner.GCSViews
             assetsSE_blue_2.Fill = new SolidBrush(Color.Blue);
 
             List<PointLatLng> assetLocSEPoints_3 = GenerateAsset(lat, lng, 22.098, 120 + adjustAngle_deg);
+            sumLat = assetLocSEPoints_3.Sum(p => p.Lat);
+            sumLng = assetLocSEPoints_3.Sum(p => p.Lng);
+            assetLatNine = sumLat / assetLocSEPoints_3.Count;
+            assetLngNine = sumLng / assetLocSEPoints_3.Count;
             assetsSE_red_3 = new GMapPolygon(assetLocSEPoints_3, "assetsSE_red_3");
             assetsSE_red_3.Stroke = new Pen(Color.Black, 2);
             assetsSE_red_3.Fill = new SolidBrush(Color.Red);
@@ -651,6 +730,10 @@ namespace MissionPlanner.GCSViews
             assetsSE_blue_3.Fill = new SolidBrush(Color.Blue);
 
             List<PointLatLng> assetLocSEPoints_4 = GenerateAsset(lat, lng, 22.098, 150 + adjustAngle_deg);
+            sumLat = assetLocSEPoints_4.Sum(p => p.Lat);
+            sumLng = assetLocSEPoints_4.Sum(p => p.Lng);
+            assetLatTen = sumLat / assetLocSEPoints_4.Count;
+            assetLngTen = sumLng / assetLocSEPoints_4.Count;
             assetsSE_red_4 = new GMapPolygon(assetLocSEPoints_4, "assetsSE_red_4");
             assetsSE_red_4.Stroke = new Pen(Color.Black, 2);
             assetsSE_red_4.Fill = new SolidBrush(Color.Red);
@@ -659,6 +742,10 @@ namespace MissionPlanner.GCSViews
             assetsSE_blue_4.Fill = new SolidBrush(Color.Blue);
 
             List<PointLatLng> assetLocSEPoints_5 = GenerateAsset(lat, lng, 22.098, 180 + adjustAngle_deg);
+            sumLat = assetLocSEPoints_5.Sum(p => p.Lat);
+            sumLng = assetLocSEPoints_5.Sum(p => p.Lng);
+            assetLatEleven = sumLat / assetLocSEPoints_5.Count;
+            assetLngEleven = sumLng / assetLocSEPoints_5.Count;
             assetsSE_red_5 = new GMapPolygon(assetLocSEPoints_5, "assetsSE_red_5");
             assetsSE_red_5.Stroke = new Pen(Color.Black, 2);
             assetsSE_red_5.Fill = new SolidBrush(Color.Red);
@@ -667,6 +754,10 @@ namespace MissionPlanner.GCSViews
             assetsSE_blue_5.Fill = new SolidBrush(Color.Blue);
 
             List<PointLatLng> assetLocSEPoints_6 = GenerateAsset(lat, lng, 22.098, 210 + adjustAngle_deg);
+            sumLat = assetLocSEPoints_6.Sum(p => p.Lat);
+            sumLng = assetLocSEPoints_6.Sum(p => p.Lng);
+            assetLatTwelve = sumLat / assetLocSEPoints_6.Count;
+            assetLngTwelve = sumLng / assetLocSEPoints_6.Count;
             assetsSE_red_6 = new GMapPolygon(assetLocSEPoints_6, "assetsSE_red_6");
             assetsSE_red_6.Stroke = new Pen(Color.Black, 2);
             assetsSE_red_6.Fill = new SolidBrush(Color.Red);
@@ -675,6 +766,10 @@ namespace MissionPlanner.GCSViews
             assetsSE_blue_6.Fill = new SolidBrush(Color.Blue);
 
             List<PointLatLng> assetLocNWPoints_1 = GenerateAsset(lat, lng, 22.098, 240 + adjustAngle_deg);
+            sumLat = assetLocNWPoints_1.Sum(p => p.Lat);
+            sumLng = assetLocNWPoints_1.Sum(p => p.Lng);
+            assetLatOne = sumLat / assetLocNWPoints_1.Count;
+            assetLngOne = sumLng / assetLocNWPoints_1.Count;
             assetsNW_red_1 = new GMapPolygon(assetLocNWPoints_1, "assetsNW_red_1");
             assetsNW_red_1.Stroke = new Pen(Color.Black, 2);
             assetsNW_red_1.Fill = new SolidBrush(Color.Red);
@@ -683,6 +778,10 @@ namespace MissionPlanner.GCSViews
             assetsNW_blue_1.Fill = new SolidBrush(Color.Blue);
 
             List<PointLatLng> assetLocNWPoints_2 = GenerateAsset(lat, lng, 22.098, 270 + adjustAngle_deg);
+            sumLat = assetLocNWPoints_2.Sum(p => p.Lat);
+            sumLng = assetLocNWPoints_2.Sum(p => p.Lng);
+            assetLatTwo = sumLat / assetLocNWPoints_2.Count;
+            assetLngTwo = sumLng / assetLocNWPoints_2.Count;
             assetsNW_red_2 = new GMapPolygon(assetLocNWPoints_2, "assetsNW_red_2");
             assetsNW_red_2.Stroke = new Pen(Color.Black, 2);
             assetsNW_red_2.Fill = new SolidBrush(Color.Red);
@@ -691,6 +790,10 @@ namespace MissionPlanner.GCSViews
             assetsNW_blue_2.Fill = new SolidBrush(Color.Blue);
 
             List<PointLatLng> assetLocNWPoints_3 = GenerateAsset(lat, lng, 22.098, 300 + adjustAngle_deg);
+            sumLat = assetLocNWPoints_3.Sum(p => p.Lat);
+            sumLng = assetLocNWPoints_3.Sum(p => p.Lng);
+            assetLatThree = sumLat / assetLocNWPoints_3.Count;
+            assetLngThree = sumLng / assetLocNWPoints_3.Count;
             assetsNW_red_3 = new GMapPolygon(assetLocNWPoints_3, "assetsNW_red_3");
             assetsNW_red_3.Stroke = new Pen(Color.Black, 2);
             assetsNW_red_3.Fill = new SolidBrush(Color.Red);
@@ -699,12 +802,32 @@ namespace MissionPlanner.GCSViews
             assetsNW_blue_3.Fill = new SolidBrush(Color.Blue);
 
             List<PointLatLng> assetLocNWPoints_4 = GenerateAsset(lat, lng, 22.098, 330 + adjustAngle_deg);
+            sumLat = assetLocNWPoints_4.Sum(p => p.Lat);
+            sumLng = assetLocNWPoints_4.Sum(p => p.Lng);
+            assetLatFour = sumLat / assetLocNWPoints_4.Count;
+            assetLngFour = sumLng / assetLocNWPoints_4.Count;
             assetsNW_red_4 = new GMapPolygon(assetLocNWPoints_4, "assetsNW_red_4");
             assetsNW_red_4.Stroke = new Pen(Color.Black, 2);
             assetsNW_red_4.Fill = new SolidBrush(Color.Red);
             assetsNW_blue_4 = new GMapPolygon(assetLocNWPoints_4, "assetsNW_blue_4");
             assetsNW_blue_4.Stroke = new Pen(Color.Black, 2);
             assetsNW_blue_4.Fill = new SolidBrush(Color.Blue);
+
+            isDemoFieldGenerated = true;
+
+            POI.POIClear();
+            POI.POIAdd(new PointLatLngAlt(assetLatOne, assetLngOne, 0), "Pos #1");
+            POI.POIAdd(new PointLatLngAlt(assetLatTwo, assetLngTwo, 0), "Pos #2");
+            POI.POIAdd(new PointLatLngAlt(assetLatThree, assetLngThree, 0), "Pos #3");
+            POI.POIAdd(new PointLatLngAlt(assetLatFour, assetLngFour, 0), "Pos #4");
+            POI.POIAdd(new PointLatLngAlt(assetLatFive, assetLngFive, 0), "Pos #5");
+            POI.POIAdd(new PointLatLngAlt(assetLatSix, assetLngSix, 0), "Pos #6");
+            POI.POIAdd(new PointLatLngAlt(assetLatSeven, assetLngSeven, 0), "Pos #7");
+            POI.POIAdd(new PointLatLngAlt(assetLatEight, assetLngEight, 0), "Pos #8");
+            POI.POIAdd(new PointLatLngAlt(assetLatNine, assetLngNine, 0), "Pos #9");
+            POI.POIAdd(new PointLatLngAlt(assetLatTen, assetLngTen, 0), "Pos #10");
+            POI.POIAdd(new PointLatLngAlt(assetLatEleven, assetLngEleven, 0), "Pos #11");
+            POI.POIAdd(new PointLatLngAlt(assetLatTwelve, assetLngTwelve, 0), "Pos #12");
         }
 
         public void ClearDemoFieldOverlay()
@@ -1153,14 +1276,194 @@ namespace MissionPlanner.GCSViews
             }
         }
 
-        private void BUT_ToAsset_Click(object sender, EventArgs e)
+        private void BUT_LoadMission_Click(object sender, EventArgs e)
         {
+            // Regain control to stop any currently running autonomous mission
+            CMB_modes.Text = "Guided";
+            BUT_setmode_Click(null, null);
+
             // Set home position to current ARV position
             setHomeSilent();
 
-            flightPlannerToolStripMenuItem_Click(null, null);
-            but_Click(BUT_close, null);
-            FlightPlanner.instance.BUT_ToAssetCreate_Click(null, null);
+            if (!isFlightPlannerReady)
+            {
+                flightPlannerToolStripMenuItem_Click(null, null);
+                but_Click(BUT_close, null);
+                isFlightPlannerReady = true;
+            }
+
+            if (mission == teMission.eeMarked)
+            {
+                FlightPlanner.instance.BUT_ToAssetCreate_Click(null, null);
+            }
+            else if (mission == teMission.eeFob)
+            {
+                if (isDemoFieldGenerated)
+                {
+                    if (isNWHome)
+                    {
+                        FlightPlanner.instance.ToPoint(fobLatNW, fobLngNW);
+                    }
+                    else
+                    {
+                        FlightPlanner.instance.ToPoint(fobLatSE, fobLngSE);
+                    }
+                }
+                else
+                {
+                    CustomMessageBox.Show("Please generate the demo field overlay first.", Strings.ERROR);
+                    return;
+                }
+            }
+            else if (mission == teMission.eeAssetOne)
+            {
+                if (isDemoFieldGenerated)
+                {
+                    FlightPlanner.instance.ToPoint(assetLatOne, assetLngOne);
+                }
+                else
+                {
+                    CustomMessageBox.Show("Please generate the demo field overlay first.", Strings.ERROR);
+                    return;
+                }
+            }
+            else if (mission == teMission.eeAssetTwo)
+            {
+                if (isDemoFieldGenerated)
+                {
+                    FlightPlanner.instance.ToPoint(assetLatTwo, assetLngTwo);
+                }
+                else
+                {
+                    CustomMessageBox.Show("Please generate the demo field overlay first.", Strings.ERROR);
+                    return;
+                }
+            }
+            else if (mission == teMission.eeAssetThree)
+            {
+                if (isDemoFieldGenerated)
+                {
+                    FlightPlanner.instance.ToPoint(assetLatThree, assetLngThree);
+                }
+                else
+                {
+                    CustomMessageBox.Show("Please generate the demo field overlay first.", Strings.ERROR);
+                    return;
+                }
+            }
+            else if (mission == teMission.eeAssetFour)
+            {
+                if (isDemoFieldGenerated)
+                {
+                    FlightPlanner.instance.ToPoint(assetLatFour, assetLngFour);
+                }
+                else
+                {
+                    CustomMessageBox.Show("Please generate the demo field overlay first.", Strings.ERROR);
+                    return;
+                }
+            }
+            else if (mission == teMission.eeAssetFive)
+            {
+                if (isDemoFieldGenerated)
+                {
+                    FlightPlanner.instance.ToPoint(assetLatFive, assetLngFive);
+                }
+                else
+                {
+                    CustomMessageBox.Show("Please generate the demo field overlay first.", Strings.ERROR);
+                    return;
+                }
+            }
+            else if (mission == teMission.eeAssetSix)
+            {
+                if (isDemoFieldGenerated)
+                {
+                    FlightPlanner.instance.ToPoint(assetLatSix, assetLngSix);
+                }
+                else
+                {
+                    CustomMessageBox.Show("Please generate the demo field overlay first.", Strings.ERROR);
+                    return;
+                }
+            }
+            else if (mission == teMission.eeAssetSeven)
+            {
+                if (isDemoFieldGenerated)
+                {
+                    FlightPlanner.instance.ToPoint(assetLatSeven, assetLngSeven);
+                }
+                else
+                {
+                    CustomMessageBox.Show("Please generate the demo field overlay first.", Strings.ERROR);
+                    return;
+                }
+            }
+            else if (mission == teMission.eeAssetEight)
+            {
+                if (isDemoFieldGenerated)
+                {
+                    FlightPlanner.instance.ToPoint(assetLatEight, assetLngEight);
+                }
+                else
+                {
+                    CustomMessageBox.Show("Please generate the demo field overlay first.", Strings.ERROR);
+                    return;
+                }
+            }
+            else if (mission == teMission.eeAssetNine)
+            {
+                if (isDemoFieldGenerated)
+                {
+                    FlightPlanner.instance.ToPoint(assetLatNine, assetLngNine);
+                }
+                else
+                {
+                    CustomMessageBox.Show("Please generate the demo field overlay first.", Strings.ERROR);
+                    return;
+                }
+            }
+            else if (mission == teMission.eeAssetTen)
+            {
+                if (isDemoFieldGenerated)
+                {
+                    FlightPlanner.instance.ToPoint(assetLatTen, assetLngTen);
+                }
+                else
+                {
+                    CustomMessageBox.Show("Please generate the demo field overlay first.", Strings.ERROR);
+                    return;
+                }
+            }
+            else if (mission == teMission.eeAssetEleven)
+            {
+                if (isDemoFieldGenerated)
+                {
+                    FlightPlanner.instance.ToPoint(assetLatEleven, assetLngEleven);
+                }
+                else
+                {
+                    CustomMessageBox.Show("Please generate the demo field overlay first.", Strings.ERROR);
+                    return;
+                }
+            }
+            else if (mission == teMission.eeAssetTwelve)
+            {
+                if (isDemoFieldGenerated)
+                {
+                    FlightPlanner.instance.ToPoint(assetLatTwelve, assetLngTwelve);
+                }
+                else
+                {
+                    CustomMessageBox.Show("Please generate the demo field overlay first.", Strings.ERROR);
+                    return;
+                }
+            }
+            else
+            {
+                CustomMessageBox.Show("Please select a mission to execute first.", Strings.ERROR);
+                return;
+            }
 
             isFlightPlanReady = true;
         }
@@ -1169,6 +1472,8 @@ namespace MissionPlanner.GCSViews
         {
             if (isFlightPlanReady)
             {
+                CMB_modes.Text = "Guided";
+                BUT_setmode_Click(null, null);
                 CMB_action.Text = actions.Mission_Start.ToString();
                 if (!MainV2.comPort.MAV.cs.armed)
                 {
@@ -2312,6 +2617,70 @@ namespace MissionPlanner.GCSViews
             {
                 isRedTeam = false;
                 isNWHome = !isNWRed;
+            }
+        }
+
+        private void MissionSelectionChanged(object sender, EventArgs e)
+        {
+            if ((string)CMB_mission.SelectedItem == "Marked Asset")
+            {
+                mission = teMission.eeMarked;
+            }
+            else if ((string)CMB_mission.SelectedItem == "FOB")
+            {
+                mission = teMission.eeFob;
+            }
+            else if ((string)CMB_mission.SelectedItem == "Pos #1")
+            {
+                mission = teMission.eeAssetOne;
+            }
+            else if ((string)CMB_mission.SelectedItem == "Pos #2")
+            {
+                mission = teMission.eeAssetTwo;
+            }
+            else if ((string)CMB_mission.SelectedItem == "Pos #3")
+            {
+                mission = teMission.eeAssetThree;
+            }
+            else if ((string)CMB_mission.SelectedItem == "Pos #4")
+            {
+                mission = teMission.eeAssetFour;
+            }
+            else if ((string)CMB_mission.SelectedItem == "Pos #5")
+            {
+                mission = teMission.eeAssetFive;
+            }
+            else if ((string)CMB_mission.SelectedItem == "Pos #6")
+            {
+                mission = teMission.eeAssetSix;
+            }
+            else if ((string)CMB_mission.SelectedItem == "Pos #7")
+            {
+                mission = teMission.eeAssetSeven;
+            }
+            else if ((string)CMB_mission.SelectedItem == "Pos #8")
+            {
+                mission = teMission.eeAssetEight;
+            }
+            else if ((string)CMB_mission.SelectedItem == "Pos #9")
+            {
+                mission = teMission.eeAssetNine;
+            }
+            else if ((string)CMB_mission.SelectedItem == "Pos #10")
+            {
+                mission = teMission.eeAssetTen;
+            }
+            else if ((string)CMB_mission.SelectedItem == "Pos #11")
+            {
+                mission = teMission.eeAssetEleven;
+            }
+            else if ((string)CMB_mission.SelectedItem == "Pos #12")
+            {
+                mission = teMission.eeAssetTwelve;
+            }
+            else
+            {
+                mission = teMission.eeNone;
             }
         }
 

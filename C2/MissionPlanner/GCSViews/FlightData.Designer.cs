@@ -60,6 +60,7 @@ namespace MissionPlanner.GCSViews
             this.BUT_clear_track = new MissionPlanner.Controls.MyButton();
             this.CMB_action = new System.Windows.Forms.ComboBox();
             this.CMB_team = new System.Windows.Forms.ComboBox();
+            this.CMB_mission = new System.Windows.Forms.ComboBox();
             this.BUTactiondo = new MissionPlanner.Controls.MyButton();
             this.BUT_resumemis = new MissionPlanner.Controls.MyButton();
             this.modifyandSetAlt = new MissionPlanner.Controls.ModifyandSet();
@@ -100,6 +101,7 @@ namespace MissionPlanner.GCSViews
             this.lngDiff_m_lbl = new System.Windows.Forms.Label();
             this.lngDiff_m_tb = new System.Windows.Forms.TextBox();
             this.angDiff_deg_lbl = new System.Windows.Forms.Label();
+            this.mission_lbl = new System.Windows.Forms.Label();
             this.angDiff_deg_tb = new System.Windows.Forms.TextBox();
             this.NACp_lbl = new System.Windows.Forms.Label();
             this.NIC_lbl = new System.Windows.Forms.Label();
@@ -239,7 +241,7 @@ namespace MissionPlanner.GCSViews
             labelInBounds = new System.Windows.Forms.Label();
             BUT_SwitchColors = new MissionPlanner.Controls.MyButton();
             BUT_ToggleDemoFieldOverlay = new MissionPlanner.Controls.MyButton();
-            BUT_ToAsset = new MissionPlanner.Controls.MyButton();
+            BUT_LoadMission = new MissionPlanner.Controls.MyButton();
             BUT_Execute = new MissionPlanner.Controls.MyButton();
             BUT_GenerateMap = new MissionPlanner.Controls.MyButton();
             this.label6 = new System.Windows.Forms.Label();
@@ -2603,7 +2605,9 @@ namespace MissionPlanner.GCSViews
             //this.splitContainer1.Panel2.Controls.Add(lngDiff_m_tb);
             this.splitContainer1.Panel2.Controls.Add(angDiff_deg_lbl);
             this.splitContainer1.Panel2.Controls.Add(angDiff_deg_tb);
-            this.splitContainer1.Panel2.Controls.Add(BUT_ToAsset);
+            this.splitContainer1.Panel2.Controls.Add(mission_lbl);
+            this.splitContainer1.Panel2.Controls.Add(CMB_mission);
+            this.splitContainer1.Panel2.Controls.Add(BUT_LoadMission);
             this.splitContainer1.Panel2.Controls.Add(BUT_Execute);
             this.splitContainer1.Panel2.Controls.Add(this.label6);
             this.splitContainer1.Panel2.Controls.Add(this.label5);
@@ -2953,17 +2957,32 @@ namespace MissionPlanner.GCSViews
             resources.ApplyResources(this.angDiff_deg_tb, "angDiff_deg_tb");
             this.angDiff_deg_tb.Name = "angDiff_deg_tb";
             this.angDiff_deg_tb.ReadOnly = false;
+            // 
+            // mission_lbl
+            // 
+            resources.ApplyResources(this.mission_lbl, "mission_lbl");
+            this.mission_lbl.Name = "mission_lbl";
             //
-            // BUT_ToAsset
+            // CMB_mission
             //
-            BUT_ToAsset.ColorMouseDown = System.Drawing.Color.Empty;
-            BUT_ToAsset.ColorMouseOver = System.Drawing.Color.Empty;
-            BUT_ToAsset.ColorNotEnabled = System.Drawing.Color.Empty;
-            resources.ApplyResources(BUT_ToAsset, "BUT_ToAsset");
-            BUT_ToAsset.Name = "BUT_ToAsset";
-            BUT_ToAsset.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
-            BUT_ToAsset.UseVisualStyleBackColor = true;
-            BUT_ToAsset.Click += new System.EventHandler(BUT_ToAsset_Click);
+            resources.ApplyResources(this.CMB_mission, "CMB_mission");
+            this.CMB_mission.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CMB_mission.DropDownWidth = 250;
+            this.CMB_mission.FormattingEnabled = true;
+            this.CMB_mission.Name = "CMB_mission";
+            this.CMB_mission.DataSource = new string[] { "None", "Marked Asset", "FOB", "Pos #1", "Pos #2", "Pos #3", "Pos #4", "Pos #5", "Pos #6", "Pos #7", "Pos #8", "Pos #9", "Pos #10", "Pos #11", "Pos #12" };
+            this.CMB_mission.SelectedIndexChanged += MissionSelectionChanged;
+            //
+            // BUT_LoadMission
+            //
+            BUT_LoadMission.ColorMouseDown = System.Drawing.Color.Empty;
+            BUT_LoadMission.ColorMouseOver = System.Drawing.Color.Empty;
+            BUT_LoadMission.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(BUT_LoadMission, "BUT_LoadMission");
+            BUT_LoadMission.Name = "BUT_LoadMission";
+            BUT_LoadMission.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            BUT_LoadMission.UseVisualStyleBackColor = true;
+            BUT_LoadMission.Click += new System.EventHandler(BUT_LoadMission_Click);
             //
             // BUT_Execute
             //
@@ -3218,6 +3237,7 @@ namespace MissionPlanner.GCSViews
         private Controls.MyButton BUTrestartmission;
         private System.Windows.Forms.ComboBox CMB_action;
         public System.Windows.Forms.ComboBox CMB_team;
+        public System.Windows.Forms.ComboBox CMB_mission;
         private Controls.MyButton BUT_Homealt;
         private System.Windows.Forms.TrackBar tracklog;
         private Controls.MyButton BUT_playlog;
@@ -3304,7 +3324,7 @@ namespace MissionPlanner.GCSViews
         public static Controls.MyButton BUT_SwitchColors;
         public static Controls.MyButton BUT_ToggleDemoFieldOverlay;
         public static Controls.MyButton BUT_GenerateMap;
-        public static Controls.MyButton BUT_ToAsset;
+        public static Controls.MyButton BUT_LoadMission;
         public static Controls.MyButton BUT_Execute;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
@@ -3423,6 +3443,7 @@ namespace MissionPlanner.GCSViews
         private System.Windows.Forms.Label lngDiff_m_lbl;
         private System.Windows.Forms.TextBox lngDiff_m_tb;
         private System.Windows.Forms.Label angDiff_deg_lbl;
+        private System.Windows.Forms.Label mission_lbl;
         private System.Windows.Forms.TextBox angDiff_deg_tb;
         private ToolStripMenuItem showIconsToolStripMenuItem;
         private ToolStripMenuItem multiLineToolStripMenuItem;

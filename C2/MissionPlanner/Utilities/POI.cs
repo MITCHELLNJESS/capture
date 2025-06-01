@@ -101,6 +101,14 @@ namespace MissionPlanner.Utilities
             }
         }
 
+        public static void POIClear()
+        {
+            for (int a = POI.POIs.Count - 1; a >= 0; a--)
+            {
+                 POI.POIs.RemoveAt(a);
+            }
+        }
+
         public static void POIEdit(GMapMarkerPOI Point)
         {
             if (Point == null)

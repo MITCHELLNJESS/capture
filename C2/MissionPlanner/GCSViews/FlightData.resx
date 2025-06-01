@@ -6073,6 +6073,36 @@
   <data name="&gt;&gt;angDiff_deg_lbl.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
+    <data name="mission_lbl.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="mission_lbl.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="mission_lbl.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="mission_lbl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 125</value>
+  </data>
+  <data name="mission_lbl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 20</value>
+  </data>
+  <data name="mission_lbl.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="mission_lbl.Text" xml:space="preserve">
+    <value>Go to:</value>
+  </data>
+  <data name="&gt;&gt;mission_lbl.Name" xml:space="preserve">
+    <value>mission_lbl</value>
+  </data>
+  <data name="&gt;&gt;mission_lbl.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;mission_lbl.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
   <data name="BUT_ToggleDemoFieldOverlay.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -6103,47 +6133,74 @@
   <data name="BUT_GenerateMap.Text" xml:space="preserve">
     <value>Regenerate Map</value>
   </data>
-    <data name="BUT_ToAsset.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="CMB_mission.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 14pt</value>
   </data>
-  <data name="BUT_ToAsset.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 125</value>
+  <data name="CMB_mission.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 145</value>
   </data>
-  <data name="BUT_ToAsset.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 40</value>
+  <data name="CMB_mission.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 40</value>
   </data>
-  <data name="BUT_ToAsset.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
+  <data name="CMB_mission.TabIndex" type="System.Int32, mscorlib">
+    <value>59</value>
   </data>
-  <data name="BUT_ToAsset.Text" xml:space="preserve">
-    <value>Plot Course To Asset</value>
+  <data name="&gt;&gt;CMB_mission.Name" xml:space="preserve">
+    <value>CMB_mission</value>
   </data>
-  <data name="&gt;&gt;BUT_ToAsset.Name" xml:space="preserve">
-    <value>BUT_ToAsset</value>
+  <data name="&gt;&gt;CMB_mission.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;BUT_ToAsset.Type" xml:space="preserve">
-    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;BUT_ToAsset.Parent" xml:space="preserve">
+  <data name="&gt;&gt;CMB_mission.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
-  <data name="&gt;&gt;BUT_ToAsset.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;CMB_mission.BackColor" type="System.Drawing.Color, System.Drawing">
+    <value>Red</value>
+  </data>
+  <data name="&gt;&gt;CMB_mission.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+    <data name="BUT_LoadMission.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_LoadMission.Location" type="System.Drawing.Point, System.Drawing">
+    <value>140, 125</value>
+  </data>
+  <data name="BUT_LoadMission.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 40</value>
+  </data>
+  <data name="BUT_LoadMission.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="BUT_LoadMission.Text" xml:space="preserve">
+    <value>Load</value>
+  </data>
+  <data name="&gt;&gt;BUT_LoadMission.Name" xml:space="preserve">
+    <value>BUT_LoadMission</value>
+  </data>
+  <data name="&gt;&gt;BUT_LoadMission.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_LoadMission.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;BUT_LoadMission.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
       <data name="BUT_Execute.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="BUT_Execute.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 175</value>
+    <value>200, 125</value>
   </data>
   <data name="BUT_Execute.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 40</value>
+    <value>70, 40</value>
   </data>
   <data name="BUT_Execute.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
   <data name="BUT_Execute.Text" xml:space="preserve">
-    <value>Execute Flight Plan</value>
+    <value>Execute</value>
   </data>
   <data name="&gt;&gt;BUT_Execute.Name" xml:space="preserve">
     <value>BUT_Execute</value>

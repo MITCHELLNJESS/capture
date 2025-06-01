@@ -765,9 +765,21 @@ namespace MissionPlanner.GCSViews
             Console.Write(FlightData.assetLon.number);
             Console.Write(" alt: ");
             Console.WriteLine(FlightData.assetAlt.number);
-            AddTakeoff(8);
-            AddWPDD(FlightData.assetLat.number, FlightData.assetLon.number, 8);
-            AddWPDD(FlightData.assetLat.number, FlightData.assetLon.number, 1);
+            AddTakeoff(4);
+            AddWPDD(FlightData.assetLat.number, FlightData.assetLon.number, 4);
+            AddWPDD(FlightData.assetLat.number, FlightData.assetLon.number, 2);
+
+            BUT_write_Click(null, null);
+            readSilent();
+        }
+
+        public void ToPoint(double lat, double lng)
+        {
+            clearMissionToolStripMenuItem_Click(null, null);
+
+            AddTakeoff(4);
+            AddWPDD(lat, lng, 4);
+            AddWPDD(lat, lng, 2);
 
             BUT_write_Click(null, null);
             readSilent();
@@ -5459,7 +5471,7 @@ namespace MissionPlanner.GCSViews
                             var dr = CustomMessageBox.Show("Reset Home to loaded coords", "Reset Home Coords",
                                 MessageBoxButtons.YesNo);
 
-                            if (dr == (int) DialogResult.Yes)
+                            if (dr == (int)DialogResult.Yes)
                             {
                                 TXT_homelat.Text = (double.Parse(cellhome.Value.ToString())).ToString();
                                 cellhome = Commands.Rows[0].Cells[Lon.Index] as DataGridViewTextBoxCell;
