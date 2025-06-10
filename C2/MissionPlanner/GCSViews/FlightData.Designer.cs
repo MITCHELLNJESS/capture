@@ -243,6 +243,36 @@ namespace MissionPlanner.GCSViews
             BUT_ToggleDemoFieldOverlay = new MissionPlanner.Controls.MyButton();
             BUT_LoadMission = new MissionPlanner.Controls.MyButton();
             BUT_Execute = new MissionPlanner.Controls.MyButton();
+            BUT_DFClose = new MissionPlanner.Controls.MyButton();
+            BUT_DFOpen = new MissionPlanner.Controls.MyButton();
+            LBL_DFMotor1 = new System.Windows.Forms.Label();
+            CMB_DFMotor1 = new System.Windows.Forms.ComboBox();
+            LBL_DFMotor2 = new System.Windows.Forms.Label();
+            CMB_DFMotor2 = new System.Windows.Forms.ComboBox();
+            LBL_DFPort1 = new System.Windows.Forms.Label();
+            TB_DFPort1 = new System.Windows.Forms.TextBox();
+            LBL_DFPort2 = new System.Windows.Forms.Label();
+            TB_DFPort2 = new System.Windows.Forms.TextBox();
+            LBL_DFOpenPwm1 = new System.Windows.Forms.Label();
+            TB_DFOpenPwm1 = new System.Windows.Forms.TextBox();
+            LBL_DFOpenPwm2 = new System.Windows.Forms.Label();
+            TB_DFOpenPwm2 = new System.Windows.Forms.TextBox();
+            LBL_DFClosePwm1 = new System.Windows.Forms.Label();
+            TB_DFClosePwm1 = new System.Windows.Forms.TextBox();
+            LBL_DFClosePwm2 = new System.Windows.Forms.Label();
+            TB_DFClosePwm2 = new System.Windows.Forms.TextBox();
+            LBL_DFStopPwm1 = new System.Windows.Forms.Label();
+            TB_DFStopPwm1 = new System.Windows.Forms.TextBox();
+            LBL_DFStopPwm2 = new System.Windows.Forms.Label();
+            TB_DFStopPwm2 = new System.Windows.Forms.TextBox();
+            LBL_DFOpenTime1 = new System.Windows.Forms.Label();
+            TB_DFOpenTime1 = new System.Windows.Forms.TextBox();
+            LBL_DFOpenTime2 = new System.Windows.Forms.Label();
+            TB_DFOpenTime2 = new System.Windows.Forms.TextBox();
+            LBL_DFCloseTime1 = new System.Windows.Forms.Label();
+            TB_DFCloseTime1 = new System.Windows.Forms.TextBox();
+            LBL_DFCloseTime2 = new System.Windows.Forms.Label();
+            TB_DFCloseTime2 = new System.Windows.Forms.TextBox();
             BUT_GenerateMap = new MissionPlanner.Controls.MyButton();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -2609,6 +2639,36 @@ namespace MissionPlanner.GCSViews
             this.splitContainer1.Panel2.Controls.Add(CMB_mission);
             this.splitContainer1.Panel2.Controls.Add(BUT_LoadMission);
             this.splitContainer1.Panel2.Controls.Add(BUT_Execute);
+            this.splitContainer1.Panel2.Controls.Add(BUT_DFClose);
+            this.splitContainer1.Panel2.Controls.Add(BUT_DFOpen);
+            this.splitContainer1.Panel2.Controls.Add(LBL_DFMotor1);
+            this.splitContainer1.Panel2.Controls.Add(CMB_DFMotor1);
+            this.splitContainer1.Panel2.Controls.Add(LBL_DFMotor2);
+            this.splitContainer1.Panel2.Controls.Add(CMB_DFMotor2);
+            this.splitContainer1.Panel2.Controls.Add(LBL_DFPort1);
+            this.splitContainer1.Panel2.Controls.Add(TB_DFPort1);
+            this.splitContainer1.Panel2.Controls.Add(LBL_DFPort2);
+            this.splitContainer1.Panel2.Controls.Add(TB_DFPort2);
+            this.splitContainer1.Panel2.Controls.Add(LBL_DFOpenPwm1);
+            this.splitContainer1.Panel2.Controls.Add(TB_DFOpenPwm1);
+            this.splitContainer1.Panel2.Controls.Add(LBL_DFOpenPwm2);
+            this.splitContainer1.Panel2.Controls.Add(TB_DFOpenPwm2);
+            this.splitContainer1.Panel2.Controls.Add(LBL_DFClosePwm1);
+            this.splitContainer1.Panel2.Controls.Add(TB_DFClosePwm1);
+            this.splitContainer1.Panel2.Controls.Add(LBL_DFClosePwm2);
+            this.splitContainer1.Panel2.Controls.Add(TB_DFClosePwm2);
+            this.splitContainer1.Panel2.Controls.Add(LBL_DFStopPwm1);
+            this.splitContainer1.Panel2.Controls.Add(TB_DFStopPwm1);
+            this.splitContainer1.Panel2.Controls.Add(LBL_DFStopPwm2);
+            this.splitContainer1.Panel2.Controls.Add(TB_DFStopPwm2);
+            this.splitContainer1.Panel2.Controls.Add(LBL_DFOpenTime1);
+            this.splitContainer1.Panel2.Controls.Add(TB_DFOpenTime1);
+            this.splitContainer1.Panel2.Controls.Add(LBL_DFOpenTime2);
+            this.splitContainer1.Panel2.Controls.Add(TB_DFOpenTime2);
+            this.splitContainer1.Panel2.Controls.Add(LBL_DFCloseTime1);
+            this.splitContainer1.Panel2.Controls.Add(TB_DFCloseTime1);
+            this.splitContainer1.Panel2.Controls.Add(LBL_DFCloseTime2);
+            this.splitContainer1.Panel2.Controls.Add(TB_DFCloseTime2);
             this.splitContainer1.Panel2.Controls.Add(this.label6);
             this.splitContainer1.Panel2.Controls.Add(this.label5);
             this.splitContainer1.Panel2.Controls.Add(this.label3);
@@ -2994,6 +3054,178 @@ namespace MissionPlanner.GCSViews
             BUT_Execute.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
             BUT_Execute.UseVisualStyleBackColor = true;
             BUT_Execute.Click += new System.EventHandler(BUT_Execute_Click);
+            //
+            // BUT_DFClose
+            //
+            BUT_DFClose.ColorMouseDown = System.Drawing.Color.Empty;
+            BUT_DFClose.ColorMouseOver = System.Drawing.Color.Empty;
+            BUT_DFClose.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(BUT_DFClose, "BUT_DFClose");
+            BUT_DFClose.Name = "BUT_DFClose";
+            BUT_DFClose.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            BUT_DFClose.UseVisualStyleBackColor = true;
+            BUT_DFClose.Click += new System.EventHandler(BUT_DFClose_Click);
+            //
+            // BUT_DFOpen
+            //
+            BUT_DFOpen.ColorMouseDown = System.Drawing.Color.Empty;
+            BUT_DFOpen.ColorMouseOver = System.Drawing.Color.Empty;
+            BUT_DFOpen.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(BUT_DFOpen, "BUT_DFOpen");
+            BUT_DFOpen.Name = "BUT_DFOpen";
+            BUT_DFOpen.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            BUT_DFOpen.UseVisualStyleBackColor = true;
+            BUT_DFOpen.Click += new System.EventHandler(BUT_DFOpen_Click);
+            // 
+            // LBL_DFMotor1
+            // 
+            resources.ApplyResources(LBL_DFMotor1, "LBL_DFMotor1");
+            LBL_DFMotor1.Name = "LBL_DFMotor1";
+            // 
+            // CMB_DFMotor1
+            // 
+            resources.ApplyResources(CMB_DFMotor1, "CMB_DFMotor1");
+            CMB_DFMotor1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            CMB_DFMotor1.DropDownWidth = 250;
+            CMB_DFMotor1.FormattingEnabled = true;
+            CMB_DFMotor1.Name = "CMB_DFMotor1";
+            CMB_DFMotor1.Items.AddRange(new string[] { "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16" });
+            CMB_DFMotor1.SelectedIndex = 0;
+            // 
+            // LBL_DFMotor2
+            // 
+            resources.ApplyResources(LBL_DFMotor2, "LBL_DFMotor2");
+            LBL_DFMotor2.Name = "LBL_DFMotor2";
+            // 
+            // CMB_DFMotor2
+            // 
+            resources.ApplyResources(CMB_DFMotor2, "CMB_DFMotor2");
+            CMB_DFMotor2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            CMB_DFMotor2.DropDownWidth = 250;
+            CMB_DFMotor2.FormattingEnabled = true;
+            CMB_DFMotor2.Name = "CMB_DFMotor2";
+            CMB_DFMotor2.Items.AddRange(new string[] { "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16" });
+            CMB_DFMotor2.SelectedIndex = 1;
+            // 
+            // LBL_DFPort1
+            // 
+            resources.ApplyResources(LBL_DFPort1, "LBL_DFPort1");
+            LBL_DFPort1.Name = "LBL_DFPort1";
+            // 
+            // LBL_DFPort2
+            // 
+            resources.ApplyResources(LBL_DFPort2, "LBL_DFPort2");
+            LBL_DFPort2.Name = "LBL_DFPort2";
+            // 
+            // LBL_DFOpenPwm1
+            // 
+            resources.ApplyResources(LBL_DFOpenPwm1, "LBL_DFOpenPwm1");
+            LBL_DFOpenPwm1.Name = "LBL_DFOpenPwm1";
+            // 
+            // TB_DFOpenPwm1
+            // 
+            resources.ApplyResources(TB_DFOpenPwm1, "TB_DFOpenPwm1");
+            TB_DFOpenPwm1.Name = "TB_DFOpenPwm1";
+            TB_DFOpenPwm1.ReadOnly = false;
+            // 
+            // LBL_DFOpenPwm2
+            // 
+            resources.ApplyResources(LBL_DFOpenPwm2, "LBL_DFOpenPwm2");
+            LBL_DFOpenPwm2.Name = "LBL_DFOpenPwm2";
+            // 
+            // TB_DFOpenPwm2
+            // 
+            resources.ApplyResources(TB_DFOpenPwm2, "TB_DFOpenPwm2");
+            TB_DFOpenPwm2.Name = "TB_DFOpenPwm2";
+            TB_DFOpenPwm2.ReadOnly = false;
+            // 
+            // LBL_DFClosePwm1
+            // 
+            resources.ApplyResources(LBL_DFClosePwm1, "LBL_DFClosePwm1");
+            LBL_DFClosePwm1.Name = "LBL_DFClosePwm1";
+            // 
+            // TB_DFClosePwm1
+            // 
+            resources.ApplyResources(TB_DFClosePwm1, "TB_DFClosePwm1");
+            TB_DFClosePwm1.Name = "TB_DFClosePwm1";
+            TB_DFClosePwm1.ReadOnly = false;
+            // 
+            // LBL_DFClosePwm2
+            // 
+            resources.ApplyResources(LBL_DFClosePwm2, "LBL_DFClosePwm2");
+            LBL_DFClosePwm2.Name = "LBL_DFClosePwm2";
+            // 
+            // TB_DFClosePwm2
+            // 
+            resources.ApplyResources(TB_DFClosePwm2, "TB_DFClosePwm2");
+            TB_DFClosePwm2.Name = "TB_DFClosePwm2";
+            TB_DFClosePwm2.ReadOnly = false;
+            // 
+            // LBL_DFStopPwm1
+            // 
+            resources.ApplyResources(LBL_DFStopPwm1, "LBL_DFStopPwm1");
+            LBL_DFStopPwm1.Name = "LBL_DFStopPwm1";
+            // 
+            // TB_DFStopPwm1
+            // 
+            resources.ApplyResources(TB_DFStopPwm1, "TB_DFStopPwm1");
+            TB_DFStopPwm1.Name = "TB_DFStopPwm1";
+            TB_DFStopPwm1.ReadOnly = false;
+            // 
+            // LBL_DFStopPwm2
+            // 
+            resources.ApplyResources(LBL_DFStopPwm2, "LBL_DFStopPwm2");
+            LBL_DFStopPwm2.Name = "LBL_DFStopPwm2";
+            // 
+            // TB_DFStopPwm2
+            // 
+            resources.ApplyResources(TB_DFStopPwm2, "TB_DFStopPwm2");
+            TB_DFStopPwm2.Name = "TB_DFStopPwm2";
+            TB_DFStopPwm2.ReadOnly = false;
+            // 
+            // LBL_DFOpenTime1
+            // 
+            resources.ApplyResources(LBL_DFOpenTime1, "LBL_DFOpenTime1");
+            LBL_DFOpenTime1.Name = "LBL_DFOpenTime1";
+            // 
+            // TB_DFOpenTime1
+            // 
+            resources.ApplyResources(TB_DFOpenTime1, "TB_DFOpenTime1");
+            TB_DFOpenTime1.Name = "TB_DFOpenTime1";
+            TB_DFOpenTime1.ReadOnly = false;
+            // 
+            // LBL_DFOpenTime2
+            // 
+            resources.ApplyResources(LBL_DFOpenTime2, "LBL_DFOpenTime2");
+            LBL_DFOpenTime2.Name = "LBL_DFOpenTime2";
+            // 
+            // TB_DFOpenTime2
+            // 
+            resources.ApplyResources(TB_DFOpenTime2, "TB_DFOpenTime2");
+            TB_DFOpenTime2.Name = "TB_DFOpenTime2";
+            TB_DFOpenTime2.ReadOnly = false;
+            // 
+            // LBL_DFCloseTime1
+            // 
+            resources.ApplyResources(LBL_DFCloseTime1, "LBL_DFCloseTime1");
+            LBL_DFCloseTime1.Name = "LBL_DFCloseTime1";
+            // 
+            // TB_DFCloseTime1
+            // 
+            resources.ApplyResources(TB_DFCloseTime1, "TB_DFCloseTime1");
+            TB_DFCloseTime1.Name = "TB_DFCloseTime1";
+            TB_DFCloseTime1.ReadOnly = false;
+            // 
+            // LBL_DFCloseTime2
+            // 
+            resources.ApplyResources(LBL_DFCloseTime2, "LBL_DFCloseTime2");
+            LBL_DFCloseTime2.Name = "LBL_DFCloseTime2";
+            // 
+            // TB_DFCloseTime2
+            // 
+            resources.ApplyResources(TB_DFCloseTime2, "TB_DFCloseTime2");
+            TB_DFCloseTime2.Name = "TB_DFCloseTime2";
+            TB_DFCloseTime2.ReadOnly = false;
             // 
             // label6
             // 
@@ -3326,6 +3558,36 @@ namespace MissionPlanner.GCSViews
         public static Controls.MyButton BUT_GenerateMap;
         public static Controls.MyButton BUT_LoadMission;
         public static Controls.MyButton BUT_Execute;
+        public static Controls.MyButton BUT_DFClose;
+        public static Controls.MyButton BUT_DFOpen;
+        public static System.Windows.Forms.Label LBL_DFMotor1;
+        public static System.Windows.Forms.ComboBox CMB_DFMotor1;
+        public static System.Windows.Forms.Label LBL_DFMotor2;
+        public static System.Windows.Forms.ComboBox CMB_DFMotor2;
+        public static System.Windows.Forms.Label LBL_DFPort1;
+        public static System.Windows.Forms.TextBox TB_DFPort1;
+        public static System.Windows.Forms.Label LBL_DFPort2;
+        public static System.Windows.Forms.TextBox TB_DFPort2;
+        public static System.Windows.Forms.Label LBL_DFOpenPwm1;
+        public static System.Windows.Forms.TextBox TB_DFOpenPwm1;
+        public static System.Windows.Forms.Label LBL_DFOpenPwm2;
+        public static System.Windows.Forms.TextBox TB_DFOpenPwm2;
+        public static System.Windows.Forms.Label LBL_DFClosePwm1;
+        public static System.Windows.Forms.TextBox TB_DFClosePwm1;
+        public static System.Windows.Forms.Label LBL_DFClosePwm2;
+        public static System.Windows.Forms.TextBox TB_DFClosePwm2;
+        public static System.Windows.Forms.Label LBL_DFStopPwm1;
+        public static System.Windows.Forms.TextBox TB_DFStopPwm1;
+        public static System.Windows.Forms.Label LBL_DFStopPwm2;
+        public static System.Windows.Forms.TextBox TB_DFStopPwm2;
+        public static System.Windows.Forms.Label LBL_DFOpenTime1;
+        public static System.Windows.Forms.TextBox TB_DFOpenTime1;
+        public static System.Windows.Forms.Label LBL_DFOpenTime2;
+        public static System.Windows.Forms.TextBox TB_DFOpenTime2;
+        public static System.Windows.Forms.Label LBL_DFCloseTime1;
+        public static System.Windows.Forms.TextBox TB_DFCloseTime1;
+        public static System.Windows.Forms.Label LBL_DFCloseTime2;
+        public static System.Windows.Forms.TextBox TB_DFCloseTime2;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label3;

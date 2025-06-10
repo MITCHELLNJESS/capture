@@ -397,6 +397,75 @@ namespace MissionPlanner.GCSViews
             }
         }
 
+        private void SetServo(int anServoNum, int anPwm)
+        {
+            try
+            {
+                if (MainV2.comPort.doCommand((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, MAVLink.MAV_CMD.DO_SET_SERVO, anServoNum, anPwm, 0, 0, 0, 0, 0))
+                {
+                    //TXT_rcchannel.BackColor = Color.Red;
+                }
+                else
+                {
+                    CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
+                }
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox.Show(Strings.CommandFailed + ex.ToString(), Strings.ERROR);
+            }
+        }
+
+        private void DFThread(int anMotor, int anPwm, int anPwmStop, double arTime_s)
+        {
+            // Activate motor 
+            SetServo(anMotor, anPwm);
+
+            // Wait for motor to move to open position
+            System.Threading.Thread.Sleep(Convert.ToInt32(arTime_s * 1000));
+
+            // Stop motor
+            SetServo(anMotor, anPwmStop);
+        }
+
+        private void BUT_DFClose_Click(object sender, EventArgs e)
+        {
+            // Initiate close procedure
+            Thread thread1 = new Thread(() => DFThread(
+                Convert.ToInt32(CMB_DFMotor1.Text),
+                Convert.ToInt32(TB_DFClosePwm1.Text),
+                Convert.ToInt32(TB_DFStopPwm1.Text),
+                Convert.ToDouble(TB_DFCloseTime1.Text)));
+            Thread thread2 = new Thread(() => DFThread(
+                Convert.ToInt32(CMB_DFMotor2.Text),
+                Convert.ToInt32(TB_DFClosePwm2.Text),
+                Convert.ToInt32(TB_DFStopPwm2.Text),
+                Convert.ToDouble(TB_DFCloseTime2.Text)));
+            thread1.IsBackground = true;
+            thread2.IsBackground = true;
+            thread1.Start();
+            thread2.Start();
+        }
+
+        private void BUT_DFOpen_Click(object sender, EventArgs e)
+        {
+            // Initiate open procedure
+            Thread thread1 = new Thread(() => DFThread(
+                Convert.ToInt32(CMB_DFMotor1.Text),
+                Convert.ToInt32(TB_DFOpenPwm1.Text),
+                Convert.ToInt32(TB_DFStopPwm1.Text),
+                Convert.ToDouble(TB_DFOpenTime1.Text)));
+            Thread thread2 = new Thread(() => DFThread(
+                Convert.ToInt32(CMB_DFMotor2.Text),
+                Convert.ToInt32(TB_DFOpenPwm2.Text),
+                Convert.ToInt32(TB_DFStopPwm2.Text),
+                Convert.ToDouble(TB_DFOpenTime2.Text)));
+            thread1.IsBackground = true;
+            thread2.IsBackground = true;
+            thread1.Start();
+            thread2.Start();
+        }
+
         static bool IsPointInCircle(double uav_lat, double uav_lon, double center_lat, double center_lon, double radius)
         {
             double earth_radius_m = 6371000;

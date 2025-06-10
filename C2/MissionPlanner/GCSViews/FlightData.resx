@@ -6073,7 +6073,7 @@
   <data name="&gt;&gt;angDiff_deg_lbl.Parent" xml:space="preserve">
     <value>splitContainer1.Panel2</value>
   </data>
-    <data name="mission_lbl.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="mission_lbl.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 12pt</value>
   </data>
   <data name="mission_lbl.AutoSize" type="System.Boolean, mscorlib">
@@ -6187,7 +6187,7 @@
   <data name="&gt;&gt;BUT_LoadMission.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-      <data name="BUT_Execute.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="BUT_Execute.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="BUT_Execute.Location" type="System.Drawing.Point, System.Drawing">
@@ -6212,6 +6212,789 @@
     <value>splitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;BUT_Execute.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="LBL_DFMotor1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_DFMotor1.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="LBL_DFMotor1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LBL_DFMotor1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 190</value>
+  </data>
+  <data name="LBL_DFMotor1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 20</value>
+  </data>
+  <data name="LBL_DFMotor1.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="LBL_DFMotor1.Text" xml:space="preserve">
+    <value>DF Motor 1</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFMotor1.Name" xml:space="preserve">
+    <value>LBL_DFMotor1</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFMotor1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFMotor1.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="LBL_DFPort1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_DFPort1.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="LBL_DFPort1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LBL_DFPort1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 210</value>
+  </data>
+  <data name="LBL_DFPort1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 32</value>
+  </data>
+  <data name="LBL_DFPort1.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="LBL_DFPort1.Text" xml:space="preserve">
+    <value>Port:</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFPort1.Name" xml:space="preserve">
+    <value>LBL_DFPort1</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFPort1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFPort1.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="CMB_DFMotor1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 14pt</value>
+  </data>
+  <data name="CMB_DFMotor1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>55, 210</value>
+  </data>
+  <data name="CMB_DFMotor1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 40</value>
+  </data>
+  <data name="CMB_DFMotor1.TabIndex" type="System.Int32, mscorlib">
+    <value>59</value>
+  </data>
+  <data name="&gt;&gt;CMB_DFMotor1.Name" xml:space="preserve">
+    <value>CMB_DFMotor1</value>
+  </data>
+  <data name="&gt;&gt;CMB_DFMotor1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CMB_DFMotor1.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;CMB_DFMotor1.BackColor" type="System.Drawing.Color, System.Drawing">
+    <value>Red</value>
+  </data>
+  <data name="&gt;&gt;CMB_DFMotor1.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="LBL_DFOpenPwm1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_DFOpenPwm1.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="LBL_DFOpenPwm1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LBL_DFOpenPwm1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 242</value>
+  </data>
+  <data name="LBL_DFOpenPwm1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 40</value>
+  </data>
+  <data name="LBL_DFOpenPwm1.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="LBL_DFOpenPwm1.Text" xml:space="preserve">
+    <value>Open PWM:</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFOpenPwm1.Name" xml:space="preserve">
+    <value>LBL_DFOpenPwm1</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFOpenPwm1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFOpenPwm1.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="TB_DFOpenPwm1.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_DFOpenPwm1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>55, 242</value>
+  </data>
+  <data name="TB_DFOpenPwm1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 40</value>
+  </data>
+  <data name="TB_DFOpenPwm1.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_DFOpenPwm1.Name" xml:space="preserve">
+    <value>TB_DFOpenPwm1</value>
+  </data>
+  <data name="&gt;&gt;TB_DFOpenPwm1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_DFOpenPwm1.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="TB_DFOpenPwm1.Text" xml:space="preserve">
+    <value>1900</value>
+  </data>
+  <data name="TB_DFOpenPwm1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_DFClosePwm1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_DFClosePwm1.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="LBL_DFClosePwm1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LBL_DFClosePwm1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 282</value>
+  </data>
+  <data name="LBL_DFClosePwm1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 40</value>
+  </data>
+  <data name="LBL_DFClosePwm1.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="LBL_DFClosePwm1.Text" xml:space="preserve">
+    <value>Close PWM:</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFClosePwm1.Name" xml:space="preserve">
+    <value>LBL_DFClosePwm1</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFClosePwm1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFClosePwm1.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="TB_DFClosePwm1.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_DFClosePwm1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>55, 282</value>
+  </data>
+  <data name="TB_DFClosePwm1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 40</value>
+  </data>
+  <data name="TB_DFClosePwm1.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_DFClosePwm1.Name" xml:space="preserve">
+    <value>TB_DFClosePwm1</value>
+  </data>
+  <data name="&gt;&gt;TB_DFClosePwm1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_DFClosePwm1.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="TB_DFClosePwm1.Text" xml:space="preserve">
+    <value>1100</value>
+  </data>
+  <data name="TB_DFClosePwm1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_DFStopPwm1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_DFStopPwm1.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="LBL_DFStopPwm1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LBL_DFStopPwm1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 322</value>
+  </data>
+  <data name="LBL_DFStopPwm1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 40</value>
+  </data>
+  <data name="LBL_DFStopPwm1.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="LBL_DFStopPwm1.Text" xml:space="preserve">
+    <value>Stop PWM:</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFStopPwm1.Name" xml:space="preserve">
+    <value>LBL_DFStopPwm1</value>
+  </data>
+  <data name="TB_DFStopPwm1.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_DFStopPwm1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>55, 322</value>
+  </data>
+  <data name="TB_DFStopPwm1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 40</value>
+  </data>
+  <data name="TB_DFStopPwm1.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_DFStopPwm1.Name" xml:space="preserve">
+    <value>TB_DFStopPwm1</value>
+  </data>
+  <data name="&gt;&gt;TB_DFStopPwm1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_DFStopPwm1.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="TB_DFStopPwm1.Text" xml:space="preserve">
+    <value>1500</value>
+  </data>
+  <data name="TB_DFStopPwm1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_DFOpenTime1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_DFOpenTime1.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="LBL_DFOpenTime1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LBL_DFOpenTime1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 362</value>
+  </data>
+  <data name="LBL_DFOpenTime1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 40</value>
+  </data>
+  <data name="LBL_DFOpenTime1.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="LBL_DFOpenTime1.Text" xml:space="preserve">
+    <value>Open Time:</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFOpenTime1.Name" xml:space="preserve">
+    <value>LBL_DFOpenTime1</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFOpenTime1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFOpenTime1.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="TB_DFOpenTime1.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_DFOpenTime1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>55, 362</value>
+  </data>
+  <data name="TB_DFOpenTime1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 40</value>
+  </data>
+  <data name="TB_DFOpenTime1.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_DFOpenTime1.Name" xml:space="preserve">
+    <value>TB_DFOpenTime1</value>
+  </data>
+  <data name="&gt;&gt;TB_DFOpenTime1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_DFOpenTime1.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="TB_DFOpenTime1.Text" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="TB_DFOpenTime1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_DFCloseTime1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_DFCloseTime1.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="LBL_DFCloseTime1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LBL_DFCloseTime1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 402</value>
+  </data>
+  <data name="LBL_DFCloseTime1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 40</value>
+  </data>
+  <data name="LBL_DFCloseTime1.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="LBL_DFCloseTime1.Text" xml:space="preserve">
+    <value>Close Time:</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFCloseTime1.Name" xml:space="preserve">
+    <value>LBL_DFCloseTime1</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFCloseTime1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFCloseTime1.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="TB_DFCloseTime1.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_DFCloseTime1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>55, 402</value>
+  </data>
+  <data name="TB_DFCloseTime1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 40</value>
+  </data>
+  <data name="TB_DFCloseTime1.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_DFCloseTime1.Name" xml:space="preserve">
+    <value>TB_DFCloseTime1</value>
+  </data>
+  <data name="&gt;&gt;TB_DFCloseTime1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_DFCloseTime1.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="TB_DFCloseTime1.Text" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="TB_DFCloseTime1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_DFMotor2.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_DFMotor2.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="LBL_DFMotor2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LBL_DFMotor2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>200, 190</value>
+  </data>
+  <data name="LBL_DFMotor2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 20</value>
+  </data>
+  <data name="LBL_DFMotor2.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="LBL_DFMotor2.Text" xml:space="preserve">
+    <value>DF Motor 2</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFMotor2.Name" xml:space="preserve">
+    <value>LBL_DFMotor2</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFMotor2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFMotor2.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="LBL_DFPort2.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_DFPort2.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="LBL_DFPort2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LBL_DFPort2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>200, 210</value>
+  </data>
+  <data name="LBL_DFPort2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 32</value>
+  </data>
+  <data name="LBL_DFPort2.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="LBL_DFPort2.Text" xml:space="preserve">
+    <value>Port:</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFPort2.Name" xml:space="preserve">
+    <value>LBL_DFPort2</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFPort2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFPort2.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+ <data name="CMB_DFMotor2.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 14pt</value>
+  </data>
+  <data name="CMB_DFMotor2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>250, 210</value>
+  </data>
+  <data name="CMB_DFMotor2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 40</value>
+  </data>
+  <data name="CMB_DFMotor2.TabIndex" type="System.Int32, mscorlib">
+    <value>59</value>
+  </data>
+  <data name="&gt;&gt;CMB_DFMotor2.Name" xml:space="preserve">
+    <value>CMB_DFMotor2</value>
+  </data>
+  <data name="&gt;&gt;CMB_DFMotor2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CMB_DFMotor2.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;CMB_DFMotor2.BackColor" type="System.Drawing.Color, System.Drawing">
+    <value>Red</value>
+  </data>
+  <data name="&gt;&gt;CMB_DFMotor2.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="LBL_DFOpenPwm2.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_DFOpenPwm2.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="LBL_DFOpenPwm2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LBL_DFOpenPwm2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>200, 242</value>
+  </data>
+  <data name="LBL_DFOpenPwm2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 40</value>
+  </data>
+  <data name="LBL_DFOpenPwm2.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="LBL_DFOpenPwm2.Text" xml:space="preserve">
+    <value>Open PWM:</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFOpenPwm2.Name" xml:space="preserve">
+    <value>LBL_DFOpenPwm2</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFOpenPwm2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFOpenPwm2.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="TB_DFOpenPwm2.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_DFOpenPwm2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>250, 242</value>
+  </data>
+  <data name="TB_DFOpenPwm2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 40</value>
+  </data>
+  <data name="TB_DFOpenPwm2.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_DFOpenPwm2.Name" xml:space="preserve">
+    <value>TB_DFOpenPwm2</value>
+  </data>
+  <data name="&gt;&gt;TB_DFOpenPwm2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_DFOpenPwm2.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="TB_DFOpenPwm2.Text" xml:space="preserve">
+    <value>1900</value>
+  </data>
+  <data name="TB_DFOpenPwm2.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_DFClosePwm2.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_DFClosePwm2.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="LBL_DFClosePwm2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LBL_DFClosePwm2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>200, 282</value>
+  </data>
+  <data name="LBL_DFClosePwm2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 40</value>
+  </data>
+  <data name="LBL_DFClosePwm2.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="LBL_DFClosePwm2.Text" xml:space="preserve">
+    <value>Close PWM:</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFClosePwm2.Name" xml:space="preserve">
+    <value>LBL_DFClosePwm2</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFClosePwm2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFClosePwm2.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="TB_DFClosePwm2.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_DFClosePwm2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>250, 282</value>
+  </data>
+  <data name="TB_DFClosePwm2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 40</value>
+  </data>
+  <data name="TB_DFClosePwm2.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_DFClosePwm2.Name" xml:space="preserve">
+    <value>TB_DFClosePwm2</value>
+  </data>
+  <data name="&gt;&gt;TB_DFClosePwm2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_DFClosePwm2.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="TB_DFClosePwm2.Text" xml:space="preserve">
+    <value>1100</value>
+  </data>
+  <data name="TB_DFClosePwm2.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_DFStopPwm2.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_DFStopPwm2.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="LBL_DFStopPwm2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LBL_DFStopPwm2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>200, 322</value>
+  </data>
+  <data name="LBL_DFStopPwm2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 40</value>
+  </data>
+  <data name="LBL_DFStopPwm2.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="LBL_DFStopPwm2.Text" xml:space="preserve">
+    <value>Stop PWM:</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFStopPwm2.Name" xml:space="preserve">
+    <value>LBL_DFStopPwm2</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFStopPwm2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFStopPwm2.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="TB_DFStopPwm2.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_DFStopPwm2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>250, 322</value>
+  </data>
+  <data name="TB_DFStopPwm2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 40</value>
+  </data>
+  <data name="TB_DFStopPwm2.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_DFStopPwm2.Name" xml:space="preserve">
+    <value>TB_DFStopPwm2</value>
+  </data>
+  <data name="&gt;&gt;TB_DFStopPwm2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_DFStopPwm2.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="TB_DFStopPwm2.Text" xml:space="preserve">
+    <value>1500</value>
+  </data>
+  <data name="TB_DFStopPwm2.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_DFOpenTime2.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_DFOpenTime2.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="LBL_DFOpenTime2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LBL_DFOpenTime2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>200, 362</value>
+  </data>
+  <data name="LBL_DFOpenTime2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 40</value>
+  </data>
+  <data name="LBL_DFOpenTime2.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="LBL_DFOpenTime2.Text" xml:space="preserve">
+    <value>Open Time:</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFOpenTime2.Name" xml:space="preserve">
+    <value>LBL_DFOpenTime2</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFOpenTime2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LBL_DFOpenTime2.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="TB_DFOpenTime2.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_DFOpenTime2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>250, 362</value>
+  </data>
+  <data name="TB_DFOpenTime2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 40</value>
+  </data>
+  <data name="TB_DFOpenTime2.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_DFOpenTime2.Name" xml:space="preserve">
+    <value>TB_DFOpenTime2</value>
+  </data>
+  <data name="&gt;&gt;TB_DFOpenTime2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_DFOpenTime2.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="TB_DFOpenTime2.Text" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="TB_DFOpenTime2.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_DFCloseTime2.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_DFCloseTime2.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="LBL_DFCloseTime2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LBL_DFCloseTime2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>200, 402</value>
+  </data>
+  <data name="LBL_DFCloseTime2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 40</value>
+  </data>
+  <data name="LBL_DFCloseTime2.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="LBL_DFCloseTime2.Text" xml:space="preserve">
+    <value>Close Time:</value>
+  </data>
+  <data name="TB_DFCloseTime2.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_DFCloseTime2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>250, 402</value>
+  </data>
+  <data name="TB_DFCloseTime2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 40</value>
+  </data>
+  <data name="TB_DFCloseTime2.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_DFCloseTime2.Name" xml:space="preserve">
+    <value>TB_DFCloseTime2</value>
+  </data>
+  <data name="&gt;&gt;TB_DFCloseTime2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_DFCloseTime2.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="TB_DFCloseTime2.Text" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="TB_DFCloseTime2.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="BUT_DFClose.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_DFClose.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 450</value>
+  </data>
+  <data name="BUT_DFClose.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 40</value>
+  </data>
+  <data name="BUT_DFClose.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="BUT_DFClose.Text" xml:space="preserve">
+    <value>CLOSE DF</value>
+  </data>
+  <data name="&gt;&gt;BUT_DFClose.Name" xml:space="preserve">
+    <value>BUT_DFClose</value>
+  </data>
+  <data name="&gt;&gt;BUT_DFClose.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_DFClose.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;BUT_DFClose.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="BUT_DFOpen.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_DFOpen.Location" type="System.Drawing.Point, System.Drawing">
+    <value>155, 450</value>
+  </data>
+  <data name="BUT_DFOpen.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 40</value>
+  </data>
+  <data name="BUT_DFOpen.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="BUT_DFOpen.Text" xml:space="preserve">
+    <value>OPEN DF</value>
+  </data>
+  <data name="&gt;&gt;BUT_DFOpen.Name" xml:space="preserve">
+    <value>BUT_DFOpen</value>
+  </data>
+  <data name="&gt;&gt;BUT_DFOpen.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_DFOpen.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;BUT_DFOpen.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
   <data name="&gt;&gt;BUT_GenerateMap.Name" xml:space="preserve">
