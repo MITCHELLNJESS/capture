@@ -105,6 +105,8 @@ using Rti.Dds.Topics;
 using Rti.Dds.Subscription;
 using System;
 using System.Threading;
+using A3MP_Shared;
+//using A3MP_MAVLink;
 
 
 namespace DDS_Subscriber
@@ -114,7 +116,7 @@ namespace DDS_Subscriber
         private const int DomainId = 0;
         private const string TopicName = "A3MPDataMsg";
         public static Logger logger = new Logger();
-
+       
         public static void RunSubscriber()
         {
             try
@@ -140,7 +142,18 @@ namespace DDS_Subscriber
                     {
                         foreach (var message in data)
                         {
+                            //create offset based on A3 output: 
+                            logger.WriteDebug("**TEST 3 - sent DDS message received to A3MP Bus...");
+                            //A3MP_MessageBus.OnDDSMessageReceived?.Invoke(message.Data.ToString());
                             logger.WriteDebug($"Received message: {message.Data}");
+                            A3MP_MessageBus.SetCommand(message.Data.ToString());
+                            logger.WriteDebug("bus command: " + A3MP_MessageBus.GetCommand());
+
+                            //need to make a call to the A3MP_CommandProcessor which will update flight data (MP)
+                            //can't use A3MP_Shared to reach MP
+                            //can DDS Subscriber point to A3MP_MAVLink? no - circular dependency 
+
+                            //FlightData.isAligned = false;
                         }
                     }
 

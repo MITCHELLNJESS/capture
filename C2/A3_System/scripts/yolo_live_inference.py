@@ -18,7 +18,8 @@ model = torch.hub.load("ultralytics/yolov5", "custom", path=model_path, force_re
 model.conf = 0.4
 
 # initializing webcam
-cap = cv2.VideoCapture(0)
+#cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 if not cap.isOpened():
     print("Unable to access webcam")
     exit()
@@ -88,7 +89,6 @@ with open(log_file, mode='w', newline='') as file:
             print("Sample Data: ", sample.data)
             ddsWriter.write(sample)
             
-
 
             # written to csv
             writer.writerow([timestamp, label, x1, y1, width, height, center_x, center_y, f"{latency:.2f}"])

@@ -189,6 +189,16 @@
             "related": ".xml"
           }
         }
+      },
+      "A3MP_Shared/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/A3MP_Shared.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/A3MP_Shared.dll": {}
+        }
       }
     }
   },
@@ -558,10 +568,16 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "A3MP_Shared/1.0.0": {
+      "type": "project",
+      "path": "../A3MP_Shared/A3MP_Shared.csproj",
+      "msbuildProject": "../A3MP_Shared/A3MP_Shared.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
+      "A3MP_Shared >= 1.0.0",
       "NETStandard.Library >= 2.0.3",
       "Rti.ConnextDds >= 7.3.0"
     ]
@@ -599,7 +615,11 @@
       "frameworks": {
         "netstandard2.0": {
           "targetAlias": "netstandard2.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\hvomm\\Desktop\\ELDP\\capture\\C2\\A3MP_Shared\\A3MP_Shared.csproj": {
+              "projectPath": "C:\\Users\\hvomm\\Desktop\\ELDP\\capture\\C2\\A3MP_Shared\\A3MP_Shared.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

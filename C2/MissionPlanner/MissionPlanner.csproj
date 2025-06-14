@@ -122,6 +122,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\A3MP_Shared\A3MP_Shared.csproj" />
     <ProjectReference Include="..\DDS_Subscriber\DDS_Subscriber.csproj" />
     <ProjectReference Include="ExtLibs\7zip\7zip.csproj" />
     <ProjectReference Include="ExtLibs\alglibnet\alglibnet.csproj" />
@@ -1192,7 +1193,7 @@
 
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="plugins\DDS_Subscriber\DDS_Integration.cs" />
+    <Compile Include="plugins\DDS_Integration\DDS_Integration.cs" />
     <Compile Include="SikRadio\ISikRadioForm.cs" />
     <Compile Include="SikRadio\RFD900.cs" />
     <Compile Include="SikRadio\RFDLib\Array.cs" />

@@ -32,6 +32,8 @@ using ZedGraph;
 using LogAnalyzer = MissionPlanner.Utilities.LogAnalyzer;
 using TableLayoutPanelCellPosition = System.Windows.Forms.TableLayoutPanelCellPosition;
 using UnauthorizedAccessException = System.UnauthorizedAccessException;
+using System.Web.SessionState;
+using A3MP_Shared;
 
 // written by michael oborne
 
@@ -177,6 +179,12 @@ namespace MissionPlanner.GCSViews
         object updateBindingSourcelock = new object();
 
         string updateBindingSourceThreadName = "";
+
+        //brainstorm
+        //public static object  vector = (X, y, z); //goes to fly2here equivalent
+        public static bool isAligned;
+        public string receivedA3Output; //check continuously for this - see HUD.cs test log
+
 
         public enum actions
         {
@@ -420,6 +428,12 @@ namespace MissionPlanner.GCSViews
 
             tabControlactions.Multiline = Settings.Instance.GetBoolean("tabControlactions_Multiline", false);
 
+            //brainstorm
+            //public static object  vector = (X, y, z); //goes to fly2here equivalent
+            isAligned = false; //A3MPCommandPublisher will keep updating this
+            receivedA3Output = A3MP_MessageBus.GetCommand(); //Will start with the latest A3 output, may need updating
+            Console.WriteLine("^^^^^^^****RECEIVED A3 OUTPUT FROM A3MP BUS*****^^^^^^^: " + receivedA3Output);
+            //needs a thread to keep pulling from A3MP_MesssageBus
         }
 
         public void Activate()
@@ -2851,7 +2865,8 @@ namespace MissionPlanner.GCSViews
 
         private void flyToHereAltToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string alt = "100";
+
+            string alt = "100"; //receivedA3Output; 
             MAVLink.MAV_FRAME frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT;
 
             if (MainV2.comPort.MAV.cs.firmware == Firmwares.ArduCopter2)

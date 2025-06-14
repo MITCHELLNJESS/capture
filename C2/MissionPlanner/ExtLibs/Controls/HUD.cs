@@ -24,6 +24,7 @@ using MathHelper = MissionPlanner.Utilities.MathHelper;
 using PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat;
 using SkiaSharp.Views.Desktop;
 using SkiaSharp;
+using A3MP_Shared;
 
 
 // Control written by Michael Oborne 2011
@@ -1336,6 +1337,10 @@ namespace MissionPlanner.Controls
 
                 count = 0;
                 huddrawtime = 0;
+
+                //TEST - REMOVE LATER
+                Console.WriteLine("......<<<<<<<<<<<<<<<<<<< HV TESTING - LATEST A3 COMMAND FROM HUD.CS: " + A3MP_MessageBus.GetCommand() + ">>>>>>>>>>>>>>>>");
+
             }
 
             lock (this)
