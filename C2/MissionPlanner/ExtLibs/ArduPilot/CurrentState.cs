@@ -1032,7 +1032,7 @@ namespace MissionPlanner
         [GroupText("NAV")]
         [DisplayFieldName("nav_bearing.Field")]
         [DisplayText("Bearing Target (deg)")]
-        public float nav_bearing { get; set; }
+        public static float nav_bearing { get; set; }
 
         [GroupText("NAV")]
         [DisplayFieldName("target_bearing.Field")]
