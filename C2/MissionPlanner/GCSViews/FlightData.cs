@@ -1559,6 +1559,26 @@ namespace MissionPlanner.GCSViews
 
         }
 
+        private void BUT_StopMission_Click(object sender, EventArgs e)
+        {
+            CMB_modes.Text = "Guided";
+            BUT_setmode_Click(null, null);
+        }
+
+        private void BUT_Land_Click(object sender, EventArgs e)
+        {
+            CMB_modes.Text = "Land";
+            BUT_setmode_Click(null, null);
+        }
+
+        private void BUT_Kill_Click(object sender, EventArgs e)
+        {
+            if (MainV2.comPort.MAV.cs.armed)
+            {
+                BUT_ARM_Click_Silent();
+            }
+        }
+
         public void BUT_playlog_Click(object sender, EventArgs e)
         {
             if (MainV2.comPort.logreadmode)
@@ -2026,6 +2046,41 @@ namespace MissionPlanner.GCSViews
             catch
             {
                 CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
+            }
+        }
+
+        private void BUT_ARM_Click_Silent()
+        {
+            if (!MainV2.comPort.BaseStream.IsOpen)
+                return;
+
+            // arm the MAV
+            try
+            {
+                var isitarmed = MainV2.comPort.MAV.cs.armed;
+                var action = MainV2.comPort.MAV.cs.armed ? "Disarm" : "Arm";
+
+                StringBuilder sb = new StringBuilder();
+                var sub = MainV2.comPort.SubscribeToPacketType(MAVLink.MAVLINK_MSG_ID.STATUSTEXT, message =>
+                {
+                    sb.AppendLine(Encoding.ASCII.GetString(((MAVLink.mavlink_statustext_t)message.data).text)
+                        .TrimEnd('\0'));
+                    return true;
+                }, (byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent);
+                bool ans = MainV2.comPort.doARM(!isitarmed);
+                MainV2.comPort.UnSubscribeToPacketType(sub);
+                if (ans == false)
+                {
+                    ans = MainV2.comPort.doARM(!isitarmed, true);
+                    if (ans == false)
+                    {
+                        CustomMessageBox.Show(Strings.ErrorRejectedByMAV, Strings.ERROR);
+                    }
+                }
+            }
+            catch
+            {
+                CustomMessageBox.Show(Strings.ErrorNoResponce, Strings.ERROR);
             }
         }
 

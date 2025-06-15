@@ -6214,6 +6214,88 @@
   <data name="&gt;&gt;BUT_Execute.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="BUT_StopMission.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_StopMission.Location" type="System.Drawing.Point, System.Drawing">
+    <value>280, 125</value>
+  </data>
+  <data name="BUT_StopMission.Size" type="System.Drawing.Size, System.Drawing">
+    <value>70, 40</value>
+  </data>
+  <data name="BUT_StopMission.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="BUT_StopMission.Text" xml:space="preserve">
+    <value>Stop Mission</value>
+  </data>
+  <data name="&gt;&gt;BUT_StopMission.Name" xml:space="preserve">
+    <value>BUT_StopMission</value>
+  </data>
+  <data name="&gt;&gt;BUT_StopMission.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_StopMission.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;BUT_StopMission.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="BUT_Land.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_Land.Location" type="System.Drawing.Point, System.Drawing">
+    <value>360, 125</value>
+  </data>
+  <data name="BUT_Land.Size" type="System.Drawing.Size, System.Drawing">
+    <value>70, 40</value>
+  </data>
+  <data name="BUT_Land.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="BUT_Land.Text" xml:space="preserve">
+    <value>Land</value>
+  </data>
+  <data name="&gt;&gt;BUT_Land.Name" xml:space="preserve">
+    <value>BUT_Land</value>
+  </data>
+  <data name="&gt;&gt;BUT_Land.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_Land.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;BUT_Land.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="BUT_Kill.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_Kill.Location" type="System.Drawing.Point, System.Drawing">
+    <value>440, 125</value>
+  </data>
+  <data name="BUT_Kill.Size" type="System.Drawing.Size, System.Drawing">
+    <value>70, 40</value>
+  </data>
+  <data name="BUT_Kill.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="BUT_Kill.Text" xml:space="preserve">
+    <value>Kill</value>
+  </data>
+  <data name="&gt;&gt;BUT_Kill.Name" xml:space="preserve">
+    <value>BUT_Kill</value>
+  </data>
+  <data name="&gt;&gt;BUT_Kill.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_Kill.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;BUT_Kill.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+
   <data name="LBL_DFMotor1.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 12pt</value>
   </data>
