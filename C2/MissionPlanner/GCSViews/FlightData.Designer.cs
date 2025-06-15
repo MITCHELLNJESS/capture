@@ -243,9 +243,6 @@ namespace MissionPlanner.GCSViews
             BUT_ToggleDemoFieldOverlay = new MissionPlanner.Controls.MyButton();
             BUT_LoadMission = new MissionPlanner.Controls.MyButton();
             BUT_Execute = new MissionPlanner.Controls.MyButton();
-            BUT_StopMission = new MissionPlanner.Controls.MyButton();
-            BUT_Land = new MissionPlanner.Controls.MyButton();
-            BUT_Kill = new MissionPlanner.Controls.MyButton();
             BUT_DFClose = new MissionPlanner.Controls.MyButton();
             BUT_DFOpen = new MissionPlanner.Controls.MyButton();
             LBL_DFMotor1 = new System.Windows.Forms.Label();
@@ -2642,9 +2639,6 @@ namespace MissionPlanner.GCSViews
             this.splitContainer1.Panel2.Controls.Add(CMB_mission);
             this.splitContainer1.Panel2.Controls.Add(BUT_LoadMission);
             this.splitContainer1.Panel2.Controls.Add(BUT_Execute);
-            this.splitContainer1.Panel2.Controls.Add(BUT_StopMission);
-            this.splitContainer1.Panel2.Controls.Add(BUT_Land);
-            this.splitContainer1.Panel2.Controls.Add(BUT_Kill);
             this.splitContainer1.Panel2.Controls.Add(BUT_DFClose);
             this.splitContainer1.Panel2.Controls.Add(BUT_DFOpen);
             this.splitContainer1.Panel2.Controls.Add(LBL_DFMotor1);
@@ -3060,39 +3054,6 @@ namespace MissionPlanner.GCSViews
             BUT_Execute.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
             BUT_Execute.UseVisualStyleBackColor = true;
             BUT_Execute.Click += new System.EventHandler(BUT_Execute_Click);
-            //
-            // BUT_StopMission
-            //
-            BUT_StopMission.ColorMouseDown = System.Drawing.Color.Empty;
-            BUT_StopMission.ColorMouseOver = System.Drawing.Color.Empty;
-            BUT_StopMission.ColorNotEnabled = System.Drawing.Color.Empty;
-            resources.ApplyResources(BUT_StopMission, "BUT_StopMission");
-            BUT_StopMission.Name = "BUT_StopMission";
-            BUT_StopMission.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
-            BUT_StopMission.UseVisualStyleBackColor = true;
-            BUT_StopMission.Click += new System.EventHandler(BUT_StopMission_Click);
-            //
-            // BUT_Land
-            //
-            BUT_Land.ColorMouseDown = System.Drawing.Color.Empty;
-            BUT_Land.ColorMouseOver = System.Drawing.Color.Empty;
-            BUT_Land.ColorNotEnabled = System.Drawing.Color.Empty;
-            resources.ApplyResources(BUT_Land, "BUT_Land");
-            BUT_Land.Name = "BUT_Land";
-            BUT_Land.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
-            BUT_Land.UseVisualStyleBackColor = true;
-            BUT_Land.Click += new System.EventHandler(BUT_Land_Click);
-            //
-            // BUT_Kill
-            //
-            BUT_Kill.ColorMouseDown = System.Drawing.Color.Empty;
-            BUT_Kill.ColorMouseOver = System.Drawing.Color.Empty;
-            BUT_Kill.ColorNotEnabled = System.Drawing.Color.Empty;
-            resources.ApplyResources(BUT_Kill, "BUT_Kill");
-            BUT_Kill.Name = "BUT_Kill";
-            BUT_Kill.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
-            BUT_Kill.UseVisualStyleBackColor = true;
-            BUT_Kill.Click += new System.EventHandler(BUT_Kill_Click);
             //
             // BUT_DFClose
             //
@@ -3597,9 +3558,6 @@ namespace MissionPlanner.GCSViews
         public static Controls.MyButton BUT_GenerateMap;
         public static Controls.MyButton BUT_LoadMission;
         public static Controls.MyButton BUT_Execute;
-        public static Controls.MyButton BUT_StopMission;
-        public static Controls.MyButton BUT_Land;
-        public static Controls.MyButton BUT_Kill;
         public static Controls.MyButton BUT_DFClose;
         public static Controls.MyButton BUT_DFOpen;
         public static System.Windows.Forms.Label LBL_DFMotor1;
