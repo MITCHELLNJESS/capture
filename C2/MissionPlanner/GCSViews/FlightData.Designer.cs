@@ -3063,34 +3063,34 @@ namespace MissionPlanner.GCSViews
             //
             // BUT_StopMission
             //
-            BUT_StopMission.ColorMouseDown = System.Drawing.Color.Empty;
-            BUT_StopMission.ColorMouseOver = System.Drawing.Color.Empty;
-            BUT_StopMission.ColorNotEnabled = System.Drawing.Color.Empty;
+            BUT_StopMission.BGGradTop = Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(227)))), ((int)(((byte)(3)))));
+            BUT_StopMission.BGGradBot = Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(159)))));
+            BUT_StopMission.TextColor = Color.Black;
             resources.ApplyResources(BUT_StopMission, "BUT_StopMission");
             BUT_StopMission.Name = "BUT_StopMission";
-            BUT_StopMission.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            BUT_StopMission.TextColorNotEnabled = Color.Black;
             BUT_StopMission.UseVisualStyleBackColor = true;
             BUT_StopMission.Click += new System.EventHandler(BUT_StopMission_Click);
             //
             // BUT_Land
             //
-            BUT_Land.ColorMouseDown = System.Drawing.Color.Empty;
-            BUT_Land.ColorMouseOver = System.Drawing.Color.Empty;
-            BUT_Land.ColorNotEnabled = System.Drawing.Color.Empty;
+            BUT_Land.BGGradTop = Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(227)))), ((int)(((byte)(3)))));
+            BUT_Land.BGGradBot = Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(159)))));
+            BUT_Land.TextColor = Color.Black;
             resources.ApplyResources(BUT_Land, "BUT_Land");
             BUT_Land.Name = "BUT_Land";
-            BUT_Land.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            BUT_Land.TextColorNotEnabled = Color.Black;
             BUT_Land.UseVisualStyleBackColor = true;
             BUT_Land.Click += new System.EventHandler(BUT_Land_Click);
             //
             // BUT_Kill
             //
-            BUT_Kill.ColorMouseDown = System.Drawing.Color.Empty;
-            BUT_Kill.ColorMouseOver = System.Drawing.Color.Empty;
-            BUT_Kill.ColorNotEnabled = System.Drawing.Color.Empty;
+            BUT_Kill.BGGradTop = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            BUT_Kill.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(115)))), ((int)(((byte)(115)))));
+            BUT_Kill.TextColor = Color.Black;
             resources.ApplyResources(BUT_Kill, "BUT_Kill");
             BUT_Kill.Name = "BUT_Kill";
-            BUT_Kill.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            BUT_Kill.TextColorNotEnabled = Color.Black;
             BUT_Kill.UseVisualStyleBackColor = true;
             BUT_Kill.Click += new System.EventHandler(BUT_Kill_Click);
             //
