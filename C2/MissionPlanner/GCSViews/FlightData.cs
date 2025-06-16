@@ -1,8 +1,10 @@
 using DirectShowLib;
+using Dowding.Model;
 using GMap.NET;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
 using log4net;
+using Microsoft.Scripting.Utils;
 using MissionPlanner.ArduPilot;
 using MissionPlanner.Controls;
 using MissionPlanner.GeoRef;
@@ -20,20 +22,19 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Dowding.Model;
-using Microsoft.Scripting.Utils;
 using WebCamService;
 using ZedGraph;
+using static IronPython.Modules.PythonIterTools;
 using LogAnalyzer = MissionPlanner.Utilities.LogAnalyzer;
 using TableLayoutPanelCellPosition = System.Windows.Forms.TableLayoutPanelCellPosition;
 using UnauthorizedAccessException = System.UnauthorizedAccessException;
-using System.Runtime.InteropServices;
-using System.Net.Sockets;
 
 // written by michael oborne
 
@@ -674,6 +675,13 @@ namespace MissionPlanner.GCSViews
 
         public void GenerateDemoFieldOverlay(double lat, double lng)
         {
+            if (!isFlightPlannerReady)
+            {
+                flightPlannerToolStripMenuItem_Click(null, null);
+                but_Click(BUT_close, null);
+                isFlightPlannerReady = true;
+            }
+
             int numPoints = 300;
 
             // Outer Bound NW
@@ -882,21 +890,58 @@ namespace MissionPlanner.GCSViews
             assetsNW_blue_4.Stroke = new Pen(Color.Black, 2);
             assetsNW_blue_4.Fill = new SolidBrush(Color.Blue);
 
+            // GeoFence
+            FlightPlanner.instance.clearMissionToolStripMenuItem_Click(null, null);
+            FlightPlanner.instance.cmb_missiontype.Text = "FENCE";
+            List<PointLatLng> fencePoints = GenerateCirclePointsBounds(lat, lng, 27, 32/*numPoints*/);
+            FlightPlanner.instance.AddPolygonPoint(fencePoints[0]);
+            int count = 0;
+            fencePoints.ForEach(a => FlightPlanner.instance.AddCommand(MAVLink.MAV_CMD.FENCE_POLYGON_VERTEX_INCLUSION, fencePoints.Count, 0, 0, 0, a.Lng, a.Lat, count++));
+            FlightPlanner.instance.BUT_write_Click(null, null);
+            FlightPlanner.instance.readSilent();
+            FlightPlanner.instance.cmb_missiontype.Text = "MISSION";
+
             isDemoFieldGenerated = true;
 
+            AddAssetPois();
+        }
+
+        private void AddAssetPois()
+        {
             POI.POIClear();
-            POI.POIAdd(new PointLatLngAlt(assetLatOne, assetLngOne, 0), "Pos #1");
-            POI.POIAdd(new PointLatLngAlt(assetLatTwo, assetLngTwo, 0), "Pos #2");
-            POI.POIAdd(new PointLatLngAlt(assetLatThree, assetLngThree, 0), "Pos #3");
-            POI.POIAdd(new PointLatLngAlt(assetLatFour, assetLngFour, 0), "Pos #4");
-            POI.POIAdd(new PointLatLngAlt(assetLatFive, assetLngFive, 0), "Pos #5");
-            POI.POIAdd(new PointLatLngAlt(assetLatSix, assetLngSix, 0), "Pos #6");
-            POI.POIAdd(new PointLatLngAlt(assetLatSeven, assetLngSeven, 0), "Pos #7");
-            POI.POIAdd(new PointLatLngAlt(assetLatEight, assetLngEight, 0), "Pos #8");
-            POI.POIAdd(new PointLatLngAlt(assetLatNine, assetLngNine, 0), "Pos #9");
-            POI.POIAdd(new PointLatLngAlt(assetLatTen, assetLngTen, 0), "Pos #10");
-            POI.POIAdd(new PointLatLngAlt(assetLatEleven, assetLngEleven, 0), "Pos #11");
-            POI.POIAdd(new PointLatLngAlt(assetLatTwelve, assetLngTwelve, 0), "Pos #12");
+
+            if (isNWHome)
+            {
+                POI.POIAdd(new PointLatLngAlt(assetLatOne, assetLngOne, 0), "Pos #1 (Opponent)");
+                POI.POIAdd(new PointLatLngAlt(assetLatTwo, assetLngTwo, 0), "Pos #2 (Opponent)");
+                POI.POIAdd(new PointLatLngAlt(assetLatThree, assetLngThree, 0), "Pos #3 (Opponent)");
+                POI.POIAdd(new PointLatLngAlt(assetLatFour, assetLngFour, 0), "Pos #4 (Opponent)");
+                POI.POIAdd(new PointLatLngAlt(assetLatFive, assetLngFive, 0), "Pos #5 (Opponent)");
+                POI.POIAdd(new PointLatLngAlt(assetLatSix, assetLngSix, 0), "Pos #6 (Opponent)");
+                POI.POIAdd(new PointLatLngAlt(assetLatSeven, assetLngSeven, 0), "Pos #7 (Friendly)");
+                POI.POIAdd(new PointLatLngAlt(assetLatEight, assetLngEight, 0), "Pos #8 (Friendly)");
+                POI.POIAdd(new PointLatLngAlt(assetLatNine, assetLngNine, 0), "Pos #9 (Friendly)");
+                POI.POIAdd(new PointLatLngAlt(assetLatTen, assetLngTen, 0), "Pos #10 (Friendly)");
+                POI.POIAdd(new PointLatLngAlt(assetLatEleven, assetLngEleven, 0), "Pos #11 (Friendly)");
+                POI.POIAdd(new PointLatLngAlt(assetLatTwelve, assetLngTwelve, 0), "Pos #12 (Friendly)");
+                this.CMB_mission.DataSource = new string[] { "None", "Marked Asset", "FOB", "Pos #1 (Opponent)", "Pos #2 (Opponent)", "Pos #3 (Opponent)", "Pos #4 (Opponent)", "Pos #5 (Opponent)", "Pos #6 (Opponent)", "Pos #7 (Friendly)", "Pos #8 (Friendly)", "Pos #9 (Friendly)", "Pos #10 (Friendly)", "Pos #11 (Friendly)", "Pos #12 (Friendly)" };
+            }
+            else
+            {
+                POI.POIAdd(new PointLatLngAlt(assetLatOne, assetLngOne, 0), "Pos #1 (Friendly)");
+                POI.POIAdd(new PointLatLngAlt(assetLatTwo, assetLngTwo, 0), "Pos #2 (Friendly)");
+                POI.POIAdd(new PointLatLngAlt(assetLatThree, assetLngThree, 0), "Pos #3 (Friendly)");
+                POI.POIAdd(new PointLatLngAlt(assetLatFour, assetLngFour, 0), "Pos #4 (Friendly)");
+                POI.POIAdd(new PointLatLngAlt(assetLatFive, assetLngFive, 0), "Pos #5 (Friendly)");
+                POI.POIAdd(new PointLatLngAlt(assetLatSix, assetLngSix, 0), "Pos #6 (Friendly)");
+                POI.POIAdd(new PointLatLngAlt(assetLatSeven, assetLngSeven, 0), "Pos #7 (Opponent)");
+                POI.POIAdd(new PointLatLngAlt(assetLatEight, assetLngEight, 0), "Pos #8 (Opponent)");
+                POI.POIAdd(new PointLatLngAlt(assetLatNine, assetLngNine, 0), "Pos #9 (Opponent)");
+                POI.POIAdd(new PointLatLngAlt(assetLatTen, assetLngTen, 0), "Pos #10 (Opponent)");
+                POI.POIAdd(new PointLatLngAlt(assetLatEleven, assetLngEleven, 0), "Pos #11 (Opponent)");
+                POI.POIAdd(new PointLatLngAlt(assetLatTwelve, assetLngTwelve, 0), "Pos #12 (Opponent)");
+                this.CMB_mission.DataSource = new string[] { "None", "Marked Asset", "FOB", "Pos #1 (Friendly)", "Pos #2 (Friendly)", "Pos #3 (Friendly)", "Pos #4 (Friendly)", "Pos #5 (Friendly)", "Pos #6 (Friendly)", "Pos #7 (Opponent)", "Pos #8 (Opponent)", "Pos #9 (Opponent)", "Pos #10 (Opponent)", "Pos #11 (Opponent)", "Pos #12 (Opponent)" };
+            }
         }
 
         public void ClearDemoFieldOverlay()
@@ -1293,6 +1338,7 @@ namespace MissionPlanner.GCSViews
 
             ClearDemoFieldOverlay();
             ShowDemoFieldOverlay();
+            AddAssetPois();
         }
 
         private void BUT_GenerateMap_Click(object sender, EventArgs e)
@@ -2742,6 +2788,7 @@ namespace MissionPlanner.GCSViews
                 isRedTeam = false;
                 isNWHome = !isNWRed;
             }
+            AddAssetPois();
         }
 
         private void MissionSelectionChanged(object sender, EventArgs e)
