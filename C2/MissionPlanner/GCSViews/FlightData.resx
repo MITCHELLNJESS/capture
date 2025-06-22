@@ -360,6 +360,9 @@
   <metadata name="bindingSourceQuickTab.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>1162, 18</value>
   </metadata>
+  <metadata name="bindingSourceThrottle.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1162, 18</value>
+  </metadata>
   <data name="quickView6.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -5857,6 +5860,42 @@
   <data name="&gt;&gt;labelInBounds.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
+  <!-- <data name="throttleLevel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data> -->
+  <data name="throttleLevel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 9.75pt</value>
+  </data>
+  <data name="throttleLevel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>566, 75</value>
+  </data>
+  <data name="throttleLevel.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>100, 27</value>
+  </data>
+  <data name="throttleLevel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 70</value>
+  </data>
+  <data name="throttleLevel.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <metadata name="throttleLevel.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>617, 17</value>
+  </metadata>
+  <data name="throttleLevel.ToolTip" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="&gt;&gt;throttleLevel.Name" xml:space="preserve">
+    <value>throttleLevel</value>
+  </data>
+  <data name="&gt;&gt;throttleLevel.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.QuickView, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;throttleLevel.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;throttleLevel.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
   <data name="BUT_SwitchColors.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -7079,6 +7118,114 @@
   <data name="&gt;&gt;BUT_DFOpen.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="BUT_Forward.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_Forward.Location" type="System.Drawing.Point, System.Drawing">
+    <value>60, 500</value>
+  </data>
+  <data name="BUT_Forward.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 40</value>
+  </data>
+  <data name="BUT_Forward.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="BUT_Forward.Text" xml:space="preserve">
+    <value>^</value>
+  </data>
+  <data name="&gt;&gt;BUT_Forward.Name" xml:space="preserve">
+    <value>BUT_Forward</value>
+  </data>
+  <data name="&gt;&gt;BUT_Forward.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_Forward.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;BUT_Forward.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="BUT_Backward.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_Backward.Location" type="System.Drawing.Point, System.Drawing">
+    <value>60, 550</value>
+  </data>
+  <data name="BUT_Backward.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 40</value>
+  </data>
+  <data name="BUT_Backward.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="BUT_Backward.Text" xml:space="preserve">
+    <value>v</value>
+  </data>
+  <data name="&gt;&gt;BUT_Backward.Name" xml:space="preserve">
+    <value>BUT_Backward</value>
+  </data>
+  <data name="&gt;&gt;BUT_Backward.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_Backward.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;BUT_Backward.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="BUT_Left.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_Left.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 550</value>
+  </data>
+  <data name="BUT_Left.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 40</value>
+  </data>
+  <data name="BUT_Left.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="BUT_Left.Text" xml:space="preserve">
+    <value>&lt;</value>
+  </data>
+  <data name="&gt;&gt;BUT_Left.Name" xml:space="preserve">
+    <value>BUT_Left</value>
+  </data>
+  <data name="&gt;&gt;BUT_Left.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_Left.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;BUT_Left.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="BUT_Right.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_Right.Location" type="System.Drawing.Point, System.Drawing">
+    <value>110, 550</value>
+  </data>
+  <data name="BUT_Right.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 40</value>
+  </data>
+  <data name="BUT_Right.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="BUT_Right.Text" xml:space="preserve">
+    <value>&gt;</value>
+  </data>
+  <data name="&gt;&gt;BUT_Right.Name" xml:space="preserve">
+    <value>BUT_Right</value>
+  </data>
+  <data name="&gt;&gt;BUT_Right.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_Right.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;BUT_Right.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
   <data name="&gt;&gt;BUT_GenerateMap.Name" xml:space="preserve">
     <value>BUT_GenerateMap</value>
   </data>
@@ -7704,6 +7851,12 @@
     <value>bindingSourceQuickTab</value>
   </data>
   <data name="&gt;&gt;bindingSourceQuickTab.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;bindingSourceThrottle.Name" xml:space="preserve">
+    <value>bindingSourceThrottle</value>
+  </data>
+  <data name="&gt;&gt;bindingSourceThrottle.Type" xml:space="preserve">
     <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;bindingSourceGaugesTab.Name" xml:space="preserve">

@@ -49,6 +49,7 @@ namespace MissionPlanner.GCSViews
             this.bindingSourceQuickTab = new System.Windows.Forms.BindingSource(this.components);
             this.quickView5 = new MissionPlanner.Controls.QuickView();
             this.quickView4 = new MissionPlanner.Controls.QuickView();
+            throttleLevel = new MissionPlanner.Controls.QuickView();
             this.quickView3 = new MissionPlanner.Controls.QuickView();
             this.quickView2 = new MissionPlanner.Controls.QuickView();
             this.quickView1 = new MissionPlanner.Controls.QuickView();
@@ -248,6 +249,10 @@ namespace MissionPlanner.GCSViews
             BUT_Kill = new MissionPlanner.Controls.MyButton();
             BUT_DFClose = new MissionPlanner.Controls.MyButton();
             BUT_DFOpen = new MissionPlanner.Controls.MyButton();
+            BUT_Forward = new MissionPlanner.Controls.MyButton();
+            BUT_Backward = new MissionPlanner.Controls.MyButton();
+            BUT_Left = new MissionPlanner.Controls.MyButton();
+            BUT_Right = new MissionPlanner.Controls.MyButton();
             LBL_DFMotor1 = new System.Windows.Forms.Label();
             CMB_DFMotor1 = new System.Windows.Forms.ComboBox();
             LBL_DFMotor2 = new System.Windows.Forms.Label();
@@ -2628,6 +2633,7 @@ namespace MissionPlanner.GCSViews
             this.splitContainer1.Panel2.Controls.Add(this.TRK_zoom);
             this.splitContainer1.Panel2.Controls.Add(this.windDir1);
             this.splitContainer1.Panel2.Controls.Add(labelInBounds);
+            this.splitContainer1.Panel2.Controls.Add(throttleLevel);
             this.splitContainer1.Panel2.Controls.Add(BUT_SwitchColors);
             this.splitContainer1.Panel2.Controls.Add(CMB_team);
             this.splitContainer1.Panel2.Controls.Add(BUT_ToggleDemoFieldOverlay);
@@ -2647,6 +2653,10 @@ namespace MissionPlanner.GCSViews
             this.splitContainer1.Panel2.Controls.Add(BUT_Kill);
             this.splitContainer1.Panel2.Controls.Add(BUT_DFClose);
             this.splitContainer1.Panel2.Controls.Add(BUT_DFOpen);
+            this.splitContainer1.Panel2.Controls.Add(BUT_Forward);
+            this.splitContainer1.Panel2.Controls.Add(BUT_Backward);
+            this.splitContainer1.Panel2.Controls.Add(BUT_Left);
+            this.splitContainer1.Panel2.Controls.Add(BUT_Right);
             this.splitContainer1.Panel2.Controls.Add(LBL_DFMotor1);
             this.splitContainer1.Panel2.Controls.Add(CMB_DFMotor1);
             this.splitContainer1.Panel2.Controls.Add(LBL_DFMotor2);
@@ -2948,6 +2958,17 @@ namespace MissionPlanner.GCSViews
             labelInBounds.Font = new Font(labelInBounds.Font.FontFamily, 18, FontStyle.Bold);
             labelInBounds.Padding = new Padding(5);
             //
+            // throttleLevel
+            //
+            throttleLevel.desc = "Throttle Level (1000 - 2000)";
+            resources.ApplyResources(throttleLevel, "throttleLevel");
+            throttleLevel.Name = "throttleLevel";
+            throttleLevel.number = 0D;
+            throttleLevel.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(100)))));
+            throttleLevel.numberColorBackup = System.Drawing.Color.Empty;
+            throttleLevel.numberformat = "0.00";
+            throttleLevel.toolTip1.SetToolTip(throttleLevel, "");
+            //
             // BUT_SwitchColors
             //
             BUT_SwitchColors.ColorMouseDown = System.Drawing.Color.Empty;
@@ -3115,6 +3136,50 @@ namespace MissionPlanner.GCSViews
             BUT_DFOpen.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
             BUT_DFOpen.UseVisualStyleBackColor = true;
             BUT_DFOpen.Click += new System.EventHandler(BUT_DFOpen_Click);
+            //
+            // BUT_Forward
+            //
+            BUT_Forward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            BUT_Forward.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            BUT_Forward.TextColor = Color.Black;
+            resources.ApplyResources(BUT_Forward, "BUT_Forward");
+            BUT_Forward.Name = "BUT_Forward";
+            BUT_Forward.TextColorNotEnabled = Color.Black;
+            BUT_Forward.UseVisualStyleBackColor = true;
+            BUT_Forward.Click += new System.EventHandler(BUT_Forward_Click);
+            //
+            // BUT_Backward
+            //
+            BUT_Backward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            BUT_Backward.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            BUT_Backward.TextColor = Color.Black;
+            resources.ApplyResources(BUT_Backward, "BUT_Backward");
+            BUT_Backward.Name = "BUT_Backward";
+            BUT_Backward.TextColorNotEnabled = Color.Black;
+            BUT_Backward.UseVisualStyleBackColor = true;
+            BUT_Backward.Click += new System.EventHandler(BUT_Backward_Click);
+            //
+            // BUT_Left
+            //
+            BUT_Left.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            BUT_Left.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            BUT_Left.TextColor = Color.Black;
+            resources.ApplyResources(BUT_Left, "BUT_Left");
+            BUT_Left.Name = "BUT_Left";
+            BUT_Left.TextColorNotEnabled = Color.Black;
+            BUT_Left.UseVisualStyleBackColor = true;
+            BUT_Left.Click += new System.EventHandler(BUT_Left_Click);
+            //
+            // BUT_Right
+            //
+            BUT_Right.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            BUT_Right.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            BUT_Right.TextColor = Color.Black;
+            resources.ApplyResources(BUT_Right, "BUT_Right");
+            BUT_Right.Name = "BUT_Right";
+            BUT_Right.TextColorNotEnabled = Color.Black;
+            BUT_Right.UseVisualStyleBackColor = true;
+            BUT_Right.Click += new System.EventHandler(BUT_Right_Click);
             // 
             // LBL_DFMotor1
             // 
@@ -3552,6 +3617,7 @@ namespace MissionPlanner.GCSViews
         private Controls.QuickView quickView2;
         private Controls.QuickView quickView1;
         private Controls.QuickView quickView4;
+        private static Controls.QuickView throttleLevel;
         private System.Windows.Forms.ToolStripMenuItem flyToHereAltToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem flightPlannerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem userItemsToolStripMenuItem;
@@ -3602,6 +3668,10 @@ namespace MissionPlanner.GCSViews
         public static Controls.MyButton BUT_Kill;
         public static Controls.MyButton BUT_DFClose;
         public static Controls.MyButton BUT_DFOpen;
+        public static Controls.MyButton BUT_Forward;
+        public static Controls.MyButton BUT_Backward;
+        public static Controls.MyButton BUT_Left;
+        public static Controls.MyButton BUT_Right;
         public static System.Windows.Forms.Label LBL_DFMotor1;
         public static System.Windows.Forms.ComboBox CMB_DFMotor1;
         public static System.Windows.Forms.Label LBL_DFMotor2;

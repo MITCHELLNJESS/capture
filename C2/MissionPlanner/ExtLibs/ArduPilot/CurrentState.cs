@@ -194,6 +194,8 @@ namespace MissionPlanner
         //It is true when we got a VFR_HUD message, so it can be used to get climbrate, instead of calculating it from time and alt change.
         private bool gotVFR = false;
 
+        public static CurrentState instance { get; set; }
+
         static CurrentState()
         {
             // set default telemrates
@@ -222,6 +224,8 @@ namespace MissionPlanner
 
         public CurrentState()
         {
+            instance = this;
+
             ResetInternals();
 
             var t = Type.GetType("Mono.Runtime");
