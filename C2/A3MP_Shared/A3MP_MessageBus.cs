@@ -1,22 +1,36 @@
 ﻿using System;
+using System.Security.Cryptography.X509Certificates;
 
 namespace A3MP_Shared
 {
     public static class A3MP_MessageBus
     {
-        public static string command = "DEFAULT";
+        public static int[] command = {-9999, -9999}; //default
+        public static string[] a3Output = new string[8];
 
-        public static void SetCommand(string message)
+        public static void setCommand(int[] cmd)
+        {
+            command = cmd;
+        }
+        
+        public static void ParseCommandString(string message)
         {
             Console.WriteLine("******* A3MP_MessageBus.setCommand() ********");
-            command = message;
-            //TODO set as array of values (change command to array not string)
 
-            //OnDDSMessageReceived?.Invoke(message);
+            //TODO set as array of values (change command to array not string)
+            //String order: {timestamp}, {x1}, {y1}, {width}, {height}, {center_x}, {center_y}, {latency:.2f}
+            a3Output = message.Split(',');
+            //message comes from A3 (x, y) - continuously
+            //we're given X, Y in center of box 
+            command[0] = Int32.Parse(a3Output[5]); //X-component of directional vector
+            command[1] = Int32.Parse(a3Output[6]); //Y-component of directional vector
+            //vector = (center x - ARV X, CENTER y - ARV y) - need to pass to MP code to know ARV X/Y
+            ////- purpose of this is simply to know what 'direction' or angle to go, then approach slowly....
+
         }
 
         //command accessor function
-        public static string GetCommand()
+        public static int[] GetCommand()
         {
             return command;
         }

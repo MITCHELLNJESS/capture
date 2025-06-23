@@ -17,6 +17,12 @@ using OpenTK.Graphics.OpenGL;
 using System.Linq;
 using System.Runtime.InteropServices;
 using MissionPlanner.Utilities;
+//using MissionPlanner.ArduPilot;
+using MissionPlanner.Controls;
+using MissionPlanner.GeoRef;
+//using MissionPlanner.Joystick;
+using MissionPlanner.Log;
+//using MissionPlanner.Maps;
 #if !LIB
 using SvgNet.SvgGdi;
 #endif
@@ -25,6 +31,7 @@ using PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat;
 using SkiaSharp.Views.Desktop;
 using SkiaSharp;
 using A3MP_Shared;
+using static alglib;
 
 
 // Control written by Michael Oborne 2011
@@ -1339,7 +1346,10 @@ namespace MissionPlanner.Controls
                 huddrawtime = 0;
 
                 //TEST - REMOVE LATER
-                Console.WriteLine("......<<<<<<<<<<<<<<<<<<< HV TESTING - LATEST A3 COMMAND FROM HUD.CS: " + A3MP_MessageBus.GetCommand() + ">>>>>>>>>>>>>>>>");
+                //TODO move this setCommand() to FlightData.cs based on other code being implemented
+                //A3MP_MessageBus.SetCommand(A3MP_MessageBus.GetCommand()[0] - MainV2.comPort.MAV.GuidedMode.x,
+                    //A3MP_MessageBus.GetCommand()[1] - MainV2.comPort.MAV.GuidedMode.y);
+                Console.WriteLine("......<<<<<<<<<<<<<<<<<<< HV TESTING - LATEST A3 COMMAND FROM HUD.CS: " + A3MP_MessageBus.GetCommand()[0] + "," + A3MP_MessageBus.GetCommand()[1] + ">>>>>>>>>>>>>>>>");
 
             }
 

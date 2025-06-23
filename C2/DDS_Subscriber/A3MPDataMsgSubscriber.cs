@@ -146,7 +146,8 @@ namespace DDS_Subscriber
                             logger.WriteDebug("**TEST 3 - sent DDS message received to A3MP Bus...");
                             //A3MP_MessageBus.OnDDSMessageReceived?.Invoke(message.Data.ToString());
                             logger.WriteDebug($"Received message: {message.Data}");
-                            A3MP_MessageBus.SetCommand(message.Data.ToString());
+                            //parses and sets command to array (Center X, Center Y) from string received
+                            A3MP_MessageBus.ParseCommandString(message.Data.ToString());
                             logger.WriteDebug("bus command: " + A3MP_MessageBus.GetCommand());
 
                             //need to make a call to the A3MP_CommandProcessor which will update flight data (MP)

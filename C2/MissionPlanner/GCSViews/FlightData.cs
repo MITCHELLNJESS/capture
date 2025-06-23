@@ -183,7 +183,7 @@ namespace MissionPlanner.GCSViews
         //brainstorm
         //public static object  vector = (X, y, z); //goes to fly2here equivalent
         public static bool isAligned;
-        public string receivedA3Output; //check continuously for this - see HUD.cs test log
+        public int [] receivedA3Output; //check continuously for this - see HUD.cs test log
 
 
         public enum actions
@@ -432,6 +432,7 @@ namespace MissionPlanner.GCSViews
             //public static object  vector = (X, y, z); //goes to fly2here equivalent
             isAligned = false; //A3MPCommandPublisher will keep updating this
             receivedA3Output = A3MP_MessageBus.GetCommand(); //Will start with the latest A3 output, may need updating
+                                                             ////(A3 Center X, A3 Center Y)
             Console.WriteLine("^^^^^^^****RECEIVED A3 OUTPUT FROM A3MP BUS*****^^^^^^^: " + receivedA3Output);
             //needs a thread to keep pulling from A3MP_MesssageBus
         }
