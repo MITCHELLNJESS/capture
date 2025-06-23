@@ -344,7 +344,6 @@ namespace MissionPlanner.GCSViews
         {
             while(true)
             {
-                //throttleLevel.number = MissionPlanner.CurrentState.instance.ch3in;
                 throttleLevel.number = MissionPlanner.CurrentState.ch3in_Static;
                 Console.Write("Throttle: ");
                 Console.WriteLine(throttleLevel.number);

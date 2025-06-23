@@ -3406,8 +3406,6 @@ namespace MissionPlanner
                             ch8in = rcin.chan8_raw;
 
                             ch3in_Static = ch3in;
-                            Console.Write("Received RC_CHANNELS_RAW message with ch3in_Static = ");
-                            Console.WriteLine(ch3in_Static);
 
                             //percent
                             rxrssi = (int)(rcin.rssi / 255.0 * 100.0);
@@ -3440,8 +3438,6 @@ namespace MissionPlanner
                             ch16in = rcin.chan16_raw;
 
                             ch3in_Static = ch3in;
-                            Console.Write("Received RC_CHANNELS message with ch3in_Static = ");
-                            Console.WriteLine(ch3in_Static);
 
                             // As per mavlink, rcin.rssi is 0-254, 0 being the worst and 254 being the best and 255 invalid/unknown
                             // get the percentage
