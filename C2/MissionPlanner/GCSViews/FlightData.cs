@@ -160,6 +160,12 @@ namespace MissionPlanner.GCSViews
         internal bool mbGoingLeft = false;
         internal bool mbGoingRight = false;
 
+        public static double alignX = 0;
+        public static double alignY = 0;
+        internal static double alignGate = 10;
+        internal static bool doAlign = false;
+        internal static double lastAlignDist = -1;
+
         internal PointLatLng MouseDownStart;
 
         //The file path of the selected script
@@ -340,7 +346,42 @@ namespace MissionPlanner.GCSViews
 
         private bool transponderNeverConnected = true;
 
-        static void UpdateThrottle()
+        static void AlignThread()
+        {
+            MoveDirection(Convert.ToInt32(alignX), Convert.ToInt32(alignY), 0, 1);
+
+            while (doAlign)
+            {
+                Console.WriteLine("Aligning!");
+                double currAlignDist = Math.Sqrt((alignX * alignX) + (alignY * alignY));
+                // If we are aligned
+                if (currAlignDist < alignGate)
+                {
+                    Console.WriteLine("Aligned!");
+                    AlignStop();
+                    doAlign = false;
+                    lastAlignDist = -1;
+                }
+                // If we overshot the asset
+                else if ((lastAlignDist != -1) && currAlignDist > lastAlignDist)
+                {
+                    Console.WriteLine("Overshot!");
+                    // Retarget asset
+                    MoveDirection(Convert.ToInt32(alignX), Convert.ToInt32(alignY), 0, 1);
+                }
+                lastAlignDist = currAlignDist;
+            }
+
+            AlignStop();
+            BUT_Align.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            BUT_Align.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            BUT_Align.ColorMouseDown = BUT_Align.BGGradBot;
+            BUT_Align.ColorMouseOver = BUT_Align.BGGradBot;
+            doAlign = false;
+            return;
+        }
+
+        static void UpdateThrottleThread()
         {
             while(true)
             {
@@ -1039,7 +1080,7 @@ namespace MissionPlanner.GCSViews
             return rad * 180 / Math.PI;
         }
 
-        private void MoveDirection(int anX, int anY, int anZ, double arDist)
+        private static void MoveDirection(int anX, int anY, int anZ, double arDist)
         {
             try
             {
@@ -1051,58 +1092,65 @@ namespace MissionPlanner.GCSViews
                 CustomMessageBox.Show(Strings.ErrorCommunicating, Strings.ERROR);
             }
 
-            const double lrEarthRadius = 6371000;
-
-            double lrUavLatRad = DegToRad(FlightData.coords1.Lat);
-            double lrUavLngRad = DegToRad(FlightData.coords1.Lng);
-
-            double lrBearingRad = DegToRad(Convert.ToDouble(CurrentState.instance.nav_bearing)) + Math.Atan2(anX, anY);
-
-            double lrDeltaLatRad = (arDist / lrEarthRadius) * Math.Cos(lrBearingRad);
-            double lrDeltaLngRad = (arDist / lrEarthRadius) * Math.Sin(lrBearingRad) / Math.Cos(lrUavLatRad);
-
-            double lrLatRad = lrUavLatRad + lrDeltaLatRad;
-            double lrLngRad = lrUavLngRad + lrDeltaLngRad;
-            double lrAlt = FlightData.coords1.Alt + anZ * arDist / Math.Sqrt(anX * anX + anY * anY + anZ * anZ);
-
-            double lrLatDeg = RadToDeg(lrLatRad);
-            double lrLngDeg = RadToDeg(lrLngRad);
-
-            string lcAltStr = Convert.ToString(lrAlt);
-
-            //CMB_modes.Text = "Guided";
-            //BUT_setmode_Click(null, null);
-            //CMB_action.Text = actions.Mission_Start.ToString();
-            //if (!MainV2.comPort.MAV.cs.armed)
-            //{
-            //    BUT_ARM_Click(null, null);
-            //}
-
-            MAVLink.MAV_FRAME frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT;
-
-            Settings.Instance["guided_alt"] = lcAltStr;
-            Settings.Instance["guided_alt_frame"] = ((byte)frame).ToString();
-
-            int intalt = Convert.ToInt32(lrAlt);
-
-            MainV2.comPort.MAV.GuidedMode.z = intalt / CurrentState.multiplieralt;
-            MainV2.comPort.MAV.GuidedMode.x = Convert.ToInt32(lrLatDeg * 1e7);
-            MainV2.comPort.MAV.GuidedMode.y = Convert.ToInt32(lrLngDeg * 1e7);
-            MainV2.comPort.MAV.GuidedMode.frame = (byte)frame;
-
-            if (MainV2.comPort.MAV.cs.mode == "Guided")
+            try
             {
-               MainV2.comPort.setGuidedModeWP(new Locationwp
-               {
-                   alt = MainV2.comPort.MAV.GuidedMode.z,
-                   lat = MainV2.comPort.MAV.GuidedMode.x / 1e7,
-                   lng = MainV2.comPort.MAV.GuidedMode.y / 1e7,
-                   frame = (byte)frame
-               });
+                const double lrEarthRadius = 6371000;
+
+                double lrUavLatRad = DegToRad(FlightData.coords1.Lat);
+                double lrUavLngRad = DegToRad(FlightData.coords1.Lng);
+
+                double lrBearingRad = DegToRad(Convert.ToDouble(CurrentState.instance.nav_bearing)) + Math.Atan2(anX, anY);
+
+                double lrDeltaLatRad = (arDist / lrEarthRadius) * Math.Cos(lrBearingRad);
+                double lrDeltaLngRad = (arDist / lrEarthRadius) * Math.Sin(lrBearingRad) / Math.Cos(lrUavLatRad);
+
+                double lrLatRad = lrUavLatRad + lrDeltaLatRad;
+                double lrLngRad = lrUavLngRad + lrDeltaLngRad;
+                double lrAlt = FlightData.coords1.Alt + anZ * arDist / Math.Sqrt(anX * anX + anY * anY + anZ * anZ);
+
+                double lrLatDeg = RadToDeg(lrLatRad);
+                double lrLngDeg = RadToDeg(lrLngRad);
+
+                string lcAltStr = Convert.ToString(lrAlt);
+
+                //CMB_modes.Text = "Guided";
+                //BUT_setmode_Click(null, null);
+                //CMB_action.Text = actions.Mission_Start.ToString();
+                //if (!MainV2.comPort.MAV.cs.armed)
+                //{
+                //    BUT_ARM_Click(null, null);
+                //}
+
+                MAVLink.MAV_FRAME frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT;
+
+                Settings.Instance["guided_alt"] = lcAltStr;
+                Settings.Instance["guided_alt_frame"] = ((byte)frame).ToString();
+
+                int intalt = Convert.ToInt32(lrAlt);
+
+                MainV2.comPort.MAV.GuidedMode.z = intalt / CurrentState.multiplieralt;
+                MainV2.comPort.MAV.GuidedMode.x = Convert.ToInt32(lrLatDeg * 1e7);
+                MainV2.comPort.MAV.GuidedMode.y = Convert.ToInt32(lrLngDeg * 1e7);
+                MainV2.comPort.MAV.GuidedMode.frame = (byte)frame;
+
+                if (MainV2.comPort.MAV.cs.mode == "Guided")
+                {
+                    MainV2.comPort.setGuidedModeWP(new Locationwp
+                    {
+                        alt = MainV2.comPort.MAV.GuidedMode.z,
+                        lat = MainV2.comPort.MAV.GuidedMode.x / 1e7,
+                        lng = MainV2.comPort.MAV.GuidedMode.y / 1e7,
+                        frame = (byte)frame
+                    });
+                }
+            }
+            catch
+            {
+                return;
             }
         }
 
-        private void AlignStop()
+        private static void AlignStop()
         {
             MAVLink.MAV_FRAME frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT;
 
@@ -1277,6 +1325,29 @@ namespace MissionPlanner.GCSViews
             }
         }
 
+        private void BUT_Align_Click(object sender, EventArgs e)
+        {
+            if (!doAlign)
+            {
+                BUT_Align.BGGradTop = Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(13)))));
+                BUT_Align.BGGradBot = Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(255)))), ((int)(((byte)(136)))));
+                BUT_Align.ColorMouseDown = BUT_Align.BGGradBot;
+                BUT_Align.ColorMouseOver = BUT_Align.BGGradBot;
+                doAlign = true;
+                Thread thread2 = new Thread(AlignThread);
+                thread2.IsBackground = true;
+                thread2.Start();
+            }
+            else
+            {
+                BUT_Align.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Align.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Align.ColorMouseDown = BUT_Align.BGGradBot;
+                BUT_Align.ColorMouseOver = BUT_Align.BGGradBot;
+                doAlign = false;
+            }
+        }
+
         public FlightData()
         {
             log.Info("Ctor Start");
@@ -1286,7 +1357,7 @@ namespace MissionPlanner.GCSViews
             thread.IsBackground = true;
             thread.Start();
 
-            Thread thread1 = new Thread(UpdateThrottle);
+            Thread thread1 = new Thread(UpdateThrottleThread);
             thread1.IsBackground = true;
             thread1.Start();
 

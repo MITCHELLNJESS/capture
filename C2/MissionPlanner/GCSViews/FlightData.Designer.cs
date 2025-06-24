@@ -253,6 +253,7 @@ namespace MissionPlanner.GCSViews
             BUT_Backward = new MissionPlanner.Controls.MyButton();
             BUT_Left = new MissionPlanner.Controls.MyButton();
             BUT_Right = new MissionPlanner.Controls.MyButton();
+            BUT_Align = new MissionPlanner.Controls.MyButton();
             LBL_DFMotor1 = new System.Windows.Forms.Label();
             CMB_DFMotor1 = new System.Windows.Forms.ComboBox();
             LBL_DFMotor2 = new System.Windows.Forms.Label();
@@ -2657,6 +2658,7 @@ namespace MissionPlanner.GCSViews
             this.splitContainer1.Panel2.Controls.Add(BUT_Backward);
             this.splitContainer1.Panel2.Controls.Add(BUT_Left);
             this.splitContainer1.Panel2.Controls.Add(BUT_Right);
+            this.splitContainer1.Panel2.Controls.Add(BUT_Align);
             this.splitContainer1.Panel2.Controls.Add(LBL_DFMotor1);
             this.splitContainer1.Panel2.Controls.Add(CMB_DFMotor1);
             this.splitContainer1.Panel2.Controls.Add(LBL_DFMotor2);
@@ -3180,6 +3182,17 @@ namespace MissionPlanner.GCSViews
             BUT_Right.TextColorNotEnabled = Color.Black;
             BUT_Right.UseVisualStyleBackColor = true;
             BUT_Right.Click += new System.EventHandler(BUT_Right_Click);
+            //
+            // BUT_Align
+            //
+            BUT_Align.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            BUT_Align.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            BUT_Align.TextColor = Color.Black;
+            resources.ApplyResources(BUT_Align, "BUT_Align");
+            BUT_Align.Name = "BUT_Align";
+            BUT_Align.TextColorNotEnabled = Color.Black;
+            BUT_Align.UseVisualStyleBackColor = true;
+            BUT_Align.Click += new System.EventHandler(BUT_Align_Click);
             // 
             // LBL_DFMotor1
             // 
@@ -3672,6 +3685,7 @@ namespace MissionPlanner.GCSViews
         public static Controls.MyButton BUT_Backward;
         public static Controls.MyButton BUT_Left;
         public static Controls.MyButton BUT_Right;
+        public static Controls.MyButton BUT_Align;
         public static System.Windows.Forms.Label LBL_DFMotor1;
         public static System.Windows.Forms.ComboBox CMB_DFMotor1;
         public static System.Windows.Forms.Label LBL_DFMotor2;
