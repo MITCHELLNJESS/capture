@@ -9,3 +9,4 @@ keras
 pymavlink
 ultralytics
 pyyaml
+rti-connext

@@ -8,7 +8,7 @@ namespace A3MP_Shared
         public static int[] command = {-9999, -9999}; //default
         public static string[] a3Output = new string[8];
 
-        public static void setCommand(int[] cmd)
+        public static void SetCommand(int[] cmd)
         {
             command = cmd;
         }
