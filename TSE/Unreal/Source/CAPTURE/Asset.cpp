@@ -218,8 +218,8 @@ FPositionData AAsset::GetAssetCoordinateData(const float XPosition, const float 
     const double LonMetersPerDeg = FMath::Cos(FMath::DegreesToRadians(OriginLat)) * 111320.0;
 
     // Calculate asset LLA.
-    double OutLatitude = OriginLat + (dY / LatMetersPerDeg);
-    double OutLongitude = OriginLon + (dX / LonMetersPerDeg);
+    double OutLatitude = OriginLat + (dX / LatMetersPerDeg);
+    double OutLongitude = OriginLon + (dY / LonMetersPerDeg);
     double OutAltitude = OriginAlt;
 
     FPositionData PosData;
