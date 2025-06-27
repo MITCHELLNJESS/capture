@@ -399,7 +399,7 @@ namespace MissionPlanner.ArduPilot
                 }
                 else if (type == MAVLink.MAV_MISSION_TYPE.FENCE)
                 {
-                    m = new GMarkerGoogle(point, GMarkerGoogleType.blue_dot);
+                    m = new GMarkerGoogle(point, GMarkerGoogleType.green_dot);
                     m.Tag = tag;
                 }
                 else if (type == MAVLink.MAV_MISSION_TYPE.RALLY)

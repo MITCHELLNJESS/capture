@@ -848,15 +848,15 @@ mc:Ignorable=""d""
                 else if (ctl.GetType() == typeof(MyButton))
                 {
                     Controls.MyButton but = (MyButton)ctl;
-                    but.BGGradTop = ButBG;
-                    try
-                    {
-                        but.BGGradBot = Color.FromArgb(ButBG.ToArgb() - 0x333333);
-                    }
-                    catch
-                    {
-                    }
-                    but.TextColor = TextColor;
+                    // but.BGGradTop = ButBG;
+                    // try
+                    // {
+                    //     but.BGGradBot = Color.FromArgb(but.BGGradTop.ToArgb() - 0x111111);
+                    // }
+                    // catch
+                    // {
+                    // }
+                    but.TextColor = Color.Black;
                     but.Outline = ButBorder;
                 }
                 else if (ctl.GetType() == typeof(TextBox))
@@ -1149,14 +1149,14 @@ mc:Ignorable=""d""
                 }
                 else if (ctl is MyButton but)
                 {
-                    but.BGGradTop = ButBG;
-                    but.BGGradBot = ButBGBot;
-                    but.TextColor = ButtonTextColor;
-                    but.TextColorNotEnabled = ButtonTextColorNotEnabled;
-                    but.Outline = ButBorder;
-                    but.ColorMouseDown = ColorMouseDown;        //sets the colour of buttons for different situations
-                    but.ColorMouseOver = ColorMouseOver;
-                    but.ColorNotEnabled = ColorNotEnabled;
+                    // but.BGGradTop = ButBG;
+                    // but.BGGradBot = ButBGBot;
+                    // but.TextColor = ButtonTextColor;
+                    // but.TextColorNotEnabled = ButtonTextColorNotEnabled;
+                    // but.Outline = ButBorder;
+                    but.ColorMouseDown = but.BGGradBot;        //sets the colour of buttons for different situations
+                    but.ColorMouseOver = but.BGGradBot;
+                    // but.ColorNotEnabled = ColorNotEnabled;
                 }
                 else if (ctl.GetType() == typeof(TextBox))
                 {

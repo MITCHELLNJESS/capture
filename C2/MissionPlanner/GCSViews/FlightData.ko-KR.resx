@@ -291,6 +291,15 @@
   <data name="tabQuick.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="tableLayoutPanelAsset.AutoScroll" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="tableLayoutPanelAsset.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
+    <value>GrowAndShrink</value>
+  </data>
+  <data name="tableLayoutPanelAsset.ColumnCount" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
   <data name="tableLayoutPanelQuick.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -506,6 +515,36 @@
   </data>
   <data name="&gt;&gt;quickView1.ZOrder" xml:space="preserve">
     <value>5</value>
+  </data>
+  <data name="tableLayoutPanelAsset.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="tableLayoutPanelAsset.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="tableLayoutPanelAsset.RowCount" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="tableLayoutPanelAsset.Size" type="System.Drawing.Size, System.Drawing">
+    <value>344, 120</value>
+  </data>
+  <data name="tableLayoutPanelAsset.TabIndex" type="System.Int32, mscorlib">
+    <value>73</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanelAsset.Name" xml:space="preserve">
+    <value>tableLayoutPanelAsset</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanelAsset.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanelAsset.Parent" xml:space="preserve">
+    <value>tabAsset</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanelAsset.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tableLayoutPanelAsset.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="quickView6" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="quickView5" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="quickView4" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="quickView3" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="quickView2" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="quickView1" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50,Percent,50" /&gt;&lt;Rows Styles="Percent,33.33333,Percent,33.33333,Percent,33.33333" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="tableLayoutPanelQuick.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>

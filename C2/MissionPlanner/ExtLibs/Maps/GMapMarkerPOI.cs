@@ -17,4 +17,12 @@ namespace MissionPlanner.Maps
         {
         }
     }
+
+    public class GMapMarkerPOI_Blue : GMarkerGoogle
+    {
+        public GMapMarkerPOI_Blue(PointLatLng p)
+            : base(p, GMarkerGoogleType.blue_dot)
+        {
+        }
+    }
 }

@@ -2,6 +2,7 @@
 using MissionPlanner.Controls;
 using MissionPlanner.Maps;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
@@ -17,6 +18,7 @@ namespace MissionPlanner.Utilities
         /// Store points of interest
         /// </summary>
         static ObservableCollection<PointLatLngAlt> POIs = new ObservableCollection<PointLatLngAlt>();
+        static List<bool> IsBlue = new List<bool>();
 
         private static EventHandler _POIModified;
 
@@ -64,6 +66,21 @@ namespace MissionPlanner.Utilities
             pnt.Tag = tag + "\n" + pnt.ToString();
 
             POI.POIs.Add(pnt);
+            POI.IsBlue.Add(false);
+
+            if (_POIModified != null && !loading)
+                _POIModified(null, null);
+        }
+
+        public static void POIAdd(PointLatLngAlt Point, string tag, bool isBlue)
+        {
+            // local copy
+            PointLatLngAlt pnt = Point;
+
+            pnt.Tag = tag + "\n" + pnt.ToString();
+
+            POI.POIs.Add(pnt);
+            POI.IsBlue.Add(isBlue);
 
             if (_POIModified != null && !loading)
                 _POIModified(null, null);
@@ -82,6 +99,7 @@ namespace MissionPlanner.Utilities
                 return;
 
             POIAdd(Point, output);
+            POI.IsBlue.Add(false);
         }
 
         public static void POIDelete(GMapMarkerPOI Point)
@@ -94,10 +112,20 @@ namespace MissionPlanner.Utilities
                 if (POI.POIs[a].Point() == Point.Position)
                 {
                     POI.POIs.RemoveAt(a);
+                    POI.IsBlue.RemoveAt(a);
                     if (_POIModified != null)
                         _POIModified(null, null);
                     return;
                 }
+            }
+        }
+
+        public static void POIClear()
+        {
+            for (int a = POI.POIs.Count - 1; a >= 0; a--)
+            {
+                POI.POIs.RemoveAt(a);
+                POI.IsBlue.RemoveAt(a);
             }
         }
 
@@ -213,13 +241,27 @@ namespace MissionPlanner.Utilities
 
             poioverlay.Clear();
 
+            int i = 0;
+
             foreach (var pnt in POIs)
             {
-                poioverlay.Markers.Add(new GMapMarkerPOI(pnt)
+                if (POI.IsBlue[i])
                 {
-                    ToolTipMode = MarkerTooltipMode.OnMouseOver,
-                    ToolTipText = pnt.Tag
-                });
+                    poioverlay.Markers.Add(new GMapMarkerPOI_Blue(pnt)
+                    {
+                        ToolTipMode = MarkerTooltipMode.OnMouseOver,
+                        ToolTipText = pnt.Tag
+                    });
+                }
+                else
+                {
+                    poioverlay.Markers.Add(new GMapMarkerPOI(pnt)
+                    {
+                        ToolTipMode = MarkerTooltipMode.OnMouseOver,
+                        ToolTipText = pnt.Tag
+                    });
+                }
+                i++;
             }
         }
     }

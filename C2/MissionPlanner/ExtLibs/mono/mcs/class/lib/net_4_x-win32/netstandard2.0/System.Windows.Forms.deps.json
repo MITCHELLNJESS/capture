@@ -237,14 +237,15 @@
       "Accessibility/1.0.0": {
         "runtime": {
           "Accessibility.dll": {
-            "fileVersion": "0.0.0.0"
+            "assemblyVersion": "1.0.0",
+            "fileVersion": ""
           }
         }
       },
       "Interfaces/1.0.0": {
         "runtime": {
           "Interfaces.dll": {
-            "assemblyVersion": "1.0.0.0",
+            "assemblyVersion": "1.0.0",
             "fileVersion": "1.0.0.0"
           }
         }
@@ -257,7 +258,7 @@
         },
         "runtime": {
           "MissionPlanner.Drawing.dll": {
-            "assemblyVersion": "4.0.0.2",
+            "assemblyVersion": "1.0.0",
             "fileVersion": "4.6.57.0"
           }
         }
@@ -270,7 +271,8 @@
         },
         "runtime": {
           "System.Drawing.dll": {
-            "fileVersion": "0.0.0.0"
+            "assemblyVersion": "1.0.0",
+            "fileVersion": ""
           }
         }
       },
@@ -285,7 +287,8 @@
         },
         "runtime": {
           "System.Runtime.Serialization.Formatters.Soap.dll": {
-            "fileVersion": "0.0.0.0"
+            "assemblyVersion": "1.0.0",
+            "fileVersion": ""
           }
         }
       },

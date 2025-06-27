@@ -1,4 +1,7 @@
+using System;
+using System.Drawing;
 using System.Windows.Forms;
+using Org.BouncyCastle.Asn1.Crmf;
 
 namespace MissionPlanner.GCSViews
 {
@@ -34,15 +37,19 @@ namespace MissionPlanner.GCSViews
             this.customizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.multiLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControlactions = new System.Windows.Forms.TabControl();
+            this.tabAsset = new System.Windows.Forms.TabPage();
             this.tabQuick = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanelAsset = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanelQuick = new System.Windows.Forms.TableLayoutPanel();
             this.quickView6 = new MissionPlanner.Controls.QuickView();
+            this.contextMenuStripAssetView = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.contextMenuStripQuickView = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.setViewCountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.undockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bindingSourceQuickTab = new System.Windows.Forms.BindingSource(this.components);
             this.quickView5 = new MissionPlanner.Controls.QuickView();
             this.quickView4 = new MissionPlanner.Controls.QuickView();
+            throttleLevel = new MissionPlanner.Controls.QuickView();
             this.quickView3 = new MissionPlanner.Controls.QuickView();
             this.quickView2 = new MissionPlanner.Controls.QuickView();
             this.quickView1 = new MissionPlanner.Controls.QuickView();
@@ -53,6 +60,8 @@ namespace MissionPlanner.GCSViews
             this.modifyandSetLoiterRad = new MissionPlanner.Controls.ModifyandSet();
             this.BUT_clear_track = new MissionPlanner.Controls.MyButton();
             this.CMB_action = new System.Windows.Forms.ComboBox();
+            this.CMB_team = new System.Windows.Forms.ComboBox();
+            this.CMB_mission = new System.Windows.Forms.ComboBox();
             this.BUTactiondo = new MissionPlanner.Controls.MyButton();
             this.BUT_resumemis = new MissionPlanner.Controls.MyButton();
             this.modifyandSetAlt = new MissionPlanner.Controls.ModifyandSet();
@@ -88,6 +97,13 @@ namespace MissionPlanner.GCSViews
             this.tabTransponder = new System.Windows.Forms.TabPage();
             this.NACp_tb = new System.Windows.Forms.TextBox();
             this.NIC_tb = new System.Windows.Forms.TextBox();
+            this.latDiff_m_lbl = new System.Windows.Forms.Label();
+            this.latDiff_m_tb = new System.Windows.Forms.TextBox();
+            this.lngDiff_m_lbl = new System.Windows.Forms.Label();
+            this.lngDiff_m_tb = new System.Windows.Forms.TextBox();
+            this.angDiff_deg_lbl = new System.Windows.Forms.Label();
+            this.mission_lbl = new System.Windows.Forms.Label();
+            this.angDiff_deg_tb = new System.Windows.Forms.TextBox();
             this.NACp_lbl = new System.Windows.Forms.Label();
             this.NIC_lbl = new System.Windows.Forms.Label();
             this.Squawk_nud = new System.Windows.Forms.NumericUpDown();
@@ -223,6 +239,54 @@ namespace MissionPlanner.GCSViews
             this.TRK_zoom = new MissionPlanner.Controls.MyTrackBar();
             this.windDir1 = new MissionPlanner.Controls.WindDir();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            labelInBounds = new System.Windows.Forms.Label();
+            BUT_SwitchColors = new MissionPlanner.Controls.MyButton();
+            BUT_ToggleDemoFieldOverlay = new MissionPlanner.Controls.MyButton();
+            BUT_LoadMission = new MissionPlanner.Controls.MyButton();
+            BUT_Execute = new MissionPlanner.Controls.MyButton();
+            BUT_StopMission = new MissionPlanner.Controls.MyButton();
+            BUT_Land = new MissionPlanner.Controls.MyButton();
+            BUT_Kill = new MissionPlanner.Controls.MyButton();
+            BUT_DFClose = new MissionPlanner.Controls.MyButton();
+            BUT_DFOpen = new MissionPlanner.Controls.MyButton();
+            BUT_Forward = new MissionPlanner.Controls.MyButton();
+            BUT_Backward = new MissionPlanner.Controls.MyButton();
+            BUT_Left = new MissionPlanner.Controls.MyButton();
+            BUT_Right = new MissionPlanner.Controls.MyButton();
+            BUT_Up = new MissionPlanner.Controls.MyButton();
+            BUT_Down = new MissionPlanner.Controls.MyButton();
+            BUT_Hov = new MissionPlanner.Controls.MyButton();
+            BUT_Align = new MissionPlanner.Controls.MyButton();
+
+            LBL_DFMotor1 = new System.Windows.Forms.Label();
+            CMB_DFMotor1 = new System.Windows.Forms.ComboBox();
+            LBL_DFMotor2 = new System.Windows.Forms.Label();
+            CMB_DFMotor2 = new System.Windows.Forms.ComboBox();
+            LBL_DFPort1 = new System.Windows.Forms.Label();
+            TB_DFPort1 = new System.Windows.Forms.TextBox();
+            LBL_DFPort2 = new System.Windows.Forms.Label();
+            TB_DFPort2 = new System.Windows.Forms.TextBox();
+            LBL_DFOpenPwm1 = new System.Windows.Forms.Label();
+            TB_DFOpenPwm1 = new System.Windows.Forms.TextBox();
+            LBL_DFOpenPwm2 = new System.Windows.Forms.Label();
+            TB_DFOpenPwm2 = new System.Windows.Forms.TextBox();
+            LBL_DFClosePwm1 = new System.Windows.Forms.Label();
+            TB_DFClosePwm1 = new System.Windows.Forms.TextBox();
+            LBL_DFClosePwm2 = new System.Windows.Forms.Label();
+            TB_DFClosePwm2 = new System.Windows.Forms.TextBox();
+            LBL_DFStopPwm1 = new System.Windows.Forms.Label();
+            TB_DFStopPwm1 = new System.Windows.Forms.TextBox();
+            LBL_DFStopPwm2 = new System.Windows.Forms.Label();
+            TB_DFStopPwm2 = new System.Windows.Forms.TextBox();
+            LBL_DFOpenTime1 = new System.Windows.Forms.Label();
+            TB_DFOpenTime1 = new System.Windows.Forms.TextBox();
+            LBL_DFOpenTime2 = new System.Windows.Forms.Label();
+            TB_DFOpenTime2 = new System.Windows.Forms.TextBox();
+            LBL_DFCloseTime1 = new System.Windows.Forms.Label();
+            TB_DFCloseTime1 = new System.Windows.Forms.TextBox();
+            LBL_DFCloseTime2 = new System.Windows.Forms.Label();
+            TB_DFCloseTime2 = new System.Windows.Forms.TextBox();
+            BUT_GenerateMap = new MissionPlanner.Controls.MyButton();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -231,7 +295,7 @@ namespace MissionPlanner.GCSViews
             this.lbl_sats = new MissionPlanner.Controls.MyLabel();
             this.gMapControl1 = new MissionPlanner.Controls.myGMAP();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.coords1 = new MissionPlanner.Controls.Coords();
+            coords1 = new MissionPlanner.Controls.Coords();
             this.CHK_autopan = new System.Windows.Forms.CheckBox();
             this.CB_tuning = new System.Windows.Forms.CheckBox();
             this.ZedGraphTimer = new System.Windows.Forms.Timer(this.components);
@@ -240,6 +304,11 @@ namespace MissionPlanner.GCSViews
             this.scriptChecker = new System.Windows.Forms.Timer(this.components);
             this.Messagetabtimer = new System.Windows.Forms.Timer(this.components);
             this.bindingSourceStatusTab = new System.Windows.Forms.BindingSource(this.components);
+            assetLat = new MissionPlanner.Controls.QuickView();
+            assetLon = new MissionPlanner.Controls.QuickView();
+            assetAlt = new MissionPlanner.Controls.QuickView();
+            assetSeqNum = new MissionPlanner.Controls.QuickView();
+            this.updateAssetBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.MainH)).BeginInit();
             this.MainH.Panel1.SuspendLayout();
             this.MainH.Panel2.SuspendLayout();
@@ -252,8 +321,11 @@ namespace MissionPlanner.GCSViews
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceHud)).BeginInit();
             this.contextMenuStripactionstab.SuspendLayout();
             this.tabControlactions.SuspendLayout();
+            this.tabAsset.SuspendLayout();
             this.tabQuick.SuspendLayout();
+            this.tableLayoutPanelAsset.SuspendLayout();
             this.tableLayoutPanelQuick.SuspendLayout();
+            this.contextMenuStripAssetView.SuspendLayout();
             this.contextMenuStripQuickView.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceQuickTab)).BeginInit();
             this.tabActions.SuspendLayout();
@@ -591,6 +663,7 @@ namespace MissionPlanner.GCSViews
             // tabControlactions
             // 
             this.tabControlactions.ContextMenuStrip = this.contextMenuStripactionstab;
+            this.tabControlactions.Controls.Add(this.tabAsset);
             this.tabControlactions.Controls.Add(this.tabQuick);
             this.tabControlactions.Controls.Add(this.tabActions);
             this.tabControlactions.Controls.Add(this.tabPagemessages);
@@ -610,6 +683,78 @@ namespace MissionPlanner.GCSViews
             this.tabControlactions.SelectedIndex = 0;
             this.tabControlactions.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabControl1_DrawItem);
             this.tabControlactions.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
+            //
+            // tabAsset
+            //
+            resources.ApplyResources(this.tabAsset, "tabAsset");
+            this.tabAsset.Controls.Add(this.tableLayoutPanelAsset);
+            this.tabAsset.Name = "tabAsset";
+            this.tabAsset.UseVisualStyleBackColor = true;
+            //
+            // tableLayoutPanelAsset
+            //
+            resources.ApplyResources(this.tableLayoutPanelAsset, "tableLayoutPanelAsset");
+            this.tableLayoutPanelAsset.Controls.Add(this.updateAssetBtn, 0, 2);
+            this.tableLayoutPanelAsset.Controls.Add(assetSeqNum, 1, 1);
+            this.tableLayoutPanelAsset.Controls.Add(assetAlt, 0, 1);
+            this.tableLayoutPanelAsset.Controls.Add(assetLon, 1, 0);
+            this.tableLayoutPanelAsset.Controls.Add(assetLat, 0, 0);
+
+            this.tableLayoutPanelAsset.Name = "tableLayoutPanelAsset";
+
+            Console.WriteLine(tableLayoutPanelAsset.ToString());
+            //
+            // assetLat
+            //
+            assetLat.ContextMenuStrip = this.contextMenuStripAssetView;
+            assetLat.desc = "AssetLatitude";
+            resources.ApplyResources(assetLat, "assetLat");
+            assetLat.Name = "assetLat";
+            assetLat.number = 0D;
+            assetLat.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(254)))), ((int)(((byte)(86)))));
+            assetLat.numberColorBackup = System.Drawing.Color.Empty;
+            assetLat.numberformat = "0.0000";
+            //
+            // assetLon
+            //
+            assetLon.ContextMenuStrip = this.contextMenuStripAssetView;
+            assetLon.desc = "AssetLongitude";
+            resources.ApplyResources(assetLon, "assetLon");
+            assetLon.Name = "assetLon";
+            assetLon.number = 0D;
+            assetLon.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(254)))), ((int)(((byte)(86)))));
+            assetLon.numberColorBackup = System.Drawing.Color.Empty;
+            assetLon.numberformat = "0.0000";
+            //
+            // assetAlt
+            //
+            assetAlt.ContextMenuStrip = this.contextMenuStripAssetView;
+            assetAlt.desc = "AssetAltitude";
+            resources.ApplyResources(assetAlt, "assetAlt");
+            assetAlt.Name = "assetAlt";
+            assetAlt.number = 0D;
+            assetAlt.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(254)))), ((int)(((byte)(86)))));
+            assetAlt.numberColorBackup = System.Drawing.Color.Empty;
+            assetAlt.numberformat = "0.0000";
+            //
+            // assetSeqNum
+            //
+            assetSeqNum.ContextMenuStrip = this.contextMenuStripAssetView;
+            assetSeqNum.desc = "AssetSequenceNumber";
+            resources.ApplyResources(assetSeqNum, "assetSeqNum");
+            assetSeqNum.Name = "assetSeqNum";
+            assetSeqNum.number = 0D;
+            assetSeqNum.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(254)))), ((int)(((byte)(86)))));
+            assetSeqNum.numberColorBackup = System.Drawing.Color.Empty;
+            assetSeqNum.numberformat = "000000";
+            //
+            // updateAssetBtn
+            //
+            resources.ApplyResources(this.updateAssetBtn, "updateAssetBtn");
+            this.updateAssetBtn.Text = "Update";
+            this.updateAssetBtn.Name = "updateAssetBtn";
+            this.updateAssetBtn.UseVisualStyleBackColor = true;
+            this.updateAssetBtn.Click += new System.EventHandler(updateAssetBtn_Click);
             // 
             // tabQuick
             // 
@@ -629,6 +774,8 @@ namespace MissionPlanner.GCSViews
             this.tableLayoutPanelQuick.Controls.Add(this.quickView2, 1, 0);
             this.tableLayoutPanelQuick.Controls.Add(this.quickView1, 0, 0);
             this.tableLayoutPanelQuick.Name = "tableLayoutPanelQuick";
+
+            Console.WriteLine(tableLayoutPanelQuick.ToString());
             // 
             // quickView6
             // 
@@ -2490,6 +2637,63 @@ namespace MissionPlanner.GCSViews
             this.splitContainer1.Panel2.Controls.Add(this.distanceBar1);
             this.splitContainer1.Panel2.Controls.Add(this.TRK_zoom);
             this.splitContainer1.Panel2.Controls.Add(this.windDir1);
+            this.splitContainer1.Panel2.Controls.Add(labelInBounds);
+            this.splitContainer1.Panel2.Controls.Add(throttleLevel);
+            this.splitContainer1.Panel2.Controls.Add(BUT_SwitchColors);
+            this.splitContainer1.Panel2.Controls.Add(CMB_team);
+            this.splitContainer1.Panel2.Controls.Add(BUT_ToggleDemoFieldOverlay);
+            this.splitContainer1.Panel2.Controls.Add(BUT_GenerateMap);
+            //this.splitContainer1.Panel2.Controls.Add(latDiff_m_lbl);
+            //this.splitContainer1.Panel2.Controls.Add(latDiff_m_tb);
+            //this.splitContainer1.Panel2.Controls.Add(lngDiff_m_lbl);
+            //this.splitContainer1.Panel2.Controls.Add(lngDiff_m_tb);
+            this.splitContainer1.Panel2.Controls.Add(angDiff_deg_lbl);
+            this.splitContainer1.Panel2.Controls.Add(angDiff_deg_tb);
+            this.splitContainer1.Panel2.Controls.Add(mission_lbl);
+            this.splitContainer1.Panel2.Controls.Add(CMB_mission);
+            this.splitContainer1.Panel2.Controls.Add(BUT_LoadMission);
+            this.splitContainer1.Panel2.Controls.Add(BUT_Execute);
+            this.splitContainer1.Panel2.Controls.Add(BUT_StopMission);
+            this.splitContainer1.Panel2.Controls.Add(BUT_Land);
+            this.splitContainer1.Panel2.Controls.Add(BUT_Kill);
+            this.splitContainer1.Panel2.Controls.Add(BUT_DFClose);
+            this.splitContainer1.Panel2.Controls.Add(BUT_DFOpen);
+            this.splitContainer1.Panel2.Controls.Add(BUT_Forward);
+            this.splitContainer1.Panel2.Controls.Add(BUT_Backward);
+            this.splitContainer1.Panel2.Controls.Add(BUT_Left);
+            this.splitContainer1.Panel2.Controls.Add(BUT_Up);
+            this.splitContainer1.Panel2.Controls.Add(BUT_Down);
+            this.splitContainer1.Panel2.Controls.Add(BUT_Hov);
+            this.splitContainer1.Panel2.Controls.Add(BUT_Align);
+            this.splitContainer1.Panel2.Controls.Add(BUT_Right);
+            this.splitContainer1.Panel2.Controls.Add(LBL_DFMotor1);
+            this.splitContainer1.Panel2.Controls.Add(CMB_DFMotor1);
+            this.splitContainer1.Panel2.Controls.Add(LBL_DFMotor2);
+            this.splitContainer1.Panel2.Controls.Add(CMB_DFMotor2);
+            this.splitContainer1.Panel2.Controls.Add(LBL_DFPort1);
+            this.splitContainer1.Panel2.Controls.Add(TB_DFPort1);
+            this.splitContainer1.Panel2.Controls.Add(LBL_DFPort2);
+            this.splitContainer1.Panel2.Controls.Add(TB_DFPort2);
+            this.splitContainer1.Panel2.Controls.Add(LBL_DFOpenPwm1);
+            this.splitContainer1.Panel2.Controls.Add(TB_DFOpenPwm1);
+            this.splitContainer1.Panel2.Controls.Add(LBL_DFOpenPwm2);
+            this.splitContainer1.Panel2.Controls.Add(TB_DFOpenPwm2);
+            this.splitContainer1.Panel2.Controls.Add(LBL_DFClosePwm1);
+            this.splitContainer1.Panel2.Controls.Add(TB_DFClosePwm1);
+            this.splitContainer1.Panel2.Controls.Add(LBL_DFClosePwm2);
+            this.splitContainer1.Panel2.Controls.Add(TB_DFClosePwm2);
+            this.splitContainer1.Panel2.Controls.Add(LBL_DFStopPwm1);
+            this.splitContainer1.Panel2.Controls.Add(TB_DFStopPwm1);
+            this.splitContainer1.Panel2.Controls.Add(LBL_DFStopPwm2);
+            this.splitContainer1.Panel2.Controls.Add(TB_DFStopPwm2);
+            this.splitContainer1.Panel2.Controls.Add(LBL_DFOpenTime1);
+            this.splitContainer1.Panel2.Controls.Add(TB_DFOpenTime1);
+            this.splitContainer1.Panel2.Controls.Add(LBL_DFOpenTime2);
+            this.splitContainer1.Panel2.Controls.Add(TB_DFOpenTime2);
+            this.splitContainer1.Panel2.Controls.Add(LBL_DFCloseTime1);
+            this.splitContainer1.Panel2.Controls.Add(TB_DFCloseTime1);
+            this.splitContainer1.Panel2.Controls.Add(LBL_DFCloseTime2);
+            this.splitContainer1.Panel2.Controls.Add(TB_DFCloseTime2);
             this.splitContainer1.Panel2.Controls.Add(this.label6);
             this.splitContainer1.Panel2.Controls.Add(this.label5);
             this.splitContainer1.Panel2.Controls.Add(this.label3);
@@ -2752,6 +2956,434 @@ namespace MissionPlanner.GCSViews
             // bindingSource1
             // 
             this.bindingSource1.DataSource = typeof(MissionPlanner.CurrentState);
+            //
+            // labelInBounds
+            //
+            resources.ApplyResources(labelInBounds, "labelInBounds");
+            labelInBounds.BackColor = System.Drawing.Color.Yellow;
+            labelInBounds.ForeColor = System.Drawing.Color.Black;
+            labelInBounds.Name = "labelInBounds";
+            labelInBounds.Tag = "custom";
+            labelInBounds.Font = new Font(labelInBounds.Font.FontFamily, 18, FontStyle.Bold);
+            labelInBounds.Padding = new Padding(5);
+            //
+            // throttleLevel
+            //
+            throttleLevel.desc = "Throttle Level (1000 - 2000)";
+            resources.ApplyResources(throttleLevel, "throttleLevel");
+            throttleLevel.Name = "throttleLevel";
+            throttleLevel.number = 0D;
+            throttleLevel.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(100)))));
+            throttleLevel.numberColorBackup = System.Drawing.Color.Empty;
+            throttleLevel.numberformat = "0.00";
+            throttleLevel.toolTip1.SetToolTip(throttleLevel, "");
+            //
+            // BUT_SwitchColors
+            //
+            BUT_SwitchColors.ColorMouseDown = System.Drawing.Color.Empty;
+            BUT_SwitchColors.ColorMouseOver = System.Drawing.Color.Empty;
+            BUT_SwitchColors.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(BUT_SwitchColors, "BUT_SwitchColors");
+            BUT_SwitchColors.Name = "BUT_SwitchColors";
+            BUT_SwitchColors.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            BUT_SwitchColors.UseVisualStyleBackColor = true;
+            BUT_SwitchColors.Click += new System.EventHandler(BUT_SwitchColors_Click);
+            //
+            // BUT_ToggleDemoFieldOverlay
+            //
+            BUT_ToggleDemoFieldOverlay.ColorMouseDown = System.Drawing.Color.Empty;
+            BUT_ToggleDemoFieldOverlay.ColorMouseOver = System.Drawing.Color.Empty;
+            BUT_ToggleDemoFieldOverlay.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(BUT_ToggleDemoFieldOverlay, "BUT_ToggleDemoFieldOverlay");
+            BUT_ToggleDemoFieldOverlay.Name = "BUT_ToggleDemoFieldOverlay";
+            BUT_ToggleDemoFieldOverlay.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            BUT_ToggleDemoFieldOverlay.UseVisualStyleBackColor = true;
+            BUT_ToggleDemoFieldOverlay.Click += new System.EventHandler(BUT_ToggleDemoFieldOverlay_Click);
+            //
+            // BUT_GenerateMap
+            //
+            BUT_GenerateMap.ColorMouseDown = System.Drawing.Color.Empty;
+            BUT_GenerateMap.ColorMouseOver = System.Drawing.Color.Empty;
+            BUT_GenerateMap.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(BUT_GenerateMap, "BUT_GenerateMap");
+            BUT_GenerateMap.Name = "BUT_GenerateMap";
+            BUT_GenerateMap.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            BUT_GenerateMap.UseVisualStyleBackColor = true;
+            BUT_GenerateMap.Click += new System.EventHandler(BUT_GenerateMap_Click);
+            //
+            // CMB_team
+            //
+            resources.ApplyResources(this.CMB_team, "CMB_team");
+            this.CMB_team.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CMB_team.DropDownWidth = 250;
+            this.CMB_team.FormattingEnabled = true;
+            this.CMB_team.Name = "CMB_team";
+            this.CMB_team.DataSource = new string[] { "Red Team", "Blue Team" };
+            this.CMB_team.SelectedIndexChanged += TeamSelectionChanged;
+            // 
+            // latDiff_m_lbl
+            // 
+            resources.ApplyResources(this.latDiff_m_lbl, "latDiff_m_lbl");
+            this.latDiff_m_lbl.Name = "latDiff_m_lbl";
+            // 
+            // latDiff_m_tb
+            // 
+            resources.ApplyResources(this.latDiff_m_tb, "latDiff_m_tb");
+            this.latDiff_m_tb.Name = "latDiff_m_tb";
+            this.latDiff_m_tb.ReadOnly = false;
+            // 
+            // lngDiff_m_lbl
+            // 
+            resources.ApplyResources(this.lngDiff_m_lbl, "lngDiff_m_lbl");
+            this.lngDiff_m_lbl.Name = "lngDiff_m_lbl";
+            // 
+            // lngDiff_m_tb
+            // 
+            resources.ApplyResources(this.lngDiff_m_tb, "lngDiff_m_tb");
+            this.lngDiff_m_tb.Name = "lngDiff_m_tb";
+            this.lngDiff_m_tb.ReadOnly = false;
+            // 
+            // angDiff_deg_lbl
+            // 
+            resources.ApplyResources(this.angDiff_deg_lbl, "angDiff_deg_lbl");
+            this.angDiff_deg_lbl.Name = "angDiff_deg_lbl";
+            // 
+            // angDiff_deg_tb
+            // 
+            resources.ApplyResources(this.angDiff_deg_tb, "angDiff_deg_tb");
+            this.angDiff_deg_tb.Name = "angDiff_deg_tb";
+            this.angDiff_deg_tb.ReadOnly = false;
+            // 
+            // mission_lbl
+            // 
+            resources.ApplyResources(this.mission_lbl, "mission_lbl");
+            this.mission_lbl.Name = "mission_lbl";
+            //
+            // CMB_mission
+            //
+            resources.ApplyResources(this.CMB_mission, "CMB_mission");
+            this.CMB_mission.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CMB_mission.DropDownWidth = 250;
+            this.CMB_mission.FormattingEnabled = true;
+            this.CMB_mission.Name = "CMB_mission";
+            this.CMB_mission.DataSource = new string[] { "None", "Marked Asset", "FOB", "Pos #1", "Pos #2", "Pos #3", "Pos #4", "Pos #5", "Pos #6", "Pos #7", "Pos #8", "Pos #9", "Pos #10", "Pos #11", "Pos #12" };
+            this.CMB_mission.SelectedIndexChanged += MissionSelectionChanged;
+            //
+            // BUT_LoadMission
+            //
+            BUT_LoadMission.ColorMouseDown = System.Drawing.Color.Empty;
+            BUT_LoadMission.ColorMouseOver = System.Drawing.Color.Empty;
+            BUT_LoadMission.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(BUT_LoadMission, "BUT_LoadMission");
+            BUT_LoadMission.Name = "BUT_LoadMission";
+            BUT_LoadMission.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            BUT_LoadMission.UseVisualStyleBackColor = true;
+            BUT_LoadMission.Click += new System.EventHandler(BUT_LoadMission_Click);
+            //
+            // BUT_Execute
+            //
+            BUT_Execute.ColorMouseDown = System.Drawing.Color.Empty;
+            BUT_Execute.ColorMouseOver = System.Drawing.Color.Empty;
+            BUT_Execute.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(BUT_Execute, "BUT_Execute");
+            BUT_Execute.Name = "BUT_Execute";
+            BUT_Execute.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            BUT_Execute.UseVisualStyleBackColor = true;
+            BUT_Execute.Click += new System.EventHandler(BUT_Execute_Click);
+            //
+            // BUT_StopMission
+            //
+            BUT_StopMission.BGGradTop = Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(227)))), ((int)(((byte)(3)))));
+            BUT_StopMission.BGGradBot = Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(159)))));
+            BUT_StopMission.TextColor = Color.Black;
+            resources.ApplyResources(BUT_StopMission, "BUT_StopMission");
+            BUT_StopMission.Name = "BUT_StopMission";
+            BUT_StopMission.TextColorNotEnabled = Color.Black;
+            BUT_StopMission.UseVisualStyleBackColor = true;
+            BUT_StopMission.Click += new System.EventHandler(BUT_StopMission_Click);
+            //
+            // BUT_Land
+            //
+            BUT_Land.BGGradTop = Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(227)))), ((int)(((byte)(3)))));
+            BUT_Land.BGGradBot = Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(159)))));
+            BUT_Land.TextColor = Color.Black;
+            resources.ApplyResources(BUT_Land, "BUT_Land");
+            BUT_Land.Name = "BUT_Land";
+            BUT_Land.TextColorNotEnabled = Color.Black;
+            BUT_Land.UseVisualStyleBackColor = true;
+            BUT_Land.Click += new System.EventHandler(BUT_Land_Click);
+            //
+            // BUT_Kill
+            //
+            BUT_Kill.BGGradTop = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            BUT_Kill.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(115)))), ((int)(((byte)(115)))));
+            BUT_Kill.TextColor = Color.Black;
+            resources.ApplyResources(BUT_Kill, "BUT_Kill");
+            BUT_Kill.Name = "BUT_Kill";
+            BUT_Kill.TextColorNotEnabled = Color.Black;
+            BUT_Kill.UseVisualStyleBackColor = true;
+            BUT_Kill.Click += new System.EventHandler(BUT_Kill_Click);
+            //
+            // BUT_DFClose
+            //
+            BUT_DFClose.ColorMouseDown = System.Drawing.Color.Empty;
+            BUT_DFClose.ColorMouseOver = System.Drawing.Color.Empty;
+            BUT_DFClose.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(BUT_DFClose, "BUT_DFClose");
+            BUT_DFClose.Name = "BUT_DFClose";
+            BUT_DFClose.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            BUT_DFClose.UseVisualStyleBackColor = true;
+            BUT_DFClose.Click += new System.EventHandler(BUT_DFClose_Click);
+            //
+            // BUT_DFOpen
+            //
+            BUT_DFOpen.ColorMouseDown = System.Drawing.Color.Empty;
+            BUT_DFOpen.ColorMouseOver = System.Drawing.Color.Empty;
+            BUT_DFOpen.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(BUT_DFOpen, "BUT_DFOpen");
+            BUT_DFOpen.Name = "BUT_DFOpen";
+            BUT_DFOpen.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            BUT_DFOpen.UseVisualStyleBackColor = true;
+            BUT_DFOpen.Click += new System.EventHandler(BUT_DFOpen_Click);
+            //
+            // BUT_Forward
+            //
+            BUT_Forward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            BUT_Forward.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            BUT_Forward.TextColor = Color.Black;
+            resources.ApplyResources(BUT_Forward, "BUT_Forward");
+            BUT_Forward.Name = "BUT_Forward";
+            BUT_Forward.TextColorNotEnabled = Color.Black;
+            BUT_Forward.UseVisualStyleBackColor = true;
+            BUT_Forward.Click += new System.EventHandler(BUT_Forward_Click);
+            //
+            // BUT_Backward
+            //
+            BUT_Backward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            BUT_Backward.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            BUT_Backward.TextColor = Color.Black;
+            resources.ApplyResources(BUT_Backward, "BUT_Backward");
+            BUT_Backward.Name = "BUT_Backward";
+            BUT_Backward.TextColorNotEnabled = Color.Black;
+            BUT_Backward.UseVisualStyleBackColor = true;
+            BUT_Backward.Click += new System.EventHandler(BUT_Backward_Click);
+            //
+            // BUT_Left
+            //
+            BUT_Left.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            BUT_Left.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            BUT_Left.TextColor = Color.Black;
+            resources.ApplyResources(BUT_Left, "BUT_Left");
+            BUT_Left.Name = "BUT_Left";
+            BUT_Left.TextColorNotEnabled = Color.Black;
+            BUT_Left.UseVisualStyleBackColor = true;
+            BUT_Left.Click += new System.EventHandler(BUT_Left_Click);
+            //
+            // BUT_Right
+            //
+            BUT_Right.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            BUT_Right.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            BUT_Right.TextColor = Color.Black;
+            resources.ApplyResources(BUT_Right, "BUT_Right");
+            BUT_Right.Name = "BUT_Right";
+            BUT_Right.TextColorNotEnabled = Color.Black;
+            BUT_Right.UseVisualStyleBackColor = true;
+            //
+            // BUT_Up
+            //
+            BUT_Up.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            BUT_Up.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            BUT_Up.TextColor = Color.Black;
+            resources.ApplyResources(BUT_Up, "BUT_Up");
+            BUT_Up.Name = "BUT_Up";
+            BUT_Up.TextColorNotEnabled = Color.Black;
+            BUT_Up.UseVisualStyleBackColor = true;
+            BUT_Up.Click += new System.EventHandler(BUT_Up_Click);
+            //
+            // BUT_Down
+            //
+            BUT_Down.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            BUT_Down.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            BUT_Down.TextColor = Color.Black;
+            resources.ApplyResources(BUT_Down, "BUT_Down");
+            BUT_Down.Name = "BUT_Down";
+            BUT_Down.TextColorNotEnabled = Color.Black;
+            BUT_Down.UseVisualStyleBackColor = true;
+            BUT_Down.Click += new System.EventHandler(BUT_Down_Click);
+            //
+            // BUT_Hov
+            //
+            BUT_Hov.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            BUT_Hov.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            BUT_Hov.TextColor = Color.Black;
+            resources.ApplyResources(BUT_Hov, "BUT_Hov");
+            BUT_Hov.Name = "BUT_Hov";
+            BUT_Hov.TextColorNotEnabled = Color.Black;
+            BUT_Hov.UseVisualStyleBackColor = true;
+            BUT_Hov.Click += new System.EventHandler(BUT_Hov_Click);
+            // 
+            //
+            // BUT_Align
+            //
+            BUT_Align.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            BUT_Align.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            BUT_Align.TextColor = Color.Black;
+            resources.ApplyResources(BUT_Align, "BUT_Align");
+            BUT_Align.Name = "BUT_Align";
+            BUT_Align.TextColorNotEnabled = Color.Black;
+            BUT_Align.UseVisualStyleBackColor = true;
+            BUT_Align.Click += new System.EventHandler(BUT_Align_Click);
+            // 
+            // 
+            // LBL_DFMotor1
+            // 
+            resources.ApplyResources(LBL_DFMotor1, "LBL_DFMotor1");
+            LBL_DFMotor1.Name = "LBL_DFMotor1";
+            // 
+            // CMB_DFMotor1
+            // 
+            resources.ApplyResources(CMB_DFMotor1, "CMB_DFMotor1");
+            CMB_DFMotor1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            CMB_DFMotor1.DropDownWidth = 250;
+            CMB_DFMotor1.FormattingEnabled = true;
+            CMB_DFMotor1.Name = "CMB_DFMotor1";
+            CMB_DFMotor1.Items.AddRange(new string[] { "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16" });
+            CMB_DFMotor1.SelectedIndex = 0;
+            // 
+            // LBL_DFMotor2
+            // 
+            resources.ApplyResources(LBL_DFMotor2, "LBL_DFMotor2");
+            LBL_DFMotor2.Name = "LBL_DFMotor2";
+            // 
+            // CMB_DFMotor2
+            // 
+            resources.ApplyResources(CMB_DFMotor2, "CMB_DFMotor2");
+            CMB_DFMotor2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            CMB_DFMotor2.DropDownWidth = 250;
+            CMB_DFMotor2.FormattingEnabled = true;
+            CMB_DFMotor2.Name = "CMB_DFMotor2";
+            CMB_DFMotor2.Items.AddRange(new string[] { "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16" });
+            CMB_DFMotor2.SelectedIndex = 1;
+            // 
+            // LBL_DFPort1
+            // 
+            resources.ApplyResources(LBL_DFPort1, "LBL_DFPort1");
+            LBL_DFPort1.Name = "LBL_DFPort1";
+            // 
+            // LBL_DFPort2
+            // 
+            resources.ApplyResources(LBL_DFPort2, "LBL_DFPort2");
+            LBL_DFPort2.Name = "LBL_DFPort2";
+            // 
+            // LBL_DFOpenPwm1
+            // 
+            resources.ApplyResources(LBL_DFOpenPwm1, "LBL_DFOpenPwm1");
+            LBL_DFOpenPwm1.Name = "LBL_DFOpenPwm1";
+            // 
+            // TB_DFOpenPwm1
+            // 
+            resources.ApplyResources(TB_DFOpenPwm1, "TB_DFOpenPwm1");
+            TB_DFOpenPwm1.Name = "TB_DFOpenPwm1";
+            TB_DFOpenPwm1.ReadOnly = false;
+            // 
+            // LBL_DFOpenPwm2
+            // 
+            resources.ApplyResources(LBL_DFOpenPwm2, "LBL_DFOpenPwm2");
+            LBL_DFOpenPwm2.Name = "LBL_DFOpenPwm2";
+            // 
+            // TB_DFOpenPwm2
+            // 
+            resources.ApplyResources(TB_DFOpenPwm2, "TB_DFOpenPwm2");
+            TB_DFOpenPwm2.Name = "TB_DFOpenPwm2";
+            TB_DFOpenPwm2.ReadOnly = false;
+            // 
+            // LBL_DFClosePwm1
+            // 
+            resources.ApplyResources(LBL_DFClosePwm1, "LBL_DFClosePwm1");
+            LBL_DFClosePwm1.Name = "LBL_DFClosePwm1";
+            // 
+            // TB_DFClosePwm1
+            // 
+            resources.ApplyResources(TB_DFClosePwm1, "TB_DFClosePwm1");
+            TB_DFClosePwm1.Name = "TB_DFClosePwm1";
+            TB_DFClosePwm1.ReadOnly = false;
+            // 
+            // LBL_DFClosePwm2
+            // 
+            resources.ApplyResources(LBL_DFClosePwm2, "LBL_DFClosePwm2");
+            LBL_DFClosePwm2.Name = "LBL_DFClosePwm2";
+            // 
+            // TB_DFClosePwm2
+            // 
+            resources.ApplyResources(TB_DFClosePwm2, "TB_DFClosePwm2");
+            TB_DFClosePwm2.Name = "TB_DFClosePwm2";
+            TB_DFClosePwm2.ReadOnly = false;
+            // 
+            // LBL_DFStopPwm1
+            // 
+            resources.ApplyResources(LBL_DFStopPwm1, "LBL_DFStopPwm1");
+            LBL_DFStopPwm1.Name = "LBL_DFStopPwm1";
+            // 
+            // TB_DFStopPwm1
+            // 
+            resources.ApplyResources(TB_DFStopPwm1, "TB_DFStopPwm1");
+            TB_DFStopPwm1.Name = "TB_DFStopPwm1";
+            TB_DFStopPwm1.ReadOnly = false;
+            // 
+            // LBL_DFStopPwm2
+            // 
+            resources.ApplyResources(LBL_DFStopPwm2, "LBL_DFStopPwm2");
+            LBL_DFStopPwm2.Name = "LBL_DFStopPwm2";
+            // 
+            // TB_DFStopPwm2
+            // 
+            resources.ApplyResources(TB_DFStopPwm2, "TB_DFStopPwm2");
+            TB_DFStopPwm2.Name = "TB_DFStopPwm2";
+            TB_DFStopPwm2.ReadOnly = false;
+            // 
+            // LBL_DFOpenTime1
+            // 
+            resources.ApplyResources(LBL_DFOpenTime1, "LBL_DFOpenTime1");
+            LBL_DFOpenTime1.Name = "LBL_DFOpenTime1";
+            // 
+            // TB_DFOpenTime1
+            // 
+            resources.ApplyResources(TB_DFOpenTime1, "TB_DFOpenTime1");
+            TB_DFOpenTime1.Name = "TB_DFOpenTime1";
+            TB_DFOpenTime1.ReadOnly = false;
+            // 
+            // LBL_DFOpenTime2
+            // 
+            resources.ApplyResources(LBL_DFOpenTime2, "LBL_DFOpenTime2");
+            LBL_DFOpenTime2.Name = "LBL_DFOpenTime2";
+            // 
+            // TB_DFOpenTime2
+            // 
+            resources.ApplyResources(TB_DFOpenTime2, "TB_DFOpenTime2");
+            TB_DFOpenTime2.Name = "TB_DFOpenTime2";
+            TB_DFOpenTime2.ReadOnly = false;
+            // 
+            // LBL_DFCloseTime1
+            // 
+            resources.ApplyResources(LBL_DFCloseTime1, "LBL_DFCloseTime1");
+            LBL_DFCloseTime1.Name = "LBL_DFCloseTime1";
+            // 
+            // TB_DFCloseTime1
+            // 
+            resources.ApplyResources(TB_DFCloseTime1, "TB_DFCloseTime1");
+            TB_DFCloseTime1.Name = "TB_DFCloseTime1";
+            TB_DFCloseTime1.ReadOnly = false;
+            // 
+            // LBL_DFCloseTime2
+            // 
+            resources.ApplyResources(LBL_DFCloseTime2, "LBL_DFCloseTime2");
+            LBL_DFCloseTime2.Name = "LBL_DFCloseTime2";
+            // 
+            // TB_DFCloseTime2
+            // 
+            resources.ApplyResources(TB_DFCloseTime2, "TB_DFCloseTime2");
+            TB_DFCloseTime2.Name = "TB_DFCloseTime2";
+            TB_DFCloseTime2.ReadOnly = false;
             // 
             // label6
             // 
@@ -2833,24 +3465,25 @@ namespace MissionPlanner.GCSViews
             // panel1
             // 
             resources.ApplyResources(this.panel1, "panel1");
-            this.panel1.Controls.Add(this.coords1);
+            this.panel1.Controls.Add(coords1);
             this.panel1.Controls.Add(this.CHK_autopan);
             this.panel1.Controls.Add(this.CB_tuning);
             this.panel1.Name = "panel1";
+            this.panel1.BackColor = Color.Red;
             // 
             // coords1
             // 
-            this.coords1.Alt = 0D;
-            this.coords1.AltSource = "";
-            this.coords1.AltUnit = "m";
-            this.coords1.DataBindings.Add(new System.Windows.Forms.Binding("Alt", this.bindingSource1, "alt", true));
-            this.coords1.DataBindings.Add(new System.Windows.Forms.Binding("Lat", this.bindingSource1, "lat", true));
-            this.coords1.DataBindings.Add(new System.Windows.Forms.Binding("Lng", this.bindingSource1, "lng", true));
-            this.coords1.Lat = 0D;
-            this.coords1.Lng = 0D;
-            resources.ApplyResources(this.coords1, "coords1");
-            this.coords1.Name = "coords1";
-            this.coords1.Vertical = false;
+            coords1.Alt = 0D;
+            coords1.AltSource = "";
+            coords1.AltUnit = "m";
+            coords1.DataBindings.Add(new System.Windows.Forms.Binding("Alt", this.bindingSource1, "alt", true));
+            coords1.DataBindings.Add(new System.Windows.Forms.Binding("Lat", this.bindingSource1, "lat", true));
+            coords1.DataBindings.Add(new System.Windows.Forms.Binding("Lng", this.bindingSource1, "lng", true));
+            coords1.Lat = 0D;
+            coords1.Lng = 0D;
+            resources.ApplyResources(coords1, "coords1");
+            coords1.Name = "coords1";
+            coords1.Vertical = false;
             // 
             // CHK_autopan
             // 
@@ -2918,7 +3551,9 @@ namespace MissionPlanner.GCSViews
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceHud)).EndInit();
             this.contextMenuStripactionstab.ResumeLayout(false);
             this.tabControlactions.ResumeLayout(false);
+            this.tabAsset.ResumeLayout(false);
             this.tabQuick.ResumeLayout(false);
+            this.tableLayoutPanelAsset.ResumeLayout(false);
             this.tableLayoutPanelQuick.ResumeLayout(false);
             this.contextMenuStripQuickView.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceQuickTab)).EndInit();
@@ -2991,6 +3626,8 @@ namespace MissionPlanner.GCSViews
         private Controls.MyButton BUTactiondo;
         private Controls.MyButton BUTrestartmission;
         private System.Windows.Forms.ComboBox CMB_action;
+        public System.Windows.Forms.ComboBox CMB_team;
+        public System.Windows.Forms.ComboBox CMB_mission;
         private Controls.MyButton BUT_Homealt;
         private System.Windows.Forms.TrackBar tracklog;
         private Controls.MyButton BUT_playlog;
@@ -3028,11 +3665,13 @@ namespace MissionPlanner.GCSViews
         private Controls.HSI Gheading;
         private Label lbl_playbackspeed;
         private System.Windows.Forms.ToolStripMenuItem setAspectRatioToolStripMenuItem;
+        public System.Windows.Forms.TabPage tabAsset;
         public System.Windows.Forms.TabPage tabQuick;
         private Controls.QuickView quickView3;
         private Controls.QuickView quickView2;
         private Controls.QuickView quickView1;
         private Controls.QuickView quickView4;
+        private static Controls.QuickView throttleLevel;
         private System.Windows.Forms.ToolStripMenuItem flyToHereAltToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem flightPlannerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem userItemsToolStripMenuItem;
@@ -3059,6 +3698,7 @@ namespace MissionPlanner.GCSViews
         private Controls.ServoOptions servoOptions11;
         private Controls.ServoOptions servoOptions12;
         private System.Windows.Forms.BindingSource bindingSourceHud;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelAsset;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelQuick;
         private System.Windows.Forms.Panel panel2;
         private Controls.MyButton BUT_speed10;
@@ -3071,6 +3711,53 @@ namespace MissionPlanner.GCSViews
         private System.Windows.Forms.Label label2;
         public System.Windows.Forms.TabPage tablogbrowse;
         private Controls.MyButton BUT_logbrowse;
+        public static System.Windows.Forms.Label labelInBounds;
+        public static Controls.MyButton BUT_SwitchColors;
+        public static Controls.MyButton BUT_ToggleDemoFieldOverlay;
+        public static Controls.MyButton BUT_GenerateMap;
+        public static Controls.MyButton BUT_LoadMission;
+        public static Controls.MyButton BUT_Execute;
+        public static Controls.MyButton BUT_StopMission;
+        public static Controls.MyButton BUT_Land;
+        public static Controls.MyButton BUT_Kill;
+        public static Controls.MyButton BUT_DFClose;
+        public static Controls.MyButton BUT_DFOpen;
+        public static Controls.MyButton BUT_Forward;
+        public static Controls.MyButton BUT_Backward;
+        public static Controls.MyButton BUT_Left;
+        public static Controls.MyButton BUT_Up;
+        public static Controls.MyButton BUT_Down;
+        public static Controls.MyButton BUT_Hov;
+        public static Controls.MyButton BUT_Align;
+        public static Controls.MyButton BUT_Right;
+        public static System.Windows.Forms.Label LBL_DFMotor1;
+        public static System.Windows.Forms.ComboBox CMB_DFMotor1;
+        public static System.Windows.Forms.Label LBL_DFMotor2;
+        public static System.Windows.Forms.ComboBox CMB_DFMotor2;
+        public static System.Windows.Forms.Label LBL_DFPort1;
+        public static System.Windows.Forms.TextBox TB_DFPort1;
+        public static System.Windows.Forms.Label LBL_DFPort2;
+        public static System.Windows.Forms.TextBox TB_DFPort2;
+        public static System.Windows.Forms.Label LBL_DFOpenPwm1;
+        public static System.Windows.Forms.TextBox TB_DFOpenPwm1;
+        public static System.Windows.Forms.Label LBL_DFOpenPwm2;
+        public static System.Windows.Forms.TextBox TB_DFOpenPwm2;
+        public static System.Windows.Forms.Label LBL_DFClosePwm1;
+        public static System.Windows.Forms.TextBox TB_DFClosePwm1;
+        public static System.Windows.Forms.Label LBL_DFClosePwm2;
+        public static System.Windows.Forms.TextBox TB_DFClosePwm2;
+        public static System.Windows.Forms.Label LBL_DFStopPwm1;
+        public static System.Windows.Forms.TextBox TB_DFStopPwm1;
+        public static System.Windows.Forms.Label LBL_DFStopPwm2;
+        public static System.Windows.Forms.TextBox TB_DFStopPwm2;
+        public static System.Windows.Forms.Label LBL_DFOpenTime1;
+        public static System.Windows.Forms.TextBox TB_DFOpenTime1;
+        public static System.Windows.Forms.Label LBL_DFOpenTime2;
+        public static System.Windows.Forms.TextBox TB_DFOpenTime2;
+        public static System.Windows.Forms.Label LBL_DFCloseTime1;
+        public static System.Windows.Forms.TextBox TB_DFCloseTime1;
+        public static System.Windows.Forms.Label LBL_DFCloseTime2;
+        public static System.Windows.Forms.TextBox TB_DFCloseTime2;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label3;
@@ -3092,7 +3779,7 @@ namespace MissionPlanner.GCSViews
         private System.Windows.Forms.BindingSource bindingSourceStatusTab;
         private System.Windows.Forms.BindingSource bindingSourceGaugesTab;
         private System.Windows.Forms.ToolStripMenuItem setHomeHereToolStripMenuItem;
-        private MissionPlanner.Controls.Coords coords1;
+        public static MissionPlanner.Controls.Coords coords1;
         private Controls.MyButton BUT_matlab;
         private System.Windows.Forms.ComboBox CMB_mountmode;
         private Controls.MyButton BUT_mountmode;
@@ -3130,6 +3817,7 @@ namespace MissionPlanner.GCSViews
         private System.Windows.Forms.ToolStripMenuItem PointCameraCoordsToolStripMenuItem1;
         private Controls.ModifyandSet modifyandSetLoiterRad;
         private System.Windows.Forms.ToolStripMenuItem onOffCameraOverlapToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripAssetView;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripQuickView;
         private System.Windows.Forms.ToolStripMenuItem setViewCountToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem setGStreamerSourceToolStripMenuItem;
@@ -3182,6 +3870,13 @@ namespace MissionPlanner.GCSViews
         private System.Windows.Forms.Label NIC_lbl;
         private System.Windows.Forms.TextBox NACp_tb;
         private System.Windows.Forms.TextBox NIC_tb;
+        private System.Windows.Forms.Label latDiff_m_lbl;
+        private System.Windows.Forms.TextBox latDiff_m_tb;
+        private System.Windows.Forms.Label lngDiff_m_lbl;
+        private System.Windows.Forms.TextBox lngDiff_m_tb;
+        private System.Windows.Forms.Label angDiff_deg_lbl;
+        private System.Windows.Forms.Label mission_lbl;
+        private System.Windows.Forms.TextBox angDiff_deg_tb;
         private ToolStripMenuItem showIconsToolStripMenuItem;
         private ToolStripMenuItem multiLineToolStripMenuItem;
         private Controls.MyButton BUT_SendMSG;
@@ -3210,5 +3905,10 @@ namespace MissionPlanner.GCSViews
         private ToolStripMenuItem gimbalVideoFullSizedToolStripMenuItem;
         private ToolStripMenuItem gimbalVideoMiniToolStripMenuItem;
         private ToolStripMenuItem gimbalVideoPopOutToolStripMenuItem;
+        public static Controls.QuickView assetLat;
+        public static Controls.QuickView assetLon;
+        public static Controls.QuickView assetAlt;
+        public static Controls.QuickView assetSeqNum;
+        private System.Windows.Forms.Button updateAssetBtn;
     }
 }

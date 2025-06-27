@@ -548,6 +548,16 @@ namespace MissionPlanner.GCSViews
             return selectedrow;
         }
 
+        public void AddWPDD(double lat, double lon, int alt)
+        {
+            selectedrow = Commands.Rows.Add();
+            Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.WAYPOINT.ToString();
+            ChangeColumnHeader(MAVLink.MAV_CMD.WAYPOINT.ToString());
+
+            updateUndoBuffer(false);
+            setfromMap(lat, lon, alt);
+        }
+
         /// <summary>
         /// Used to create a new WP
         /// </summary>
@@ -621,6 +631,24 @@ namespace MissionPlanner.GCSViews
                 }
             }
 
+            IProgressReporterDialogue frmProgressReporter = new ProgressReporterDialogue
+            {
+                StartPosition = FormStartPosition.CenterScreen,
+                Text = "Receiving WP's"
+            };
+
+            frmProgressReporter.DoWork += getWPs;
+            frmProgressReporter.UpdateProgressAndStatus(-1, "Receiving WP's");
+
+            ThemeManager.ApplyThemeTo(frmProgressReporter);
+
+            frmProgressReporter.RunBackgroundOperationAsync();
+
+            frmProgressReporter.Dispose();
+        }
+
+        public void readSilent()
+        {
             IProgressReporterDialogue frmProgressReporter = new ProgressReporterDialogue
             {
                 StartPosition = FormStartPosition.CenterScreen,
@@ -724,6 +752,37 @@ namespace MissionPlanner.GCSViews
             frmProgressReporter.Dispose();
 
             MainMap.Focus();
+        }
+
+        public void BUT_ToAssetCreate_Click(object sender, EventArgs e)
+        {
+            FlightData.updateAssetBtn_Click(null, null);
+            clearMissionToolStripMenuItem_Click(null, null);
+
+            Console.Write("Asset position from data window - lat: ");
+            Console.Write(FlightData.assetLat.number);
+            Console.Write(" lon: ");
+            Console.Write(FlightData.assetLon.number);
+            Console.Write(" alt: ");
+            Console.WriteLine(FlightData.assetAlt.number);
+            AddTakeoff(4);
+            AddWPDD(FlightData.assetLat.number, FlightData.assetLon.number, 4);
+            AddWPDD(FlightData.assetLat.number, FlightData.assetLon.number, 2);
+
+            BUT_write_Click(null, null);
+            readSilent();
+        }
+
+        public void ToPoint(double lat, double lng)
+        {
+            clearMissionToolStripMenuItem_Click(null, null);
+
+            AddTakeoff(4);
+            AddWPDD(lat, lng, 4);
+            AddWPDD(lat, lng, 2);
+
+            BUT_write_Click(null, null);
+            readSilent();
         }
 
         /// <summary>
@@ -1719,6 +1778,35 @@ namespace MissionPlanner.GCSViews
             }
         }
 
+        public void AddPolygonPoint(PointLatLng acPoint)
+        {
+            if (polygongridmode == false)
+            {
+                polygongridmode = true;
+                return;
+            }
+
+            List<PointLatLng> polygonPoints = new List<PointLatLng>();
+            if (drawnpolygonsoverlay.Polygons.Count == 0)
+            {
+                drawnpolygon.Points.Clear();
+                drawnpolygonsoverlay.Polygons.Add(drawnpolygon);
+            }
+
+            drawnpolygon.Fill = Brushes.Transparent;
+
+            // remove full loop is exists
+            if (drawnpolygon.Points.Count > 1 &&
+                drawnpolygon.Points[0] == drawnpolygon.Points[drawnpolygon.Points.Count - 1])
+                drawnpolygon.Points.RemoveAt(drawnpolygon.Points.Count - 1); // unmake a full loop
+
+            drawnpolygon.Points.Add(acPoint);
+
+            redrawPolygonSurvey(drawnpolygon.Points.Select(a => new PointLatLngAlt(a)).ToList());
+
+            MainMap.Invalidate();
+        }
+
         public void addPolygonPointToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (polygongridmode == false)
@@ -2185,10 +2273,10 @@ namespace MissionPlanner.GCSViews
                 BUT_Add.Visible = false;
                 processToScreen(MainV2.comPort.MAV.fencepoints.Select(a => (Locationwp) a.Value).ToList());
 
-                Common.MessageShowAgain("FlightPlan Fence", "Please use the Polygon drawing tool to draw " +
-                                                            "Inclusion and Exclusion areas (round circle to the left)," +
-                                                            " once drawn use the same icon to convert it to a inclusion " +
-                                                            "or exclusion fence");
+                //Common.MessageShowAgain("FlightPlan Fence", "Please use the Polygon drawing tool to draw " +
+                //                                            "Inclusion and Exclusion areas (round circle to the left)," +
+                //                                            " once drawn use the same icon to convert it to a inclusion " +
+                //                                            "or exclusion fence");
             }
             else
             {
@@ -5412,7 +5500,7 @@ namespace MissionPlanner.GCSViews
                             var dr = CustomMessageBox.Show("Reset Home to loaded coords", "Reset Home Coords",
                                 MessageBoxButtons.YesNo);
 
-                            if (dr == (int) DialogResult.Yes)
+                            if (dr == (int)DialogResult.Yes)
                             {
                                 TXT_homelat.Text = (double.Parse(cellhome.Value.ToString())).ToString();
                                 cellhome = Commands.Rows[0].Cells[Lon.Index] as DataGridViewTextBoxCell;
@@ -6570,6 +6658,19 @@ Column 1: Field type (RALLY is the only one at the moment -- may have RALLY_LAND
             Commands.Rows[selectedrow].Cells[Param1.Index].Value = topi;
 
             Commands.Rows[selectedrow].Cells[Alt.Index].Value = alti;
+
+            ChangeColumnHeader(MAVLink.MAV_CMD.TAKEOFF.ToString());
+
+            writeKML();
+        }
+
+        public void AddTakeoff(int alt)
+        {
+            selectedrow = Commands.Rows.Add();
+
+            Commands.Rows[selectedrow].Cells[Command.Index].Value = MAVLink.MAV_CMD.TAKEOFF.ToString();
+
+            Commands.Rows[selectedrow].Cells[Alt.Index].Value = alt;
 
             ChangeColumnHeader(MAVLink.MAV_CMD.TAKEOFF.ToString());
 
