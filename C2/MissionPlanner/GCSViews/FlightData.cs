@@ -1131,12 +1131,10 @@ namespace MissionPlanner.GCSViews
                 CustomMessageBox.Show(Strings.ErrorCommunicating, Strings.ERROR);
             }
 
-            try
-            {
-                const double lrEarthRadius = 6371000;
+            const double lrEarthRadius = 6371000;
 
-                double lrUavLatRad = DegToRad(FlightData.coords1.Lat);
-                double lrUavLngRad = DegToRad(FlightData.coords1.Lng);
+            double lrUavLatRad = DegToRad(FlightData.coords1.Lat);
+            double lrUavLngRad = DegToRad(FlightData.coords1.Lng);
 
             double lrBearingRad = 0;
             double lrDeltaLatRad = 0;
@@ -1492,7 +1490,7 @@ namespace MissionPlanner.GCSViews
             }
         }
 
-        private void MoveTo(double arLat, double arLng, int anAlt)
+        private static void MoveTo(double arLat, double arLng, int anAlt)
         {
             string lcAltStr = Convert.ToString(anAlt);
 
