@@ -253,6 +253,9 @@ namespace MissionPlanner.GCSViews
             BUT_Backward = new MissionPlanner.Controls.MyButton();
             BUT_Left = new MissionPlanner.Controls.MyButton();
             BUT_Right = new MissionPlanner.Controls.MyButton();
+            BUT_Up = new MissionPlanner.Controls.MyButton();
+            BUT_Down = new MissionPlanner.Controls.MyButton();
+            BUT_Hov = new MissionPlanner.Controls.MyButton();
             LBL_DFMotor1 = new System.Windows.Forms.Label();
             CMB_DFMotor1 = new System.Windows.Forms.ComboBox();
             LBL_DFMotor2 = new System.Windows.Forms.Label();
@@ -2657,6 +2660,9 @@ namespace MissionPlanner.GCSViews
             this.splitContainer1.Panel2.Controls.Add(BUT_Backward);
             this.splitContainer1.Panel2.Controls.Add(BUT_Left);
             this.splitContainer1.Panel2.Controls.Add(BUT_Right);
+            this.splitContainer1.Panel2.Controls.Add(BUT_Up);
+            this.splitContainer1.Panel2.Controls.Add(BUT_Down);
+            this.splitContainer1.Panel2.Controls.Add(BUT_Hov);
             this.splitContainer1.Panel2.Controls.Add(LBL_DFMotor1);
             this.splitContainer1.Panel2.Controls.Add(CMB_DFMotor1);
             this.splitContainer1.Panel2.Controls.Add(LBL_DFMotor2);
@@ -3180,6 +3186,39 @@ namespace MissionPlanner.GCSViews
             BUT_Right.TextColorNotEnabled = Color.Black;
             BUT_Right.UseVisualStyleBackColor = true;
             BUT_Right.Click += new System.EventHandler(BUT_Right_Click);
+            //
+            // BUT_Up
+            //
+            BUT_Up.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            BUT_Up.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            BUT_Up.TextColor = Color.Black;
+            resources.ApplyResources(BUT_Up, "BUT_Up");
+            BUT_Up.Name = "BUT_Up";
+            BUT_Up.TextColorNotEnabled = Color.Black;
+            BUT_Up.UseVisualStyleBackColor = true;
+            BUT_Up.Click += new System.EventHandler(BUT_Up_Click);
+            //
+            // BUT_Down
+            //
+            BUT_Down.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            BUT_Down.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            BUT_Down.TextColor = Color.Black;
+            resources.ApplyResources(BUT_Down, "BUT_Down");
+            BUT_Down.Name = "BUT_Down";
+            BUT_Down.TextColorNotEnabled = Color.Black;
+            BUT_Down.UseVisualStyleBackColor = true;
+            BUT_Down.Click += new System.EventHandler(BUT_Down_Click);
+            //
+            // BUT_Hov
+            //
+            BUT_Hov.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            BUT_Hov.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            BUT_Hov.TextColor = Color.Black;
+            resources.ApplyResources(BUT_Hov, "BUT_Hov");
+            BUT_Hov.Name = "BUT_Hov";
+            BUT_Hov.TextColorNotEnabled = Color.Black;
+            BUT_Hov.UseVisualStyleBackColor = true;
+            BUT_Hov.Click += new System.EventHandler(BUT_Hov_Click);
             // 
             // LBL_DFMotor1
             // 
@@ -3672,6 +3711,9 @@ namespace MissionPlanner.GCSViews
         public static Controls.MyButton BUT_Backward;
         public static Controls.MyButton BUT_Left;
         public static Controls.MyButton BUT_Right;
+        public static Controls.MyButton BUT_Up;
+        public static Controls.MyButton BUT_Down;
+        public static Controls.MyButton BUT_Hov;
         public static System.Windows.Forms.Label LBL_DFMotor1;
         public static System.Windows.Forms.ComboBox CMB_DFMotor1;
         public static System.Windows.Forms.Label LBL_DFMotor2;

@@ -1,8 +1,10 @@
 using DirectShowLib;
+using Dowding.Model;
 using GMap.NET;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
 using log4net;
+using Microsoft.Scripting.Utils;
 using MissionPlanner.ArduPilot;
 using MissionPlanner.Controls;
 using MissionPlanner.GeoRef;
@@ -20,20 +22,19 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Dowding.Model;
-using Microsoft.Scripting.Utils;
 using WebCamService;
 using ZedGraph;
+using static IronPython.Modules._ast;
 using LogAnalyzer = MissionPlanner.Utilities.LogAnalyzer;
 using TableLayoutPanelCellPosition = System.Windows.Forms.TableLayoutPanelCellPosition;
 using UnauthorizedAccessException = System.UnauthorizedAccessException;
-using System.Runtime.InteropServices;
-using System.Net.Sockets;
 
 // written by michael oborne
 
@@ -159,6 +160,8 @@ namespace MissionPlanner.GCSViews
         internal bool mbGoingBackward = false;
         internal bool mbGoingLeft = false;
         internal bool mbGoingRight = false;
+        internal bool mbGoingUp = false;
+        internal bool mbGoingDown = false;
 
         internal PointLatLng MouseDownStart;
 
@@ -937,34 +940,70 @@ namespace MissionPlanner.GCSViews
 
             if (isNWHome)
             {
-                POI.POIAdd(new PointLatLngAlt(assetLatOne, assetLngOne, 0), "Pos #1 (Opponent)");
-                POI.POIAdd(new PointLatLngAlt(assetLatTwo, assetLngTwo, 0), "Pos #2 (Opponent)");
-                POI.POIAdd(new PointLatLngAlt(assetLatThree, assetLngThree, 0), "Pos #3 (Opponent)");
-                POI.POIAdd(new PointLatLngAlt(assetLatFour, assetLngFour, 0), "Pos #4 (Opponent)");
-                POI.POIAdd(new PointLatLngAlt(assetLatFive, assetLngFive, 0), "Pos #5 (Opponent)");
-                POI.POIAdd(new PointLatLngAlt(assetLatSix, assetLngSix, 0), "Pos #6 (Opponent)");
-                POI.POIAdd(new PointLatLngAlt(assetLatSeven, assetLngSeven, 0), "Pos #7 (Friendly)");
-                POI.POIAdd(new PointLatLngAlt(assetLatEight, assetLngEight, 0), "Pos #8 (Friendly)");
-                POI.POIAdd(new PointLatLngAlt(assetLatNine, assetLngNine, 0), "Pos #9 (Friendly)");
-                POI.POIAdd(new PointLatLngAlt(assetLatTen, assetLngTen, 0), "Pos #10 (Friendly)");
-                POI.POIAdd(new PointLatLngAlt(assetLatEleven, assetLngEleven, 0), "Pos #11 (Friendly)");
-                POI.POIAdd(new PointLatLngAlt(assetLatTwelve, assetLngTwelve, 0), "Pos #12 (Friendly)");
+                if (isNWRed)
+                {
+                    POI.POIAdd(new PointLatLngAlt(assetLatOne, assetLngOne, 0), "Pos #1 (Opponent)", true);
+                    POI.POIAdd(new PointLatLngAlt(assetLatTwo, assetLngTwo, 0), "Pos #2 (Opponent)", true);
+                    POI.POIAdd(new PointLatLngAlt(assetLatThree, assetLngThree, 0), "Pos #3 (Opponent)", true);
+                    POI.POIAdd(new PointLatLngAlt(assetLatFour, assetLngFour, 0), "Pos #4 (Opponent)", true);
+                    POI.POIAdd(new PointLatLngAlt(assetLatFive, assetLngFive, 0), "Pos #5 (Opponent)", true);
+                    POI.POIAdd(new PointLatLngAlt(assetLatSix, assetLngSix, 0), "Pos #6 (Opponent)", true);
+                    POI.POIAdd(new PointLatLngAlt(assetLatSeven, assetLngSeven, 0), "Pos #7 (Friendly)", false);
+                    POI.POIAdd(new PointLatLngAlt(assetLatEight, assetLngEight, 0), "Pos #8 (Friendly)", false);
+                    POI.POIAdd(new PointLatLngAlt(assetLatNine, assetLngNine, 0), "Pos #9 (Friendly)", false);
+                    POI.POIAdd(new PointLatLngAlt(assetLatTen, assetLngTen, 0), "Pos #10 (Friendly)", false);
+                    POI.POIAdd(new PointLatLngAlt(assetLatEleven, assetLngEleven, 0), "Pos #11 (Friendly)", false);
+                    POI.POIAdd(new PointLatLngAlt(assetLatTwelve, assetLngTwelve, 0), "Pos #12 (Friendly)", false);
+                }
+                else
+                {
+                    POI.POIAdd(new PointLatLngAlt(assetLatOne, assetLngOne, 0), "Pos #1 (Opponent)", false);
+                    POI.POIAdd(new PointLatLngAlt(assetLatTwo, assetLngTwo, 0), "Pos #2 (Opponent)", false);
+                    POI.POIAdd(new PointLatLngAlt(assetLatThree, assetLngThree, 0), "Pos #3 (Opponent)", false);
+                    POI.POIAdd(new PointLatLngAlt(assetLatFour, assetLngFour, 0), "Pos #4 (Opponent)", false);
+                    POI.POIAdd(new PointLatLngAlt(assetLatFive, assetLngFive, 0), "Pos #5 (Opponent)", false);
+                    POI.POIAdd(new PointLatLngAlt(assetLatSix, assetLngSix, 0), "Pos #6 (Opponent)", false);
+                    POI.POIAdd(new PointLatLngAlt(assetLatSeven, assetLngSeven, 0), "Pos #7 (Friendly)", true);
+                    POI.POIAdd(new PointLatLngAlt(assetLatEight, assetLngEight, 0), "Pos #8 (Friendly)", true);
+                    POI.POIAdd(new PointLatLngAlt(assetLatNine, assetLngNine, 0), "Pos #9 (Friendly)", true);
+                    POI.POIAdd(new PointLatLngAlt(assetLatTen, assetLngTen, 0), "Pos #10 (Friendly)", true);
+                    POI.POIAdd(new PointLatLngAlt(assetLatEleven, assetLngEleven, 0), "Pos #11 (Friendly)", true);
+                    POI.POIAdd(new PointLatLngAlt(assetLatTwelve, assetLngTwelve, 0), "Pos #12 (Friendly)", true);
+                }
                 this.CMB_mission.DataSource = new string[] { "None", "Marked Asset", "FOB", "Pos #1 (Opponent)", "Pos #2 (Opponent)", "Pos #3 (Opponent)", "Pos #4 (Opponent)", "Pos #5 (Opponent)", "Pos #6 (Opponent)", "Pos #7 (Friendly)", "Pos #8 (Friendly)", "Pos #9 (Friendly)", "Pos #10 (Friendly)", "Pos #11 (Friendly)", "Pos #12 (Friendly)" };
             }
             else
             {
-                POI.POIAdd(new PointLatLngAlt(assetLatOne, assetLngOne, 0), "Pos #1 (Friendly)");
-                POI.POIAdd(new PointLatLngAlt(assetLatTwo, assetLngTwo, 0), "Pos #2 (Friendly)");
-                POI.POIAdd(new PointLatLngAlt(assetLatThree, assetLngThree, 0), "Pos #3 (Friendly)");
-                POI.POIAdd(new PointLatLngAlt(assetLatFour, assetLngFour, 0), "Pos #4 (Friendly)");
-                POI.POIAdd(new PointLatLngAlt(assetLatFive, assetLngFive, 0), "Pos #5 (Friendly)");
-                POI.POIAdd(new PointLatLngAlt(assetLatSix, assetLngSix, 0), "Pos #6 (Friendly)");
-                POI.POIAdd(new PointLatLngAlt(assetLatSeven, assetLngSeven, 0), "Pos #7 (Opponent)");
-                POI.POIAdd(new PointLatLngAlt(assetLatEight, assetLngEight, 0), "Pos #8 (Opponent)");
-                POI.POIAdd(new PointLatLngAlt(assetLatNine, assetLngNine, 0), "Pos #9 (Opponent)");
-                POI.POIAdd(new PointLatLngAlt(assetLatTen, assetLngTen, 0), "Pos #10 (Opponent)");
-                POI.POIAdd(new PointLatLngAlt(assetLatEleven, assetLngEleven, 0), "Pos #11 (Opponent)");
-                POI.POIAdd(new PointLatLngAlt(assetLatTwelve, assetLngTwelve, 0), "Pos #12 (Opponent)");
+                if (isNWRed)
+                {
+                    POI.POIAdd(new PointLatLngAlt(assetLatOne, assetLngOne, 0), "Pos #1 (Friendly)", true);
+                    POI.POIAdd(new PointLatLngAlt(assetLatTwo, assetLngTwo, 0), "Pos #2 (Friendly)", true);
+                    POI.POIAdd(new PointLatLngAlt(assetLatThree, assetLngThree, 0), "Pos #3 (Friendly)", true);
+                    POI.POIAdd(new PointLatLngAlt(assetLatFour, assetLngFour, 0), "Pos #4 (Friendly)", true);
+                    POI.POIAdd(new PointLatLngAlt(assetLatFive, assetLngFive, 0), "Pos #5 (Friendly)", true);
+                    POI.POIAdd(new PointLatLngAlt(assetLatSix, assetLngSix, 0), "Pos #6 (Friendly)", true);
+                    POI.POIAdd(new PointLatLngAlt(assetLatSeven, assetLngSeven, 0), "Pos #7 (Opponent)", false);
+                    POI.POIAdd(new PointLatLngAlt(assetLatEight, assetLngEight, 0), "Pos #8 (Opponent)", false);
+                    POI.POIAdd(new PointLatLngAlt(assetLatNine, assetLngNine, 0), "Pos #9 (Opponent)", false);
+                    POI.POIAdd(new PointLatLngAlt(assetLatTen, assetLngTen, 0), "Pos #10 (Opponent)", false);
+                    POI.POIAdd(new PointLatLngAlt(assetLatEleven, assetLngEleven, 0), "Pos #11 (Opponent)", false);
+                    POI.POIAdd(new PointLatLngAlt(assetLatTwelve, assetLngTwelve, 0), "Pos #12 (Opponent)", false);
+                }
+                else
+                {
+                    POI.POIAdd(new PointLatLngAlt(assetLatOne, assetLngOne, 0), "Pos #1 (Friendly)", false);
+                    POI.POIAdd(new PointLatLngAlt(assetLatTwo, assetLngTwo, 0), "Pos #2 (Friendly)", false);
+                    POI.POIAdd(new PointLatLngAlt(assetLatThree, assetLngThree, 0), "Pos #3 (Friendly)", false);
+                    POI.POIAdd(new PointLatLngAlt(assetLatFour, assetLngFour, 0), "Pos #4 (Friendly)", false);
+                    POI.POIAdd(new PointLatLngAlt(assetLatFive, assetLngFive, 0), "Pos #5 (Friendly)", false);
+                    POI.POIAdd(new PointLatLngAlt(assetLatSix, assetLngSix, 0), "Pos #6 (Friendly)", false);
+                    POI.POIAdd(new PointLatLngAlt(assetLatSeven, assetLngSeven, 0), "Pos #7 (Opponent)", true);
+                    POI.POIAdd(new PointLatLngAlt(assetLatEight, assetLngEight, 0), "Pos #8 (Opponent)", true);
+                    POI.POIAdd(new PointLatLngAlt(assetLatNine, assetLngNine, 0), "Pos #9 (Opponent)", true);
+                    POI.POIAdd(new PointLatLngAlt(assetLatTen, assetLngTen, 0), "Pos #10 (Opponent)", true);
+                    POI.POIAdd(new PointLatLngAlt(assetLatEleven, assetLngEleven, 0), "Pos #11 (Opponent)", true);
+                    POI.POIAdd(new PointLatLngAlt(assetLatTwelve, assetLngTwelve, 0), "Pos #12 (Opponent)", true);
+                }
                 this.CMB_mission.DataSource = new string[] { "None", "Marked Asset", "FOB", "Pos #1 (Friendly)", "Pos #2 (Friendly)", "Pos #3 (Friendly)", "Pos #4 (Friendly)", "Pos #5 (Friendly)", "Pos #6 (Friendly)", "Pos #7 (Opponent)", "Pos #8 (Opponent)", "Pos #9 (Opponent)", "Pos #10 (Opponent)", "Pos #11 (Opponent)", "Pos #12 (Opponent)" };
             }
         }
@@ -1056,54 +1095,41 @@ namespace MissionPlanner.GCSViews
             double lrUavLatRad = DegToRad(FlightData.coords1.Lat);
             double lrUavLngRad = DegToRad(FlightData.coords1.Lng);
 
-            double lrBearingRad = DegToRad(Convert.ToDouble(CurrentState.instance.nav_bearing)) + Math.Atan2(anX, anY);
+            double lrBearingRad = 0;
+            double lrDeltaLatRad = 0;
+            double lrDeltaLngRad = 0;
 
-            double lrDeltaLatRad = (arDist / lrEarthRadius) * Math.Cos(lrBearingRad);
-            double lrDeltaLngRad = (arDist / lrEarthRadius) * Math.Sin(lrBearingRad) / Math.Cos(lrUavLatRad);
+            // Only calculate a new lat/lng if we are moving laterally
+            if (Math.Sqrt((anX * anX) + (anY * anY)) != 0)
+            {
+                lrBearingRad = DegToRad(Convert.ToDouble(CurrentState.instance.nav_bearing)) + Math.Atan2(anX, anY);
+
+                lrDeltaLatRad = (arDist / lrEarthRadius) * Math.Cos(lrBearingRad);
+                lrDeltaLngRad = (arDist / lrEarthRadius) * Math.Sin(lrBearingRad) / Math.Cos(lrUavLatRad);
+            }
 
             double lrLatRad = lrUavLatRad + lrDeltaLatRad;
             double lrLngRad = lrUavLngRad + lrDeltaLngRad;
-            double lrAlt = FlightData.coords1.Alt + anZ * arDist / Math.Sqrt(anX * anX + anY * anY + anZ * anZ);
+            int lnAlt = Convert.ToInt32(FlightData.coords1.Alt);
+            if (anZ > 0)
+            {
+                lnAlt = 10;
+            }
+            else if (anZ < 0)
+            {
+                lnAlt = 1;
+            }
 
             double lrLatDeg = RadToDeg(lrLatRad);
             double lrLngDeg = RadToDeg(lrLngRad);
 
-            string lcAltStr = Convert.ToString(lrAlt);
-
-            //CMB_modes.Text = "Guided";
-            //BUT_setmode_Click(null, null);
-            //CMB_action.Text = actions.Mission_Start.ToString();
-            //if (!MainV2.comPort.MAV.cs.armed)
-            //{
-            //    BUT_ARM_Click(null, null);
-            //}
-
-            MAVLink.MAV_FRAME frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT;
-
-            Settings.Instance["guided_alt"] = lcAltStr;
-            Settings.Instance["guided_alt_frame"] = ((byte)frame).ToString();
-
-            int intalt = Convert.ToInt32(lrAlt);
-
-            MainV2.comPort.MAV.GuidedMode.z = intalt / CurrentState.multiplieralt;
-            MainV2.comPort.MAV.GuidedMode.x = Convert.ToInt32(lrLatDeg * 1e7);
-            MainV2.comPort.MAV.GuidedMode.y = Convert.ToInt32(lrLngDeg * 1e7);
-            MainV2.comPort.MAV.GuidedMode.frame = (byte)frame;
-
-            if (MainV2.comPort.MAV.cs.mode == "Guided")
-            {
-               MainV2.comPort.setGuidedModeWP(new Locationwp
-               {
-                   alt = MainV2.comPort.MAV.GuidedMode.z,
-                   lat = MainV2.comPort.MAV.GuidedMode.x / 1e7,
-                   lng = MainV2.comPort.MAV.GuidedMode.y / 1e7,
-                   frame = (byte)frame
-               });
-            }
+            MoveTo(lrLatDeg, lrLngDeg, Convert.ToInt32(lnAlt));
         }
 
         private void AlignStop()
         {
+            MainV2.comPort.setMode("GUIDED");
+
             MAVLink.MAV_FRAME frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT;
 
             Settings.Instance["guided_alt"] = Convert.ToString(FlightData.coords1.Alt);
@@ -1149,6 +1175,10 @@ namespace MissionPlanner.GCSViews
                 BUT_Left.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
                 BUT_Right.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
                 BUT_Right.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Up.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Up.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Down.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Down.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
                 BUT_Forward.ColorMouseDown = BUT_Forward.BGGradBot;
                 BUT_Forward.ColorMouseOver = BUT_Forward.BGGradBot;
                 BUT_Backward.ColorMouseDown = BUT_Backward.BGGradBot;
@@ -1157,6 +1187,11 @@ namespace MissionPlanner.GCSViews
                 BUT_Left.ColorMouseOver = BUT_Left.BGGradBot;
                 BUT_Right.ColorMouseDown = BUT_Right.BGGradBot;
                 BUT_Right.ColorMouseOver = BUT_Right.BGGradBot;
+                BUT_Up.ColorMouseDown = BUT_Up.BGGradBot;
+                BUT_Up.ColorMouseOver = BUT_Up.BGGradBot;
+                BUT_Down.ColorMouseDown = BUT_Down.BGGradBot;
+                BUT_Down.ColorMouseOver = BUT_Down.BGGradBot;
+
                 mbGoingForward = true;
                 mbGoingBackward = false;
                 mbGoingLeft = false;
@@ -1186,6 +1221,10 @@ namespace MissionPlanner.GCSViews
                 BUT_Left.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
                 BUT_Right.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
                 BUT_Right.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Up.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Up.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Down.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Down.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
                 BUT_Forward.ColorMouseDown = BUT_Forward.BGGradBot;
                 BUT_Forward.ColorMouseOver = BUT_Forward.BGGradBot;
                 BUT_Backward.ColorMouseDown = BUT_Backward.BGGradBot;
@@ -1194,6 +1233,11 @@ namespace MissionPlanner.GCSViews
                 BUT_Left.ColorMouseOver = BUT_Left.BGGradBot;
                 BUT_Right.ColorMouseDown = BUT_Right.BGGradBot;
                 BUT_Right.ColorMouseOver = BUT_Right.BGGradBot;
+                BUT_Up.ColorMouseDown = BUT_Up.BGGradBot;
+                BUT_Up.ColorMouseOver = BUT_Up.BGGradBot;
+                BUT_Down.ColorMouseDown = BUT_Down.BGGradBot;
+                BUT_Down.ColorMouseOver = BUT_Down.BGGradBot;
+
                 mbGoingForward = false;
                 mbGoingBackward = true;
                 mbGoingLeft = false;
@@ -1223,6 +1267,10 @@ namespace MissionPlanner.GCSViews
                 BUT_Left.BGGradBot = Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(255)))), ((int)(((byte)(136)))));
                 BUT_Right.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
                 BUT_Right.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Up.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Up.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Down.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Down.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
                 BUT_Forward.ColorMouseDown = BUT_Forward.BGGradBot;
                 BUT_Forward.ColorMouseOver = BUT_Forward.BGGradBot;
                 BUT_Backward.ColorMouseDown = BUT_Backward.BGGradBot;
@@ -1231,6 +1279,11 @@ namespace MissionPlanner.GCSViews
                 BUT_Left.ColorMouseOver = BUT_Left.BGGradBot;
                 BUT_Right.ColorMouseDown = BUT_Right.BGGradBot;
                 BUT_Right.ColorMouseOver = BUT_Right.BGGradBot;
+                BUT_Up.ColorMouseDown = BUT_Up.BGGradBot;
+                BUT_Up.ColorMouseOver = BUT_Up.BGGradBot;
+                BUT_Down.ColorMouseDown = BUT_Down.BGGradBot;
+                BUT_Down.ColorMouseOver = BUT_Down.BGGradBot;
+
                 mbGoingForward = false;
                 mbGoingBackward = false;
                 mbGoingLeft = true;
@@ -1260,6 +1313,10 @@ namespace MissionPlanner.GCSViews
                 BUT_Left.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
                 BUT_Right.BGGradTop = Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(13)))));
                 BUT_Right.BGGradBot = Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(255)))), ((int)(((byte)(136)))));
+                BUT_Up.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Up.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Down.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Down.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
                 BUT_Forward.ColorMouseDown = BUT_Forward.BGGradBot;
                 BUT_Forward.ColorMouseOver = BUT_Forward.BGGradBot;
                 BUT_Backward.ColorMouseDown = BUT_Backward.BGGradBot;
@@ -1268,12 +1325,155 @@ namespace MissionPlanner.GCSViews
                 BUT_Left.ColorMouseOver = BUT_Left.BGGradBot;
                 BUT_Right.ColorMouseDown = BUT_Right.BGGradBot;
                 BUT_Right.ColorMouseOver = BUT_Right.BGGradBot;
+                BUT_Up.ColorMouseDown = BUT_Up.BGGradBot;
+                BUT_Up.ColorMouseOver = BUT_Up.BGGradBot;
+                BUT_Down.ColorMouseDown = BUT_Down.BGGradBot;
+                BUT_Down.ColorMouseOver = BUT_Down.BGGradBot;
 
                 mbGoingForward = false;
                 mbGoingBackward = false;
                 mbGoingLeft = false;
                 mbGoingRight = true;
                 MoveDirection(1, 0, 0, 1);
+            }
+        }
+
+        private void BUT_Up_Click(object sender, EventArgs e)
+        {
+            if (mbGoingUp)
+            {
+                BUT_Up.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Up.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Up.ColorMouseDown = BUT_Up.BGGradBot;
+                BUT_Up.ColorMouseOver = BUT_Up.BGGradBot;
+                mbGoingUp = false;
+                AlignStop();
+            }
+            else
+            {
+                BUT_Forward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Forward.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Backward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Backward.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Left.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Left.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Right.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Right.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Up.BGGradTop = Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(13)))));
+                BUT_Up.BGGradBot = Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(255)))), ((int)(((byte)(136)))));
+                BUT_Down.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Down.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Forward.ColorMouseDown = BUT_Forward.BGGradBot;
+                BUT_Forward.ColorMouseOver = BUT_Forward.BGGradBot;
+                BUT_Backward.ColorMouseDown = BUT_Backward.BGGradBot;
+                BUT_Backward.ColorMouseOver = BUT_Backward.BGGradBot;
+                BUT_Left.ColorMouseDown = BUT_Left.BGGradBot;
+                BUT_Left.ColorMouseOver = BUT_Left.BGGradBot;
+                BUT_Right.ColorMouseDown = BUT_Right.BGGradBot;
+                BUT_Right.ColorMouseOver = BUT_Right.BGGradBot;
+                BUT_Up.ColorMouseDown = BUT_Up.BGGradBot;
+                BUT_Up.ColorMouseOver = BUT_Up.BGGradBot;
+                BUT_Down.ColorMouseDown = BUT_Down.BGGradBot;
+                BUT_Down.ColorMouseOver = BUT_Down.BGGradBot;
+
+                mbGoingForward = false;
+                mbGoingBackward = false;
+                mbGoingLeft = false;
+                mbGoingRight = false;
+                mbGoingUp = true;
+                mbGoingDown = false;
+                MoveDirection(0, 0, 1, 1);
+            }
+        }
+
+        private void BUT_Down_Click(object sender, EventArgs e)
+        {
+            if (mbGoingDown)
+            {
+                BUT_Down.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Down.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Down.ColorMouseDown = BUT_Down.BGGradBot;
+                BUT_Down.ColorMouseOver = BUT_Down.BGGradBot;
+                mbGoingDown = false;
+                AlignStop();
+            }
+            else
+            {
+                BUT_Forward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Forward.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Backward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Backward.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Left.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Left.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Right.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Right.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Up.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Up.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Down.BGGradTop = Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(13)))));
+                BUT_Down.BGGradBot = Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(255)))), ((int)(((byte)(136)))));
+                BUT_Forward.ColorMouseDown = BUT_Forward.BGGradBot;
+                BUT_Forward.ColorMouseOver = BUT_Forward.BGGradBot;
+                BUT_Backward.ColorMouseDown = BUT_Backward.BGGradBot;
+                BUT_Backward.ColorMouseOver = BUT_Backward.BGGradBot;
+                BUT_Left.ColorMouseDown = BUT_Left.BGGradBot;
+                BUT_Left.ColorMouseOver = BUT_Left.BGGradBot;
+                BUT_Right.ColorMouseDown = BUT_Right.BGGradBot;
+                BUT_Right.ColorMouseOver = BUT_Right.BGGradBot;
+                BUT_Up.ColorMouseDown = BUT_Up.BGGradBot;
+                BUT_Up.ColorMouseOver = BUT_Up.BGGradBot;
+                BUT_Down.ColorMouseDown = BUT_Down.BGGradBot;
+                BUT_Down.ColorMouseOver = BUT_Down.BGGradBot;
+
+                mbGoingForward = false;
+                mbGoingBackward = false;
+                mbGoingLeft = false;
+                mbGoingRight = false;
+                mbGoingUp = false;
+                mbGoingDown = true;
+                MoveDirection(0, 0, -1, 1);
+            }
+        }
+
+        private void BUT_Hov_Click(object sender, EventArgs e)
+        {
+            MainV2.comPort.setMode("GUIDED");
+
+            if (!MainV2.comPort.MAV.cs.armed)
+            {
+                BUT_ARM_Click(null, null);
+                TakeOffSilent(1);
+            }
+            else
+            {
+                MoveTo(FlightData.coords1.Lat, FlightData.coords1.Lng, 1);
+            }
+        }
+
+        private void MoveTo(double arLat, double arLng, int anAlt)
+        {
+            string lcAltStr = Convert.ToString(anAlt);
+
+            MAVLink.MAV_FRAME frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT;
+
+            Settings.Instance["guided_alt"] = lcAltStr;
+            Settings.Instance["guided_alt_frame"] = ((byte)frame).ToString();
+
+            MainV2.comPort.MAV.GuidedMode.z = anAlt / CurrentState.multiplieralt;
+            MainV2.comPort.MAV.GuidedMode.x = Convert.ToInt32(arLat * 1e7);
+            MainV2.comPort.MAV.GuidedMode.y = Convert.ToInt32(arLng * 1e7);
+            MainV2.comPort.MAV.GuidedMode.frame = (byte)frame;
+
+            MainV2.comPort.setMode("GUIDED");
+
+            if (MainV2.comPort.MAV.cs.mode == "Guided")
+            {
+                MainV2.comPort.setGuidedModeWP(new Locationwp
+                {
+                    alt = MainV2.comPort.MAV.GuidedMode.z,
+                    lat = MainV2.comPort.MAV.GuidedMode.x / 1e7,
+                    lng = MainV2.comPort.MAV.GuidedMode.y / 1e7,
+                    frame = (byte)frame
+                });
             }
         }
 
@@ -6918,6 +7118,30 @@ namespace MissionPlanner.GCSViews
                 try
                 {
                     MainV2.comPort.doCommand((byte) MainV2.comPort.sysidcurrent, (byte) MainV2.comPort.compidcurrent,
+                        MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, altf);
+                }
+                catch
+                {
+                    CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
+                }
+            }
+        }
+
+        private void TakeOffSilent(int anAlt)
+        {
+            if (MainV2.comPort.BaseStream.IsOpen)
+            {
+                string alt = Convert.ToString(anAlt);
+
+                var altf = float.Parse(alt, CultureInfo.InvariantCulture);
+
+                Settings.Instance["takeoff_alt"] = altf.ToString();
+
+                MainV2.comPort.setMode("GUIDED");
+
+                try
+                {
+                    MainV2.comPort.doCommand((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent,
                         MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, altf);
                 }
                 catch

@@ -7226,6 +7226,87 @@
   <data name="&gt;&gt;BUT_Right.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="BUT_Up.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_Up.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 500</value>
+  </data>
+  <data name="BUT_Up.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 40</value>
+  </data>
+  <data name="BUT_Up.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="BUT_Up.Text" xml:space="preserve">
+    <value>UP</value>
+  </data>
+  <data name="&gt;&gt;BUT_Up.Name" xml:space="preserve">
+    <value>BUT_Up</value>
+  </data>
+  <data name="&gt;&gt;BUT_Up.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_Up.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;BUT_Up.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="BUT_Down.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_Down.Location" type="System.Drawing.Point, System.Drawing">
+    <value>110, 500</value>
+  </data>
+  <data name="BUT_Down.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 40</value>
+  </data>
+  <data name="BUT_Down.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="BUT_Down.Text" xml:space="preserve">
+    <value>DOWN</value>
+  </data>
+  <data name="&gt;&gt;BUT_Down.Name" xml:space="preserve">
+    <value>BUT_Down</value>
+  </data>
+  <data name="&gt;&gt;BUT_Down.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_Down.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;BUT_Down.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="BUT_Hov.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_Hov.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 600</value>
+  </data>
+  <data name="BUT_Hov.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 40</value>
+  </data>
+  <data name="BUT_Hov.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="BUT_Hov.Text" xml:space="preserve">
+    <value>1m</value>
+  </data>
+  <data name="&gt;&gt;BUT_Hov.Name" xml:space="preserve">
+    <value>BUT_Hov</value>
+  </data>
+  <data name="&gt;&gt;BUT_Hov.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_Hov.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;BUT_Hov.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
   <data name="&gt;&gt;BUT_GenerateMap.Name" xml:space="preserve">
     <value>BUT_GenerateMap</value>
   </data>
