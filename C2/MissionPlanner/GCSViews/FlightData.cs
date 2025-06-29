@@ -8163,7 +8163,7 @@ namespace MissionPlanner.GCSViews
         public static void updateAssetBtn_Click(object sender, EventArgs e)
         {
             int port = 23;
-            string ipAddress = "192.168.0.100";
+            string ipAddress = "127.0.0.1";
 
             // Create a new TcpClient object
             TcpClient client = new TcpClient();
