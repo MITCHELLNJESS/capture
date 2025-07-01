@@ -2184,15 +2184,22 @@ namespace MissionPlanner.Controls
                         new Pen(Color.FromArgb(200, this._redPen.Color.R, this._redPen.Color.G, this._redPen.Color.B),
                             4.0f))
                     {
-                        // left
-                        graphicsObject.DrawLine(redtemp, centercircle.Left - halfwidth / 5, 0, centercircle.Left, 0);
-                        // right
-                        graphicsObject.DrawLine(redtemp, centercircle.Right, 0, centercircle.Right + halfwidth / 5, 0);
-                        // center point
-                        graphicsObject.DrawLine(redtemp, 0 - 1, 0, centercircle.Right - halfwidth / 3,
-                            0 + halfheight / 10);
-                        graphicsObject.DrawLine(redtemp, 0 + 1, 0, centercircle.Left + halfwidth / 3,
-                            0 + halfheight / 10);
+                        // Get the center coordinates of the centercircle
+                        float centerX = (centercircle.Left + centercircle.Right) / 2;
+                        float centerY = (centercircle.Top + centercircle.Bottom) / 2;
+
+                        // Set the length of the crosshairs
+                        float crosshairLength = Math.Min(halfwidth, halfheight) / 5;
+
+                        // Horizontal line (left to right)
+                        graphicsObject.DrawLine(redtemp,
+                            centerX - crosshairLength, centerY,
+                            centerX + crosshairLength, centerY);
+
+                        // Vertical line (top to bottom)
+                        graphicsObject.DrawLine(redtemp,
+                            centerX, centerY - crosshairLength,
+                            centerX, centerY + crosshairLength);
                     }
                 }
 
