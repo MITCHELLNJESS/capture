@@ -756,7 +756,7 @@ namespace MissionPlanner.GCSViews
 
         public void BUT_ToAssetCreate_Click(object sender, EventArgs e)
         {
-            FlightData.updateAssetBtn_Click(null, null);
+            FlightData.instance.updateAssetBtn_Click(null, null);
             clearMissionToolStripMenuItem_Click(null, null);
 
             Console.Write("Asset position from data window - lat: ");

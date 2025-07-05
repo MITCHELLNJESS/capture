@@ -151,6 +151,8 @@ namespace MissionPlanner.GCSViews
         internal static double assetLngEleven = 0;
         internal static double assetLatTwelve = 0;
         internal static double assetLngTwelve = 0;
+        internal static double assetLatMarked = 0;
+        internal static double assetLngMarked = 0;
         internal static teMission mission = teMission.eeNone;
 
         internal static PointLatLng redFob = new PointLatLng(0, 0);
@@ -942,33 +944,33 @@ namespace MissionPlanner.GCSViews
             {
                 if (isNWRed)
                 {
-                    POI.POIAdd(new PointLatLngAlt(assetLatOne, assetLngOne, 0), "Pos #1 (Opponent)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTwo, assetLngTwo, 0), "Pos #2 (Opponent)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatThree, assetLngThree, 0), "Pos #3 (Opponent)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatFour, assetLngFour, 0), "Pos #4 (Opponent)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatFive, assetLngFive, 0), "Pos #5 (Opponent)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatSix, assetLngSix, 0), "Pos #6 (Opponent)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatSeven, assetLngSeven, 0), "Pos #7 (Friendly)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatEight, assetLngEight, 0), "Pos #8 (Friendly)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatNine, assetLngNine, 0), "Pos #9 (Friendly)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTen, assetLngTen, 0), "Pos #10 (Friendly)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatEleven, assetLngEleven, 0), "Pos #11 (Friendly)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTwelve, assetLngTwelve, 0), "Pos #12 (Friendly)", false);
+                    POI.POIAdd(new PointLatLngAlt(assetLatOne, assetLngOne, 0), "Pos #1 (Opponent)", 1);
+                    POI.POIAdd(new PointLatLngAlt(assetLatTwo, assetLngTwo, 0), "Pos #2 (Opponent)", 1);
+                    POI.POIAdd(new PointLatLngAlt(assetLatThree, assetLngThree, 0), "Pos #3 (Opponent)", 1);
+                    POI.POIAdd(new PointLatLngAlt(assetLatFour, assetLngFour, 0), "Pos #4 (Opponent)", 1);
+                    POI.POIAdd(new PointLatLngAlt(assetLatFive, assetLngFive, 0), "Pos #5 (Opponent)", 1);
+                    POI.POIAdd(new PointLatLngAlt(assetLatSix, assetLngSix, 0), "Pos #6 (Opponent)", 1);
+                    POI.POIAdd(new PointLatLngAlt(assetLatSeven, assetLngSeven, 0), "Pos #7 (Friendly)", 0);
+                    POI.POIAdd(new PointLatLngAlt(assetLatEight, assetLngEight, 0), "Pos #8 (Friendly)", 0);
+                    POI.POIAdd(new PointLatLngAlt(assetLatNine, assetLngNine, 0), "Pos #9 (Friendly)", 0);
+                    POI.POIAdd(new PointLatLngAlt(assetLatTen, assetLngTen, 0), "Pos #10 (Friendly)", 0);
+                    POI.POIAdd(new PointLatLngAlt(assetLatEleven, assetLngEleven, 0), "Pos #11 (Friendly)", 0);
+                    POI.POIAdd(new PointLatLngAlt(assetLatTwelve, assetLngTwelve, 0), "Pos #12 (Friendly)", 0);
                 }
                 else
                 {
-                    POI.POIAdd(new PointLatLngAlt(assetLatOne, assetLngOne, 0), "Pos #1 (Opponent)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTwo, assetLngTwo, 0), "Pos #2 (Opponent)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatThree, assetLngThree, 0), "Pos #3 (Opponent)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatFour, assetLngFour, 0), "Pos #4 (Opponent)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatFive, assetLngFive, 0), "Pos #5 (Opponent)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatSix, assetLngSix, 0), "Pos #6 (Opponent)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatSeven, assetLngSeven, 0), "Pos #7 (Friendly)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatEight, assetLngEight, 0), "Pos #8 (Friendly)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatNine, assetLngNine, 0), "Pos #9 (Friendly)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTen, assetLngTen, 0), "Pos #10 (Friendly)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatEleven, assetLngEleven, 0), "Pos #11 (Friendly)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTwelve, assetLngTwelve, 0), "Pos #12 (Friendly)", true);
+                    POI.POIAdd(new PointLatLngAlt(assetLatOne, assetLngOne, 0), "Pos #1 (Opponent)", 0);
+                    POI.POIAdd(new PointLatLngAlt(assetLatTwo, assetLngTwo, 0), "Pos #2 (Opponent)", 0);
+                    POI.POIAdd(new PointLatLngAlt(assetLatThree, assetLngThree, 0), "Pos #3 (Opponent)", 0);
+                    POI.POIAdd(new PointLatLngAlt(assetLatFour, assetLngFour, 0), "Pos #4 (Opponent)", 0);
+                    POI.POIAdd(new PointLatLngAlt(assetLatFive, assetLngFive, 0), "Pos #5 (Opponent)", 0);
+                    POI.POIAdd(new PointLatLngAlt(assetLatSix, assetLngSix, 0), "Pos #6 (Opponent)", 0);
+                    POI.POIAdd(new PointLatLngAlt(assetLatSeven, assetLngSeven, 0), "Pos #7 (Friendly)", 1);
+                    POI.POIAdd(new PointLatLngAlt(assetLatEight, assetLngEight, 0), "Pos #8 (Friendly)", 1);
+                    POI.POIAdd(new PointLatLngAlt(assetLatNine, assetLngNine, 0), "Pos #9 (Friendly)", 1);
+                    POI.POIAdd(new PointLatLngAlt(assetLatTen, assetLngTen, 0), "Pos #10 (Friendly)", 1);
+                    POI.POIAdd(new PointLatLngAlt(assetLatEleven, assetLngEleven, 0), "Pos #11 (Friendly)", 1);
+                    POI.POIAdd(new PointLatLngAlt(assetLatTwelve, assetLngTwelve, 0), "Pos #12 (Friendly)", 1);
                 }
                 this.CMB_mission.DataSource = new string[] { "None", "Marked Asset", "FOB", "Pos #1 (Opponent)", "Pos #2 (Opponent)", "Pos #3 (Opponent)", "Pos #4 (Opponent)", "Pos #5 (Opponent)", "Pos #6 (Opponent)", "Pos #7 (Friendly)", "Pos #8 (Friendly)", "Pos #9 (Friendly)", "Pos #10 (Friendly)", "Pos #11 (Friendly)", "Pos #12 (Friendly)" };
             }
@@ -976,35 +978,103 @@ namespace MissionPlanner.GCSViews
             {
                 if (isNWRed)
                 {
-                    POI.POIAdd(new PointLatLngAlt(assetLatOne, assetLngOne, 0), "Pos #1 (Friendly)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTwo, assetLngTwo, 0), "Pos #2 (Friendly)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatThree, assetLngThree, 0), "Pos #3 (Friendly)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatFour, assetLngFour, 0), "Pos #4 (Friendly)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatFive, assetLngFive, 0), "Pos #5 (Friendly)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatSix, assetLngSix, 0), "Pos #6 (Friendly)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatSeven, assetLngSeven, 0), "Pos #7 (Opponent)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatEight, assetLngEight, 0), "Pos #8 (Opponent)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatNine, assetLngNine, 0), "Pos #9 (Opponent)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTen, assetLngTen, 0), "Pos #10 (Opponent)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatEleven, assetLngEleven, 0), "Pos #11 (Opponent)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTwelve, assetLngTwelve, 0), "Pos #12 (Opponent)", false);
+                    POI.POIAdd(new PointLatLngAlt(assetLatOne, assetLngOne, 0), "Pos #1 (Friendly)", 1);
+                    POI.POIAdd(new PointLatLngAlt(assetLatTwo, assetLngTwo, 0), "Pos #2 (Friendly)", 1);
+                    POI.POIAdd(new PointLatLngAlt(assetLatThree, assetLngThree, 0), "Pos #3 (Friendly)", 1);
+                    POI.POIAdd(new PointLatLngAlt(assetLatFour, assetLngFour, 0), "Pos #4 (Friendly)", 1);
+                    POI.POIAdd(new PointLatLngAlt(assetLatFive, assetLngFive, 0), "Pos #5 (Friendly)", 1);
+                    POI.POIAdd(new PointLatLngAlt(assetLatSix, assetLngSix, 0), "Pos #6 (Friendly)", 1);
+                    POI.POIAdd(new PointLatLngAlt(assetLatSeven, assetLngSeven, 0), "Pos #7 (Opponent)", 0);
+                    POI.POIAdd(new PointLatLngAlt(assetLatEight, assetLngEight, 0), "Pos #8 (Opponent)", 0);
+                    POI.POIAdd(new PointLatLngAlt(assetLatNine, assetLngNine, 0), "Pos #9 (Opponent)", 0);
+                    POI.POIAdd(new PointLatLngAlt(assetLatTen, assetLngTen, 0), "Pos #10 (Opponent)", 0);
+                    POI.POIAdd(new PointLatLngAlt(assetLatEleven, assetLngEleven, 0), "Pos #11 (Opponent)", 0);
+                    POI.POIAdd(new PointLatLngAlt(assetLatTwelve, assetLngTwelve, 0), "Pos #12 (Opponent)", 0);
                 }
                 else
                 {
-                    POI.POIAdd(new PointLatLngAlt(assetLatOne, assetLngOne, 0), "Pos #1 (Friendly)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTwo, assetLngTwo, 0), "Pos #2 (Friendly)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatThree, assetLngThree, 0), "Pos #3 (Friendly)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatFour, assetLngFour, 0), "Pos #4 (Friendly)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatFive, assetLngFive, 0), "Pos #5 (Friendly)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatSix, assetLngSix, 0), "Pos #6 (Friendly)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatSeven, assetLngSeven, 0), "Pos #7 (Opponent)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatEight, assetLngEight, 0), "Pos #8 (Opponent)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatNine, assetLngNine, 0), "Pos #9 (Opponent)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTen, assetLngTen, 0), "Pos #10 (Opponent)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatEleven, assetLngEleven, 0), "Pos #11 (Opponent)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTwelve, assetLngTwelve, 0), "Pos #12 (Opponent)", true);
+                    POI.POIAdd(new PointLatLngAlt(assetLatOne, assetLngOne, 0), "Pos #1 (Friendly)", 0);
+                    POI.POIAdd(new PointLatLngAlt(assetLatTwo, assetLngTwo, 0), "Pos #2 (Friendly)", 0);
+                    POI.POIAdd(new PointLatLngAlt(assetLatThree, assetLngThree, 0), "Pos #3 (Friendly)", 0);
+                    POI.POIAdd(new PointLatLngAlt(assetLatFour, assetLngFour, 0), "Pos #4 (Friendly)", 0);
+                    POI.POIAdd(new PointLatLngAlt(assetLatFive, assetLngFive, 0), "Pos #5 (Friendly)", 0);
+                    POI.POIAdd(new PointLatLngAlt(assetLatSix, assetLngSix, 0), "Pos #6 (Friendly)", 0);
+                    POI.POIAdd(new PointLatLngAlt(assetLatSeven, assetLngSeven, 0), "Pos #7 (Opponent)", 1);
+                    POI.POIAdd(new PointLatLngAlt(assetLatEight, assetLngEight, 0), "Pos #8 (Opponent)", 1);
+                    POI.POIAdd(new PointLatLngAlt(assetLatNine, assetLngNine, 0), "Pos #9 (Opponent)", 1);
+                    POI.POIAdd(new PointLatLngAlt(assetLatTen, assetLngTen, 0), "Pos #10 (Opponent)", 1);
+                    POI.POIAdd(new PointLatLngAlt(assetLatEleven, assetLngEleven, 0), "Pos #11 (Opponent)", 1);
+                    POI.POIAdd(new PointLatLngAlt(assetLatTwelve, assetLngTwelve, 0), "Pos #12 (Opponent)", 1);
                 }
                 this.CMB_mission.DataSource = new string[] { "None", "Marked Asset", "FOB", "Pos #1 (Friendly)", "Pos #2 (Friendly)", "Pos #3 (Friendly)", "Pos #4 (Friendly)", "Pos #5 (Friendly)", "Pos #6 (Friendly)", "Pos #7 (Opponent)", "Pos #8 (Opponent)", "Pos #9 (Opponent)", "Pos #10 (Opponent)", "Pos #11 (Opponent)", "Pos #12 (Opponent)" };
+            }
+
+            if (assetLatMarked != 0 && assetLngMarked != 0)
+            {
+                int idx = POI.POIDeleteClosest(new GMapMarkerPOI(new PointLatLng(assetLatMarked, assetLngMarked)));
+                switch (idx)
+                {
+                    case 0:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #1 (Marked)", 2);
+                        assetLatOne = assetLatMarked;
+                        assetLngOne = assetLngMarked;
+                        break;
+                    case 1:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #2 (Marked)", 2);
+                        assetLatTwo = assetLatMarked;
+                        assetLngTwo = assetLngMarked;
+                        break;
+                    case 2:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #3 (Marked)", 2);
+                        assetLatThree = assetLatMarked;
+                        assetLngThree = assetLngMarked;
+                        break;
+                    case 3:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #4 (Marked)", 2);
+                        assetLatFour = assetLatMarked;
+                        assetLngFour = assetLngMarked;
+                        break;
+                    case 4:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #5 (Marked)", 2);
+                        assetLatFive = assetLatMarked;
+                        assetLngFive = assetLngMarked;
+                        break;
+                    case 5:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #6 (Marked)", 2);
+                        assetLatSix = assetLatMarked;
+                        assetLngSix = assetLngMarked;
+                        break;
+                    case 6:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #7 (Marked)", 2);
+                        assetLatSeven = assetLatMarked;
+                        assetLngSeven = assetLngMarked;
+                        break;
+                    case 7:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #8 (Marked)", 2);
+                        assetLatEight = assetLatMarked;
+                        assetLngEight = assetLngMarked;
+                        break;
+                    case 8:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #9 (Marked)", 2);
+                        assetLatNine = assetLatMarked;
+                        assetLngNine = assetLngMarked;
+                        break;
+                    case 9:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #10 (Marked)", 2);
+                        assetLatTen = assetLatMarked;
+                        assetLngTen = assetLngMarked;
+                        break;
+                    case 10:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #11 (Marked)", 2);
+                        assetLatEleven = assetLatMarked;
+                        assetLngEleven = assetLngMarked;
+                        break;
+                    case 11:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #12 (Marked)", 2);
+                        assetLatTwelve = assetLatMarked;
+                        assetLngTwelve = assetLngMarked;
+                        break;
+                }
             }
         }
 
@@ -8160,7 +8230,7 @@ namespace MissionPlanner.GCSViews
             public double alt;
         }
 
-        public static void updateAssetBtn_Click(object sender, EventArgs e)
+        public void updateAssetBtn_Click(object sender, EventArgs e)
         {
             int port = 23;
             string ipAddress = "127.0.0.1";
@@ -8222,6 +8292,9 @@ namespace MissionPlanner.GCSViews
                     assetAlt.number = positionData.alt;
                     assetSeqNum.number = positionData.seqNum;
 
+                    assetLatMarked = positionData.lat;
+                    assetLngMarked = positionData.lon;
+
                     // Close the connection
                     stream.Close();
                 }
@@ -8249,6 +8322,8 @@ namespace MissionPlanner.GCSViews
                 // Print any errors
                 Console.WriteLine("Error: " + ex.Message);
             }
+
+            AddAssetPois();
         }
 
         private void ALT_btn_Click(object sender, EventArgs e)
