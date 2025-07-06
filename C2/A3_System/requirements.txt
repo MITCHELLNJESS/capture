@@ -10,3 +10,4 @@ pymavlink
 ultralytics
 pyyaml
 rti-connext
+seaborn
