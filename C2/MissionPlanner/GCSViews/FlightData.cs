@@ -4,6 +4,7 @@ using GMap.NET;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
 using log4net;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Scripting.Utils;
 using MissionPlanner.ArduPilot;
 using MissionPlanner.Controls;
@@ -154,6 +155,8 @@ namespace MissionPlanner.GCSViews
         internal static double assetLngEleven = 0;
         internal static double assetLatTwelve = 0;
         internal static double assetLngTwelve = 0;
+        internal static double assetLatMarked = 0;
+        internal static double assetLngMarked = 0;
         internal static teMission mission = teMission.eeNone;
 
         internal static PointLatLng redFob = new PointLatLng(0, 0);
@@ -442,6 +445,11 @@ namespace MissionPlanner.GCSViews
                     int green = Convert.ToInt32(255 * (1 - percentage));
                     int blue = 0;
                     throttleLevel.numberColor = System.Drawing.Color.FromArgb(red, green, blue);
+
+                    if (FlightData.instance.checkBoxAug.Checked)
+                    {
+                        FlightData.instance.checkBoxAug.Checked = false;
+                    }
                 }
 
                 System.Threading.Thread.Sleep(500);
@@ -576,6 +584,86 @@ namespace MissionPlanner.GCSViews
             thread2.IsBackground = true;
             thread1.Start();
             thread2.Start();
+        }
+
+        private void CheckBoxAug_CheckStateChanged(object sender, EventArgs e)
+        {
+            // This code will execute when the checkbox's checked state changes (checked or unchecked).
+            if (!checkBoxAug.Checked)
+            {
+                Color dark = Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
+                BUT_Forward.BGGradTop = dark;
+                BUT_Forward.BGGradBot = dark;
+                BUT_Backward.BGGradTop = dark;
+                BUT_Backward.BGGradBot = dark;
+                BUT_Left.BGGradTop = dark;
+                BUT_Left.BGGradBot = dark;
+                BUT_Right.BGGradTop = dark;
+                BUT_Right.BGGradBot = dark;
+                BUT_Up.BGGradTop = dark;
+                BUT_Up.BGGradBot = dark;
+                BUT_Down.BGGradTop = dark;
+                BUT_Down.BGGradBot = dark;
+                BUT_Hov.BGGradTop = dark;
+                BUT_Hov.BGGradBot = dark;
+                BUT_Forward.ColorMouseDown = BUT_Forward.BGGradBot;
+                BUT_Forward.ColorMouseOver = BUT_Forward.BGGradBot;
+                BUT_Backward.ColorMouseDown = BUT_Backward.BGGradBot;
+                BUT_Backward.ColorMouseOver = BUT_Backward.BGGradBot;
+                BUT_Left.ColorMouseDown = BUT_Left.BGGradBot;
+                BUT_Left.ColorMouseOver = BUT_Left.BGGradBot;
+                BUT_Right.ColorMouseDown = BUT_Right.BGGradBot;
+                BUT_Right.ColorMouseOver = BUT_Right.BGGradBot;
+                BUT_Up.ColorMouseDown = BUT_Up.BGGradBot;
+                BUT_Up.ColorMouseOver = BUT_Up.BGGradBot;
+                BUT_Down.ColorMouseDown = BUT_Down.BGGradBot;
+                BUT_Down.ColorMouseOver = BUT_Down.BGGradBot;
+                BUT_Hov.ColorMouseDown = BUT_Hov.BGGradBot;
+                BUT_Hov.ColorMouseOver = BUT_Hov.BGGradBot;
+            }
+            else
+            {
+                if (MainV2.comPort.MAV.cs.mode != "Guided")
+                {
+                    if (CustomMessageBox.Show("Enter GUIDED Mode?", "", CustomMessageBox.MessageBoxButtons.YesNo) == CustomMessageBox.DialogResult.Yes)
+                    {
+                        MainV2.comPort.setMode("GUIDED");
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+
+                BUT_Forward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Forward.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Backward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Backward.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Left.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Left.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Right.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Right.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Up.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Up.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Down.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Down.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Hov.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Hov.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Forward.ColorMouseDown = BUT_Forward.BGGradBot;
+                BUT_Forward.ColorMouseOver = BUT_Forward.BGGradBot;
+                BUT_Backward.ColorMouseDown = BUT_Backward.BGGradBot;
+                BUT_Backward.ColorMouseOver = BUT_Backward.BGGradBot;
+                BUT_Left.ColorMouseDown = BUT_Left.BGGradBot;
+                BUT_Left.ColorMouseOver = BUT_Left.BGGradBot;
+                BUT_Right.ColorMouseDown = BUT_Right.BGGradBot;
+                BUT_Right.ColorMouseOver = BUT_Right.BGGradBot;
+                BUT_Up.ColorMouseDown = BUT_Up.BGGradBot;
+                BUT_Up.ColorMouseOver = BUT_Up.BGGradBot;
+                BUT_Down.ColorMouseDown = BUT_Down.BGGradBot;
+                BUT_Down.ColorMouseOver = BUT_Down.BGGradBot;
+                BUT_Hov.ColorMouseDown = BUT_Hov.BGGradBot;
+                BUT_Hov.ColorMouseOver = BUT_Hov.BGGradBot;
+            }
         }
 
         static bool IsPointInCircle(double uav_lat, double uav_lon, double center_lat, double center_lon, double radius)
@@ -1051,6 +1139,74 @@ namespace MissionPlanner.GCSViews
                 }
                 this.CMB_mission.DataSource = new string[] { "None", "Marked Asset", "FOB", "Pos #1 (Friendly)", "Pos #2 (Friendly)", "Pos #3 (Friendly)", "Pos #4 (Friendly)", "Pos #5 (Friendly)", "Pos #6 (Friendly)", "Pos #7 (Opponent)", "Pos #8 (Opponent)", "Pos #9 (Opponent)", "Pos #10 (Opponent)", "Pos #11 (Opponent)", "Pos #12 (Opponent)" };
             }
+
+            if (assetLatMarked != 0 && assetLngMarked != 0)
+            {
+                int idx = POI.POIDeleteClosest(new GMapMarkerPOI(new PointLatLng(assetLatMarked, assetLngMarked)));
+                switch (idx)
+                {
+                    case 0:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #1 (Marked)", 2);
+                        assetLatOne = assetLatMarked;
+                        assetLngOne = assetLngMarked;
+                        break;
+                    case 1:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #2 (Marked)", 2);
+                        assetLatTwo = assetLatMarked;
+                        assetLngTwo = assetLngMarked;
+                        break;
+                    case 2:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #3 (Marked)", 2);
+                        assetLatThree = assetLatMarked;
+                        assetLngThree = assetLngMarked;
+                        break;
+                    case 3:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #4 (Marked)", 2);
+                        assetLatFour = assetLatMarked;
+                        assetLngFour = assetLngMarked;
+                        break;
+                    case 4:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #5 (Marked)", 2);
+                        assetLatFive = assetLatMarked;
+                        assetLngFive = assetLngMarked;
+                        break;
+                    case 5:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #6 (Marked)", 2);
+                        assetLatSix = assetLatMarked;
+                        assetLngSix = assetLngMarked;
+                        break;
+                    case 6:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #7 (Marked)", 2);
+                        assetLatSeven = assetLatMarked;
+                        assetLngSeven = assetLngMarked;
+                        break;
+                    case 7:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #8 (Marked)", 2);
+                        assetLatEight = assetLatMarked;
+                        assetLngEight = assetLngMarked;
+                        break;
+                    case 8:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #9 (Marked)", 2);
+                        assetLatNine = assetLatMarked;
+                        assetLngNine = assetLngMarked;
+                        break;
+                    case 9:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #10 (Marked)", 2);
+                        assetLatTen = assetLatMarked;
+                        assetLngTen = assetLngMarked;
+                        break;
+                    case 10:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #11 (Marked)", 2);
+                        assetLatEleven = assetLatMarked;
+                        assetLngEleven = assetLngMarked;
+                        break;
+                    case 11:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #12 (Marked)", 2);
+                        assetLatTwelve = assetLatMarked;
+                        assetLngTwelve = assetLngMarked;
+                        break;
+                }
+            }
         }
 
         public void ClearDemoFieldOverlay()
@@ -1201,6 +1357,11 @@ namespace MissionPlanner.GCSViews
 
         private void BUT_Forward_Click(object sender, EventArgs e)
         {
+            if (!checkBoxAug.Checked)
+            {
+                return;
+            }
+
             if (mbGoingForward)
             {
                 BUT_Forward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
@@ -1249,6 +1410,11 @@ namespace MissionPlanner.GCSViews
 
         private void BUT_Backward_Click(object sender, EventArgs e)
         {
+            if (!checkBoxAug.Checked)
+            {
+                return;
+            }
+
             if (mbGoingBackward)
             {
                 BUT_Backward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
@@ -1297,6 +1463,11 @@ namespace MissionPlanner.GCSViews
 
         private void BUT_Left_Click(object sender, EventArgs e)
         {
+            if (!checkBoxAug.Checked)
+            {
+                return;
+            }
+
             if (mbGoingLeft)
             {
                 BUT_Left.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
@@ -1345,6 +1516,11 @@ namespace MissionPlanner.GCSViews
 
         private void BUT_Right_Click(object sender, EventArgs e)
         {
+            if (!checkBoxAug.Checked)
+            {
+                return;
+            }
+
             if (mbGoingRight)
             {
                 BUT_Right.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
@@ -1393,6 +1569,11 @@ namespace MissionPlanner.GCSViews
 
         private void BUT_Up_Click(object sender, EventArgs e)
         {
+            if (!checkBoxAug.Checked)
+            {
+                return;
+            }
+
             if (mbGoingUp)
             {
                 BUT_Up.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
@@ -1441,6 +1622,11 @@ namespace MissionPlanner.GCSViews
 
         private void BUT_Down_Click(object sender, EventArgs e)
         {
+            if (!checkBoxAug.Checked)
+            {
+                return;
+            }
+
             if (mbGoingDown)
             {
                 BUT_Down.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
@@ -1489,6 +1675,11 @@ namespace MissionPlanner.GCSViews
 
         private void BUT_Hov_Click(object sender, EventArgs e)
         {
+            if (!checkBoxAug.Checked)
+            {
+                return;
+            }
+
             MainV2.comPort.setMode("GUIDED");
 
             if (!MainV2.comPort.MAV.cs.armed)
@@ -2331,6 +2522,8 @@ namespace MissionPlanner.GCSViews
             TabListDisplay.Clear();
 
             TabListDisplay.Add(tabAsset.Name, MainV2.DisplayConfiguration.displayAssetTab);
+
+            TabListDisplay.Add(tabDf.Name, MainV2.DisplayConfiguration.displayAssetTab);
 
             TabListDisplay.Add(tabQuick.Name, MainV2.DisplayConfiguration.displayQuickTab);
 
@@ -8240,10 +8433,10 @@ namespace MissionPlanner.GCSViews
             public double alt;
         }
 
-        public static void updateAssetBtn_Click(object sender, EventArgs e)
+        public void updateAssetBtn_Click(object sender, EventArgs e)
         {
             int port = 23;
-            string ipAddress = "192.168.0.100";
+            string ipAddress = "127.0.0.1";
 
             // Create a new TcpClient object
             TcpClient client = new TcpClient();
@@ -8302,6 +8495,9 @@ namespace MissionPlanner.GCSViews
                     assetAlt.number = positionData.alt;
                     assetSeqNum.number = positionData.seqNum;
 
+                    assetLatMarked = positionData.lat;
+                    assetLngMarked = positionData.lon;
+
                     // Close the connection
                     stream.Close();
                 }
@@ -8329,6 +8525,8 @@ namespace MissionPlanner.GCSViews
                 // Print any errors
                 Console.WriteLine("Error: " + ex.Message);
             }
+
+            AddAssetPois();
         }
 
         private void ALT_btn_Click(object sender, EventArgs e)
