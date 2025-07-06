@@ -1344,16 +1344,6 @@ namespace MissionPlanner.Controls
 
                 count = 0;
                 huddrawtime = 0;
-
-                //TEST - REMOVE LATER
-                //TODO move this setCommand() to FlightData.cs based on other code being implemented
-                int targetX = 0;
-                int targetY = 0; //cross hair x/y - 'center of screen' 
-                int[] command = {A3MP_MessageBus.GetCommand()[0] - targetX,
-                A3MP_MessageBus.GetCommand()[1] - targetY};
-                A3MP_MessageBus.SetCommand(command);
-                Console.WriteLine("......<<<<<<<<<<<<<<<<<<< HV TESTING - LATEST A3 COMMAND FROM HUD.CS: " + A3MP_MessageBus.GetCommand()[0] + "," + A3MP_MessageBus.GetCommand()[1] + ">>>>>>>>>>>>>>>>");
-
             }
 
             lock (this)

@@ -3,8 +3,8 @@ using System.IO;
 
 public class Logger
 {
-    private string logFilePath = "C:\\Users\\hvomm\\Desktop\\ELDP" +
-        "\\capture\\C2\\DDS_Subscriber\\log.txt"; //"log.txt";  // 
+    private string logFilePath = "C:\\Users\\barre\\git" +
+        "\\capture-2\\C2\\DDS_Subscriber\\log.txt"; 
 
     public void WriteDebug(string message)
     {

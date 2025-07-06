@@ -129,6 +129,7 @@ namespace MissionPlanner.GCSViews
         internal static double fobLngNW = 0;
         internal static double fobLatSE = 0;
         internal static double fobLngSE = 0;
+        internal static List<PointLatLng> assetLocs = new List<PointLatLng>();
         internal static double assetLatOne = 0;
         internal static double assetLngOne = 0;
         internal static double assetLatTwo = 0;
@@ -165,9 +166,13 @@ namespace MissionPlanner.GCSViews
         internal bool mbGoingUp = false;
         internal bool mbGoingDown = false;
 
-        public static double alignX = 0;
-        public static double alignY = 0;
-        internal static double alignGate = 10;
+        public static int alignX = 0;
+        public static int alignY = 0;
+        internal static int lastAlignX = 0;
+        internal static int lastAlignY = 0;
+        internal static int alignTimeout = 4;
+        internal static int alignTimeoutCount = 0;
+        internal static int alignGate = 70;
         internal static bool doAlign = false;
         internal static double lastAlignDist = -1;
 
@@ -358,26 +363,21 @@ namespace MissionPlanner.GCSViews
         static void AlignThread()
         {
             MoveDirection(Convert.ToInt32(alignX), Convert.ToInt32(alignY), 0, 1);
+            Console.WriteLine("Aligning!");
 
             while (doAlign)
             {
-                Console.WriteLine("Aligning!");
                 double currAlignDist = Math.Sqrt((alignX * alignX) + (alignY * alignY));
                 // If we are aligned
-                if (currAlignDist < alignGate)
+                if ((currAlignDist < alignGate) && !((alignX == 0) && (alignY == 0)))
                 {
                     Console.WriteLine("Aligned!");
                     AlignStop();
                     doAlign = false;
                     lastAlignDist = -1;
                 }
-                // If we overshot the asset
-                else if ((lastAlignDist != -1) && currAlignDist > lastAlignDist)
-                {
-                    Console.WriteLine("Overshot!");
-                    // Retarget asset
-                    MoveDirection(Convert.ToInt32(alignX), Convert.ToInt32(alignY), 0, 1);
-                }
+                // Retarget asset
+                MoveDirection(Convert.ToInt32(alignX), Convert.ToInt32(alignY), 0, 1);
                 lastAlignDist = currAlignDist;
             }
 
@@ -394,6 +394,43 @@ namespace MissionPlanner.GCSViews
         {
             while(true)
             {
+                int targetX = 900;
+                int targetY = 500; //cross hair x/y - 'center of screen'
+                int[] command = {A3MP_MessageBus.GetCommand()[0] - targetX,
+                A3MP_MessageBus.GetCommand()[1] - targetY};
+                A3MP_MessageBus.SetCommand(command);
+
+                if (alignTimeoutCount == alignTimeout)
+                {
+                    alignX = 0;
+                    alignY = 0;
+                }
+
+                if (
+                    (command[0] != -9999) &&
+                    (command[1] != -9999) &&
+                    (command[0] != lastAlignX) &&
+                    (-command[1] != lastAlignY) &&
+                    (command[0] < 3000) &&
+                    (command[0] > -3000) &&
+                    (command[1] < 3000) &&
+                    (command[1] > -3000)
+                )
+                {
+                    alignX = command[0];
+                    alignY = -command[1];
+                    alignTimeoutCount = 0;
+                }
+                else
+                {
+                    alignTimeoutCount++;
+                }
+
+                Console.Write("alignX = ");
+                Console.WriteLine(alignX);
+                Console.Write("alignY = ");
+                Console.WriteLine(alignY);
+
                 throttleLevel.number = MissionPlanner.CurrentState.ch3in_Static;
                 Console.Write("Throttle: ");
                 Console.WriteLine(throttleLevel.number);
@@ -820,11 +857,16 @@ namespace MissionPlanner.GCSViews
             FOBSE_Blue.Fill = new SolidBrush(Color.Blue);
 
             // Asset locations
+            int angleOffset = 30;
+            for (int angle = 0; angle < 360; angle += angleOffset)
+            {
+                List<PointLatLng> assetLocPoints = GenerateAsset(lat, lng, 22.098, angle + adjustAngle_deg);
+                double sumLatAsset = assetLocPoints.Sum(p => p.Lat);
+                double sumLngAsset = assetLocPoints.Sum(p => p.Lng);
+                assetLocs.Add(new PointLatLngAlt(sumLatAsset / assetLocPoints.Count, sumLngAsset / assetLocPoints.Count, 0));
+            }
+
             List<PointLatLng> assetLocNWPoints_5 = GenerateAsset(lat, lng, 22.098, 0 + adjustAngle_deg);
-            sumLat = assetLocNWPoints_5.Sum(p => p.Lat);
-            sumLng = assetLocNWPoints_5.Sum(p => p.Lng);
-            assetLatFive = sumLat / assetLocNWPoints_5.Count;
-            assetLngFive = sumLng / assetLocNWPoints_5.Count;
             assetsNW_red_5 = new GMapPolygon(assetLocNWPoints_5, "assetLoc_red_5");
             assetsNW_red_5.Stroke = new Pen(Color.Black, 2);
             assetsNW_red_5.Fill = new SolidBrush(Color.Red);
@@ -833,10 +875,6 @@ namespace MissionPlanner.GCSViews
             assetsNW_blue_5.Fill = new SolidBrush(Color.Blue);
 
             List<PointLatLng> assetLocNWPoints_6 = GenerateAsset(lat, lng, 22.098, 30 + adjustAngle_deg);
-            sumLat = assetLocNWPoints_6.Sum(p => p.Lat);
-            sumLng = assetLocNWPoints_6.Sum(p => p.Lng);
-            assetLatSix = sumLat / assetLocNWPoints_6.Count;
-            assetLngSix = sumLng / assetLocNWPoints_6.Count;
             assetsNW_red_6 = new GMapPolygon(assetLocNWPoints_6, "assetsNW_red_6");
             assetsNW_red_6.Stroke = new Pen(Color.Black, 2);
             assetsNW_red_6.Fill = new SolidBrush(Color.Red);
@@ -845,10 +883,6 @@ namespace MissionPlanner.GCSViews
             assetsNW_blue_6.Fill = new SolidBrush(Color.Blue);
 
             List<PointLatLng> assetLocSEPoints_1 = GenerateAsset(lat, lng, 22.098, 60 + adjustAngle_deg);
-            sumLat = assetLocSEPoints_1.Sum(p => p.Lat);
-            sumLng = assetLocSEPoints_1.Sum(p => p.Lng);
-            assetLatSeven = sumLat / assetLocSEPoints_1.Count;
-            assetLngSeven = sumLng / assetLocSEPoints_1.Count;
             assetsSE_red_1 = new GMapPolygon(assetLocSEPoints_1, "assetLoc_red_1");
             assetsSE_red_1.Stroke = new Pen(Color.Black, 2);
             assetsSE_red_1.Fill = new SolidBrush(Color.Red);
@@ -857,10 +891,6 @@ namespace MissionPlanner.GCSViews
             assetsSE_blue_1.Fill = new SolidBrush(Color.Blue);
 
             List<PointLatLng> assetLocSEPoints_2 = GenerateAsset(lat, lng, 22.098, 90 + adjustAngle_deg);
-            sumLat = assetLocSEPoints_2.Sum(p => p.Lat);
-            sumLng = assetLocSEPoints_2.Sum(p => p.Lng);
-            assetLatEight = sumLat / assetLocSEPoints_2.Count;
-            assetLngEight = sumLng / assetLocSEPoints_2.Count;
             assetsSE_red_2 = new GMapPolygon(assetLocSEPoints_2, "assetsSE_red_2");
             assetsSE_red_2.Stroke = new Pen(Color.Black, 2);
             assetsSE_red_2.Fill = new SolidBrush(Color.Red);
@@ -869,10 +899,6 @@ namespace MissionPlanner.GCSViews
             assetsSE_blue_2.Fill = new SolidBrush(Color.Blue);
 
             List<PointLatLng> assetLocSEPoints_3 = GenerateAsset(lat, lng, 22.098, 120 + adjustAngle_deg);
-            sumLat = assetLocSEPoints_3.Sum(p => p.Lat);
-            sumLng = assetLocSEPoints_3.Sum(p => p.Lng);
-            assetLatNine = sumLat / assetLocSEPoints_3.Count;
-            assetLngNine = sumLng / assetLocSEPoints_3.Count;
             assetsSE_red_3 = new GMapPolygon(assetLocSEPoints_3, "assetsSE_red_3");
             assetsSE_red_3.Stroke = new Pen(Color.Black, 2);
             assetsSE_red_3.Fill = new SolidBrush(Color.Red);
@@ -881,10 +907,6 @@ namespace MissionPlanner.GCSViews
             assetsSE_blue_3.Fill = new SolidBrush(Color.Blue);
 
             List<PointLatLng> assetLocSEPoints_4 = GenerateAsset(lat, lng, 22.098, 150 + adjustAngle_deg);
-            sumLat = assetLocSEPoints_4.Sum(p => p.Lat);
-            sumLng = assetLocSEPoints_4.Sum(p => p.Lng);
-            assetLatTen = sumLat / assetLocSEPoints_4.Count;
-            assetLngTen = sumLng / assetLocSEPoints_4.Count;
             assetsSE_red_4 = new GMapPolygon(assetLocSEPoints_4, "assetsSE_red_4");
             assetsSE_red_4.Stroke = new Pen(Color.Black, 2);
             assetsSE_red_4.Fill = new SolidBrush(Color.Red);
@@ -893,10 +915,6 @@ namespace MissionPlanner.GCSViews
             assetsSE_blue_4.Fill = new SolidBrush(Color.Blue);
 
             List<PointLatLng> assetLocSEPoints_5 = GenerateAsset(lat, lng, 22.098, 180 + adjustAngle_deg);
-            sumLat = assetLocSEPoints_5.Sum(p => p.Lat);
-            sumLng = assetLocSEPoints_5.Sum(p => p.Lng);
-            assetLatEleven = sumLat / assetLocSEPoints_5.Count;
-            assetLngEleven = sumLng / assetLocSEPoints_5.Count;
             assetsSE_red_5 = new GMapPolygon(assetLocSEPoints_5, "assetsSE_red_5");
             assetsSE_red_5.Stroke = new Pen(Color.Black, 2);
             assetsSE_red_5.Fill = new SolidBrush(Color.Red);
@@ -905,10 +923,6 @@ namespace MissionPlanner.GCSViews
             assetsSE_blue_5.Fill = new SolidBrush(Color.Blue);
 
             List<PointLatLng> assetLocSEPoints_6 = GenerateAsset(lat, lng, 22.098, 210 + adjustAngle_deg);
-            sumLat = assetLocSEPoints_6.Sum(p => p.Lat);
-            sumLng = assetLocSEPoints_6.Sum(p => p.Lng);
-            assetLatTwelve = sumLat / assetLocSEPoints_6.Count;
-            assetLngTwelve = sumLng / assetLocSEPoints_6.Count;
             assetsSE_red_6 = new GMapPolygon(assetLocSEPoints_6, "assetsSE_red_6");
             assetsSE_red_6.Stroke = new Pen(Color.Black, 2);
             assetsSE_red_6.Fill = new SolidBrush(Color.Red);
@@ -917,10 +931,6 @@ namespace MissionPlanner.GCSViews
             assetsSE_blue_6.Fill = new SolidBrush(Color.Blue);
 
             List<PointLatLng> assetLocNWPoints_1 = GenerateAsset(lat, lng, 22.098, 240 + adjustAngle_deg);
-            sumLat = assetLocNWPoints_1.Sum(p => p.Lat);
-            sumLng = assetLocNWPoints_1.Sum(p => p.Lng);
-            assetLatOne = sumLat / assetLocNWPoints_1.Count;
-            assetLngOne = sumLng / assetLocNWPoints_1.Count;
             assetsNW_red_1 = new GMapPolygon(assetLocNWPoints_1, "assetsNW_red_1");
             assetsNW_red_1.Stroke = new Pen(Color.Black, 2);
             assetsNW_red_1.Fill = new SolidBrush(Color.Red);
@@ -929,10 +939,6 @@ namespace MissionPlanner.GCSViews
             assetsNW_blue_1.Fill = new SolidBrush(Color.Blue);
 
             List<PointLatLng> assetLocNWPoints_2 = GenerateAsset(lat, lng, 22.098, 270 + adjustAngle_deg);
-            sumLat = assetLocNWPoints_2.Sum(p => p.Lat);
-            sumLng = assetLocNWPoints_2.Sum(p => p.Lng);
-            assetLatTwo = sumLat / assetLocNWPoints_2.Count;
-            assetLngTwo = sumLng / assetLocNWPoints_2.Count;
             assetsNW_red_2 = new GMapPolygon(assetLocNWPoints_2, "assetsNW_red_2");
             assetsNW_red_2.Stroke = new Pen(Color.Black, 2);
             assetsNW_red_2.Fill = new SolidBrush(Color.Red);
@@ -941,10 +947,6 @@ namespace MissionPlanner.GCSViews
             assetsNW_blue_2.Fill = new SolidBrush(Color.Blue);
 
             List<PointLatLng> assetLocNWPoints_3 = GenerateAsset(lat, lng, 22.098, 300 + adjustAngle_deg);
-            sumLat = assetLocNWPoints_3.Sum(p => p.Lat);
-            sumLng = assetLocNWPoints_3.Sum(p => p.Lng);
-            assetLatThree = sumLat / assetLocNWPoints_3.Count;
-            assetLngThree = sumLng / assetLocNWPoints_3.Count;
             assetsNW_red_3 = new GMapPolygon(assetLocNWPoints_3, "assetsNW_red_3");
             assetsNW_red_3.Stroke = new Pen(Color.Black, 2);
             assetsNW_red_3.Fill = new SolidBrush(Color.Red);
@@ -953,10 +955,6 @@ namespace MissionPlanner.GCSViews
             assetsNW_blue_3.Fill = new SolidBrush(Color.Blue);
 
             List<PointLatLng> assetLocNWPoints_4 = GenerateAsset(lat, lng, 22.098, 330 + adjustAngle_deg);
-            sumLat = assetLocNWPoints_4.Sum(p => p.Lat);
-            sumLng = assetLocNWPoints_4.Sum(p => p.Lng);
-            assetLatFour = sumLat / assetLocNWPoints_4.Count;
-            assetLngFour = sumLng / assetLocNWPoints_4.Count;
             assetsNW_red_4 = new GMapPolygon(assetLocNWPoints_4, "assetsNW_red_4");
             assetsNW_red_4.Stroke = new Pen(Color.Black, 2);
             assetsNW_red_4.Fill = new SolidBrush(Color.Red);
@@ -989,33 +987,33 @@ namespace MissionPlanner.GCSViews
             {
                 if (isNWRed)
                 {
-                    POI.POIAdd(new PointLatLngAlt(assetLatOne, assetLngOne, 0), "Pos #1 (Opponent)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTwo, assetLngTwo, 0), "Pos #2 (Opponent)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatThree, assetLngThree, 0), "Pos #3 (Opponent)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatFour, assetLngFour, 0), "Pos #4 (Opponent)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatFive, assetLngFive, 0), "Pos #5 (Opponent)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatSix, assetLngSix, 0), "Pos #6 (Opponent)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatSeven, assetLngSeven, 0), "Pos #7 (Friendly)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatEight, assetLngEight, 0), "Pos #8 (Friendly)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatNine, assetLngNine, 0), "Pos #9 (Friendly)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTen, assetLngTen, 0), "Pos #10 (Friendly)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatEleven, assetLngEleven, 0), "Pos #11 (Friendly)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTwelve, assetLngTwelve, 0), "Pos #12 (Friendly)", false);
+                    POI.POIAdd(assetLocs[8], "Pos #1 (Opponent)", true);
+                    POI.POIAdd(assetLocs[9], "Pos #2 (Opponent)", true);
+                    POI.POIAdd(assetLocs[10], "Pos #3 (Opponent)", true);
+                    POI.POIAdd(assetLocs[11], "Pos #4 (Opponent)", true);
+                    POI.POIAdd(assetLocs[0], "Pos #5 (Opponent)", true);
+                    POI.POIAdd(assetLocs[1], "Pos #6 (Opponent)", true);
+                    POI.POIAdd(assetLocs[2], "Pos #7 (Friendly)", false);
+                    POI.POIAdd(assetLocs[3], "Pos #8 (Friendly)", false);
+                    POI.POIAdd(assetLocs[4], "Pos #9 (Friendly)", false);
+                    POI.POIAdd(assetLocs[5], "Pos #10 (Friendly)", false);
+                    POI.POIAdd(assetLocs[6], "Pos #11 (Friendly)", false);
+                    POI.POIAdd(assetLocs[7], "Pos #12 (Friendly)", false);
                 }
                 else
                 {
-                    POI.POIAdd(new PointLatLngAlt(assetLatOne, assetLngOne, 0), "Pos #1 (Opponent)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTwo, assetLngTwo, 0), "Pos #2 (Opponent)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatThree, assetLngThree, 0), "Pos #3 (Opponent)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatFour, assetLngFour, 0), "Pos #4 (Opponent)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatFive, assetLngFive, 0), "Pos #5 (Opponent)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatSix, assetLngSix, 0), "Pos #6 (Opponent)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatSeven, assetLngSeven, 0), "Pos #7 (Friendly)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatEight, assetLngEight, 0), "Pos #8 (Friendly)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatNine, assetLngNine, 0), "Pos #9 (Friendly)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTen, assetLngTen, 0), "Pos #10 (Friendly)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatEleven, assetLngEleven, 0), "Pos #11 (Friendly)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTwelve, assetLngTwelve, 0), "Pos #12 (Friendly)", true);
+                    POI.POIAdd(assetLocs[8], "Pos #1 (Opponent)", false);
+                    POI.POIAdd(assetLocs[9], "Pos #2 (Opponent)", false);
+                    POI.POIAdd(assetLocs[10], "Pos #3 (Opponent)", false);
+                    POI.POIAdd(assetLocs[11], "Pos #4 (Opponent)", false);
+                    POI.POIAdd(assetLocs[0], "Pos #5 (Opponent)", false);
+                    POI.POIAdd(assetLocs[1], "Pos #6 (Opponent)", false);
+                    POI.POIAdd(assetLocs[2], "Pos #7 (Friendly)", true);
+                    POI.POIAdd(assetLocs[3], "Pos #8 (Friendly)", true);
+                    POI.POIAdd(assetLocs[4], "Pos #9 (Friendly)", true);
+                    POI.POIAdd(assetLocs[5], "Pos #10 (Friendly)", true);
+                    POI.POIAdd(assetLocs[6], "Pos #11 (Friendly)", true);
+                    POI.POIAdd(assetLocs[7], "Pos #12 (Friendly)", true);
                 }
                 this.CMB_mission.DataSource = new string[] { "None", "Marked Asset", "FOB", "Pos #1 (Opponent)", "Pos #2 (Opponent)", "Pos #3 (Opponent)", "Pos #4 (Opponent)", "Pos #5 (Opponent)", "Pos #6 (Opponent)", "Pos #7 (Friendly)", "Pos #8 (Friendly)", "Pos #9 (Friendly)", "Pos #10 (Friendly)", "Pos #11 (Friendly)", "Pos #12 (Friendly)" };
             }
@@ -1023,33 +1021,33 @@ namespace MissionPlanner.GCSViews
             {
                 if (isNWRed)
                 {
-                    POI.POIAdd(new PointLatLngAlt(assetLatOne, assetLngOne, 0), "Pos #1 (Friendly)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTwo, assetLngTwo, 0), "Pos #2 (Friendly)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatThree, assetLngThree, 0), "Pos #3 (Friendly)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatFour, assetLngFour, 0), "Pos #4 (Friendly)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatFive, assetLngFive, 0), "Pos #5 (Friendly)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatSix, assetLngSix, 0), "Pos #6 (Friendly)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatSeven, assetLngSeven, 0), "Pos #7 (Opponent)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatEight, assetLngEight, 0), "Pos #8 (Opponent)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatNine, assetLngNine, 0), "Pos #9 (Opponent)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTen, assetLngTen, 0), "Pos #10 (Opponent)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatEleven, assetLngEleven, 0), "Pos #11 (Opponent)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTwelve, assetLngTwelve, 0), "Pos #12 (Opponent)", false);
+                    POI.POIAdd(assetLocs[8], "Pos #1 (Friendly)", true);
+                    POI.POIAdd(assetLocs[9], "Pos #2 (Friendly)", true);
+                    POI.POIAdd(assetLocs[10], "Pos #3 (Friendly)", true);
+                    POI.POIAdd(assetLocs[11], "Pos #4 (Friendly)", true);
+                    POI.POIAdd(assetLocs[0], "Pos #5 (Friendly)", true);
+                    POI.POIAdd(assetLocs[1], "Pos #6 (Friendly)", true);
+                    POI.POIAdd(assetLocs[2], "Pos #7 (Opponent)", false);
+                    POI.POIAdd(assetLocs[3], "Pos #8 (Opponent)", false);
+                    POI.POIAdd(assetLocs[4], "Pos #9 (Opponent)", false);
+                    POI.POIAdd(assetLocs[5], "Pos #10 (Opponent)", false);
+                    POI.POIAdd(assetLocs[6], "Pos #11 (Opponent)", false);
+                    POI.POIAdd(assetLocs[7], "Pos #12 (Opponent)", false);
                 }
                 else
                 {
-                    POI.POIAdd(new PointLatLngAlt(assetLatOne, assetLngOne, 0), "Pos #1 (Friendly)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTwo, assetLngTwo, 0), "Pos #2 (Friendly)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatThree, assetLngThree, 0), "Pos #3 (Friendly)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatFour, assetLngFour, 0), "Pos #4 (Friendly)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatFive, assetLngFive, 0), "Pos #5 (Friendly)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatSix, assetLngSix, 0), "Pos #6 (Friendly)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatSeven, assetLngSeven, 0), "Pos #7 (Opponent)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatEight, assetLngEight, 0), "Pos #8 (Opponent)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatNine, assetLngNine, 0), "Pos #9 (Opponent)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTen, assetLngTen, 0), "Pos #10 (Opponent)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatEleven, assetLngEleven, 0), "Pos #11 (Opponent)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTwelve, assetLngTwelve, 0), "Pos #12 (Opponent)", true);
+                    POI.POIAdd(assetLocs[8], "Pos #1 (Friendly)", false);
+                    POI.POIAdd(assetLocs[9], "Pos #2 (Friendly)", false);
+                    POI.POIAdd(assetLocs[10], "Pos #3 (Friendly)", false);
+                    POI.POIAdd(assetLocs[11], "Pos #4 (Friendly)", false);
+                    POI.POIAdd(assetLocs[0], "Pos #5 (Friendly)", false);
+                    POI.POIAdd(assetLocs[1], "Pos #6 (Friendly)", false);
+                    POI.POIAdd(assetLocs[2], "Pos #7 (Opponent)", true);
+                    POI.POIAdd(assetLocs[3], "Pos #8 (Opponent)", true);
+                    POI.POIAdd(assetLocs[4], "Pos #9 (Opponent)", true);
+                    POI.POIAdd(assetLocs[5], "Pos #10 (Opponent)", true);
+                    POI.POIAdd(assetLocs[6], "Pos #11 (Opponent)", true);
+                    POI.POIAdd(assetLocs[7], "Pos #12 (Opponent)", true);
                 }
                 this.CMB_mission.DataSource = new string[] { "None", "Marked Asset", "FOB", "Pos #1 (Friendly)", "Pos #2 (Friendly)", "Pos #3 (Friendly)", "Pos #4 (Friendly)", "Pos #5 (Friendly)", "Pos #6 (Friendly)", "Pos #7 (Opponent)", "Pos #8 (Opponent)", "Pos #9 (Opponent)", "Pos #10 (Opponent)", "Pos #11 (Opponent)", "Pos #12 (Opponent)" };
             }
@@ -1243,6 +1241,8 @@ namespace MissionPlanner.GCSViews
                 mbGoingBackward = false;
                 mbGoingLeft = false;
                 mbGoingRight = false;
+                mbGoingUp = false;
+                mbGoingDown = false;
                 MoveDirection(0, 1, 0, 1);
             }
         }
@@ -1289,6 +1289,8 @@ namespace MissionPlanner.GCSViews
                 mbGoingBackward = true;
                 mbGoingLeft = false;
                 mbGoingRight = false;
+                mbGoingUp = false;
+                mbGoingDown = false;
                 MoveDirection(0, -1, 0, 1);
             }
         }
@@ -1335,6 +1337,8 @@ namespace MissionPlanner.GCSViews
                 mbGoingBackward = false;
                 mbGoingLeft = true;
                 mbGoingRight = false;
+                mbGoingUp = false;
+                mbGoingDown = false;
                 MoveDirection(-1, 0, 0, 1);
             }
         }
@@ -1381,6 +1385,8 @@ namespace MissionPlanner.GCSViews
                 mbGoingBackward = false;
                 mbGoingLeft = false;
                 mbGoingRight = true;
+                mbGoingUp = false;
+                mbGoingDown = false;
                 MoveDirection(1, 0, 0, 1);
             }
         }

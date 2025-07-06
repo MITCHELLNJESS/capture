@@ -13,13 +13,13 @@ temp = pathlib.PosixPath
 pathlib.PosixPath = pathlib.WindowsPath
 
 # load YOLOv5 model
-model_path = pathlib.PosixPath("C:\\Users\\hvomm\\Desktop\\ELDP\\capture\\C2\\A3_System\\best.pt")
+model_path = pathlib.PosixPath("C:\\Users\\barre\\git\\capture-2\\C2\\A3_System\\best.pt")
 model = torch.hub.load("ultralytics/yolov5", "custom", path=model_path, force_reload=True)
 model.conf = 0.4
 
 # initializing webcam
 #cap = cv2.VideoCapture(0)
-cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+cap = cv2.VideoCapture(1, cv2.CAP_DSHOW)
 if not cap.isOpened():
     print("Unable to access webcam")
     exit()
