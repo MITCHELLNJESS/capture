@@ -312,6 +312,9 @@
   <data name="tabAsset.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="tabDf.AutoScroll" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="tabQuick.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -743,6 +746,9 @@
   </data>
   <data name="tabAsset.Text" xml:space="preserve">
     <value>Asset</value>
+  </data>
+  <data name="tabDf.Text" xml:space="preserve">
+    <value>Dragon Fingers Config</value>
   </data>
   <data name="tabQuick.Text" xml:space="preserve">
     <value>Quick</value>
@@ -5860,9 +5866,6 @@
   <data name="&gt;&gt;labelInBounds.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
-  <!-- <data name="throttleLevel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data> -->
   <data name="throttleLevel.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 9.75pt</value>
   </data>
@@ -6345,7 +6348,7 @@
     <value>NoControl</value>
   </data>
   <data name="LBL_DFMotor1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 190</value>
+    <value>5, 5</value>
   </data>
   <data name="LBL_DFMotor1.Size" type="System.Drawing.Size, System.Drawing">
     <value>180, 20</value>
@@ -6363,7 +6366,7 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;LBL_DFMotor1.Parent" xml:space="preserve">
-    <value>splitContainer1.Panel2</value>
+    <value>tabDf</value>
   </data>
   <data name="LBL_DFPort1.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 12pt</value>
@@ -6375,7 +6378,7 @@
     <value>NoControl</value>
   </data>
   <data name="LBL_DFPort1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 210</value>
+    <value>5, 25</value>
   </data>
   <data name="LBL_DFPort1.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 32</value>
@@ -6393,13 +6396,13 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;LBL_DFPort1.Parent" xml:space="preserve">
-    <value>splitContainer1.Panel2</value>
+    <value>tabDf</value>
   </data>
   <data name="CMB_DFMotor1.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 14pt</value>
   </data>
   <data name="CMB_DFMotor1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>55, 210</value>
+    <value>55, 25</value>
   </data>
   <data name="CMB_DFMotor1.Size" type="System.Drawing.Size, System.Drawing">
     <value>130, 40</value>
@@ -6414,7 +6417,7 @@
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;CMB_DFMotor1.Parent" xml:space="preserve">
-    <value>splitContainer1.Panel2</value>
+    <value>tabDf</value>
   </data>
   <data name="&gt;&gt;CMB_DFMotor1.BackColor" type="System.Drawing.Color, System.Drawing">
     <value>Red</value>
@@ -6432,7 +6435,7 @@
     <value>NoControl</value>
   </data>
   <data name="LBL_DFOpenPwm1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 242</value>
+    <value>5, 57</value>
   </data>
   <data name="LBL_DFOpenPwm1.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 40</value>
@@ -6450,13 +6453,13 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;LBL_DFOpenPwm1.Parent" xml:space="preserve">
-    <value>splitContainer1.Panel2</value>
+    <value>tabDf</value>
   </data>
   <data name="TB_DFOpenPwm1.AutoSize" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
   <data name="TB_DFOpenPwm1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>55, 242</value>
+    <value>55, 57</value>
   </data>
   <data name="TB_DFOpenPwm1.Size" type="System.Drawing.Size, System.Drawing">
     <value>130, 40</value>
@@ -6471,7 +6474,7 @@
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;TB_DFOpenPwm1.Parent" xml:space="preserve">
-    <value>splitContainer1.Panel2</value>
+    <value>tabDf</value>
   </data>
   <data name="TB_DFOpenPwm1.Text" xml:space="preserve">
     <value>1900</value>
@@ -6489,7 +6492,7 @@
     <value>NoControl</value>
   </data>
   <data name="LBL_DFClosePwm1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 282</value>
+    <value>5, 97</value>
   </data>
   <data name="LBL_DFClosePwm1.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 40</value>
@@ -6507,13 +6510,13 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;LBL_DFClosePwm1.Parent" xml:space="preserve">
-    <value>splitContainer1.Panel2</value>
+    <value>tabDf</value>
   </data>
   <data name="TB_DFClosePwm1.AutoSize" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
   <data name="TB_DFClosePwm1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>55, 282</value>
+    <value>55, 97</value>
   </data>
   <data name="TB_DFClosePwm1.Size" type="System.Drawing.Size, System.Drawing">
     <value>130, 40</value>
@@ -6528,7 +6531,7 @@
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;TB_DFClosePwm1.Parent" xml:space="preserve">
-    <value>splitContainer1.Panel2</value>
+    <value>tabDf</value>
   </data>
   <data name="TB_DFClosePwm1.Text" xml:space="preserve">
     <value>1100</value>
@@ -6546,7 +6549,7 @@
     <value>NoControl</value>
   </data>
   <data name="LBL_DFStopPwm1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 322</value>
+    <value>5, 137</value>
   </data>
   <data name="LBL_DFStopPwm1.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 40</value>
@@ -6564,7 +6567,7 @@
     <value>False</value>
   </data>
   <data name="TB_DFStopPwm1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>55, 322</value>
+    <value>55, 137</value>
   </data>
   <data name="TB_DFStopPwm1.Size" type="System.Drawing.Size, System.Drawing">
     <value>130, 40</value>
@@ -6579,7 +6582,7 @@
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;TB_DFStopPwm1.Parent" xml:space="preserve">
-    <value>splitContainer1.Panel2</value>
+    <value>tabDf</value>
   </data>
   <data name="TB_DFStopPwm1.Text" xml:space="preserve">
     <value>1500</value>
@@ -6597,7 +6600,7 @@
     <value>NoControl</value>
   </data>
   <data name="LBL_DFOpenTime1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 362</value>
+    <value>5, 177</value>
   </data>
   <data name="LBL_DFOpenTime1.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 40</value>
@@ -6615,13 +6618,13 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;LBL_DFOpenTime1.Parent" xml:space="preserve">
-    <value>splitContainer1.Panel2</value>
+    <value>tabDf</value>
   </data>
   <data name="TB_DFOpenTime1.AutoSize" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
   <data name="TB_DFOpenTime1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>55, 362</value>
+    <value>55, 177</value>
   </data>
   <data name="TB_DFOpenTime1.Size" type="System.Drawing.Size, System.Drawing">
     <value>130, 40</value>
@@ -6636,7 +6639,7 @@
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;TB_DFOpenTime1.Parent" xml:space="preserve">
-    <value>splitContainer1.Panel2</value>
+    <value>tabDf</value>
   </data>
   <data name="TB_DFOpenTime1.Text" xml:space="preserve">
     <value>10</value>
@@ -6654,7 +6657,7 @@
     <value>NoControl</value>
   </data>
   <data name="LBL_DFCloseTime1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 402</value>
+    <value>5, 217</value>
   </data>
   <data name="LBL_DFCloseTime1.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 40</value>
@@ -6672,13 +6675,13 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;LBL_DFCloseTime1.Parent" xml:space="preserve">
-    <value>splitContainer1.Panel2</value>
+    <value>tabDf</value>
   </data>
   <data name="TB_DFCloseTime1.AutoSize" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
   <data name="TB_DFCloseTime1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>55, 402</value>
+    <value>55, 217</value>
   </data>
   <data name="TB_DFCloseTime1.Size" type="System.Drawing.Size, System.Drawing">
     <value>130, 40</value>
@@ -6693,7 +6696,7 @@
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;TB_DFCloseTime1.Parent" xml:space="preserve">
-    <value>splitContainer1.Panel2</value>
+    <value>tabDf</value>
   </data>
   <data name="TB_DFCloseTime1.Text" xml:space="preserve">
     <value>10</value>
@@ -6711,7 +6714,7 @@
     <value>NoControl</value>
   </data>
   <data name="LBL_DFMotor2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>200, 190</value>
+    <value>200, 5</value>
   </data>
   <data name="LBL_DFMotor2.Size" type="System.Drawing.Size, System.Drawing">
     <value>180, 20</value>
@@ -6729,7 +6732,7 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;LBL_DFMotor2.Parent" xml:space="preserve">
-    <value>splitContainer1.Panel2</value>
+    <value>tabDf</value>
   </data>
   <data name="LBL_DFPort2.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 12pt</value>
@@ -6741,7 +6744,7 @@
     <value>NoControl</value>
   </data>
   <data name="LBL_DFPort2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>200, 210</value>
+    <value>200, 25</value>
   </data>
   <data name="LBL_DFPort2.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 32</value>
@@ -6759,13 +6762,13 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;LBL_DFPort2.Parent" xml:space="preserve">
-    <value>splitContainer1.Panel2</value>
+    <value>tabDf</value>
   </data>
  <data name="CMB_DFMotor2.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 14pt</value>
   </data>
   <data name="CMB_DFMotor2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>250, 210</value>
+    <value>250, 25</value>
   </data>
   <data name="CMB_DFMotor2.Size" type="System.Drawing.Size, System.Drawing">
     <value>130, 40</value>
@@ -6780,7 +6783,7 @@
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;CMB_DFMotor2.Parent" xml:space="preserve">
-    <value>splitContainer1.Panel2</value>
+    <value>tabDf</value>
   </data>
   <data name="&gt;&gt;CMB_DFMotor2.BackColor" type="System.Drawing.Color, System.Drawing">
     <value>Red</value>
@@ -6798,7 +6801,7 @@
     <value>NoControl</value>
   </data>
   <data name="LBL_DFOpenPwm2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>200, 242</value>
+    <value>200, 57</value>
   </data>
   <data name="LBL_DFOpenPwm2.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 40</value>
@@ -6816,13 +6819,13 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;LBL_DFOpenPwm2.Parent" xml:space="preserve">
-    <value>splitContainer1.Panel2</value>
+    <value>tabDf</value>
   </data>
   <data name="TB_DFOpenPwm2.AutoSize" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
   <data name="TB_DFOpenPwm2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>250, 242</value>
+    <value>250, 57</value>
   </data>
   <data name="TB_DFOpenPwm2.Size" type="System.Drawing.Size, System.Drawing">
     <value>130, 40</value>
@@ -6837,7 +6840,7 @@
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;TB_DFOpenPwm2.Parent" xml:space="preserve">
-    <value>splitContainer1.Panel2</value>
+    <value>tabDf</value>
   </data>
   <data name="TB_DFOpenPwm2.Text" xml:space="preserve">
     <value>1900</value>
@@ -6855,7 +6858,7 @@
     <value>NoControl</value>
   </data>
   <data name="LBL_DFClosePwm2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>200, 282</value>
+    <value>200, 97</value>
   </data>
   <data name="LBL_DFClosePwm2.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 40</value>
@@ -6873,13 +6876,13 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;LBL_DFClosePwm2.Parent" xml:space="preserve">
-    <value>splitContainer1.Panel2</value>
+    <value>tabDf</value>
   </data>
   <data name="TB_DFClosePwm2.AutoSize" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
   <data name="TB_DFClosePwm2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>250, 282</value>
+    <value>250, 97</value>
   </data>
   <data name="TB_DFClosePwm2.Size" type="System.Drawing.Size, System.Drawing">
     <value>130, 40</value>
@@ -6894,7 +6897,7 @@
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;TB_DFClosePwm2.Parent" xml:space="preserve">
-    <value>splitContainer1.Panel2</value>
+    <value>tabDf</value>
   </data>
   <data name="TB_DFClosePwm2.Text" xml:space="preserve">
     <value>1100</value>
@@ -6912,7 +6915,7 @@
     <value>NoControl</value>
   </data>
   <data name="LBL_DFStopPwm2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>200, 322</value>
+    <value>200, 137</value>
   </data>
   <data name="LBL_DFStopPwm2.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 40</value>
@@ -6930,13 +6933,13 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;LBL_DFStopPwm2.Parent" xml:space="preserve">
-    <value>splitContainer1.Panel2</value>
+    <value>tabDf</value>
   </data>
   <data name="TB_DFStopPwm2.AutoSize" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
   <data name="TB_DFStopPwm2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>250, 322</value>
+    <value>250, 137</value>
   </data>
   <data name="TB_DFStopPwm2.Size" type="System.Drawing.Size, System.Drawing">
     <value>130, 40</value>
@@ -6951,7 +6954,7 @@
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;TB_DFStopPwm2.Parent" xml:space="preserve">
-    <value>splitContainer1.Panel2</value>
+    <value>tabDf</value>
   </data>
   <data name="TB_DFStopPwm2.Text" xml:space="preserve">
     <value>1500</value>
@@ -6969,7 +6972,7 @@
     <value>NoControl</value>
   </data>
   <data name="LBL_DFOpenTime2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>200, 362</value>
+    <value>200, 177</value>
   </data>
   <data name="LBL_DFOpenTime2.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 40</value>
@@ -6987,13 +6990,13 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;LBL_DFOpenTime2.Parent" xml:space="preserve">
-    <value>splitContainer1.Panel2</value>
+    <value>tabDf</value>
   </data>
   <data name="TB_DFOpenTime2.AutoSize" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
   <data name="TB_DFOpenTime2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>250, 362</value>
+    <value>250, 177</value>
   </data>
   <data name="TB_DFOpenTime2.Size" type="System.Drawing.Size, System.Drawing">
     <value>130, 40</value>
@@ -7008,7 +7011,7 @@
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;TB_DFOpenTime2.Parent" xml:space="preserve">
-    <value>splitContainer1.Panel2</value>
+    <value>tabDf</value>
   </data>
   <data name="TB_DFOpenTime2.Text" xml:space="preserve">
     <value>10</value>
@@ -7026,7 +7029,7 @@
     <value>NoControl</value>
   </data>
   <data name="LBL_DFCloseTime2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>200, 402</value>
+    <value>200, 217</value>
   </data>
   <data name="LBL_DFCloseTime2.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 40</value>
@@ -7041,7 +7044,7 @@
     <value>False</value>
   </data>
   <data name="TB_DFCloseTime2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>250, 402</value>
+    <value>250, 217</value>
   </data>
   <data name="TB_DFCloseTime2.Size" type="System.Drawing.Size, System.Drawing">
     <value>130, 40</value>
@@ -7056,7 +7059,7 @@
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;TB_DFCloseTime2.Parent" xml:space="preserve">
-    <value>splitContainer1.Panel2</value>
+    <value>tabDf</value>
   </data>
   <data name="TB_DFCloseTime2.Text" xml:space="preserve">
     <value>10</value>
@@ -7068,7 +7071,7 @@
     <value>NoControl</value>
   </data>
   <data name="BUT_DFClose.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 450</value>
+    <value>5, 185</value>
   </data>
   <data name="BUT_DFClose.Size" type="System.Drawing.Size, System.Drawing">
     <value>130, 40</value>
@@ -7086,7 +7089,7 @@
     <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;BUT_DFClose.Parent" xml:space="preserve">
-    <value>splitContainer1.Panel2</value>
+    <value>tabDf</value>
   </data>
   <data name="&gt;&gt;BUT_DFClose.ZOrder" xml:space="preserve">
     <value>2</value>
@@ -7095,7 +7098,7 @@
     <value>NoControl</value>
   </data>
   <data name="BUT_DFOpen.Location" type="System.Drawing.Point, System.Drawing">
-    <value>155, 450</value>
+    <value>155, 185</value>
   </data>
   <data name="BUT_DFOpen.Size" type="System.Drawing.Size, System.Drawing">
     <value>130, 40</value>
@@ -7113,16 +7116,43 @@
     <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;BUT_DFOpen.Parent" xml:space="preserve">
-    <value>splitContainer1.Panel2</value>
+    <value>tabDf</value>
   </data>
   <data name="&gt;&gt;BUT_DFOpen.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="checkBoxAug.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkBoxAug.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 235</value>
+  </data>
+  <data name="checkBoxAug.Size" type="System.Drawing.Size, System.Drawing">
+    <value>143, 17</value>
+  </data>
+  <data name="checkBoxAug.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="checkBoxAug.Text" xml:space="preserve">
+    <value>Assisted Mode</value>
+  </data>
+  <data name="&gt;&gt;checkBoxAug.Name" xml:space="preserve">
+    <value>checkBoxAug</value>
+  </data>
+  <data name="&gt;&gt;checkBoxAug.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxAug.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;checkBoxAug.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
   <data name="BUT_Forward.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="BUT_Forward.Location" type="System.Drawing.Point, System.Drawing">
-    <value>60, 500</value>
+    <value>55, 260</value>
   </data>
   <data name="BUT_Forward.Size" type="System.Drawing.Size, System.Drawing">
     <value>40, 40</value>
@@ -7149,7 +7179,7 @@
     <value>NoControl</value>
   </data>
   <data name="BUT_Backward.Location" type="System.Drawing.Point, System.Drawing">
-    <value>60, 550</value>
+    <value>55, 310</value>
   </data>
   <data name="BUT_Backward.Size" type="System.Drawing.Size, System.Drawing">
     <value>40, 40</value>
@@ -7176,7 +7206,7 @@
     <value>NoControl</value>
   </data>
   <data name="BUT_Left.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 550</value>
+    <value>5, 310</value>
   </data>
   <data name="BUT_Left.Size" type="System.Drawing.Size, System.Drawing">
     <value>40, 40</value>
@@ -7203,7 +7233,7 @@
     <value>NoControl</value>
   </data>
   <data name="BUT_Right.Location" type="System.Drawing.Point, System.Drawing">
-    <value>110, 550</value>
+    <value>105, 310</value>
   </data>
   <data name="BUT_Right.Size" type="System.Drawing.Size, System.Drawing">
     <value>40, 40</value>
@@ -7230,7 +7260,7 @@
     <value>NoControl</value>
   </data>
   <data name="BUT_Up.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 500</value>
+    <value>5, 260</value>
   </data>
   <data name="BUT_Up.Size" type="System.Drawing.Size, System.Drawing">
     <value>40, 40</value>
@@ -7257,7 +7287,7 @@
     <value>NoControl</value>
   </data>
   <data name="BUT_Down.Location" type="System.Drawing.Point, System.Drawing">
-    <value>110, 500</value>
+    <value>105, 260</value>
   </data>
   <data name="BUT_Down.Size" type="System.Drawing.Size, System.Drawing">
     <value>40, 40</value>
@@ -7284,7 +7314,7 @@
     <value>NoControl</value>
   </data>
   <data name="BUT_Hov.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 600</value>
+    <value>5, 360</value>
   </data>
   <data name="BUT_Hov.Size" type="System.Drawing.Size, System.Drawing">
     <value>40, 40</value>

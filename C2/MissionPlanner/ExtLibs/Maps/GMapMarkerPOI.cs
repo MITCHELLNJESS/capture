@@ -25,4 +25,12 @@ namespace MissionPlanner.Maps
         {
         }
     }
+
+    public class GMapMarkerPOI_Yellow : GMarkerGoogle
+    {
+        public GMapMarkerPOI_Yellow(PointLatLng p)
+            : base(p, GMarkerGoogleType.yellow_dot)
+        {
+        }
+    }
 }

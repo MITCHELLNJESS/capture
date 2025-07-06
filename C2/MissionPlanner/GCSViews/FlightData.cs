@@ -4,6 +4,7 @@ using GMap.NET;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
 using log4net;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Scripting.Utils;
 using MissionPlanner.ArduPilot;
 using MissionPlanner.Controls;
@@ -360,6 +361,11 @@ namespace MissionPlanner.GCSViews
                     int green = Convert.ToInt32(255 * (1 - percentage));
                     int blue = 0;
                     throttleLevel.numberColor = System.Drawing.Color.FromArgb(red, green, blue);
+
+                    if (FlightData.instance.checkBoxAug.Checked)
+                    {
+                        FlightData.instance.checkBoxAug.Checked = false;
+                    }
                 }
 
                 System.Threading.Thread.Sleep(500);
@@ -494,6 +500,86 @@ namespace MissionPlanner.GCSViews
             thread2.IsBackground = true;
             thread1.Start();
             thread2.Start();
+        }
+
+        private void CheckBoxAug_CheckStateChanged(object sender, EventArgs e)
+        {
+            // This code will execute when the checkbox's checked state changes (checked or unchecked).
+            if (!checkBoxAug.Checked)
+            {
+                Color dark = Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
+                BUT_Forward.BGGradTop = dark;
+                BUT_Forward.BGGradBot = dark;
+                BUT_Backward.BGGradTop = dark;
+                BUT_Backward.BGGradBot = dark;
+                BUT_Left.BGGradTop = dark;
+                BUT_Left.BGGradBot = dark;
+                BUT_Right.BGGradTop = dark;
+                BUT_Right.BGGradBot = dark;
+                BUT_Up.BGGradTop = dark;
+                BUT_Up.BGGradBot = dark;
+                BUT_Down.BGGradTop = dark;
+                BUT_Down.BGGradBot = dark;
+                BUT_Hov.BGGradTop = dark;
+                BUT_Hov.BGGradBot = dark;
+                BUT_Forward.ColorMouseDown = BUT_Forward.BGGradBot;
+                BUT_Forward.ColorMouseOver = BUT_Forward.BGGradBot;
+                BUT_Backward.ColorMouseDown = BUT_Backward.BGGradBot;
+                BUT_Backward.ColorMouseOver = BUT_Backward.BGGradBot;
+                BUT_Left.ColorMouseDown = BUT_Left.BGGradBot;
+                BUT_Left.ColorMouseOver = BUT_Left.BGGradBot;
+                BUT_Right.ColorMouseDown = BUT_Right.BGGradBot;
+                BUT_Right.ColorMouseOver = BUT_Right.BGGradBot;
+                BUT_Up.ColorMouseDown = BUT_Up.BGGradBot;
+                BUT_Up.ColorMouseOver = BUT_Up.BGGradBot;
+                BUT_Down.ColorMouseDown = BUT_Down.BGGradBot;
+                BUT_Down.ColorMouseOver = BUT_Down.BGGradBot;
+                BUT_Hov.ColorMouseDown = BUT_Hov.BGGradBot;
+                BUT_Hov.ColorMouseOver = BUT_Hov.BGGradBot;
+            }
+            else
+            {
+                if (MainV2.comPort.MAV.cs.mode != "Guided")
+                {
+                    if (CustomMessageBox.Show("Enter GUIDED Mode?", "", CustomMessageBox.MessageBoxButtons.YesNo) == CustomMessageBox.DialogResult.Yes)
+                    {
+                        MainV2.comPort.setMode("GUIDED");
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+
+                BUT_Forward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Forward.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Backward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Backward.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Left.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Left.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Right.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Right.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Up.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Up.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Down.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Down.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Hov.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Hov.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Forward.ColorMouseDown = BUT_Forward.BGGradBot;
+                BUT_Forward.ColorMouseOver = BUT_Forward.BGGradBot;
+                BUT_Backward.ColorMouseDown = BUT_Backward.BGGradBot;
+                BUT_Backward.ColorMouseOver = BUT_Backward.BGGradBot;
+                BUT_Left.ColorMouseDown = BUT_Left.BGGradBot;
+                BUT_Left.ColorMouseOver = BUT_Left.BGGradBot;
+                BUT_Right.ColorMouseDown = BUT_Right.BGGradBot;
+                BUT_Right.ColorMouseOver = BUT_Right.BGGradBot;
+                BUT_Up.ColorMouseDown = BUT_Up.BGGradBot;
+                BUT_Up.ColorMouseOver = BUT_Up.BGGradBot;
+                BUT_Down.ColorMouseDown = BUT_Down.BGGradBot;
+                BUT_Down.ColorMouseOver = BUT_Down.BGGradBot;
+                BUT_Hov.ColorMouseDown = BUT_Hov.BGGradBot;
+                BUT_Hov.ColorMouseOver = BUT_Hov.BGGradBot;
+            }
         }
 
         static bool IsPointInCircle(double uav_lat, double uav_lon, double center_lat, double center_lon, double radius)
@@ -1226,6 +1312,11 @@ namespace MissionPlanner.GCSViews
 
         private void BUT_Forward_Click(object sender, EventArgs e)
         {
+            if (!checkBoxAug.Checked)
+            {
+                return;
+            }
+
             if (mbGoingForward)
             {
                 BUT_Forward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
@@ -1272,6 +1363,11 @@ namespace MissionPlanner.GCSViews
 
         private void BUT_Backward_Click(object sender, EventArgs e)
         {
+            if (!checkBoxAug.Checked)
+            {
+                return;
+            }
+
             if (mbGoingBackward)
             {
                 BUT_Backward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
@@ -1318,6 +1414,11 @@ namespace MissionPlanner.GCSViews
 
         private void BUT_Left_Click(object sender, EventArgs e)
         {
+            if (!checkBoxAug.Checked)
+            {
+                return;
+            }
+
             if (mbGoingLeft)
             {
                 BUT_Left.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
@@ -1364,6 +1465,11 @@ namespace MissionPlanner.GCSViews
 
         private void BUT_Right_Click(object sender, EventArgs e)
         {
+            if (!checkBoxAug.Checked)
+            {
+                return;
+            }
+
             if (mbGoingRight)
             {
                 BUT_Right.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
@@ -1410,6 +1516,11 @@ namespace MissionPlanner.GCSViews
 
         private void BUT_Up_Click(object sender, EventArgs e)
         {
+            if (!checkBoxAug.Checked)
+            {
+                return;
+            }
+
             if (mbGoingUp)
             {
                 BUT_Up.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
@@ -1458,6 +1569,11 @@ namespace MissionPlanner.GCSViews
 
         private void BUT_Down_Click(object sender, EventArgs e)
         {
+            if (!checkBoxAug.Checked)
+            {
+                return;
+            }
+
             if (mbGoingDown)
             {
                 BUT_Down.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
@@ -1506,6 +1622,11 @@ namespace MissionPlanner.GCSViews
 
         private void BUT_Hov_Click(object sender, EventArgs e)
         {
+            if (!checkBoxAug.Checked)
+            {
+                return;
+            }
+
             MainV2.comPort.setMode("GUIDED");
 
             if (!MainV2.comPort.MAV.cs.armed)
@@ -2321,6 +2442,8 @@ namespace MissionPlanner.GCSViews
             TabListDisplay.Clear();
 
             TabListDisplay.Add(tabAsset.Name, MainV2.DisplayConfiguration.displayAssetTab);
+
+            TabListDisplay.Add(tabDf.Name, MainV2.DisplayConfiguration.displayAssetTab);
 
             TabListDisplay.Add(tabQuick.Name, MainV2.DisplayConfiguration.displayQuickTab);
 
