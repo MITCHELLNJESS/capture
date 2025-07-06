@@ -2698,6 +2698,7 @@ namespace MissionPlanner.GCSViews
             this.splitContainer1.Panel2.Controls.Add(BUT_Forward);
             this.splitContainer1.Panel2.Controls.Add(BUT_Backward);
             this.splitContainer1.Panel2.Controls.Add(BUT_Left);
+            this.splitContainer1.Panel2.Controls.Add(BUT_Right);
             this.splitContainer1.Panel2.Controls.Add(BUT_Up);
             this.splitContainer1.Panel2.Controls.Add(BUT_Down);
             this.splitContainer1.Panel2.Controls.Add(BUT_Hov);
@@ -3244,8 +3245,8 @@ namespace MissionPlanner.GCSViews
             //
             // BUT_Align
             //
-            BUT_Align.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            BUT_Align.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            BUT_Align.BGGradTop = dark;
+            BUT_Align.BGGradBot = dark;
             BUT_Align.TextColor = Color.Black;
             resources.ApplyResources(BUT_Align, "BUT_Align");
             BUT_Align.Name = "BUT_Align";

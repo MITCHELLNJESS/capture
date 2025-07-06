@@ -445,11 +445,11 @@ namespace MissionPlanner.GCSViews
                     int green = Convert.ToInt32(255 * (1 - percentage));
                     int blue = 0;
                     throttleLevel.numberColor = System.Drawing.Color.FromArgb(red, green, blue);
+                }
 
-                    if (FlightData.instance.checkBoxAug.Checked)
-                    {
-                        FlightData.instance.checkBoxAug.Checked = false;
-                    }
+                if ((throttleLevel.number > 1000) && (FlightData.instance.checkBoxAug.Checked))
+                {
+                    FlightData.instance.checkBoxAug.Checked = false;
                 }
 
                 System.Threading.Thread.Sleep(500);
@@ -606,6 +606,8 @@ namespace MissionPlanner.GCSViews
                 BUT_Down.BGGradBot = dark;
                 BUT_Hov.BGGradTop = dark;
                 BUT_Hov.BGGradBot = dark;
+                BUT_Align.BGGradTop = dark;
+                BUT_Align.BGGradBot = dark;
                 BUT_Forward.ColorMouseDown = BUT_Forward.BGGradBot;
                 BUT_Forward.ColorMouseOver = BUT_Forward.BGGradBot;
                 BUT_Backward.ColorMouseDown = BUT_Backward.BGGradBot;
@@ -620,6 +622,8 @@ namespace MissionPlanner.GCSViews
                 BUT_Down.ColorMouseOver = BUT_Down.BGGradBot;
                 BUT_Hov.ColorMouseDown = BUT_Hov.BGGradBot;
                 BUT_Hov.ColorMouseOver = BUT_Hov.BGGradBot;
+                BUT_Align.ColorMouseDown = BUT_Align.BGGradBot;
+                BUT_Align.ColorMouseOver = BUT_Align.BGGradBot;
             }
             else
             {
@@ -649,6 +653,8 @@ namespace MissionPlanner.GCSViews
                 BUT_Down.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
                 BUT_Hov.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
                 BUT_Hov.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Align.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Align.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
                 BUT_Forward.ColorMouseDown = BUT_Forward.BGGradBot;
                 BUT_Forward.ColorMouseOver = BUT_Forward.BGGradBot;
                 BUT_Backward.ColorMouseDown = BUT_Backward.BGGradBot;
@@ -663,6 +669,8 @@ namespace MissionPlanner.GCSViews
                 BUT_Down.ColorMouseOver = BUT_Down.BGGradBot;
                 BUT_Hov.ColorMouseDown = BUT_Hov.BGGradBot;
                 BUT_Hov.ColorMouseOver = BUT_Hov.BGGradBot;
+                BUT_Align.ColorMouseDown = BUT_Align.BGGradBot;
+                BUT_Align.ColorMouseOver = BUT_Align.BGGradBot;
             }
         }
 
@@ -1075,33 +1083,33 @@ namespace MissionPlanner.GCSViews
             {
                 if (isNWRed)
                 {
-                    POI.POIAdd(assetLocs[8], "Pos #1 (Opponent)", true);
-                    POI.POIAdd(assetLocs[9], "Pos #2 (Opponent)", true);
-                    POI.POIAdd(assetLocs[10], "Pos #3 (Opponent)", true);
-                    POI.POIAdd(assetLocs[11], "Pos #4 (Opponent)", true);
-                    POI.POIAdd(assetLocs[0], "Pos #5 (Opponent)", true);
-                    POI.POIAdd(assetLocs[1], "Pos #6 (Opponent)", true);
-                    POI.POIAdd(assetLocs[2], "Pos #7 (Friendly)", false);
-                    POI.POIAdd(assetLocs[3], "Pos #8 (Friendly)", false);
-                    POI.POIAdd(assetLocs[4], "Pos #9 (Friendly)", false);
-                    POI.POIAdd(assetLocs[5], "Pos #10 (Friendly)", false);
-                    POI.POIAdd(assetLocs[6], "Pos #11 (Friendly)", false);
-                    POI.POIAdd(assetLocs[7], "Pos #12 (Friendly)", false);
+                    POI.POIAdd(assetLocs[8], "Pos #1 (Opponent)", 1);
+                    POI.POIAdd(assetLocs[9], "Pos #2 (Opponent)", 1);
+                    POI.POIAdd(assetLocs[10], "Pos #3 (Opponent)", 1);
+                    POI.POIAdd(assetLocs[11], "Pos #4 (Opponent)", 1);
+                    POI.POIAdd(assetLocs[0], "Pos #5 (Opponent)", 1);
+                    POI.POIAdd(assetLocs[1], "Pos #6 (Opponent)", 1);
+                    POI.POIAdd(assetLocs[2], "Pos #7 (Friendly)", 0);
+                    POI.POIAdd(assetLocs[3], "Pos #8 (Friendly)", 0);
+                    POI.POIAdd(assetLocs[4], "Pos #9 (Friendly)", 0);
+                    POI.POIAdd(assetLocs[5], "Pos #10 (Friendly)", 0);
+                    POI.POIAdd(assetLocs[6], "Pos #11 (Friendly)", 0);
+                    POI.POIAdd(assetLocs[7], "Pos #12 (Friendly)", 0);
                 }
                 else
                 {
-                    POI.POIAdd(assetLocs[8], "Pos #1 (Opponent)", false);
-                    POI.POIAdd(assetLocs[9], "Pos #2 (Opponent)", false);
-                    POI.POIAdd(assetLocs[10], "Pos #3 (Opponent)", false);
-                    POI.POIAdd(assetLocs[11], "Pos #4 (Opponent)", false);
-                    POI.POIAdd(assetLocs[0], "Pos #5 (Opponent)", false);
-                    POI.POIAdd(assetLocs[1], "Pos #6 (Opponent)", false);
-                    POI.POIAdd(assetLocs[2], "Pos #7 (Friendly)", true);
-                    POI.POIAdd(assetLocs[3], "Pos #8 (Friendly)", true);
-                    POI.POIAdd(assetLocs[4], "Pos #9 (Friendly)", true);
-                    POI.POIAdd(assetLocs[5], "Pos #10 (Friendly)", true);
-                    POI.POIAdd(assetLocs[6], "Pos #11 (Friendly)", true);
-                    POI.POIAdd(assetLocs[7], "Pos #12 (Friendly)", true);
+                    POI.POIAdd(assetLocs[8], "Pos #1 (Opponent)", 0);
+                    POI.POIAdd(assetLocs[9], "Pos #2 (Opponent)", 0);
+                    POI.POIAdd(assetLocs[10], "Pos #3 (Opponent)", 0);
+                    POI.POIAdd(assetLocs[11], "Pos #4 (Opponent)", 0);
+                    POI.POIAdd(assetLocs[0], "Pos #5 (Opponent)", 0);
+                    POI.POIAdd(assetLocs[1], "Pos #6 (Opponent)", 0);
+                    POI.POIAdd(assetLocs[2], "Pos #7 (Friendly)", 1);
+                    POI.POIAdd(assetLocs[3], "Pos #8 (Friendly)", 1);
+                    POI.POIAdd(assetLocs[4], "Pos #9 (Friendly)", 1);
+                    POI.POIAdd(assetLocs[5], "Pos #10 (Friendly)", 1);
+                    POI.POIAdd(assetLocs[6], "Pos #11 (Friendly)", 1);
+                    POI.POIAdd(assetLocs[7], "Pos #12 (Friendly)", 1);
                 }
                 this.CMB_mission.DataSource = new string[] { "None", "Marked Asset", "FOB", "Pos #1 (Opponent)", "Pos #2 (Opponent)", "Pos #3 (Opponent)", "Pos #4 (Opponent)", "Pos #5 (Opponent)", "Pos #6 (Opponent)", "Pos #7 (Friendly)", "Pos #8 (Friendly)", "Pos #9 (Friendly)", "Pos #10 (Friendly)", "Pos #11 (Friendly)", "Pos #12 (Friendly)" };
             }
@@ -1109,33 +1117,33 @@ namespace MissionPlanner.GCSViews
             {
                 if (isNWRed)
                 {
-                    POI.POIAdd(assetLocs[8], "Pos #1 (Friendly)", true);
-                    POI.POIAdd(assetLocs[9], "Pos #2 (Friendly)", true);
-                    POI.POIAdd(assetLocs[10], "Pos #3 (Friendly)", true);
-                    POI.POIAdd(assetLocs[11], "Pos #4 (Friendly)", true);
-                    POI.POIAdd(assetLocs[0], "Pos #5 (Friendly)", true);
-                    POI.POIAdd(assetLocs[1], "Pos #6 (Friendly)", true);
-                    POI.POIAdd(assetLocs[2], "Pos #7 (Opponent)", false);
-                    POI.POIAdd(assetLocs[3], "Pos #8 (Opponent)", false);
-                    POI.POIAdd(assetLocs[4], "Pos #9 (Opponent)", false);
-                    POI.POIAdd(assetLocs[5], "Pos #10 (Opponent)", false);
-                    POI.POIAdd(assetLocs[6], "Pos #11 (Opponent)", false);
-                    POI.POIAdd(assetLocs[7], "Pos #12 (Opponent)", false);
+                    POI.POIAdd(assetLocs[8], "Pos #1 (Friendly)", 1);
+                    POI.POIAdd(assetLocs[9], "Pos #2 (Friendly)", 1);
+                    POI.POIAdd(assetLocs[10], "Pos #3 (Friendly)", 1);
+                    POI.POIAdd(assetLocs[11], "Pos #4 (Friendly)", 1);
+                    POI.POIAdd(assetLocs[0], "Pos #5 (Friendly)", 1);
+                    POI.POIAdd(assetLocs[1], "Pos #6 (Friendly)", 1);
+                    POI.POIAdd(assetLocs[2], "Pos #7 (Opponent)", 0);
+                    POI.POIAdd(assetLocs[3], "Pos #8 (Opponent)", 0);
+                    POI.POIAdd(assetLocs[4], "Pos #9 (Opponent)", 0);
+                    POI.POIAdd(assetLocs[5], "Pos #10 (Opponent)", 0);
+                    POI.POIAdd(assetLocs[6], "Pos #11 (Opponent)", 0);
+                    POI.POIAdd(assetLocs[7], "Pos #12 (Opponent)", 0);
                 }
                 else
                 {
-                    POI.POIAdd(assetLocs[8], "Pos #1 (Friendly)", false);
-                    POI.POIAdd(assetLocs[9], "Pos #2 (Friendly)", false);
-                    POI.POIAdd(assetLocs[10], "Pos #3 (Friendly)", false);
-                    POI.POIAdd(assetLocs[11], "Pos #4 (Friendly)", false);
-                    POI.POIAdd(assetLocs[0], "Pos #5 (Friendly)", false);
-                    POI.POIAdd(assetLocs[1], "Pos #6 (Friendly)", false);
-                    POI.POIAdd(assetLocs[2], "Pos #7 (Opponent)", true);
-                    POI.POIAdd(assetLocs[3], "Pos #8 (Opponent)", true);
-                    POI.POIAdd(assetLocs[4], "Pos #9 (Opponent)", true);
-                    POI.POIAdd(assetLocs[5], "Pos #10 (Opponent)", true);
-                    POI.POIAdd(assetLocs[6], "Pos #11 (Opponent)", true);
-                    POI.POIAdd(assetLocs[7], "Pos #12 (Opponent)", true);
+                    POI.POIAdd(assetLocs[8], "Pos #1 (Friendly)", 0);
+                    POI.POIAdd(assetLocs[9], "Pos #2 (Friendly)", 0);
+                    POI.POIAdd(assetLocs[10], "Pos #3 (Friendly)", 0);
+                    POI.POIAdd(assetLocs[11], "Pos #4 (Friendly)", 0);
+                    POI.POIAdd(assetLocs[0], "Pos #5 (Friendly)", 0);
+                    POI.POIAdd(assetLocs[1], "Pos #6 (Friendly)", 0);
+                    POI.POIAdd(assetLocs[2], "Pos #7 (Opponent)", 1);
+                    POI.POIAdd(assetLocs[3], "Pos #8 (Opponent)", 1);
+                    POI.POIAdd(assetLocs[4], "Pos #9 (Opponent)", 1);
+                    POI.POIAdd(assetLocs[5], "Pos #10 (Opponent)", 1);
+                    POI.POIAdd(assetLocs[6], "Pos #11 (Opponent)", 1);
+                    POI.POIAdd(assetLocs[7], "Pos #12 (Opponent)", 1);
                 }
                 this.CMB_mission.DataSource = new string[] { "None", "Marked Asset", "FOB", "Pos #1 (Friendly)", "Pos #2 (Friendly)", "Pos #3 (Friendly)", "Pos #4 (Friendly)", "Pos #5 (Friendly)", "Pos #6 (Friendly)", "Pos #7 (Opponent)", "Pos #8 (Opponent)", "Pos #9 (Opponent)", "Pos #10 (Opponent)", "Pos #11 (Opponent)", "Pos #12 (Opponent)" };
             }
@@ -1723,6 +1731,11 @@ namespace MissionPlanner.GCSViews
 
         private void BUT_Align_Click(object sender, EventArgs e)
         {
+            if (!checkBoxAug.Checked)
+            {
+                return;
+            }
+
             if (!doAlign)
             {
                 BUT_Align.BGGradTop = Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(13)))));

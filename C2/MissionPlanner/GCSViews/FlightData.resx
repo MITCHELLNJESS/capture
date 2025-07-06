@@ -7341,7 +7341,7 @@
     <value>NoControl</value>
   </data>
   <data name="BUT_Align.Location" type="System.Drawing.Point, System.Drawing">
-    <value>60, 600</value>
+    <value>55, 360</value>
   </data>
   <data name="BUT_Align.Size" type="System.Drawing.Size, System.Drawing">
     <value>40, 40</value>
