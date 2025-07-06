@@ -7337,6 +7337,33 @@
   <data name="&gt;&gt;BUT_Hov.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="BUT_Align.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_Align.Location" type="System.Drawing.Point, System.Drawing">
+    <value>55, 360</value>
+  </data>
+  <data name="BUT_Align.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 40</value>
+  </data>
+  <data name="BUT_Align.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="BUT_Align.Text" xml:space="preserve">
+    <value>Align</value>
+  </data>
+  <data name="&gt;&gt;BUT_Align.Name" xml:space="preserve">
+    <value>BUT_Align</value>
+  </data>
+  <data name="&gt;&gt;BUT_Align.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_Align.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;BUT_Align.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
   <data name="&gt;&gt;BUT_GenerateMap.Name" xml:space="preserve">
     <value>BUT_GenerateMap</value>
   </data>

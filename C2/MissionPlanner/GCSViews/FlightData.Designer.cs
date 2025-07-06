@@ -258,6 +258,8 @@ namespace MissionPlanner.GCSViews
             BUT_Up = new MissionPlanner.Controls.MyButton();
             BUT_Down = new MissionPlanner.Controls.MyButton();
             BUT_Hov = new MissionPlanner.Controls.MyButton();
+            BUT_Align = new MissionPlanner.Controls.MyButton();
+
             LBL_DFMotor1 = new System.Windows.Forms.Label();
             CMB_DFMotor1 = new System.Windows.Forms.ComboBox();
             LBL_DFMotor2 = new System.Windows.Forms.Label();
@@ -2700,6 +2702,7 @@ namespace MissionPlanner.GCSViews
             this.splitContainer1.Panel2.Controls.Add(BUT_Up);
             this.splitContainer1.Panel2.Controls.Add(BUT_Down);
             this.splitContainer1.Panel2.Controls.Add(BUT_Hov);
+            this.splitContainer1.Panel2.Controls.Add(BUT_Align);
             this.splitContainer1.Panel2.Controls.Add(this.label6);
             this.splitContainer1.Panel2.Controls.Add(this.label5);
             this.splitContainer1.Panel2.Controls.Add(this.label3);
@@ -3205,7 +3208,6 @@ namespace MissionPlanner.GCSViews
             BUT_Right.Name = "BUT_Right";
             BUT_Right.TextColorNotEnabled = Color.Black;
             BUT_Right.UseVisualStyleBackColor = true;
-            BUT_Right.Click += new System.EventHandler(BUT_Right_Click);
             //
             // BUT_Up
             //
@@ -3239,7 +3241,20 @@ namespace MissionPlanner.GCSViews
             BUT_Hov.TextColorNotEnabled = Color.Black;
             BUT_Hov.UseVisualStyleBackColor = true;
             BUT_Hov.Click += new System.EventHandler(BUT_Hov_Click);
+            // 
             //
+            // BUT_Align
+            //
+            BUT_Align.BGGradTop = dark;
+            BUT_Align.BGGradBot = dark;
+            BUT_Align.TextColor = Color.Black;
+            resources.ApplyResources(BUT_Align, "BUT_Align");
+            BUT_Align.Name = "BUT_Align";
+            BUT_Align.TextColorNotEnabled = Color.Black;
+            BUT_Align.UseVisualStyleBackColor = true;
+            BUT_Align.Click += new System.EventHandler(BUT_Align_Click);
+            // 
+            // 
             // LBL_DFMotor1
             //
             resources.ApplyResources(LBL_DFMotor1, "LBL_DFMotor1");
@@ -3732,10 +3747,11 @@ namespace MissionPlanner.GCSViews
         public static Controls.MyButton BUT_Forward;
         public static Controls.MyButton BUT_Backward;
         public static Controls.MyButton BUT_Left;
-        public static Controls.MyButton BUT_Right;
         public static Controls.MyButton BUT_Up;
         public static Controls.MyButton BUT_Down;
         public static Controls.MyButton BUT_Hov;
+        public static Controls.MyButton BUT_Align;
+        public static Controls.MyButton BUT_Right;
         public static System.Windows.Forms.Label LBL_DFMotor1;
         public static System.Windows.Forms.ComboBox CMB_DFMotor1;
         public static System.Windows.Forms.Label LBL_DFMotor2;

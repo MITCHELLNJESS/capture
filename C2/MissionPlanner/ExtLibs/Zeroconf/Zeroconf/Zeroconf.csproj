@@ -14,6 +14,7 @@
     <UseFullSemVerForNuGet>true</UseFullSemVerForNuGet>
     <GenerateDocumentationFile Condition=" '$(Configuration)' == 'Release' ">true</GenerateDocumentationFile>
     <DebugType>portable</DebugType>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Platforms\**\*.*" />

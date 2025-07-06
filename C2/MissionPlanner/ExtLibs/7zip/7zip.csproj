@@ -10,6 +10,7 @@
     <DebugSymbols>True</DebugSymbols>
     <Description>7zip</Description>
     <NeutralLanguage>en</NeutralLanguage>
+    <Platforms>AnyCPU;x64</Platforms>
 
   </PropertyGroup>
 
