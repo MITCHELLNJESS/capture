@@ -24,6 +24,7 @@ using MathHelper = MissionPlanner.Utilities.MathHelper;
 using PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat;
 using SkiaSharp.Views.Desktop;
 using SkiaSharp;
+using System.Security.Cryptography.X509Certificates;
 
 
 // Control written by Michael Oborne 2011
@@ -329,6 +330,10 @@ namespace MissionPlanner.Controls
         private string _mode = "Manual";
         private DateTime _modechanged = DateTime.MinValue;
         private int _wpno = 0;
+        private int _boundingBoxWidth = 0;
+        private int _boundingBoxHeight = 0;
+        private int _boundingBoxLeft = 0;
+        private int _boundingBoxTop = 0;
 
         float _AOA = 0;
         float _SSA = 0;
@@ -919,6 +924,58 @@ namespace MissionPlanner.Controls
                 if (_critSSA != value)
                 {
                     _critSSA = value;
+                    this.Invalidate();
+                }
+            }
+        }
+
+        public int boundingBoxWidth
+        {
+            get { return _boundingBoxWidth;  }
+            set
+            {
+                if (boundingBoxWidth != value)
+                {
+                    _boundingBoxWidth = value;
+                    this.Invalidate();
+                }
+            }
+        }
+
+        public int boundingBoxHeight
+        {
+            get { return _boundingBoxHeight; }
+            set
+            {
+                if (boundingBoxHeight != value)
+                {
+                    _boundingBoxHeight = value;
+                    this.Invalidate();
+                }
+            }
+        }
+
+        public int boundingBoxLeft
+        {
+            get { return _boundingBoxLeft; }
+            set
+            {
+                if (boundingBoxLeft != value)
+                {
+                    _boundingBoxLeft = value;
+                    this.Invalidate();
+                }
+            }
+        }
+
+        public int boundingBoxTop
+        {
+            get { return _boundingBoxTop; }
+            set
+            {
+                if (boundingBoxTop != value)
+                {
+                    _boundingBoxTop = value;
                     this.Invalidate();
                 }
             }
@@ -2200,7 +2257,21 @@ namespace MissionPlanner.Controls
                         graphicsObject.DrawLine(redtemp,
                             centerX, centerY - crosshairLength,
                             centerX, centerY + crosshairLength);
+
+                        //Uncomment to create a standard bounding box
+                        //graphicsObject.boundingBoxWidth = halfwidth;
+                        //graphicsObject.boundingBoxHeight = halfheight;
+                        //graphicsObject.boundingBoxLeft = -graphicsObject.boundingBoxWidth / 2;
+                        //graphicsObject.boundingBoxTop = -graphicsObject.boundingBoxHeight / 2;
+
+                        // Create a rectangle centered at (0,0)
+                        Rectangle boundingBox = new Rectangle(_boundingBoxLeft, _boundingBoxTop, _boundingBoxWidth, _boundingBoxHeight);
+
+                        graphicsObject.DrawRectangle(redtemp, boundingBox);
+
                     }
+
+                    
                 }
 
                 // Flight Path vector
@@ -3785,6 +3856,26 @@ namespace MissionPlanner.Controls
 
             Refresh();
         }
+
+        // Draw Bounding Box
+
+        //public class MyDrawingHelper
+        //{
+        //    public void DrawBoundingBox(Graphics graphics, Pen pen, Point center, int width, int height)
+        //    {
+        //        // Calculate top-left corner
+        //        int topLeftX = center.X - width / 2;
+        //        int topLeftY = center.Y - height / 2;
+
+        //        // Draw the rectangle
+        //        graphics.DrawRectangle(pen, topLeftX, topLeftY, width, height);
+        //    }
+        //}
+        //private void MyControl_Paint(object sender, PaintEventArgs e)
+        //{
+        //    var drawer = new MyDrawingHelper();
+        //    drawer.DrawBoundingBox(e.Graphics, new Pen(Color.Red, 2), new Point(150, 150), 80, 50);
+        //}
 
         [Browsable(false)]
         public new bool VSync
