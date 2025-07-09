@@ -7,6 +7,7 @@
     <AssemblyName>MissionPlanner.Drawing</AssemblyName>
     <AssemblyVersion>4.0.0.2</AssemblyVersion>
     <FileVersion>4.6.57.0</FileVersion>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

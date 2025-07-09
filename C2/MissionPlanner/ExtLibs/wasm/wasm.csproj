@@ -11,6 +11,7 @@
 		<WasmEnableSIMD>true</WasmEnableSIMD>
 		<PublishTrimmed>false</PublishTrimmed>
 		<WasmEnableThreads>false</WasmEnableThreads>
+		<Platforms>AnyCPU;x64</Platforms>
 
   </PropertyGroup>
 
@@ -22,6 +23,12 @@
 
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>

@@ -4,6 +4,7 @@ using GMap.NET;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
 using log4net;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Scripting.Utils;
 using MissionPlanner.ArduPilot;
 using MissionPlanner.Controls;
@@ -35,6 +36,8 @@ using static IronPython.Modules._ast;
 using LogAnalyzer = MissionPlanner.Utilities.LogAnalyzer;
 using TableLayoutPanelCellPosition = System.Windows.Forms.TableLayoutPanelCellPosition;
 using UnauthorizedAccessException = System.UnauthorizedAccessException;
+using System.Web.SessionState;
+using A3MP_Shared;
 
 // written by michael oborne
 
@@ -127,6 +130,7 @@ namespace MissionPlanner.GCSViews
         internal static double fobLngNW = 0;
         internal static double fobLatSE = 0;
         internal static double fobLngSE = 0;
+        internal static List<PointLatLng> assetLocs = new List<PointLatLng>();
         internal static double assetLatOne = 0;
         internal static double assetLngOne = 0;
         internal static double assetLatTwo = 0;
@@ -151,6 +155,8 @@ namespace MissionPlanner.GCSViews
         internal static double assetLngEleven = 0;
         internal static double assetLatTwelve = 0;
         internal static double assetLngTwelve = 0;
+        internal static double assetLatMarked = 0;
+        internal static double assetLngMarked = 0;
         internal static teMission mission = teMission.eeNone;
 
         internal static PointLatLng redFob = new PointLatLng(0, 0);
@@ -162,6 +168,16 @@ namespace MissionPlanner.GCSViews
         internal bool mbGoingRight = false;
         internal bool mbGoingUp = false;
         internal bool mbGoingDown = false;
+
+        public static int alignX = 0;
+        public static int alignY = 0;
+        internal static int lastAlignX = 0;
+        internal static int lastAlignY = 0;
+        internal static int alignTimeout = 4;
+        internal static int alignTimeoutCount = 0;
+        internal static int alignGate = 70;
+        internal static bool doAlign = false;
+        internal static double lastAlignDist = -1;
 
         internal PointLatLng MouseDownStart;
 
@@ -289,6 +305,10 @@ namespace MissionPlanner.GCSViews
 
         private MyButton BUT_close;
 
+        public static bool isAligned;
+        public int [] receivedA3Output; //check continuously for this - see HUD.cs test log
+
+
         public enum actions
         {
             Loiter_Unlim,
@@ -343,10 +363,77 @@ namespace MissionPlanner.GCSViews
 
         private bool transponderNeverConnected = true;
 
-        static void UpdateThrottle()
+        static void AlignThread()
+        {
+            MoveDirection(Convert.ToInt32(alignX), Convert.ToInt32(alignY), 0, 1);
+            Console.WriteLine("Aligning!");
+
+            while (doAlign)
+            {
+                double currAlignDist = Math.Sqrt((alignX * alignX) + (alignY * alignY));
+                // If we are aligned
+                if ((currAlignDist < alignGate) && !((alignX == 0) && (alignY == 0)))
+                {
+                    Console.WriteLine("Aligned!");
+                    AlignStop();
+                    doAlign = false;
+                    lastAlignDist = -1;
+                }
+                // Retarget asset
+                MoveDirection(Convert.ToInt32(alignX), Convert.ToInt32(alignY), 0, 1);
+                lastAlignDist = currAlignDist;
+            }
+
+            AlignStop();
+            BUT_Align.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            BUT_Align.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            BUT_Align.ColorMouseDown = BUT_Align.BGGradBot;
+            BUT_Align.ColorMouseOver = BUT_Align.BGGradBot;
+            doAlign = false;
+            return;
+        }
+
+        static void UpdateThrottleThread()
         {
             while(true)
             {
+                int targetX = 900;
+                int targetY = 500; //cross hair x/y - 'center of screen'
+                int[] command = {A3MP_MessageBus.GetCommand()[0] - targetX,
+                A3MP_MessageBus.GetCommand()[1] - targetY};
+                A3MP_MessageBus.SetCommand(command);
+
+                if (alignTimeoutCount == alignTimeout)
+                {
+                    alignX = 0;
+                    alignY = 0;
+                }
+
+                if (
+                    (command[0] != -9999) &&
+                    (command[1] != -9999) &&
+                    (command[0] != lastAlignX) &&
+                    (-command[1] != lastAlignY) &&
+                    (command[0] < 3000) &&
+                    (command[0] > -3000) &&
+                    (command[1] < 3000) &&
+                    (command[1] > -3000)
+                )
+                {
+                    alignX = command[0];
+                    alignY = -command[1];
+                    alignTimeoutCount = 0;
+                }
+                else
+                {
+                    alignTimeoutCount++;
+                }
+
+                Console.Write("alignX = ");
+                Console.WriteLine(alignX);
+                Console.Write("alignY = ");
+                Console.WriteLine(alignY);
+
                 throttleLevel.number = MissionPlanner.CurrentState.ch3in_Static;
                 Console.Write("Throttle: ");
                 Console.WriteLine(throttleLevel.number);
@@ -358,6 +445,11 @@ namespace MissionPlanner.GCSViews
                     int green = Convert.ToInt32(255 * (1 - percentage));
                     int blue = 0;
                     throttleLevel.numberColor = System.Drawing.Color.FromArgb(red, green, blue);
+                }
+
+                if ((throttleLevel.number > 1000) && (FlightData.instance.checkBoxAug.Checked))
+                {
+                    FlightData.instance.checkBoxAug.Checked = false;
                 }
 
                 System.Threading.Thread.Sleep(500);
@@ -492,6 +584,94 @@ namespace MissionPlanner.GCSViews
             thread2.IsBackground = true;
             thread1.Start();
             thread2.Start();
+        }
+
+        private void CheckBoxAug_CheckStateChanged(object sender, EventArgs e)
+        {
+            // This code will execute when the checkbox's checked state changes (checked or unchecked).
+            if (!checkBoxAug.Checked)
+            {
+                Color dark = Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
+                BUT_Forward.BGGradTop = dark;
+                BUT_Forward.BGGradBot = dark;
+                BUT_Backward.BGGradTop = dark;
+                BUT_Backward.BGGradBot = dark;
+                BUT_Left.BGGradTop = dark;
+                BUT_Left.BGGradBot = dark;
+                BUT_Right.BGGradTop = dark;
+                BUT_Right.BGGradBot = dark;
+                BUT_Up.BGGradTop = dark;
+                BUT_Up.BGGradBot = dark;
+                BUT_Down.BGGradTop = dark;
+                BUT_Down.BGGradBot = dark;
+                BUT_Hov.BGGradTop = dark;
+                BUT_Hov.BGGradBot = dark;
+                BUT_Align.BGGradTop = dark;
+                BUT_Align.BGGradBot = dark;
+                BUT_Forward.ColorMouseDown = BUT_Forward.BGGradBot;
+                BUT_Forward.ColorMouseOver = BUT_Forward.BGGradBot;
+                BUT_Backward.ColorMouseDown = BUT_Backward.BGGradBot;
+                BUT_Backward.ColorMouseOver = BUT_Backward.BGGradBot;
+                BUT_Left.ColorMouseDown = BUT_Left.BGGradBot;
+                BUT_Left.ColorMouseOver = BUT_Left.BGGradBot;
+                BUT_Right.ColorMouseDown = BUT_Right.BGGradBot;
+                BUT_Right.ColorMouseOver = BUT_Right.BGGradBot;
+                BUT_Up.ColorMouseDown = BUT_Up.BGGradBot;
+                BUT_Up.ColorMouseOver = BUT_Up.BGGradBot;
+                BUT_Down.ColorMouseDown = BUT_Down.BGGradBot;
+                BUT_Down.ColorMouseOver = BUT_Down.BGGradBot;
+                BUT_Hov.ColorMouseDown = BUT_Hov.BGGradBot;
+                BUT_Hov.ColorMouseOver = BUT_Hov.BGGradBot;
+                BUT_Align.ColorMouseDown = BUT_Align.BGGradBot;
+                BUT_Align.ColorMouseOver = BUT_Align.BGGradBot;
+            }
+            else
+            {
+                if (MainV2.comPort.MAV.cs.mode != "Guided")
+                {
+                    if (CustomMessageBox.Show("Enter GUIDED Mode?", "", CustomMessageBox.MessageBoxButtons.YesNo) == CustomMessageBox.DialogResult.Yes)
+                    {
+                        MainV2.comPort.setMode("GUIDED");
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+
+                BUT_Forward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Forward.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Backward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Backward.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Left.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Left.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Right.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Right.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Up.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Up.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Down.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Down.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Hov.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Hov.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Align.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Align.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Forward.ColorMouseDown = BUT_Forward.BGGradBot;
+                BUT_Forward.ColorMouseOver = BUT_Forward.BGGradBot;
+                BUT_Backward.ColorMouseDown = BUT_Backward.BGGradBot;
+                BUT_Backward.ColorMouseOver = BUT_Backward.BGGradBot;
+                BUT_Left.ColorMouseDown = BUT_Left.BGGradBot;
+                BUT_Left.ColorMouseOver = BUT_Left.BGGradBot;
+                BUT_Right.ColorMouseDown = BUT_Right.BGGradBot;
+                BUT_Right.ColorMouseOver = BUT_Right.BGGradBot;
+                BUT_Up.ColorMouseDown = BUT_Up.BGGradBot;
+                BUT_Up.ColorMouseOver = BUT_Up.BGGradBot;
+                BUT_Down.ColorMouseDown = BUT_Down.BGGradBot;
+                BUT_Down.ColorMouseOver = BUT_Down.BGGradBot;
+                BUT_Hov.ColorMouseDown = BUT_Hov.BGGradBot;
+                BUT_Hov.ColorMouseOver = BUT_Hov.BGGradBot;
+                BUT_Align.ColorMouseDown = BUT_Align.BGGradBot;
+                BUT_Align.ColorMouseOver = BUT_Align.BGGradBot;
+            }
         }
 
         static bool IsPointInCircle(double uav_lat, double uav_lon, double center_lat, double center_lon, double radius)
@@ -773,11 +953,16 @@ namespace MissionPlanner.GCSViews
             FOBSE_Blue.Fill = new SolidBrush(Color.Blue);
 
             // Asset locations
+            int angleOffset = 30;
+            for (int angle = 0; angle < 360; angle += angleOffset)
+            {
+                List<PointLatLng> assetLocPoints = GenerateAsset(lat, lng, 22.098, angle + adjustAngle_deg);
+                double sumLatAsset = assetLocPoints.Sum(p => p.Lat);
+                double sumLngAsset = assetLocPoints.Sum(p => p.Lng);
+                assetLocs.Add(new PointLatLngAlt(sumLatAsset / assetLocPoints.Count, sumLngAsset / assetLocPoints.Count, 0));
+            }
+
             List<PointLatLng> assetLocNWPoints_5 = GenerateAsset(lat, lng, 22.098, 0 + adjustAngle_deg);
-            sumLat = assetLocNWPoints_5.Sum(p => p.Lat);
-            sumLng = assetLocNWPoints_5.Sum(p => p.Lng);
-            assetLatFive = sumLat / assetLocNWPoints_5.Count;
-            assetLngFive = sumLng / assetLocNWPoints_5.Count;
             assetsNW_red_5 = new GMapPolygon(assetLocNWPoints_5, "assetLoc_red_5");
             assetsNW_red_5.Stroke = new Pen(Color.Black, 2);
             assetsNW_red_5.Fill = new SolidBrush(Color.Red);
@@ -786,10 +971,6 @@ namespace MissionPlanner.GCSViews
             assetsNW_blue_5.Fill = new SolidBrush(Color.Blue);
 
             List<PointLatLng> assetLocNWPoints_6 = GenerateAsset(lat, lng, 22.098, 30 + adjustAngle_deg);
-            sumLat = assetLocNWPoints_6.Sum(p => p.Lat);
-            sumLng = assetLocNWPoints_6.Sum(p => p.Lng);
-            assetLatSix = sumLat / assetLocNWPoints_6.Count;
-            assetLngSix = sumLng / assetLocNWPoints_6.Count;
             assetsNW_red_6 = new GMapPolygon(assetLocNWPoints_6, "assetsNW_red_6");
             assetsNW_red_6.Stroke = new Pen(Color.Black, 2);
             assetsNW_red_6.Fill = new SolidBrush(Color.Red);
@@ -798,10 +979,6 @@ namespace MissionPlanner.GCSViews
             assetsNW_blue_6.Fill = new SolidBrush(Color.Blue);
 
             List<PointLatLng> assetLocSEPoints_1 = GenerateAsset(lat, lng, 22.098, 60 + adjustAngle_deg);
-            sumLat = assetLocSEPoints_1.Sum(p => p.Lat);
-            sumLng = assetLocSEPoints_1.Sum(p => p.Lng);
-            assetLatSeven = sumLat / assetLocSEPoints_1.Count;
-            assetLngSeven = sumLng / assetLocSEPoints_1.Count;
             assetsSE_red_1 = new GMapPolygon(assetLocSEPoints_1, "assetLoc_red_1");
             assetsSE_red_1.Stroke = new Pen(Color.Black, 2);
             assetsSE_red_1.Fill = new SolidBrush(Color.Red);
@@ -810,10 +987,6 @@ namespace MissionPlanner.GCSViews
             assetsSE_blue_1.Fill = new SolidBrush(Color.Blue);
 
             List<PointLatLng> assetLocSEPoints_2 = GenerateAsset(lat, lng, 22.098, 90 + adjustAngle_deg);
-            sumLat = assetLocSEPoints_2.Sum(p => p.Lat);
-            sumLng = assetLocSEPoints_2.Sum(p => p.Lng);
-            assetLatEight = sumLat / assetLocSEPoints_2.Count;
-            assetLngEight = sumLng / assetLocSEPoints_2.Count;
             assetsSE_red_2 = new GMapPolygon(assetLocSEPoints_2, "assetsSE_red_2");
             assetsSE_red_2.Stroke = new Pen(Color.Black, 2);
             assetsSE_red_2.Fill = new SolidBrush(Color.Red);
@@ -822,10 +995,6 @@ namespace MissionPlanner.GCSViews
             assetsSE_blue_2.Fill = new SolidBrush(Color.Blue);
 
             List<PointLatLng> assetLocSEPoints_3 = GenerateAsset(lat, lng, 22.098, 120 + adjustAngle_deg);
-            sumLat = assetLocSEPoints_3.Sum(p => p.Lat);
-            sumLng = assetLocSEPoints_3.Sum(p => p.Lng);
-            assetLatNine = sumLat / assetLocSEPoints_3.Count;
-            assetLngNine = sumLng / assetLocSEPoints_3.Count;
             assetsSE_red_3 = new GMapPolygon(assetLocSEPoints_3, "assetsSE_red_3");
             assetsSE_red_3.Stroke = new Pen(Color.Black, 2);
             assetsSE_red_3.Fill = new SolidBrush(Color.Red);
@@ -834,10 +1003,6 @@ namespace MissionPlanner.GCSViews
             assetsSE_blue_3.Fill = new SolidBrush(Color.Blue);
 
             List<PointLatLng> assetLocSEPoints_4 = GenerateAsset(lat, lng, 22.098, 150 + adjustAngle_deg);
-            sumLat = assetLocSEPoints_4.Sum(p => p.Lat);
-            sumLng = assetLocSEPoints_4.Sum(p => p.Lng);
-            assetLatTen = sumLat / assetLocSEPoints_4.Count;
-            assetLngTen = sumLng / assetLocSEPoints_4.Count;
             assetsSE_red_4 = new GMapPolygon(assetLocSEPoints_4, "assetsSE_red_4");
             assetsSE_red_4.Stroke = new Pen(Color.Black, 2);
             assetsSE_red_4.Fill = new SolidBrush(Color.Red);
@@ -846,10 +1011,6 @@ namespace MissionPlanner.GCSViews
             assetsSE_blue_4.Fill = new SolidBrush(Color.Blue);
 
             List<PointLatLng> assetLocSEPoints_5 = GenerateAsset(lat, lng, 22.098, 180 + adjustAngle_deg);
-            sumLat = assetLocSEPoints_5.Sum(p => p.Lat);
-            sumLng = assetLocSEPoints_5.Sum(p => p.Lng);
-            assetLatEleven = sumLat / assetLocSEPoints_5.Count;
-            assetLngEleven = sumLng / assetLocSEPoints_5.Count;
             assetsSE_red_5 = new GMapPolygon(assetLocSEPoints_5, "assetsSE_red_5");
             assetsSE_red_5.Stroke = new Pen(Color.Black, 2);
             assetsSE_red_5.Fill = new SolidBrush(Color.Red);
@@ -858,10 +1019,6 @@ namespace MissionPlanner.GCSViews
             assetsSE_blue_5.Fill = new SolidBrush(Color.Blue);
 
             List<PointLatLng> assetLocSEPoints_6 = GenerateAsset(lat, lng, 22.098, 210 + adjustAngle_deg);
-            sumLat = assetLocSEPoints_6.Sum(p => p.Lat);
-            sumLng = assetLocSEPoints_6.Sum(p => p.Lng);
-            assetLatTwelve = sumLat / assetLocSEPoints_6.Count;
-            assetLngTwelve = sumLng / assetLocSEPoints_6.Count;
             assetsSE_red_6 = new GMapPolygon(assetLocSEPoints_6, "assetsSE_red_6");
             assetsSE_red_6.Stroke = new Pen(Color.Black, 2);
             assetsSE_red_6.Fill = new SolidBrush(Color.Red);
@@ -870,10 +1027,6 @@ namespace MissionPlanner.GCSViews
             assetsSE_blue_6.Fill = new SolidBrush(Color.Blue);
 
             List<PointLatLng> assetLocNWPoints_1 = GenerateAsset(lat, lng, 22.098, 240 + adjustAngle_deg);
-            sumLat = assetLocNWPoints_1.Sum(p => p.Lat);
-            sumLng = assetLocNWPoints_1.Sum(p => p.Lng);
-            assetLatOne = sumLat / assetLocNWPoints_1.Count;
-            assetLngOne = sumLng / assetLocNWPoints_1.Count;
             assetsNW_red_1 = new GMapPolygon(assetLocNWPoints_1, "assetsNW_red_1");
             assetsNW_red_1.Stroke = new Pen(Color.Black, 2);
             assetsNW_red_1.Fill = new SolidBrush(Color.Red);
@@ -882,10 +1035,6 @@ namespace MissionPlanner.GCSViews
             assetsNW_blue_1.Fill = new SolidBrush(Color.Blue);
 
             List<PointLatLng> assetLocNWPoints_2 = GenerateAsset(lat, lng, 22.098, 270 + adjustAngle_deg);
-            sumLat = assetLocNWPoints_2.Sum(p => p.Lat);
-            sumLng = assetLocNWPoints_2.Sum(p => p.Lng);
-            assetLatTwo = sumLat / assetLocNWPoints_2.Count;
-            assetLngTwo = sumLng / assetLocNWPoints_2.Count;
             assetsNW_red_2 = new GMapPolygon(assetLocNWPoints_2, "assetsNW_red_2");
             assetsNW_red_2.Stroke = new Pen(Color.Black, 2);
             assetsNW_red_2.Fill = new SolidBrush(Color.Red);
@@ -894,10 +1043,6 @@ namespace MissionPlanner.GCSViews
             assetsNW_blue_2.Fill = new SolidBrush(Color.Blue);
 
             List<PointLatLng> assetLocNWPoints_3 = GenerateAsset(lat, lng, 22.098, 300 + adjustAngle_deg);
-            sumLat = assetLocNWPoints_3.Sum(p => p.Lat);
-            sumLng = assetLocNWPoints_3.Sum(p => p.Lng);
-            assetLatThree = sumLat / assetLocNWPoints_3.Count;
-            assetLngThree = sumLng / assetLocNWPoints_3.Count;
             assetsNW_red_3 = new GMapPolygon(assetLocNWPoints_3, "assetsNW_red_3");
             assetsNW_red_3.Stroke = new Pen(Color.Black, 2);
             assetsNW_red_3.Fill = new SolidBrush(Color.Red);
@@ -906,10 +1051,6 @@ namespace MissionPlanner.GCSViews
             assetsNW_blue_3.Fill = new SolidBrush(Color.Blue);
 
             List<PointLatLng> assetLocNWPoints_4 = GenerateAsset(lat, lng, 22.098, 330 + adjustAngle_deg);
-            sumLat = assetLocNWPoints_4.Sum(p => p.Lat);
-            sumLng = assetLocNWPoints_4.Sum(p => p.Lng);
-            assetLatFour = sumLat / assetLocNWPoints_4.Count;
-            assetLngFour = sumLng / assetLocNWPoints_4.Count;
             assetsNW_red_4 = new GMapPolygon(assetLocNWPoints_4, "assetsNW_red_4");
             assetsNW_red_4.Stroke = new Pen(Color.Black, 2);
             assetsNW_red_4.Fill = new SolidBrush(Color.Red);
@@ -942,33 +1083,33 @@ namespace MissionPlanner.GCSViews
             {
                 if (isNWRed)
                 {
-                    POI.POIAdd(new PointLatLngAlt(assetLatOne, assetLngOne, 0), "Pos #1 (Opponent)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTwo, assetLngTwo, 0), "Pos #2 (Opponent)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatThree, assetLngThree, 0), "Pos #3 (Opponent)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatFour, assetLngFour, 0), "Pos #4 (Opponent)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatFive, assetLngFive, 0), "Pos #5 (Opponent)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatSix, assetLngSix, 0), "Pos #6 (Opponent)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatSeven, assetLngSeven, 0), "Pos #7 (Friendly)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatEight, assetLngEight, 0), "Pos #8 (Friendly)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatNine, assetLngNine, 0), "Pos #9 (Friendly)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTen, assetLngTen, 0), "Pos #10 (Friendly)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatEleven, assetLngEleven, 0), "Pos #11 (Friendly)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTwelve, assetLngTwelve, 0), "Pos #12 (Friendly)", false);
+                    POI.POIAdd(assetLocs[8], "Pos #1 (Opponent)", 1);
+                    POI.POIAdd(assetLocs[9], "Pos #2 (Opponent)", 1);
+                    POI.POIAdd(assetLocs[10], "Pos #3 (Opponent)", 1);
+                    POI.POIAdd(assetLocs[11], "Pos #4 (Opponent)", 1);
+                    POI.POIAdd(assetLocs[0], "Pos #5 (Opponent)", 1);
+                    POI.POIAdd(assetLocs[1], "Pos #6 (Opponent)", 1);
+                    POI.POIAdd(assetLocs[2], "Pos #7 (Friendly)", 0);
+                    POI.POIAdd(assetLocs[3], "Pos #8 (Friendly)", 0);
+                    POI.POIAdd(assetLocs[4], "Pos #9 (Friendly)", 0);
+                    POI.POIAdd(assetLocs[5], "Pos #10 (Friendly)", 0);
+                    POI.POIAdd(assetLocs[6], "Pos #11 (Friendly)", 0);
+                    POI.POIAdd(assetLocs[7], "Pos #12 (Friendly)", 0);
                 }
                 else
                 {
-                    POI.POIAdd(new PointLatLngAlt(assetLatOne, assetLngOne, 0), "Pos #1 (Opponent)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTwo, assetLngTwo, 0), "Pos #2 (Opponent)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatThree, assetLngThree, 0), "Pos #3 (Opponent)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatFour, assetLngFour, 0), "Pos #4 (Opponent)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatFive, assetLngFive, 0), "Pos #5 (Opponent)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatSix, assetLngSix, 0), "Pos #6 (Opponent)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatSeven, assetLngSeven, 0), "Pos #7 (Friendly)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatEight, assetLngEight, 0), "Pos #8 (Friendly)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatNine, assetLngNine, 0), "Pos #9 (Friendly)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTen, assetLngTen, 0), "Pos #10 (Friendly)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatEleven, assetLngEleven, 0), "Pos #11 (Friendly)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTwelve, assetLngTwelve, 0), "Pos #12 (Friendly)", true);
+                    POI.POIAdd(assetLocs[8], "Pos #1 (Opponent)", 0);
+                    POI.POIAdd(assetLocs[9], "Pos #2 (Opponent)", 0);
+                    POI.POIAdd(assetLocs[10], "Pos #3 (Opponent)", 0);
+                    POI.POIAdd(assetLocs[11], "Pos #4 (Opponent)", 0);
+                    POI.POIAdd(assetLocs[0], "Pos #5 (Opponent)", 0);
+                    POI.POIAdd(assetLocs[1], "Pos #6 (Opponent)", 0);
+                    POI.POIAdd(assetLocs[2], "Pos #7 (Friendly)", 1);
+                    POI.POIAdd(assetLocs[3], "Pos #8 (Friendly)", 1);
+                    POI.POIAdd(assetLocs[4], "Pos #9 (Friendly)", 1);
+                    POI.POIAdd(assetLocs[5], "Pos #10 (Friendly)", 1);
+                    POI.POIAdd(assetLocs[6], "Pos #11 (Friendly)", 1);
+                    POI.POIAdd(assetLocs[7], "Pos #12 (Friendly)", 1);
                 }
                 this.CMB_mission.DataSource = new string[] { "None", "Marked Asset", "FOB", "Pos #1 (Opponent)", "Pos #2 (Opponent)", "Pos #3 (Opponent)", "Pos #4 (Opponent)", "Pos #5 (Opponent)", "Pos #6 (Opponent)", "Pos #7 (Friendly)", "Pos #8 (Friendly)", "Pos #9 (Friendly)", "Pos #10 (Friendly)", "Pos #11 (Friendly)", "Pos #12 (Friendly)" };
             }
@@ -976,35 +1117,103 @@ namespace MissionPlanner.GCSViews
             {
                 if (isNWRed)
                 {
-                    POI.POIAdd(new PointLatLngAlt(assetLatOne, assetLngOne, 0), "Pos #1 (Friendly)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTwo, assetLngTwo, 0), "Pos #2 (Friendly)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatThree, assetLngThree, 0), "Pos #3 (Friendly)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatFour, assetLngFour, 0), "Pos #4 (Friendly)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatFive, assetLngFive, 0), "Pos #5 (Friendly)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatSix, assetLngSix, 0), "Pos #6 (Friendly)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatSeven, assetLngSeven, 0), "Pos #7 (Opponent)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatEight, assetLngEight, 0), "Pos #8 (Opponent)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatNine, assetLngNine, 0), "Pos #9 (Opponent)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTen, assetLngTen, 0), "Pos #10 (Opponent)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatEleven, assetLngEleven, 0), "Pos #11 (Opponent)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTwelve, assetLngTwelve, 0), "Pos #12 (Opponent)", false);
+                    POI.POIAdd(assetLocs[8], "Pos #1 (Friendly)", 1);
+                    POI.POIAdd(assetLocs[9], "Pos #2 (Friendly)", 1);
+                    POI.POIAdd(assetLocs[10], "Pos #3 (Friendly)", 1);
+                    POI.POIAdd(assetLocs[11], "Pos #4 (Friendly)", 1);
+                    POI.POIAdd(assetLocs[0], "Pos #5 (Friendly)", 1);
+                    POI.POIAdd(assetLocs[1], "Pos #6 (Friendly)", 1);
+                    POI.POIAdd(assetLocs[2], "Pos #7 (Opponent)", 0);
+                    POI.POIAdd(assetLocs[3], "Pos #8 (Opponent)", 0);
+                    POI.POIAdd(assetLocs[4], "Pos #9 (Opponent)", 0);
+                    POI.POIAdd(assetLocs[5], "Pos #10 (Opponent)", 0);
+                    POI.POIAdd(assetLocs[6], "Pos #11 (Opponent)", 0);
+                    POI.POIAdd(assetLocs[7], "Pos #12 (Opponent)", 0);
                 }
                 else
                 {
-                    POI.POIAdd(new PointLatLngAlt(assetLatOne, assetLngOne, 0), "Pos #1 (Friendly)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTwo, assetLngTwo, 0), "Pos #2 (Friendly)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatThree, assetLngThree, 0), "Pos #3 (Friendly)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatFour, assetLngFour, 0), "Pos #4 (Friendly)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatFive, assetLngFive, 0), "Pos #5 (Friendly)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatSix, assetLngSix, 0), "Pos #6 (Friendly)", false);
-                    POI.POIAdd(new PointLatLngAlt(assetLatSeven, assetLngSeven, 0), "Pos #7 (Opponent)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatEight, assetLngEight, 0), "Pos #8 (Opponent)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatNine, assetLngNine, 0), "Pos #9 (Opponent)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTen, assetLngTen, 0), "Pos #10 (Opponent)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatEleven, assetLngEleven, 0), "Pos #11 (Opponent)", true);
-                    POI.POIAdd(new PointLatLngAlt(assetLatTwelve, assetLngTwelve, 0), "Pos #12 (Opponent)", true);
+                    POI.POIAdd(assetLocs[8], "Pos #1 (Friendly)", 0);
+                    POI.POIAdd(assetLocs[9], "Pos #2 (Friendly)", 0);
+                    POI.POIAdd(assetLocs[10], "Pos #3 (Friendly)", 0);
+                    POI.POIAdd(assetLocs[11], "Pos #4 (Friendly)", 0);
+                    POI.POIAdd(assetLocs[0], "Pos #5 (Friendly)", 0);
+                    POI.POIAdd(assetLocs[1], "Pos #6 (Friendly)", 0);
+                    POI.POIAdd(assetLocs[2], "Pos #7 (Opponent)", 1);
+                    POI.POIAdd(assetLocs[3], "Pos #8 (Opponent)", 1);
+                    POI.POIAdd(assetLocs[4], "Pos #9 (Opponent)", 1);
+                    POI.POIAdd(assetLocs[5], "Pos #10 (Opponent)", 1);
+                    POI.POIAdd(assetLocs[6], "Pos #11 (Opponent)", 1);
+                    POI.POIAdd(assetLocs[7], "Pos #12 (Opponent)", 1);
                 }
                 this.CMB_mission.DataSource = new string[] { "None", "Marked Asset", "FOB", "Pos #1 (Friendly)", "Pos #2 (Friendly)", "Pos #3 (Friendly)", "Pos #4 (Friendly)", "Pos #5 (Friendly)", "Pos #6 (Friendly)", "Pos #7 (Opponent)", "Pos #8 (Opponent)", "Pos #9 (Opponent)", "Pos #10 (Opponent)", "Pos #11 (Opponent)", "Pos #12 (Opponent)" };
+            }
+
+            if (assetLatMarked != 0 && assetLngMarked != 0)
+            {
+                int idx = POI.POIDeleteClosest(new GMapMarkerPOI(new PointLatLng(assetLatMarked, assetLngMarked)));
+                switch (idx)
+                {
+                    case 0:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #1 (Marked)", 2);
+                        assetLatOne = assetLatMarked;
+                        assetLngOne = assetLngMarked;
+                        break;
+                    case 1:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #2 (Marked)", 2);
+                        assetLatTwo = assetLatMarked;
+                        assetLngTwo = assetLngMarked;
+                        break;
+                    case 2:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #3 (Marked)", 2);
+                        assetLatThree = assetLatMarked;
+                        assetLngThree = assetLngMarked;
+                        break;
+                    case 3:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #4 (Marked)", 2);
+                        assetLatFour = assetLatMarked;
+                        assetLngFour = assetLngMarked;
+                        break;
+                    case 4:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #5 (Marked)", 2);
+                        assetLatFive = assetLatMarked;
+                        assetLngFive = assetLngMarked;
+                        break;
+                    case 5:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #6 (Marked)", 2);
+                        assetLatSix = assetLatMarked;
+                        assetLngSix = assetLngMarked;
+                        break;
+                    case 6:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #7 (Marked)", 2);
+                        assetLatSeven = assetLatMarked;
+                        assetLngSeven = assetLngMarked;
+                        break;
+                    case 7:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #8 (Marked)", 2);
+                        assetLatEight = assetLatMarked;
+                        assetLngEight = assetLngMarked;
+                        break;
+                    case 8:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #9 (Marked)", 2);
+                        assetLatNine = assetLatMarked;
+                        assetLngNine = assetLngMarked;
+                        break;
+                    case 9:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #10 (Marked)", 2);
+                        assetLatTen = assetLatMarked;
+                        assetLngTen = assetLngMarked;
+                        break;
+                    case 10:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #11 (Marked)", 2);
+                        assetLatEleven = assetLatMarked;
+                        assetLngEleven = assetLngMarked;
+                        break;
+                    case 11:
+                        POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #12 (Marked)", 2);
+                        assetLatTwelve = assetLatMarked;
+                        assetLngTwelve = assetLngMarked;
+                        break;
+                }
             }
         }
 
@@ -1078,7 +1287,7 @@ namespace MissionPlanner.GCSViews
             return rad * 180 / Math.PI;
         }
 
-        private void MoveDirection(int anX, int anY, int anZ, double arDist)
+        private static void MoveDirection(int anX, int anY, int anZ, double arDist)
         {
             try
             {
@@ -1120,13 +1329,13 @@ namespace MissionPlanner.GCSViews
                 lnAlt = 1;
             }
 
-            double lrLatDeg = RadToDeg(lrLatRad);
-            double lrLngDeg = RadToDeg(lrLngRad);
+                double lrLatDeg = RadToDeg(lrLatRad);
+                double lrLngDeg = RadToDeg(lrLngRad);
 
             MoveTo(lrLatDeg, lrLngDeg, Convert.ToInt32(lnAlt));
         }
 
-        private void AlignStop()
+        private static void AlignStop()
         {
             MainV2.comPort.setMode("GUIDED");
 
@@ -1156,6 +1365,11 @@ namespace MissionPlanner.GCSViews
 
         private void BUT_Forward_Click(object sender, EventArgs e)
         {
+            if (!checkBoxAug.Checked)
+            {
+                return;
+            }
+
             if (mbGoingForward)
             {
                 BUT_Forward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
@@ -1196,12 +1410,19 @@ namespace MissionPlanner.GCSViews
                 mbGoingBackward = false;
                 mbGoingLeft = false;
                 mbGoingRight = false;
+                mbGoingUp = false;
+                mbGoingDown = false;
                 MoveDirection(0, 1, 0, 1);
             }
         }
 
         private void BUT_Backward_Click(object sender, EventArgs e)
         {
+            if (!checkBoxAug.Checked)
+            {
+                return;
+            }
+
             if (mbGoingBackward)
             {
                 BUT_Backward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
@@ -1242,12 +1463,19 @@ namespace MissionPlanner.GCSViews
                 mbGoingBackward = true;
                 mbGoingLeft = false;
                 mbGoingRight = false;
+                mbGoingUp = false;
+                mbGoingDown = false;
                 MoveDirection(0, -1, 0, 1);
             }
         }
 
         private void BUT_Left_Click(object sender, EventArgs e)
         {
+            if (!checkBoxAug.Checked)
+            {
+                return;
+            }
+
             if (mbGoingLeft)
             {
                 BUT_Left.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
@@ -1288,12 +1516,19 @@ namespace MissionPlanner.GCSViews
                 mbGoingBackward = false;
                 mbGoingLeft = true;
                 mbGoingRight = false;
+                mbGoingUp = false;
+                mbGoingDown = false;
                 MoveDirection(-1, 0, 0, 1);
             }
         }
 
         private void BUT_Right_Click(object sender, EventArgs e)
         {
+            if (!checkBoxAug.Checked)
+            {
+                return;
+            }
+
             if (mbGoingRight)
             {
                 BUT_Right.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
@@ -1334,12 +1569,19 @@ namespace MissionPlanner.GCSViews
                 mbGoingBackward = false;
                 mbGoingLeft = false;
                 mbGoingRight = true;
+                mbGoingUp = false;
+                mbGoingDown = false;
                 MoveDirection(1, 0, 0, 1);
             }
         }
 
         private void BUT_Up_Click(object sender, EventArgs e)
         {
+            if (!checkBoxAug.Checked)
+            {
+                return;
+            }
+
             if (mbGoingUp)
             {
                 BUT_Up.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
@@ -1388,6 +1630,11 @@ namespace MissionPlanner.GCSViews
 
         private void BUT_Down_Click(object sender, EventArgs e)
         {
+            if (!checkBoxAug.Checked)
+            {
+                return;
+            }
+
             if (mbGoingDown)
             {
                 BUT_Down.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
@@ -1436,6 +1683,11 @@ namespace MissionPlanner.GCSViews
 
         private void BUT_Hov_Click(object sender, EventArgs e)
         {
+            if (!checkBoxAug.Checked)
+            {
+                return;
+            }
+
             MainV2.comPort.setMode("GUIDED");
 
             if (!MainV2.comPort.MAV.cs.armed)
@@ -1449,7 +1701,7 @@ namespace MissionPlanner.GCSViews
             }
         }
 
-        private void MoveTo(double arLat, double arLng, int anAlt)
+        private static void MoveTo(double arLat, double arLng, int anAlt)
         {
             string lcAltStr = Convert.ToString(anAlt);
 
@@ -1477,6 +1729,34 @@ namespace MissionPlanner.GCSViews
             }
         }
 
+        private void BUT_Align_Click(object sender, EventArgs e)
+        {
+            if (!checkBoxAug.Checked)
+            {
+                return;
+            }
+
+            if (!doAlign)
+            {
+                BUT_Align.BGGradTop = Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(13)))));
+                BUT_Align.BGGradBot = Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(255)))), ((int)(((byte)(136)))));
+                BUT_Align.ColorMouseDown = BUT_Align.BGGradBot;
+                BUT_Align.ColorMouseOver = BUT_Align.BGGradBot;
+                doAlign = true;
+                Thread thread2 = new Thread(AlignThread);
+                thread2.IsBackground = true;
+                thread2.Start();
+            }
+            else
+            {
+                BUT_Align.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Align.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Align.ColorMouseDown = BUT_Align.BGGradBot;
+                BUT_Align.ColorMouseOver = BUT_Align.BGGradBot;
+                doAlign = false;
+            }
+        }
+
         public FlightData()
         {
             log.Info("Ctor Start");
@@ -1486,7 +1766,7 @@ namespace MissionPlanner.GCSViews
             thread.IsBackground = true;
             thread.Start();
 
-            Thread thread1 = new Thread(UpdateThrottle);
+            Thread thread1 = new Thread(UpdateThrottleThread);
             thread1.IsBackground = true;
             thread1.Start();
 
@@ -1683,6 +1963,10 @@ namespace MissionPlanner.GCSViews
             };
             BUT_close.Click += but_Click;
 
+            isAligned = false; //A3MPCommandPublisher will keep updating this
+            receivedA3Output = A3MP_MessageBus.GetCommand(); //Will start with the latest A3 output, may need updating
+                                                             ////(A3 Center X, A3 Center Y)
+            Console.WriteLine("^^^^^^^****RECEIVED A3 OUTPUT FROM A3MP BUS*****^^^^^^^: " + receivedA3Output);
         }
 
         public void Activate()
@@ -2251,6 +2535,8 @@ namespace MissionPlanner.GCSViews
             TabListDisplay.Clear();
 
             TabListDisplay.Add(tabAsset.Name, MainV2.DisplayConfiguration.displayAssetTab);
+
+            TabListDisplay.Add(tabDf.Name, MainV2.DisplayConfiguration.displayAssetTab);
 
             TabListDisplay.Add(tabQuick.Name, MainV2.DisplayConfiguration.displayQuickTab);
 
@@ -8160,10 +8446,10 @@ namespace MissionPlanner.GCSViews
             public double alt;
         }
 
-        public static void updateAssetBtn_Click(object sender, EventArgs e)
+        public void updateAssetBtn_Click(object sender, EventArgs e)
         {
             int port = 23;
-            string ipAddress = "192.168.0.100";
+            string ipAddress = "127.0.0.1";
 
             // Create a new TcpClient object
             TcpClient client = new TcpClient();
@@ -8222,6 +8508,9 @@ namespace MissionPlanner.GCSViews
                     assetAlt.number = positionData.alt;
                     assetSeqNum.number = positionData.seqNum;
 
+                    assetLatMarked = positionData.lat;
+                    assetLngMarked = positionData.lon;
+
                     // Close the connection
                     stream.Close();
                 }
@@ -8249,6 +8538,8 @@ namespace MissionPlanner.GCSViews
                 // Print any errors
                 Console.WriteLine("Error: " + ex.Message);
             }
+
+            AddAssetPois();
         }
 
         private void ALT_btn_Click(object sender, EventArgs e)
