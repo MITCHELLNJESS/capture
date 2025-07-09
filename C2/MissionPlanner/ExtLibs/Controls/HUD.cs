@@ -17,6 +17,12 @@ using OpenTK.Graphics.OpenGL;
 using System.Linq;
 using System.Runtime.InteropServices;
 using MissionPlanner.Utilities;
+//using MissionPlanner.ArduPilot;
+using MissionPlanner.Controls;
+using MissionPlanner.GeoRef;
+//using MissionPlanner.Joystick;
+using MissionPlanner.Log;
+//using MissionPlanner.Maps;
 #if !LIB
 using SvgNet.SvgGdi;
 #endif
@@ -24,6 +30,8 @@ using MathHelper = MissionPlanner.Utilities.MathHelper;
 using PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat;
 using SkiaSharp.Views.Desktop;
 using SkiaSharp;
+using A3MP_Shared;
+using static alglib;
 
 
 // Control written by Michael Oborne 2011

@@ -71,6 +71,7 @@ namespace MissionPlanner
 
         public static string[] names = new string[] {"VVVVZ"};
         public static bool MONO = false;
+        public static Logger logger = new Logger();
 
         static Program()
         {
@@ -91,7 +92,7 @@ namespace MissionPlanner
         [STAThread]
         public static void Main(string[] args)
         {
-            Start(args);
+            Start(args);            
         }
 
         public static async void TraceMe(bool start = true)
@@ -124,6 +125,12 @@ namespace MissionPlanner
         public static void Start(string[] args)
         {
             Program.args = args;
+
+            logger.WriteDebug("A3-MP INTERFACE RUNNING!--------------------------------");
+            Console.WriteLine("A3-MP INTERFACE RUNNING!--------------------------------");
+            DDS_Integration ddsIntegration = new DDS_Integration();
+            ddsIntegration.StartDDSSubscriber();
+
             Console.WriteLine(
                 "If your error is about Microsoft.DirectX.DirectInput, please install the latest directx redist from here http://www.microsoft.com/en-us/download/details.aspx?id=35 \n\n");
             Console.WriteLine("Debug under mono    MONO_LOG_LEVEL=debug mono MissionPlanner.exe");
@@ -492,7 +499,7 @@ namespace MissionPlanner
             }
             catch
             {
-            }
+            }           
         }
 
         private static string SerialPort_GetDeviceName(string port)

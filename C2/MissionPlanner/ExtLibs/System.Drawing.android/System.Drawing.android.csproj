@@ -11,6 +11,7 @@
     <Company>System.Drawing.android</Company>
     <Product>System.Drawing.android</Product>
     <SignAssembly>false</SignAssembly>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

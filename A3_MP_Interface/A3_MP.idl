@@ -1,0 +1,14 @@
+module DDS_Subscriber
+{
+	struct A3MPDataMsg {
+	/*long hour;
+	long minute;
+	long second;
+	float boundingBoxXCoord;
+	float boundingBoxYCoord;
+	float boundingBoxLengthPixels;
+	float boundingBoxWidthPixels;
+	boolean isAligned;*/
+	string data;
+};
+};

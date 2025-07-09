@@ -11,6 +11,7 @@
     <Company>Michael Oborne</Company>
     <Copyright>Michael Oborne</Copyright>
     <NeutralLanguage>en</NeutralLanguage>
+    <Platforms>AnyCPU;x64</Platforms>
 
   </PropertyGroup>
 

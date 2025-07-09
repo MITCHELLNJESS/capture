@@ -12,6 +12,7 @@
     <Product>MissionPlanner.Drawing.Common</Product>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>open.snk</AssemblyOriginatorKeyFile>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
