@@ -447,7 +447,7 @@ namespace MissionPlanner.GCSViews
                     throttleLevel.numberColor = System.Drawing.Color.FromArgb(red, green, blue);
                 }
 
-                if ((throttleLevel.number > 1000) && (FlightData.instance.checkBoxAug.Checked))
+                if ((MainV2.comPort.MAV.cs.mode != "Guided") && (FlightData.instance.checkBoxAug.Checked))
                 {
                     FlightData.instance.checkBoxAug.Checked = false;
                 }
