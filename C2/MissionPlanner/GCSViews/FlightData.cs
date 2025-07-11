@@ -8466,7 +8466,7 @@ namespace MissionPlanner.GCSViews
             try
             {
                 // Connect to the Telnet server
-                client.Connect(IPAddress.Loopback, port);
+                client.Connect(ipAddress, port);
             }
             catch (Exception ex)
             {
