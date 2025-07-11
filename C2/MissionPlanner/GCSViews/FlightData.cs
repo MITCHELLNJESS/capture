@@ -175,9 +175,10 @@ namespace MissionPlanner.GCSViews
         internal static int lastAlignY = 0;
         internal static int alignTimeout = 4;
         internal static int alignTimeoutCount = 0;
+        // TODO Find a better value for this
         internal static int alignGate = 70;
+        // Means that the ARV is currently aligning autonomously
         internal static bool doAlign = false;
-        internal static double lastAlignDist = -1;
 
         internal PointLatLng MouseDownStart;
 
@@ -377,11 +378,9 @@ namespace MissionPlanner.GCSViews
                     Console.WriteLine("Aligned!");
                     AlignStop();
                     doAlign = false;
-                    lastAlignDist = -1;
                 }
                 // Retarget asset
                 MoveDirection(Convert.ToInt32(alignX), Convert.ToInt32(alignY), 0, 1);
-                lastAlignDist = currAlignDist;
             }
 
             AlignStop();
@@ -397,8 +396,13 @@ namespace MissionPlanner.GCSViews
         {
             while(true)
             {
+                // TODO Fix values - come from the I&T team
+                // Need a picture from the camera mounted to the UAV 1
+                // meter from the ground with the asset directly below
+                // the dragon fingers. The target x and y will be the
+                // pixel coordinates of the asset in the picture
                 int targetX = 900;
-                int targetY = 500; //cross hair x/y - 'center of screen'
+                int targetY = 500;
                 int[] command = {A3MP_MessageBus.GetCommand()[0] - targetX,
                 A3MP_MessageBus.GetCommand()[1] - targetY};
                 A3MP_MessageBus.SetCommand(command);
@@ -409,11 +413,13 @@ namespace MissionPlanner.GCSViews
                     alignY = 0;
                 }
 
+                // If A3 saw something and we think it is real data
                 if (
                     (command[0] != -9999) &&
                     (command[1] != -9999) &&
                     (command[0] != lastAlignX) &&
                     (-command[1] != lastAlignY) &&
+                    // TODO These should be the maximum and minimum possible values
                     (command[0] < 3000) &&
                     (command[0] > -3000) &&
                     (command[1] < 3000) &&
@@ -1287,6 +1293,7 @@ namespace MissionPlanner.GCSViews
             return rad * 180 / Math.PI;
         }
 
+        // arDist is in meters
         private static void MoveDirection(int anX, int anY, int anZ, double arDist)
         {
             try
@@ -1736,6 +1743,7 @@ namespace MissionPlanner.GCSViews
                 return;
             }
 
+            // If we are not currently aligning
             if (!doAlign)
             {
                 BUT_Align.BGGradTop = Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(13)))));
@@ -1747,6 +1755,7 @@ namespace MissionPlanner.GCSViews
                 thread2.IsBackground = true;
                 thread2.Start();
             }
+            // Else we are currently aligning
             else
             {
                 BUT_Align.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
@@ -8457,7 +8466,7 @@ namespace MissionPlanner.GCSViews
             try
             {
                 // Connect to the Telnet server
-                client.Connect(ipAddress, port);
+                client.Connect(IPAddress.Loopback, port);
             }
             catch (Exception ex)
             {
