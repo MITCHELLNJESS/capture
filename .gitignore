@@ -92,3 +92,13 @@ desktop.ini
 /C2/MissionPlanner/ExtLibs/mono/mcs/class/lib/net_4_x-win32/netstandard2.0/MissionPlanner.Drawing.dll
 /C2/MissionPlanner/ExtLibs/mono/mcs/class/lib/net_4_x-win32/netstandard2.0/System.Drawing.dll
 /C2/MissionPlanner/ExtLibs/mono/mcs/class/lib/net_4_x-win32/netstandard2.0/System.Windows.Forms.dll
+# Unreal Engine Plugin Folders
+/TSE/Unreal/Plugins/*/Intermediate/
+/TSE/Unreal/Plugins/*/Binaries/
+/TSE/Unreal/Plugins/*/Saved/
+
+#DDS Subscriber obj
+/C2/DDS_Subscriber/obj/
+
+bounding_box_yolo_log.csv
+A3

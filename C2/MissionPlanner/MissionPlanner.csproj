@@ -36,6 +36,7 @@
 		<PlatformTarget>AnyCPU</PlatformTarget>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <OutputPath>bin\Debug\net461\</OutputPath>
@@ -44,10 +45,23 @@
     <CodeAnalysisRuleSet></CodeAnalysisRuleSet>
     <WarningsAsErrors>$(WarningsAsErrors);</WarningsAsErrors>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutputPath>bin\Debug\net461\</OutputPath>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisRuleSet />
+    <WarningsAsErrors>$(WarningsAsErrors);</WarningsAsErrors>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <OutputPath>bin\Release\net461\</OutputPath>
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet></CodeAnalysisRuleSet>
+    <WarningsAsErrors>$(WarningsAsErrors);</WarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutputPath>bin\Release\net461\</OutputPath>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet />
     <WarningsAsErrors>$(WarningsAsErrors);</WarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
@@ -108,6 +122,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\A3MP_Shared\A3MP_Shared.csproj" />
+    <ProjectReference Include="..\DDS_Subscriber\DDS_Subscriber.csproj" />
     <ProjectReference Include="ExtLibs\7zip\7zip.csproj" />
     <ProjectReference Include="ExtLibs\alglibnet\alglibnet.csproj" />
     <ProjectReference Include="ExtLibs\Antenna\MissionPlanner.Antenna.csproj" />
@@ -1177,6 +1193,7 @@
 
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="plugins\DDS_Integration\DDS_Integration.cs" />
     <Compile Include="SikRadio\ISikRadioForm.cs" />
     <Compile Include="SikRadio\RFD900.cs" />
     <Compile Include="SikRadio\RFDLib\Array.cs" />

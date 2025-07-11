@@ -38,6 +38,7 @@ namespace MissionPlanner.GCSViews
             this.multiLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControlactions = new System.Windows.Forms.TabControl();
             this.tabAsset = new System.Windows.Forms.TabPage();
+            this.tabDf = new System.Windows.Forms.TabPage();
             this.tabQuick = new System.Windows.Forms.TabPage();
             this.tableLayoutPanelAsset = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanelQuick = new System.Windows.Forms.TableLayoutPanel();
@@ -159,6 +160,7 @@ namespace MissionPlanner.GCSViews
             this.auxOptions7 = new MissionPlanner.Controls.AuxOptions();
             this.tabScripts = new System.Windows.Forms.TabPage();
             this.checkBoxRedirectOutput = new System.Windows.Forms.CheckBox();
+            this.checkBoxAug = new System.Windows.Forms.CheckBox();
             this.BUT_edit_selected = new MissionPlanner.Controls.MyButton();
             this.labelSelectedScript = new System.Windows.Forms.Label();
             this.BUT_run_script = new MissionPlanner.Controls.MyButton();
@@ -253,6 +255,11 @@ namespace MissionPlanner.GCSViews
             BUT_Backward = new MissionPlanner.Controls.MyButton();
             BUT_Left = new MissionPlanner.Controls.MyButton();
             BUT_Right = new MissionPlanner.Controls.MyButton();
+            BUT_Up = new MissionPlanner.Controls.MyButton();
+            BUT_Down = new MissionPlanner.Controls.MyButton();
+            BUT_Hov = new MissionPlanner.Controls.MyButton();
+            BUT_Align = new MissionPlanner.Controls.MyButton();
+
             LBL_DFMotor1 = new System.Windows.Forms.Label();
             CMB_DFMotor1 = new System.Windows.Forms.ComboBox();
             LBL_DFMotor2 = new System.Windows.Forms.Label();
@@ -317,6 +324,7 @@ namespace MissionPlanner.GCSViews
             this.contextMenuStripactionstab.SuspendLayout();
             this.tabControlactions.SuspendLayout();
             this.tabAsset.SuspendLayout();
+            this.tabDf.SuspendLayout();
             this.tabQuick.SuspendLayout();
             this.tableLayoutPanelAsset.SuspendLayout();
             this.tableLayoutPanelQuick.SuspendLayout();
@@ -658,6 +666,7 @@ namespace MissionPlanner.GCSViews
             // tabControlactions
             // 
             this.tabControlactions.ContextMenuStrip = this.contextMenuStripactionstab;
+            this.tabControlactions.Controls.Add(this.tabDf);
             this.tabControlactions.Controls.Add(this.tabAsset);
             this.tabControlactions.Controls.Add(this.tabQuick);
             this.tabControlactions.Controls.Add(this.tabActions);
@@ -698,6 +707,38 @@ namespace MissionPlanner.GCSViews
             this.tableLayoutPanelAsset.Name = "tableLayoutPanelAsset";
 
             Console.WriteLine(tableLayoutPanelAsset.ToString());
+            //
+            // tabDf
+            //
+            resources.ApplyResources(this.tabDf, "tabDf");
+            this.tabDf.Controls.Add(LBL_DFMotor1);
+            this.tabDf.Controls.Add(CMB_DFMotor1);
+            this.tabDf.Controls.Add(LBL_DFMotor2);
+            this.tabDf.Controls.Add(CMB_DFMotor2);
+            this.tabDf.Controls.Add(LBL_DFPort1);
+            this.tabDf.Controls.Add(LBL_DFPort2);
+            this.tabDf.Controls.Add(LBL_DFOpenPwm1);
+            this.tabDf.Controls.Add(TB_DFOpenPwm1);
+            this.tabDf.Controls.Add(LBL_DFOpenPwm2);
+            this.tabDf.Controls.Add(TB_DFOpenPwm2);
+            this.tabDf.Controls.Add(LBL_DFClosePwm1);
+            this.tabDf.Controls.Add(TB_DFClosePwm1);
+            this.tabDf.Controls.Add(LBL_DFClosePwm2);
+            this.tabDf.Controls.Add(TB_DFClosePwm2);
+            this.tabDf.Controls.Add(LBL_DFStopPwm1);
+            this.tabDf.Controls.Add(TB_DFStopPwm1);
+            this.tabDf.Controls.Add(LBL_DFStopPwm2);
+            this.tabDf.Controls.Add(TB_DFStopPwm2);
+            this.tabDf.Controls.Add(LBL_DFOpenTime1);
+            this.tabDf.Controls.Add(TB_DFOpenTime1);
+            this.tabDf.Controls.Add(LBL_DFOpenTime2);
+            this.tabDf.Controls.Add(TB_DFOpenTime2);
+            this.tabDf.Controls.Add(LBL_DFCloseTime1);
+            this.tabDf.Controls.Add(TB_DFCloseTime1);
+            this.tabDf.Controls.Add(LBL_DFCloseTime2);
+            this.tabDf.Controls.Add(TB_DFCloseTime2);
+            this.tabDf.Name = "tabDf";
+            this.tabDf.UseVisualStyleBackColor = true;
             //
             // assetLat
             //
@@ -2653,38 +2694,15 @@ namespace MissionPlanner.GCSViews
             this.splitContainer1.Panel2.Controls.Add(BUT_Kill);
             this.splitContainer1.Panel2.Controls.Add(BUT_DFClose);
             this.splitContainer1.Panel2.Controls.Add(BUT_DFOpen);
+            this.splitContainer1.Panel2.Controls.Add(checkBoxAug);
             this.splitContainer1.Panel2.Controls.Add(BUT_Forward);
             this.splitContainer1.Panel2.Controls.Add(BUT_Backward);
             this.splitContainer1.Panel2.Controls.Add(BUT_Left);
             this.splitContainer1.Panel2.Controls.Add(BUT_Right);
-            this.splitContainer1.Panel2.Controls.Add(LBL_DFMotor1);
-            this.splitContainer1.Panel2.Controls.Add(CMB_DFMotor1);
-            this.splitContainer1.Panel2.Controls.Add(LBL_DFMotor2);
-            this.splitContainer1.Panel2.Controls.Add(CMB_DFMotor2);
-            this.splitContainer1.Panel2.Controls.Add(LBL_DFPort1);
-            this.splitContainer1.Panel2.Controls.Add(TB_DFPort1);
-            this.splitContainer1.Panel2.Controls.Add(LBL_DFPort2);
-            this.splitContainer1.Panel2.Controls.Add(TB_DFPort2);
-            this.splitContainer1.Panel2.Controls.Add(LBL_DFOpenPwm1);
-            this.splitContainer1.Panel2.Controls.Add(TB_DFOpenPwm1);
-            this.splitContainer1.Panel2.Controls.Add(LBL_DFOpenPwm2);
-            this.splitContainer1.Panel2.Controls.Add(TB_DFOpenPwm2);
-            this.splitContainer1.Panel2.Controls.Add(LBL_DFClosePwm1);
-            this.splitContainer1.Panel2.Controls.Add(TB_DFClosePwm1);
-            this.splitContainer1.Panel2.Controls.Add(LBL_DFClosePwm2);
-            this.splitContainer1.Panel2.Controls.Add(TB_DFClosePwm2);
-            this.splitContainer1.Panel2.Controls.Add(LBL_DFStopPwm1);
-            this.splitContainer1.Panel2.Controls.Add(TB_DFStopPwm1);
-            this.splitContainer1.Panel2.Controls.Add(LBL_DFStopPwm2);
-            this.splitContainer1.Panel2.Controls.Add(TB_DFStopPwm2);
-            this.splitContainer1.Panel2.Controls.Add(LBL_DFOpenTime1);
-            this.splitContainer1.Panel2.Controls.Add(TB_DFOpenTime1);
-            this.splitContainer1.Panel2.Controls.Add(LBL_DFOpenTime2);
-            this.splitContainer1.Panel2.Controls.Add(TB_DFOpenTime2);
-            this.splitContainer1.Panel2.Controls.Add(LBL_DFCloseTime1);
-            this.splitContainer1.Panel2.Controls.Add(TB_DFCloseTime1);
-            this.splitContainer1.Panel2.Controls.Add(LBL_DFCloseTime2);
-            this.splitContainer1.Panel2.Controls.Add(TB_DFCloseTime2);
+            this.splitContainer1.Panel2.Controls.Add(BUT_Up);
+            this.splitContainer1.Panel2.Controls.Add(BUT_Down);
+            this.splitContainer1.Panel2.Controls.Add(BUT_Hov);
+            this.splitContainer1.Panel2.Controls.Add(BUT_Align);
             this.splitContainer1.Panel2.Controls.Add(this.label6);
             this.splitContainer1.Panel2.Controls.Add(this.label5);
             this.splitContainer1.Panel2.Controls.Add(this.label3);
@@ -3137,10 +3155,21 @@ namespace MissionPlanner.GCSViews
             BUT_DFOpen.UseVisualStyleBackColor = true;
             BUT_DFOpen.Click += new System.EventHandler(BUT_DFOpen_Click);
             //
+            // checkBoxAug
+            //
+            resources.ApplyResources(this.checkBoxAug, "checkBoxAug");
+            this.checkBoxAug.Checked = false;
+            this.checkBoxAug.CheckState = System.Windows.Forms.CheckState.Unchecked;
+            this.checkBoxAug.Name = "checkBoxAug";
+            this.checkBoxAug.UseVisualStyleBackColor = true;
+            this.checkBoxAug.Visible = true;
+            this.checkBoxAug.CheckStateChanged += CheckBoxAug_CheckStateChanged;
+            //
             // BUT_Forward
             //
-            BUT_Forward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            BUT_Forward.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            Color dark = Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
+            BUT_Forward.BGGradTop = dark;
+            BUT_Forward.BGGradBot = dark;
             BUT_Forward.TextColor = Color.Black;
             resources.ApplyResources(BUT_Forward, "BUT_Forward");
             BUT_Forward.Name = "BUT_Forward";
@@ -3150,8 +3179,8 @@ namespace MissionPlanner.GCSViews
             //
             // BUT_Backward
             //
-            BUT_Backward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            BUT_Backward.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            BUT_Backward.BGGradTop = dark;
+            BUT_Backward.BGGradBot = dark;
             BUT_Backward.TextColor = Color.Black;
             resources.ApplyResources(BUT_Backward, "BUT_Backward");
             BUT_Backward.Name = "BUT_Backward";
@@ -3161,8 +3190,8 @@ namespace MissionPlanner.GCSViews
             //
             // BUT_Left
             //
-            BUT_Left.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            BUT_Left.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            BUT_Left.BGGradTop = dark;
+            BUT_Left.BGGradBot = dark;
             BUT_Left.TextColor = Color.Black;
             resources.ApplyResources(BUT_Left, "BUT_Left");
             BUT_Left.Name = "BUT_Left";
@@ -3172,22 +3201,67 @@ namespace MissionPlanner.GCSViews
             //
             // BUT_Right
             //
-            BUT_Right.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            BUT_Right.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            BUT_Right.BGGradTop = dark;
+            BUT_Right.BGGradBot = dark;
             BUT_Right.TextColor = Color.Black;
             resources.ApplyResources(BUT_Right, "BUT_Right");
             BUT_Right.Name = "BUT_Right";
             BUT_Right.TextColorNotEnabled = Color.Black;
             BUT_Right.UseVisualStyleBackColor = true;
-            BUT_Right.Click += new System.EventHandler(BUT_Right_Click);
+            //
+            // BUT_Up
+            //
+            BUT_Up.BGGradTop = dark;
+            BUT_Up.BGGradBot = dark;
+            BUT_Up.TextColor = Color.Black;
+            resources.ApplyResources(BUT_Up, "BUT_Up");
+            BUT_Up.Name = "BUT_Up";
+            BUT_Up.TextColorNotEnabled = Color.Black;
+            BUT_Up.UseVisualStyleBackColor = true;
+            BUT_Up.Click += new System.EventHandler(BUT_Up_Click);
+            //
+            // BUT_Down
+            //
+            BUT_Down.BGGradTop = dark;
+            BUT_Down.BGGradBot = dark;
+            BUT_Down.TextColor = Color.Black;
+            resources.ApplyResources(BUT_Down, "BUT_Down");
+            BUT_Down.Name = "BUT_Down";
+            BUT_Down.TextColorNotEnabled = Color.Black;
+            BUT_Down.UseVisualStyleBackColor = true;
+            BUT_Down.Click += new System.EventHandler(BUT_Down_Click);
+            //
+            // BUT_Hov
+            //
+            BUT_Hov.BGGradTop = dark;
+            BUT_Hov.BGGradBot = dark;
+            BUT_Hov.TextColor = Color.Black;
+            resources.ApplyResources(BUT_Hov, "BUT_Hov");
+            BUT_Hov.Name = "BUT_Hov";
+            BUT_Hov.TextColorNotEnabled = Color.Black;
+            BUT_Hov.UseVisualStyleBackColor = true;
+            BUT_Hov.Click += new System.EventHandler(BUT_Hov_Click);
+            // 
+            //
+            // BUT_Align
+            //
+            BUT_Align.BGGradTop = dark;
+            BUT_Align.BGGradBot = dark;
+            BUT_Align.TextColor = Color.Black;
+            resources.ApplyResources(BUT_Align, "BUT_Align");
+            BUT_Align.Name = "BUT_Align";
+            BUT_Align.TextColorNotEnabled = Color.Black;
+            BUT_Align.UseVisualStyleBackColor = true;
+            BUT_Align.Click += new System.EventHandler(BUT_Align_Click);
+            // 
             // 
             // LBL_DFMotor1
-            // 
+            //
             resources.ApplyResources(LBL_DFMotor1, "LBL_DFMotor1");
             LBL_DFMotor1.Name = "LBL_DFMotor1";
-            // 
+            //
             // CMB_DFMotor1
-            // 
+            //
             resources.ApplyResources(CMB_DFMotor1, "CMB_DFMotor1");
             CMB_DFMotor1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             CMB_DFMotor1.DropDownWidth = 250;
@@ -3498,6 +3572,7 @@ namespace MissionPlanner.GCSViews
             this.contextMenuStripactionstab.ResumeLayout(false);
             this.tabControlactions.ResumeLayout(false);
             this.tabAsset.ResumeLayout(false);
+            this.tabDf.ResumeLayout(false);
             this.tabQuick.ResumeLayout(false);
             this.tableLayoutPanelAsset.ResumeLayout(false);
             this.tableLayoutPanelQuick.ResumeLayout(false);
@@ -3612,6 +3687,7 @@ namespace MissionPlanner.GCSViews
         private Label lbl_playbackspeed;
         private System.Windows.Forms.ToolStripMenuItem setAspectRatioToolStripMenuItem;
         public System.Windows.Forms.TabPage tabAsset;
+        public System.Windows.Forms.TabPage tabDf;
         public System.Windows.Forms.TabPage tabQuick;
         private Controls.QuickView quickView3;
         private Controls.QuickView quickView2;
@@ -3671,6 +3747,10 @@ namespace MissionPlanner.GCSViews
         public static Controls.MyButton BUT_Forward;
         public static Controls.MyButton BUT_Backward;
         public static Controls.MyButton BUT_Left;
+        public static Controls.MyButton BUT_Up;
+        public static Controls.MyButton BUT_Down;
+        public static Controls.MyButton BUT_Hov;
+        public static Controls.MyButton BUT_Align;
         public static Controls.MyButton BUT_Right;
         public static System.Windows.Forms.Label LBL_DFMotor1;
         public static System.Windows.Forms.ComboBox CMB_DFMotor1;
@@ -3714,6 +3794,7 @@ namespace MissionPlanner.GCSViews
         private System.Windows.Forms.OpenFileDialog openScriptDialog;
         private System.Windows.Forms.Timer scriptChecker;
         private System.Windows.Forms.CheckBox checkBoxRedirectOutput;
+        private System.Windows.Forms.CheckBox checkBoxAug;
         private System.Windows.Forms.ToolStripMenuItem russianHudToolStripMenuItem;
         public System.Windows.Forms.ContextMenuStrip contextMenuStripMap;
         public System.Windows.Forms.ContextMenuStrip contextMenuStripHud;
