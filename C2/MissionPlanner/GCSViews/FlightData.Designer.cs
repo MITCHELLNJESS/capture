@@ -103,8 +103,10 @@ namespace MissionPlanner.GCSViews
             this.lngDiff_m_lbl = new System.Windows.Forms.Label();
             this.lngDiff_m_tb = new System.Windows.Forms.TextBox();
             this.angDiff_deg_lbl = new System.Windows.Forms.Label();
+            this.crosshairs_lbl = new System.Windows.Forms.Label();
             this.mission_lbl = new System.Windows.Forms.Label();
             this.angDiff_deg_tb = new System.Windows.Forms.TextBox();
+            crosshairs_tb = new System.Windows.Forms.TextBox();
             this.NACp_lbl = new System.Windows.Forms.Label();
             this.NIC_lbl = new System.Windows.Forms.Label();
             this.Squawk_nud = new System.Windows.Forms.NumericUpDown();
@@ -2679,10 +2681,6 @@ namespace MissionPlanner.GCSViews
             this.splitContainer1.Panel2.Controls.Add(CMB_team);
             this.splitContainer1.Panel2.Controls.Add(BUT_ToggleDemoFieldOverlay);
             this.splitContainer1.Panel2.Controls.Add(BUT_GenerateMap);
-            //this.splitContainer1.Panel2.Controls.Add(latDiff_m_lbl);
-            //this.splitContainer1.Panel2.Controls.Add(latDiff_m_tb);
-            //this.splitContainer1.Panel2.Controls.Add(lngDiff_m_lbl);
-            //this.splitContainer1.Panel2.Controls.Add(lngDiff_m_tb);
             this.splitContainer1.Panel2.Controls.Add(angDiff_deg_lbl);
             this.splitContainer1.Panel2.Controls.Add(angDiff_deg_tb);
             this.splitContainer1.Panel2.Controls.Add(mission_lbl);
@@ -2703,6 +2701,8 @@ namespace MissionPlanner.GCSViews
             this.splitContainer1.Panel2.Controls.Add(BUT_Down);
             this.splitContainer1.Panel2.Controls.Add(BUT_Hov);
             this.splitContainer1.Panel2.Controls.Add(BUT_Align);
+            this.splitContainer1.Panel2.Controls.Add(crosshairs_lbl);
+            this.splitContainer1.Panel2.Controls.Add(crosshairs_tb);
             this.splitContainer1.Panel2.Controls.Add(this.label6);
             this.splitContainer1.Panel2.Controls.Add(this.label5);
             this.splitContainer1.Panel2.Controls.Add(this.label3);
@@ -3254,6 +3254,17 @@ namespace MissionPlanner.GCSViews
             BUT_Align.TextColorNotEnabled = Color.Black;
             BUT_Align.UseVisualStyleBackColor = true;
             BUT_Align.Click += new System.EventHandler(BUT_Align_Click);
+            //
+            // crosshairs_lbl
+            //
+            resources.ApplyResources(this.crosshairs_lbl, "crosshairs_lbl");
+            this.crosshairs_lbl.Name = "crosshairs_lbl";
+            //
+            // crosshairs_tb
+            //
+            resources.ApplyResources(crosshairs_tb, "crosshairs_tb");
+            crosshairs_tb.Name = "crosshairs_tb";
+            crosshairs_tb.ReadOnly = false;
             // 
             // 
             // LBL_DFMotor1
@@ -3899,8 +3910,10 @@ namespace MissionPlanner.GCSViews
         private System.Windows.Forms.Label lngDiff_m_lbl;
         private System.Windows.Forms.TextBox lngDiff_m_tb;
         private System.Windows.Forms.Label angDiff_deg_lbl;
+        private System.Windows.Forms.Label crosshairs_lbl;
         private System.Windows.Forms.Label mission_lbl;
         private System.Windows.Forms.TextBox angDiff_deg_tb;
+        private static System.Windows.Forms.TextBox crosshairs_tb;
         private ToolStripMenuItem showIconsToolStripMenuItem;
         private ToolStripMenuItem multiLineToolStripMenuItem;
         private Controls.MyButton BUT_SendMSG;

@@ -5,8 +5,9 @@ namespace A3MP_Shared
 {
     public static class A3MP_MessageBus
     {
-        public static int[] command = {-9999, -9999}; //default
+        public static int[] command = {-9999, -9999, -9999, -9999}; //default
         public static string[] a3Output = new string[8];
+        private static bool commandReady = false;
 
         public static void SetCommand(int[] cmd)
         {
@@ -24,15 +25,33 @@ namespace A3MP_Shared
             //we're given X, Y in center of box 
             command[0] = Int32.Parse(a3Output[5]); //X-component of directional vector
             command[1] = Int32.Parse(a3Output[6]); //Y-component of directional vector
+            command[2] = Int32.Parse(a3Output[3]); //Width of bounding box
+            command[3] = Int32.Parse(a3Output[4]); //Height of bounding box
             //vector = (center x - ARV X, CENTER y - ARV y) - need to pass to MP code to know ARV X/Y
             ////- purpose of this is simply to know what 'direction' or angle to go, then approach slowly....
 
+            commandReady = true;
         }
 
         //command accessor function
         public static int[] GetCommand()
         {
             return command;
+        }
+
+        public static int[] GetCommandSnapshot()
+        {
+            Console.WriteLine("******* A3MP_MessageBus.GetCommandSnapshot() ********");
+
+            if (commandReady)
+            {
+                commandReady = false;
+                return command;
+            }
+            else
+            {
+                return new int[] { -9999, -9999, -9999, -9999 };
+            }
         }
 
         //public static void UpdateFlightData(string command)

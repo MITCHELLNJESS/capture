@@ -20,6 +20,12 @@ model.conf = 0.4
 # initializing webcam
 #cap = cv2.VideoCapture(0)
 cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+print(f"Video stream width: {frame_width} pixels")
+print(f"Video stream height: {frame_height} pixels")
+cv2.namedWindow("Asset Alignment Assistance System", cv2.WINDOW_NORMAL)
+cv2.resizeWindow("Asset Alignment Assistance System", 800, 600)
 if not cap.isOpened():
     print("Unable to access webcam")
     exit()
@@ -95,7 +101,7 @@ with open(log_file, mode='w', newline='') as file:
             file.flush()
 
         # display
-        cv2.imshow("A3 System", frame)
+        cv2.imshow("Asset Alignment Assistance System", frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 

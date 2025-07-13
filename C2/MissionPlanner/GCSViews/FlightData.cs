@@ -171,8 +171,14 @@ namespace MissionPlanner.GCSViews
 
         public static int alignX = 0;
         public static int alignY = 0;
-        internal static int lastAlignX = 0;
-        internal static int lastAlignY = 0;
+        public static int boundingBoxWidth = 0;
+        public static int boundingBoxHeight = 0;
+        public static int boundingBoxLeft = 0;
+        public static int boundingBoxTop = 0;
+        public static int cameraWidth = 1920;
+        public static int cameraHeight = 1080;
+        internal static int lastCenterX = 0;
+        internal static int lastCenterY = 0;
         internal static int alignTimeout = 4;
         internal static int alignTimeoutCount = 0;
         internal static int alignGate = 70;
@@ -397,11 +403,30 @@ namespace MissionPlanner.GCSViews
         {
             while(true)
             {
-                int targetX = 900;
-                int targetY = 500; //cross hair x/y - 'center of screen'
-                int[] command = {A3MP_MessageBus.GetCommand()[0] - targetX,
-                A3MP_MessageBus.GetCommand()[1] - targetY};
-                A3MP_MessageBus.SetCommand(command);
+                int targetX = cameraHeight / 2;
+                int targetY = cameraWidth / 2; //cross hair x/y - 'center of screen'
+                int[] command = A3MP_MessageBus.GetCommandSnapshot();
+
+                Console.Write("Flight Data Received: ");
+                Console.Write(command[0]);
+                Console.Write(" ");
+                Console.Write(command[1]);
+                Console.Write(" ");
+                Console.Write(command[2]);
+                Console.Write(" ");
+                Console.WriteLine(command[3]);
+
+                myhud.command = command;
+                Console.Write("Crosshairs offset: ");
+                try
+                {
+                    Console.WriteLine(Convert.ToInt32(crosshairs_tb.Text));
+                    myhud.crosshairsOffset = Convert.ToInt32(crosshairs_tb.Text);
+                }
+                catch
+                {
+                    myhud.crosshairsOffset = 0;
+                }
 
                 if (alignTimeoutCount == alignTimeout)
                 {
@@ -412,22 +437,25 @@ namespace MissionPlanner.GCSViews
                 if (
                     (command[0] != -9999) &&
                     (command[1] != -9999) &&
-                    (command[0] != lastAlignX) &&
-                    (-command[1] != lastAlignY) &&
+                    (command[0] != lastCenterX) &&
+                    (command[1] != lastCenterY) &&
                     (command[0] < 3000) &&
                     (command[0] > -3000) &&
                     (command[1] < 3000) &&
                     (command[1] > -3000)
                 )
                 {
-                    alignX = command[0];
-                    alignY = -command[1];
+                    alignX = command[0] - targetX;
+                    alignY = targetY - command[1];
                     alignTimeoutCount = 0;
                 }
                 else
                 {
                     alignTimeoutCount++;
                 }
+
+                lastCenterX = command[0];
+                lastCenterY = command[1];
 
                 Console.Write("alignX = ");
                 Console.WriteLine(alignX);
