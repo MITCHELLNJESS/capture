@@ -235,7 +235,7 @@ namespace MissionPlanner.GCSViews
             CMB_altmode.DataSource = EnumTranslator.EnumToList<altmode>();
 
             //set default
-            CMB_altmode.SelectedItem = altmode.Relative;
+            CMB_altmode.SelectedItem = altmode.Terrain;
 
             cmb_missiontype.DataSource = new List<MAVLink.MAV_MISSION_TYPE>()
                 {MAVLink.MAV_MISSION_TYPE.MISSION, MAVLink.MAV_MISSION_TYPE.FENCE, MAVLink.MAV_MISSION_TYPE.RALLY};
@@ -756,7 +756,7 @@ namespace MissionPlanner.GCSViews
 
         public void BUT_ToAssetCreate_Click(object sender, EventArgs e)
         {
-            FlightData.updateAssetBtn_Click(null, null);
+            FlightData.instance.updateAssetBtn_Click(null, null);
             clearMissionToolStripMenuItem_Click(null, null);
 
             Console.Write("Asset position from data window - lat: ");
@@ -1778,6 +1778,35 @@ namespace MissionPlanner.GCSViews
             }
         }
 
+        public void AddPolygonPoint(PointLatLng acPoint)
+        {
+            if (polygongridmode == false)
+            {
+                polygongridmode = true;
+                return;
+            }
+
+            List<PointLatLng> polygonPoints = new List<PointLatLng>();
+            if (drawnpolygonsoverlay.Polygons.Count == 0)
+            {
+                drawnpolygon.Points.Clear();
+                drawnpolygonsoverlay.Polygons.Add(drawnpolygon);
+            }
+
+            drawnpolygon.Fill = Brushes.Transparent;
+
+            // remove full loop is exists
+            if (drawnpolygon.Points.Count > 1 &&
+                drawnpolygon.Points[0] == drawnpolygon.Points[drawnpolygon.Points.Count - 1])
+                drawnpolygon.Points.RemoveAt(drawnpolygon.Points.Count - 1); // unmake a full loop
+
+            drawnpolygon.Points.Add(acPoint);
+
+            redrawPolygonSurvey(drawnpolygon.Points.Select(a => new PointLatLngAlt(a)).ToList());
+
+            MainMap.Invalidate();
+        }
+
         public void addPolygonPointToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (polygongridmode == false)
@@ -2244,10 +2273,10 @@ namespace MissionPlanner.GCSViews
                 BUT_Add.Visible = false;
                 processToScreen(MainV2.comPort.MAV.fencepoints.Select(a => (Locationwp) a.Value).ToList());
 
-                Common.MessageShowAgain("FlightPlan Fence", "Please use the Polygon drawing tool to draw " +
-                                                            "Inclusion and Exclusion areas (round circle to the left)," +
-                                                            " once drawn use the same icon to convert it to a inclusion " +
-                                                            "or exclusion fence");
+                //Common.MessageShowAgain("FlightPlan Fence", "Please use the Polygon drawing tool to draw " +
+                //                                            "Inclusion and Exclusion areas (round circle to the left)," +
+                //                                            " once drawn use the same icon to convert it to a inclusion " +
+                //                                            "or exclusion fence");
             }
             else
             {

@@ -5,6 +5,7 @@
     <OutputTypeEx>library</OutputTypeEx>
     <AssemblyName>MissionPlanner.Maps</AssemblyName>
     <RootNamespace>MissionPlanner.Maps</RootNamespace>
+    <Platforms>AnyCPU;x64</Platforms>
 
   </PropertyGroup>
 
@@ -12,7 +13,15 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net472|x64'">
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net472|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net472|x64'">
     <DefineConstants>DEBUG;TRACE</DefineConstants>
   </PropertyGroup>
 
