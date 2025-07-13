@@ -447,10 +447,10 @@ namespace MissionPlanner.GCSViews
                     throttleLevel.numberColor = System.Drawing.Color.FromArgb(red, green, blue);
                 }
 
-                if ((MainV2.comPort.MAV.cs.mode != "Guided") && (FlightData.instance.checkBoxAug.Checked))
-                {
-                    FlightData.instance.checkBoxAug.Checked = false;
-                }
+                //if ((MainV2.comPort.MAV.cs.mode != "Guided") && (FlightData.instance.checkBoxAug.Checked))
+                //{
+                //    FlightData.instance.checkBoxAug.Checked = false;
+                //}
 
                 System.Threading.Thread.Sleep(500);
             }
@@ -1292,7 +1292,7 @@ namespace MissionPlanner.GCSViews
             try
             {
                 MainV2.comPort.doCommand(MainV2.comPort.MAV.sysid, MainV2.comPort.MAV.compid,
-                        MAVLink.MAV_CMD.DO_CHANGE_SPEED, 0, 0.05f, 0, 0, 0, 0, 0);
+                        MAVLink.MAV_CMD.DO_CHANGE_SPEED, 0, 0.1f, 0, 0, 0, 0, 0);
             }
             catch
             {
@@ -1311,7 +1311,7 @@ namespace MissionPlanner.GCSViews
             // Only calculate a new lat/lng if we are moving laterally
             if (Math.Sqrt((anX * anX) + (anY * anY)) != 0)
             {
-                lrBearingRad = DegToRad(Convert.ToDouble(CurrentState.instance.nav_bearing)) + Math.Atan2(anX, anY);
+                lrBearingRad = DegToRad(Convert.ToDouble(MainV2.comPort.MAV.cs.nav_bearing)) + Math.Atan2(anX, anY);
 
                 lrDeltaLatRad = (arDist / lrEarthRadius) * Math.Cos(lrBearingRad);
                 lrDeltaLngRad = (arDist / lrEarthRadius) * Math.Sin(lrBearingRad) / Math.Cos(lrUavLatRad);

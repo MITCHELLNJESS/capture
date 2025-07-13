@@ -3208,6 +3208,7 @@ namespace MissionPlanner.GCSViews
             BUT_Right.Name = "BUT_Right";
             BUT_Right.TextColorNotEnabled = Color.Black;
             BUT_Right.UseVisualStyleBackColor = true;
+            BUT_Right.Click += new System.EventHandler(BUT_Right_Click);
             //
             // BUT_Up
             //
