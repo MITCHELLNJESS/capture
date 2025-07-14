@@ -1324,7 +1324,7 @@ namespace MissionPlanner.GCSViews
             {
                 lnAlt = 10;
             }
-            else if (anZ < 0)
+            else if (anZ <= 0)
             {
                 lnAlt = 1;
             }
