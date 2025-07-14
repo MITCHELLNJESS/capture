@@ -379,8 +379,8 @@ namespace MissionPlanner.GCSViews
         {
             while(true)
             {
-                int targetX = cameraHeight / 2;
-                int targetY = cameraWidth / 2; //cross hair x/y - 'center of screen'
+                int targetX = cameraWidth / 2;
+                int targetY = cameraHeight / 2; //cross hair x/y - 'center of screen'
                 int[] command = A3MP_MessageBus.GetCommandSnapshot();
 
                 Console.Write("Flight Data Received: ");
@@ -421,6 +421,14 @@ namespace MissionPlanner.GCSViews
                     (command[1] > -3000)
                 )
                 {
+                    Console.Write("command[0] = ");
+                    Console.WriteLine(command[0]);
+                    Console.Write("command[1] = ");
+                    Console.WriteLine(command[1]);
+                    Console.Write("targetX = ");
+                    Console.WriteLine(targetX);
+                    Console.Write("targetY = ");
+                    Console.WriteLine(targetY);
                     alignX = command[0] - targetX;
                     alignY = targetY - command[1];
                     alignTimeoutCount = 0;
