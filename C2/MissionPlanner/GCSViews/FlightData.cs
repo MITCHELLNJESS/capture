@@ -430,7 +430,7 @@ namespace MissionPlanner.GCSViews
                     Console.Write("targetY = ");
                     Console.WriteLine(targetY);
                     alignX = command[0] - targetX;
-                    alignY = targetY - command[1];
+                    alignY = targetY - command[1] + myhud.crosshairsOffset;
                     alignTimeoutCount = 0;
                 }
                 else
@@ -966,6 +966,7 @@ namespace MissionPlanner.GCSViews
 
             // Asset locations
             int angleOffset = 30;
+            assetLocs.Clear();
             for (int angle = 0; angle < 360; angle += angleOffset)
             {
                 List<PointLatLng> assetLocPoints = GenerateAsset(lat, lng, 22.098, angle + adjustAngle_deg);
@@ -1320,18 +1321,18 @@ namespace MissionPlanner.GCSViews
             double lrLatRad = lrUavLatRad + lrDeltaLatRad;
             double lrLngRad = lrUavLngRad + lrDeltaLngRad;
             int lnAlt = Convert.ToInt32(FlightData.coords1.Alt);
+            if (lnAlt == 0)
+            {
+                lnAlt = 1;
+            }
+
             if (anZ > 0)
             {
                 lnAlt = 10;
             }
             else if (anZ < 0)
             {
-                lnAlt = 1;
-            }
-
-            if (lnAlt == 0)
-            {
-                lnAlt = 1;
+                lnAlt = -1;
             }
 
             double lrLatDeg = RadToDeg(lrLatRad);
