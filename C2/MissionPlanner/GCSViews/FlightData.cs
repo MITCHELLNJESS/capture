@@ -1324,13 +1324,18 @@ namespace MissionPlanner.GCSViews
             {
                 lnAlt = 10;
             }
-            else if (anZ <= 0)
+            else if (anZ < 0)
             {
                 lnAlt = 1;
             }
 
-                double lrLatDeg = RadToDeg(lrLatRad);
-                double lrLngDeg = RadToDeg(lrLngRad);
+            if (lnAlt == 0)
+            {
+                lnAlt = 1;
+            }
+
+            double lrLatDeg = RadToDeg(lrLatRad);
+            double lrLngDeg = RadToDeg(lrLngRad);
 
             MoveTo(lrLatDeg, lrLngDeg, Convert.ToInt32(lnAlt));
         }
