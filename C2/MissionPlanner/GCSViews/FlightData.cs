@@ -131,30 +131,6 @@ namespace MissionPlanner.GCSViews
         internal static double fobLatSE = 0;
         internal static double fobLngSE = 0;
         internal static List<PointLatLng> assetLocs = new List<PointLatLng>();
-        internal static double assetLatOne = 0;
-        internal static double assetLngOne = 0;
-        internal static double assetLatTwo = 0;
-        internal static double assetLngTwo = 0;
-        internal static double assetLatThree = 0;
-        internal static double assetLngThree = 0;
-        internal static double assetLatFour = 0;
-        internal static double assetLngFour = 0;
-        internal static double assetLatFive = 0;
-        internal static double assetLngFive = 0;
-        internal static double assetLatSix = 0;
-        internal static double assetLngSix = 0;
-        internal static double assetLatSeven = 0;
-        internal static double assetLngSeven = 0;
-        internal static double assetLatEight = 0;
-        internal static double assetLngEight = 0;
-        internal static double assetLatNine = 0;
-        internal static double assetLngNine = 0;
-        internal static double assetLatTen = 0;
-        internal static double assetLngTen = 0;
-        internal static double assetLatEleven = 0;
-        internal static double assetLngEleven = 0;
-        internal static double assetLatTwelve = 0;
-        internal static double assetLngTwelve = 0;
         internal static double assetLatMarked = 0;
         internal static double assetLngMarked = 0;
         internal static teMission mission = teMission.eeNone;
@@ -1183,63 +1159,51 @@ namespace MissionPlanner.GCSViews
                 {
                     case 0:
                         POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #1 (Marked)", 2);
-                        assetLatOne = assetLatMarked;
-                        assetLngOne = assetLngMarked;
+                        assetLocs[8] = new PointLatLng(assetLatMarked, assetLngMarked);
                         break;
                     case 1:
                         POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #2 (Marked)", 2);
-                        assetLatTwo = assetLatMarked;
-                        assetLngTwo = assetLngMarked;
+                        assetLocs[9] = new PointLatLng(assetLatMarked, assetLngMarked);
                         break;
                     case 2:
                         POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #3 (Marked)", 2);
-                        assetLatThree = assetLatMarked;
-                        assetLngThree = assetLngMarked;
+                        assetLocs[10] = new PointLatLng(assetLatMarked, assetLngMarked);
                         break;
                     case 3:
                         POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #4 (Marked)", 2);
-                        assetLatFour = assetLatMarked;
-                        assetLngFour = assetLngMarked;
+                        assetLocs[11] = new PointLatLng(assetLatMarked, assetLngMarked);
                         break;
                     case 4:
                         POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #5 (Marked)", 2);
-                        assetLatFive = assetLatMarked;
-                        assetLngFive = assetLngMarked;
+                        assetLocs[0] = new PointLatLng(assetLatMarked, assetLngMarked);
                         break;
                     case 5:
                         POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #6 (Marked)", 2);
-                        assetLatSix = assetLatMarked;
-                        assetLngSix = assetLngMarked;
+                        assetLocs[1] = new PointLatLng(assetLatMarked, assetLngMarked);
                         break;
                     case 6:
                         POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #7 (Marked)", 2);
-                        assetLatSeven = assetLatMarked;
-                        assetLngSeven = assetLngMarked;
+                        assetLocs[2] = new PointLatLng(assetLatMarked, assetLngMarked);
                         break;
                     case 7:
                         POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #8 (Marked)", 2);
-                        assetLatEight = assetLatMarked;
-                        assetLngEight = assetLngMarked;
+                        assetLocs[3] = new PointLatLng(assetLatMarked, assetLngMarked);
                         break;
                     case 8:
                         POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #9 (Marked)", 2);
-                        assetLatNine = assetLatMarked;
-                        assetLngNine = assetLngMarked;
+                        assetLocs[4] = new PointLatLng(assetLatMarked, assetLngMarked);
                         break;
                     case 9:
                         POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #10 (Marked)", 2);
-                        assetLatTen = assetLatMarked;
-                        assetLngTen = assetLngMarked;
+                        assetLocs[5] = new PointLatLng(assetLatMarked, assetLngMarked);
                         break;
                     case 10:
                         POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #11 (Marked)", 2);
-                        assetLatEleven = assetLatMarked;
-                        assetLngEleven = assetLngMarked;
+                        assetLocs[6] = new PointLatLng(assetLatMarked, assetLngMarked);
                         break;
                     case 11:
                         POI.POIAdd(new PointLatLngAlt(assetLatMarked, assetLngMarked, 0), "Pos #12 (Marked)", 2);
-                        assetLatTwelve = assetLatMarked;
-                        assetLngTwelve = assetLngMarked;
+                        assetLocs[7] = new PointLatLng(assetLatMarked, assetLngMarked);
                         break;
                 }
             }
@@ -2223,7 +2187,7 @@ namespace MissionPlanner.GCSViews
             {
                 if (isDemoFieldGenerated)
                 {
-                    FlightPlanner.instance.ToPoint(assetLatOne, assetLngOne);
+                    FlightPlanner.instance.ToPoint(assetLocs[8].Lat, assetLocs[8].Lng);
                 }
                 else
                 {
@@ -2235,7 +2199,7 @@ namespace MissionPlanner.GCSViews
             {
                 if (isDemoFieldGenerated)
                 {
-                    FlightPlanner.instance.ToPoint(assetLatTwo, assetLngTwo);
+                    FlightPlanner.instance.ToPoint(assetLocs[9].Lat, assetLocs[9].Lng);
                 }
                 else
                 {
@@ -2247,7 +2211,7 @@ namespace MissionPlanner.GCSViews
             {
                 if (isDemoFieldGenerated)
                 {
-                    FlightPlanner.instance.ToPoint(assetLatThree, assetLngThree);
+                    FlightPlanner.instance.ToPoint(assetLocs[10].Lat, assetLocs[10].Lng);
                 }
                 else
                 {
@@ -2259,7 +2223,7 @@ namespace MissionPlanner.GCSViews
             {
                 if (isDemoFieldGenerated)
                 {
-                    FlightPlanner.instance.ToPoint(assetLatFour, assetLngFour);
+                    FlightPlanner.instance.ToPoint(assetLocs[11].Lat, assetLocs[11].Lng);
                 }
                 else
                 {
@@ -2271,7 +2235,7 @@ namespace MissionPlanner.GCSViews
             {
                 if (isDemoFieldGenerated)
                 {
-                    FlightPlanner.instance.ToPoint(assetLatFive, assetLngFive);
+                    FlightPlanner.instance.ToPoint(assetLocs[0].Lat, assetLocs[0].Lng);
                 }
                 else
                 {
@@ -2283,7 +2247,7 @@ namespace MissionPlanner.GCSViews
             {
                 if (isDemoFieldGenerated)
                 {
-                    FlightPlanner.instance.ToPoint(assetLatSix, assetLngSix);
+                    FlightPlanner.instance.ToPoint(assetLocs[1].Lat, assetLocs[1].Lng);
                 }
                 else
                 {
@@ -2295,7 +2259,7 @@ namespace MissionPlanner.GCSViews
             {
                 if (isDemoFieldGenerated)
                 {
-                    FlightPlanner.instance.ToPoint(assetLatSeven, assetLngSeven);
+                    FlightPlanner.instance.ToPoint(assetLocs[2].Lat, assetLocs[2].Lng);
                 }
                 else
                 {
@@ -2307,7 +2271,7 @@ namespace MissionPlanner.GCSViews
             {
                 if (isDemoFieldGenerated)
                 {
-                    FlightPlanner.instance.ToPoint(assetLatEight, assetLngEight);
+                    FlightPlanner.instance.ToPoint(assetLocs[3].Lat, assetLocs[3].Lng);
                 }
                 else
                 {
@@ -2319,7 +2283,7 @@ namespace MissionPlanner.GCSViews
             {
                 if (isDemoFieldGenerated)
                 {
-                    FlightPlanner.instance.ToPoint(assetLatNine, assetLngNine);
+                    FlightPlanner.instance.ToPoint(assetLocs[4].Lat, assetLocs[4].Lng);
                 }
                 else
                 {
@@ -2331,7 +2295,7 @@ namespace MissionPlanner.GCSViews
             {
                 if (isDemoFieldGenerated)
                 {
-                    FlightPlanner.instance.ToPoint(assetLatTen, assetLngTen);
+                    FlightPlanner.instance.ToPoint(assetLocs[5].Lat, assetLocs[5].Lng);
                 }
                 else
                 {
@@ -2343,7 +2307,7 @@ namespace MissionPlanner.GCSViews
             {
                 if (isDemoFieldGenerated)
                 {
-                    FlightPlanner.instance.ToPoint(assetLatEleven, assetLngEleven);
+                    FlightPlanner.instance.ToPoint(assetLocs[6].Lat, assetLocs[6].Lng);
                 }
                 else
                 {
@@ -2355,7 +2319,7 @@ namespace MissionPlanner.GCSViews
             {
                 if (isDemoFieldGenerated)
                 {
-                    FlightPlanner.instance.ToPoint(assetLatTwelve, assetLngTwelve);
+                    FlightPlanner.instance.ToPoint(assetLocs[7].Lat, assetLocs[7].Lng);
                 }
                 else
                 {
