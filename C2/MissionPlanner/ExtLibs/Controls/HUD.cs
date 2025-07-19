@@ -1022,8 +1022,8 @@ namespace MissionPlanner.Controls
 
         public static int alignX = 0;
         public static int alignY = 0;
-        public static int cameraWidth = 1920;
-        public static int cameraHeight = 1080;
+        public static int cameraWidth = 0;
+        public static int cameraHeight = 0;
         internal static int lastCenterX = 0;
         internal static int lastCenterY = 0;
         internal static int boxTimeout = 4;
@@ -2302,9 +2302,6 @@ namespace MissionPlanner.Controls
                         graphicsObject.DrawLine(redtemp,
                             centerX, centerY - crosshairLength,
                             centerX, centerY + crosshairLength);
-
-                        int cameraHeight = 1080;
-                        int cameraWidth = 1920;
 
                         int boxWidth = 0;
                         int boxHeight = 0;

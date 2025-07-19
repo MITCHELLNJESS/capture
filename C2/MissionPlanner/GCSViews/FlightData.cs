@@ -151,8 +151,8 @@ namespace MissionPlanner.GCSViews
         public static int boundingBoxHeight = 0;
         public static int boundingBoxLeft = 0;
         public static int boundingBoxTop = 0;
-        public static int cameraWidth = 1920;
-        public static int cameraHeight = 1080;
+        public static int cameraWidth = 640;
+        public static int cameraHeight = 480;
         internal static int lastCenterX = 0;
         internal static int lastCenterY = 0;
         internal static int alignTimeout = 4;
@@ -1775,6 +1775,9 @@ namespace MissionPlanner.GCSViews
             Thread thread1 = new Thread(UpdateThrottleThread);
             thread1.IsBackground = true;
             thread1.Start();
+
+            HUD.cameraHeight = cameraHeight;
+            HUD.cameraWidth = cameraWidth;
 
             log.Info("Components Done");
 
