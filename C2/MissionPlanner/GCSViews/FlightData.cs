@@ -161,6 +161,8 @@ namespace MissionPlanner.GCSViews
         internal static bool doAlign = false;
         internal static double lastAlignDist = -1;
 
+        public static string assetIpAddress = "192.168.0.100";
+
         internal PointLatLng MouseDownStart;
 
         //The file path of the selected script
@@ -1092,6 +1094,11 @@ namespace MissionPlanner.GCSViews
         {
             POI.POIClear();
 
+            if (assetLocs.Count < 12)
+            {
+                return;
+            }
+
             if (isNWHome)
             {
                 if (isNWRed)
@@ -1345,7 +1352,7 @@ namespace MissionPlanner.GCSViews
         {
             MainV2.comPort.setMode("GUIDED");
 
-            MAVLink.MAV_FRAME frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT;
+            MAVLink.MAV_FRAME frame = MAVLink.MAV_FRAME.GLOBAL_TERRAIN_ALT;
 
             Settings.Instance["guided_alt"] = Convert.ToString(FlightData.coords1.Alt);
             Settings.Instance["guided_alt_frame"] = ((byte)frame).ToString();
@@ -1711,7 +1718,7 @@ namespace MissionPlanner.GCSViews
         {
             string lcAltStr = Convert.ToString(anAlt);
 
-            MAVLink.MAV_FRAME frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT;
+            MAVLink.MAV_FRAME frame = MAVLink.MAV_FRAME.GLOBAL_TERRAIN_ALT;
 
             Settings.Instance["guided_alt"] = lcAltStr;
             Settings.Instance["guided_alt_frame"] = ((byte)frame).ToString();
@@ -4982,7 +4989,7 @@ namespace MissionPlanner.GCSViews
             }
 
             string alt = "100";
-            MAVLink.MAV_FRAME frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT;
+            MAVLink.MAV_FRAME frame = MAVLink.MAV_FRAME.GLOBAL_TERRAIN_ALT;
 
             if (MainV2.comPort.MAV.cs.firmware == Firmwares.ArduCopter2)
             {
@@ -8458,7 +8465,6 @@ namespace MissionPlanner.GCSViews
         public void updateAssetBtn_Click(object sender, EventArgs e)
         {
             int port = 23;
-            string ipAddress = "127.0.0.1";
 
             // Create a new TcpClient object
             TcpClient client = new TcpClient();
@@ -8466,7 +8472,7 @@ namespace MissionPlanner.GCSViews
             try
             {
                 // Connect to the Telnet server
-                client.Connect(ipAddress, port);
+                client.Connect(assetIpAddress, port);
             }
             catch (Exception ex)
             {
