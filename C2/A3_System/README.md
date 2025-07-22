@@ -1,4 +1,17 @@
-# Instruction for installing content:
+# A3 SYSTEM: 
+
+## Folder structure for working version 22 July 2025
+capture/
+└── C2/
+    └── A3_System/
+        ├── scripts/
+        │   └── yolo_offline_inference.py
+        ├── models/
+            └──weights/
+        │      └── best.pt  # Trained model checkpoint
+        └── yolov5/      # Cloned repo from https://github.com/ultralytics/yolov5
+
+## Instruction for installing content:
 
 All of the work was completed within a virtual environment, for work on windows please follow these steps:
 
