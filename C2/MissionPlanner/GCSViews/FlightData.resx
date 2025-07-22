@@ -315,6 +315,9 @@
   <data name="tabDf.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="tabPos.AutoScroll" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="tabQuick.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -749,6 +752,9 @@
   </data>
   <data name="tabDf.Text" xml:space="preserve">
     <value>Dragon Fingers Config</value>
+  </data>
+  <data name="tabPos.Text" xml:space="preserve">
+    <value>Asset Position Config</value>
   </data>
   <data name="tabQuick.Text" xml:space="preserve">
     <value>Quick</value>
@@ -6337,7 +6343,6 @@
   <data name="&gt;&gt;BUT_Kill.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-
   <data name="LBL_DFMotor1.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 12pt</value>
   </data>
@@ -6477,7 +6482,7 @@
     <value>tabDf</value>
   </data>
   <data name="TB_DFOpenPwm1.Text" xml:space="preserve">
-    <value>1900</value>
+    <value>2050</value>
   </data>
   <data name="TB_DFOpenPwm1.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 12pt</value>
@@ -6534,7 +6539,7 @@
     <value>tabDf</value>
   </data>
   <data name="TB_DFClosePwm1.Text" xml:space="preserve">
-    <value>1100</value>
+    <value>800</value>
   </data>
   <data name="TB_DFClosePwm1.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 12pt</value>
@@ -6642,7 +6647,7 @@
     <value>tabDf</value>
   </data>
   <data name="TB_DFOpenTime1.Text" xml:space="preserve">
-    <value>10</value>
+    <value>.75</value>
   </data>
   <data name="TB_DFOpenTime1.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 12pt</value>
@@ -6699,7 +6704,7 @@
     <value>tabDf</value>
   </data>
   <data name="TB_DFCloseTime1.Text" xml:space="preserve">
-    <value>10</value>
+    <value>.7</value>
   </data>
   <data name="TB_DFCloseTime1.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 12pt</value>
@@ -6843,7 +6848,7 @@
     <value>tabDf</value>
   </data>
   <data name="TB_DFOpenPwm2.Text" xml:space="preserve">
-    <value>1900</value>
+    <value>1680</value>
   </data>
   <data name="TB_DFOpenPwm2.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 12pt</value>
@@ -6900,7 +6905,7 @@
     <value>tabDf</value>
   </data>
   <data name="TB_DFClosePwm2.Text" xml:space="preserve">
-    <value>1100</value>
+    <value>730</value>
   </data>
   <data name="TB_DFClosePwm2.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 12pt</value>
@@ -7014,7 +7019,7 @@
     <value>tabDf</value>
   </data>
   <data name="TB_DFOpenTime2.Text" xml:space="preserve">
-    <value>10</value>
+    <value>.75</value>
   </data>
   <data name="TB_DFOpenTime2.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 12pt</value>
@@ -7062,10 +7067,1426 @@
     <value>tabDf</value>
   </data>
   <data name="TB_DFCloseTime2.Text" xml:space="preserve">
-    <value>10</value>
+    <value>.7</value>
   </data>
   <data name="TB_DFCloseTime2.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_AssetPosConfig_1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_AssetPosConfig_1.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="LBL_AssetPosConfig_1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LBL_AssetPosConfig_1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 5</value>
+  </data>
+  <data name="LBL_AssetPosConfig_1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 20</value>
+  </data>
+  <data name="LBL_AssetPosConfig_1.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="LBL_AssetPosConfig_1.Text" xml:space="preserve">
+    <value>Postion #1</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_1.Name" xml:space="preserve">
+    <value>LBL_AssetPosConfig_1</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_1.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+    <data name="LBL_AssetPosConfig_2.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_AssetPosConfig_2.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="LBL_AssetPosConfig_2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LBL_AssetPosConfig_2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 25</value>
+  </data>
+  <data name="LBL_AssetPosConfig_2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 20</value>
+  </data>
+  <data name="LBL_AssetPosConfig_2.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="LBL_AssetPosConfig_2.Text" xml:space="preserve">
+    <value>Postion #2</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_2.Name" xml:space="preserve">
+    <value>LBL_AssetPosConfig_2</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_2.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+    <data name="LBL_AssetPosConfig_3.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_AssetPosConfig_3.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="LBL_AssetPosConfig_3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LBL_AssetPosConfig_3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 45</value>
+  </data>
+  <data name="LBL_AssetPosConfig_3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 20</value>
+  </data>
+  <data name="LBL_AssetPosConfig_3.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="LBL_AssetPosConfig_3.Text" xml:space="preserve">
+    <value>Postion #3</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_3.Name" xml:space="preserve">
+    <value>LBL_AssetPosConfig_3</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_3.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+    <data name="LBL_AssetPosConfig_4.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_AssetPosConfig_4.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="LBL_AssetPosConfig_4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LBL_AssetPosConfig_4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 65</value>
+  </data>
+  <data name="LBL_AssetPosConfig_4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 20</value>
+  </data>
+  <data name="LBL_AssetPosConfig_4.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="LBL_AssetPosConfig_4.Text" xml:space="preserve">
+    <value>Postion #4</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_4.Name" xml:space="preserve">
+    <value>LBL_AssetPosConfig_4</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_4.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+    <data name="LBL_AssetPosConfig_5.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_AssetPosConfig_5.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="LBL_AssetPosConfig_5.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LBL_AssetPosConfig_5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 85</value>
+  </data>
+  <data name="LBL_AssetPosConfig_5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 20</value>
+  </data>
+  <data name="LBL_AssetPosConfig_5.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="LBL_AssetPosConfig_5.Text" xml:space="preserve">
+    <value>Postion #5</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_5.Name" xml:space="preserve">
+    <value>LBL_AssetPosConfig_5</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_5.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+    <data name="LBL_AssetPosConfig_6.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_AssetPosConfig_6.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="LBL_AssetPosConfig_6.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LBL_AssetPosConfig_6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 105</value>
+  </data>
+  <data name="LBL_AssetPosConfig_6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 20</value>
+  </data>
+  <data name="LBL_AssetPosConfig_6.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="LBL_AssetPosConfig_6.Text" xml:space="preserve">
+    <value>Postion #6</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_6.Name" xml:space="preserve">
+    <value>LBL_AssetPosConfig_6</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_6.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+    <data name="LBL_AssetPosConfig_7.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_AssetPosConfig_7.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="LBL_AssetPosConfig_7.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LBL_AssetPosConfig_7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 125</value>
+  </data>
+  <data name="LBL_AssetPosConfig_7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 20</value>
+  </data>
+  <data name="LBL_AssetPosConfig_7.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="LBL_AssetPosConfig_7.Text" xml:space="preserve">
+    <value>Postion #7</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_7.Name" xml:space="preserve">
+    <value>LBL_AssetPosConfig_7</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_7.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+    <data name="LBL_AssetPosConfig_8.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_AssetPosConfig_8.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="LBL_AssetPosConfig_8.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LBL_AssetPosConfig_8.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 145</value>
+  </data>
+  <data name="LBL_AssetPosConfig_8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 20</value>
+  </data>
+  <data name="LBL_AssetPosConfig_8.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="LBL_AssetPosConfig_8.Text" xml:space="preserve">
+    <value>Postion #8</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_8.Name" xml:space="preserve">
+    <value>LBL_AssetPosConfig_8</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_8.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_8.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+    <data name="LBL_AssetPosConfig_9.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_AssetPosConfig_9.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="LBL_AssetPosConfig_9.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LBL_AssetPosConfig_9.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 165</value>
+  </data>
+  <data name="LBL_AssetPosConfig_9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 20</value>
+  </data>
+  <data name="LBL_AssetPosConfig_9.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="LBL_AssetPosConfig_9.Text" xml:space="preserve">
+    <value>Postion #9</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_9.Name" xml:space="preserve">
+    <value>LBL_AssetPosConfig_9</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_9.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_9.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+    <data name="LBL_AssetPosConfig_10.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_AssetPosConfig_10.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="LBL_AssetPosConfig_10.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LBL_AssetPosConfig_10.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 185</value>
+  </data>
+  <data name="LBL_AssetPosConfig_10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 20</value>
+  </data>
+  <data name="LBL_AssetPosConfig_10.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="LBL_AssetPosConfig_10.Text" xml:space="preserve">
+    <value>Postion #10</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_10.Name" xml:space="preserve">
+    <value>LBL_AssetPosConfig_10</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_10.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_10.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+    <data name="LBL_AssetPosConfig_11.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_AssetPosConfig_11.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="LBL_AssetPosConfig_11.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LBL_AssetPosConfig_11.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 205</value>
+  </data>
+  <data name="LBL_AssetPosConfig_11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 20</value>
+  </data>
+  <data name="LBL_AssetPosConfig_11.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="LBL_AssetPosConfig_11.Text" xml:space="preserve">
+    <value>Postion #11</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_11.Name" xml:space="preserve">
+    <value>LBL_AssetPosConfig_11</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_11.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_11.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+    <data name="LBL_AssetPosConfig_12.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_AssetPosConfig_12.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="LBL_AssetPosConfig_12.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LBL_AssetPosConfig_12.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 225</value>
+  </data>
+  <data name="LBL_AssetPosConfig_12.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 20</value>
+  </data>
+  <data name="LBL_AssetPosConfig_12.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="LBL_AssetPosConfig_12.Text" xml:space="preserve">
+    <value>Postion #12</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_12.Name" xml:space="preserve">
+    <value>LBL_AssetPosConfig_12</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_12.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetPosConfig_12.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetIp.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetIp.Location" type="System.Drawing.Point, System.Drawing">
+    <value>50, 0</value>
+  </data>
+  <data name="TB_AssetIp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>150, 20</value>
+  </data>
+  <data name="TB_AssetIp.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetIp.Name" xml:space="preserve">
+    <value>TB_AssetIp</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetIp.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetIp.Parent" xml:space="preserve">
+    <value>tabAsset</value>
+  </data>
+  <data name="TB_AssetIp.Text" xml:space="preserve">
+    <value>192.168.0.100</value>
+  </data>
+  <data name="TB_AssetIp.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_AssetIp.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="LBL_AssetIp.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="LBL_AssetIp.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="LBL_AssetIp.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="LBL_AssetIp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 20</value>
+  </data>
+  <data name="LBL_AssetIp.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="LBL_AssetIp.Text" xml:space="preserve">
+    <value>IP: </value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetIp.Name" xml:space="preserve">
+    <value>LBL_AssetIp</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetIp.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LBL_AssetIp.Parent" xml:space="preserve">
+    <value>tabAsset</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_1.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>185, 5</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_1.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_1.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigLat_1</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_1.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_1.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_1.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>285, 5</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_1.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_1.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigLng_1</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_1.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_1.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_1.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>385, 5</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_1.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_1.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigAlt_1</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_1.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_1.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_2.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>185, 25</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_2.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_2.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigLat_2</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_2.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_2.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_2.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_2.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>285, 25</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_2.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_2.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigLng_2</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_2.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_2.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_2.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_2.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>385, 25</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_2.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_2.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigAlt_2</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_2.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_2.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_2.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_3.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>185, 45</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_3.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_3.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigLat_3</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_3.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_3.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_3.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_3.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>285, 45</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_3.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_3.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigLng_3</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_3.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_3.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_3.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_3.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>385, 45</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_3.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_3.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigAlt_3</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_3.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_3.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_3.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_4.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>185, 65</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_4.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_4.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigLat_4</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_4.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_4.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_4.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_4.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>285, 65</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_4.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_4.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigLng_4</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_4.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_4.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_4.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_4.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>385, 65</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_4.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_4.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigAlt_4</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_4.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_4.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_4.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_5.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>185, 85</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_5.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_5.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigLat_5</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_5.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_5.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_5.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_5.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>285, 85</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_5.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_5.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigLng_5</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_5.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_5.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_5.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_5.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>385, 85</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_5.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_5.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigAlt_5</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_5.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_5.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_5.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_6.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>185, 105</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_6.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_6.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigLat_6</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_6.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_6.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_6.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_6.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>285, 105</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_6.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_6.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigLng_6</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_6.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_6.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_6.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_6.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>385, 105</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_6.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_6.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigAlt_6</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_6.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_6.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_6.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_7.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>185, 125</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_7.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_7.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigLat_7</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_7.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_7.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_7.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_7.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>285, 125</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_7.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_7.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigLng_7</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_7.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_7.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_7.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_7.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>385, 125</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_7.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_7.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigAlt_7</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_7.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_7.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_7.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_8.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_8.Location" type="System.Drawing.Point, System.Drawing">
+    <value>185, 145</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_8.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_8.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigLat_8</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_8.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_8.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_8.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_8.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_8.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_8.Location" type="System.Drawing.Point, System.Drawing">
+    <value>285, 145</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_8.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_8.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigLng_8</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_8.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_8.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_8.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_8.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_8.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_8.Location" type="System.Drawing.Point, System.Drawing">
+    <value>385, 145</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_8.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_8.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigAlt_8</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_8.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_8.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_8.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_8.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_9.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_9.Location" type="System.Drawing.Point, System.Drawing">
+    <value>185, 165</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_9.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_9.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigLat_9</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_9.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_9.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_9.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_9.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_9.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_9.Location" type="System.Drawing.Point, System.Drawing">
+    <value>285, 165</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_9.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_9.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigLng_9</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_9.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_9.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_9.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_9.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_9.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_9.Location" type="System.Drawing.Point, System.Drawing">
+    <value>385, 165</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_9.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_9.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigAlt_9</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_9.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_9.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_9.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_9.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_10.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_10.Location" type="System.Drawing.Point, System.Drawing">
+    <value>185, 185</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_10.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_10.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigLat_10</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_10.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_10.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_10.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_10.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_10.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_10.Location" type="System.Drawing.Point, System.Drawing">
+    <value>285, 185</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_10.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_10.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigLng_10</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_10.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_10.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_10.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_10.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_10.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_10.Location" type="System.Drawing.Point, System.Drawing">
+    <value>385, 185</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_10.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_10.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigAlt_10</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_10.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_10.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_10.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_10.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_11.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_11.Location" type="System.Drawing.Point, System.Drawing">
+    <value>185, 205</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_11.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_11.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigLat_11</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_11.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_11.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_11.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_11.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_11.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_11.Location" type="System.Drawing.Point, System.Drawing">
+    <value>285, 205</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_11.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_11.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigLng_11</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_11.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_11.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_11.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_11.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_11.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_11.Location" type="System.Drawing.Point, System.Drawing">
+    <value>385, 205</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_11.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_11.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigAlt_11</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_11.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_11.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_11.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_11.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_12.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_12.Location" type="System.Drawing.Point, System.Drawing">
+    <value>185, 225</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_12.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_12.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_12.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigLat_12</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_12.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLat_12.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_12.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigLat_12.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_12.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_12.Location" type="System.Drawing.Point, System.Drawing">
+    <value>285, 225</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_12.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_12.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_12.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigLng_12</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_12.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigLng_12.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_12.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigLng_12.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_12.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_12.Location" type="System.Drawing.Point, System.Drawing">
+    <value>385, 225</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_12.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_12.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_12.Name" xml:space="preserve">
+    <value>TB_AssetPosConfigAlt_12</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_12.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_AssetPosConfigAlt_12.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_12.Text" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TB_AssetPosConfigAlt_12.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="updateAssetPosBtn.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="updateAssetPosBtn.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 245</value>
+  </data>
+  <data name="updateAssetPosBtn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 40</value>
+  </data>
+  <data name="updateAssetPosBtn.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="updateAssetPosBtn.Text" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="&gt;&gt;updateAssetPosBtn.Name" xml:space="preserve">
+    <value>updateAssetPosBtn</value>
+  </data>
+  <data name="&gt;&gt;updateAssetPosBtn.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;updateAssetPosBtn.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="&gt;&gt;updateAssetPosBtn.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="BUT_DFClose.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -7364,8 +8785,206 @@
   <data name="&gt;&gt;BUT_Align.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="crosshairs_tb.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="BUT_Cal.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_Cal.Location" type="System.Drawing.Point, System.Drawing">
+    <value>105, 360</value>
+  </data>
+  <data name="BUT_Cal.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 40</value>
+  </data>
+  <data name="BUT_Cal.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="BUT_Cal.Text" xml:space="preserve">
+    <value>Cal.</value>
+  </data>
+  <data name="&gt;&gt;BUT_Cal.Name" xml:space="preserve">
+    <value>BUT_Cal</value>
+  </data>
+  <data name="&gt;&gt;BUT_Cal.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_Cal.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;BUT_Cal.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="TB_MoveDist.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_MoveDist.Location" type="System.Drawing.Point, System.Drawing">
+    <value>145, 430</value>
+  </data>
+  <data name="TB_MoveDist.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 30</value>
+  </data>
+  <data name="TB_MoveDist.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_MoveDist.Name" xml:space="preserve">
+    <value>TB_MoveDist</value>
+  </data>
+  <data name="&gt;&gt;TB_MoveDist.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_MoveDist.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="TB_MoveDist.Text" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="TB_MoveDist.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="TB_MoveSpeed.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="TB_MoveSpeed.Location" type="System.Drawing.Point, System.Drawing">
+    <value>195, 430</value>
+  </data>
+  <data name="TB_MoveSpeed.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 30</value>
+  </data>
+  <data name="TB_MoveSpeed.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;TB_MoveSpeed.Name" xml:space="preserve">
+    <value>TB_MoveSpeed</value>
+  </data>
+  <data name="&gt;&gt;TB_MoveSpeed.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TB_MoveSpeed.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="TB_MoveSpeed.Text" xml:space="preserve">
+    <value>0.1</value>
+  </data>
+  <data name="TB_MoveSpeed.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="buttonType_lbl.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="buttonType_lbl.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="buttonType_lbl.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonType_lbl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 410</value>
+  </data>
+  <data name="buttonType_lbl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 20</value>
+  </data>
+  <data name="buttonType_lbl.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="buttonType_lbl.Text" xml:space="preserve">
+    <value>Movement Type:</value>
+  </data>
+  <data name="&gt;&gt;buttonType_lbl.Name" xml:space="preserve">
+    <value>buttonType_lbl</value>
+  </data>
+  <data name="&gt;&gt;buttonType_lbl.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;buttonType_lbl.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="buttonDist_lbl.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="buttonDist_lbl.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="buttonDist_lbl.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonDist_lbl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>145, 410</value>
+  </data>
+  <data name="buttonDist_lbl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 20</value>
+  </data>
+  <data name="buttonDist_lbl.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="buttonDist_lbl.Text" xml:space="preserve">
+    <value>Dist:</value>
+  </data>
+  <data name="&gt;&gt;buttonDist_lbl.Name" xml:space="preserve">
+    <value>buttonDist_lbl</value>
+  </data>
+  <data name="&gt;&gt;buttonDist_lbl.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;buttonDist_lbl.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="buttonSpeed_lbl.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="buttonSpeed_lbl.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="buttonSpeed_lbl.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonSpeed_lbl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>195, 410</value>
+  </data>
+  <data name="buttonSpeed_lbl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>40, 20</value>
+  </data>
+  <data name="buttonSpeed_lbl.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="buttonSpeed_lbl.Text" xml:space="preserve">
+    <value>Spd:</value>
+  </data>
+  <data name="&gt;&gt;buttonSpeed_lbl.Name" xml:space="preserve">
+    <value>buttonSpeed_lbl</value>
+  </data>
+  <data name="&gt;&gt;buttonSpeed_lbl.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;buttonSpeed_lbl.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="CMB_buttonType.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 14pt</value>
+  </data>
+  <data name="CMB_buttonType.Location" type="System.Drawing.Point, System.Drawing">
     <value>5, 430</value>
+  </data>
+  <data name="CMB_buttonType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 40</value>
+  </data>
+  <data name="CMB_buttonType.TabIndex" type="System.Int32, mscorlib">
+    <value>59</value>
+  </data>
+  <data name="&gt;&gt;CMB_buttonType.Name" xml:space="preserve">
+    <value>CMB_buttonType</value>
+  </data>
+  <data name="&gt;&gt;CMB_buttonType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CMB_buttonType.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;CMB_buttonType.BackColor" type="System.Drawing.Color, System.Drawing">
+    <value>Red</value>
+  </data>
+  <data name="&gt;&gt;CMB_buttonType.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="crosshairs_tb.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 490</value>
   </data>
   <data name="crosshairs_tb.Size" type="System.Drawing.Size, System.Drawing">
     <value>150, 30</value>
@@ -7398,7 +9017,7 @@
     <value>NoControl</value>
   </data>
   <data name="crosshairs_lbl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 410</value>
+    <value>5, 470</value>
   </data>
   <data name="crosshairs_lbl.Size" type="System.Drawing.Size, System.Drawing">
     <value>150, 20</value>

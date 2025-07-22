@@ -39,6 +39,7 @@ namespace MissionPlanner.GCSViews
             this.tabControlactions = new System.Windows.Forms.TabControl();
             this.tabAsset = new System.Windows.Forms.TabPage();
             this.tabDf = new System.Windows.Forms.TabPage();
+            this.tabPos = new System.Windows.Forms.TabPage();
             this.tabQuick = new System.Windows.Forms.TabPage();
             this.tableLayoutPanelAsset = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanelQuick = new System.Windows.Forms.TableLayoutPanel();
@@ -62,7 +63,8 @@ namespace MissionPlanner.GCSViews
             this.BUT_clear_track = new MissionPlanner.Controls.MyButton();
             this.CMB_action = new System.Windows.Forms.ComboBox();
             this.CMB_team = new System.Windows.Forms.ComboBox();
-            this.CMB_mission = new System.Windows.Forms.ComboBox();
+            CMB_mission = new System.Windows.Forms.ComboBox();
+            CMB_buttonType = new System.Windows.Forms.ComboBox();
             this.BUTactiondo = new MissionPlanner.Controls.MyButton();
             this.BUT_resumemis = new MissionPlanner.Controls.MyButton();
             this.modifyandSetAlt = new MissionPlanner.Controls.ModifyandSet();
@@ -105,6 +107,9 @@ namespace MissionPlanner.GCSViews
             this.angDiff_deg_lbl = new System.Windows.Forms.Label();
             this.crosshairs_lbl = new System.Windows.Forms.Label();
             this.mission_lbl = new System.Windows.Forms.Label();
+            this.buttonType_lbl = new System.Windows.Forms.Label();
+            this.buttonDist_lbl = new System.Windows.Forms.Label();
+            this.buttonSpeed_lbl = new System.Windows.Forms.Label();
             this.angDiff_deg_tb = new System.Windows.Forms.TextBox();
             crosshairs_tb = new System.Windows.Forms.TextBox();
             this.NACp_lbl = new System.Windows.Forms.Label();
@@ -261,6 +266,7 @@ namespace MissionPlanner.GCSViews
             BUT_Down = new MissionPlanner.Controls.MyButton();
             BUT_Hov = new MissionPlanner.Controls.MyButton();
             BUT_Align = new MissionPlanner.Controls.MyButton();
+            BUT_Cal = new MissionPlanner.Controls.MyButton();
 
             LBL_DFMotor1 = new System.Windows.Forms.Label();
             CMB_DFMotor1 = new System.Windows.Forms.ComboBox();
@@ -290,6 +296,55 @@ namespace MissionPlanner.GCSViews
             TB_DFCloseTime1 = new System.Windows.Forms.TextBox();
             LBL_DFCloseTime2 = new System.Windows.Forms.Label();
             TB_DFCloseTime2 = new System.Windows.Forms.TextBox();
+            LBL_AssetPosConfig_1 = new System.Windows.Forms.Label();
+            TB_AssetPosConfigLat_1 = new System.Windows.Forms.TextBox();
+            TB_AssetPosConfigLng_1 = new System.Windows.Forms.TextBox();
+            LBL_AssetPosConfig_2 = new System.Windows.Forms.Label();
+            TB_AssetPosConfigLat_2 = new System.Windows.Forms.TextBox();
+            TB_AssetPosConfigLng_2 = new System.Windows.Forms.TextBox();
+            LBL_AssetPosConfig_3 = new System.Windows.Forms.Label();
+            TB_AssetPosConfigLat_3 = new System.Windows.Forms.TextBox();
+            TB_AssetPosConfigLng_3 = new System.Windows.Forms.TextBox();
+            LBL_AssetPosConfig_4 = new System.Windows.Forms.Label();
+            TB_AssetPosConfigLat_4 = new System.Windows.Forms.TextBox();
+            TB_AssetPosConfigLng_4 = new System.Windows.Forms.TextBox();
+            LBL_AssetPosConfig_5 = new System.Windows.Forms.Label();
+            TB_AssetPosConfigLat_5 = new System.Windows.Forms.TextBox();
+            TB_AssetPosConfigLng_5 = new System.Windows.Forms.TextBox();
+            LBL_AssetPosConfig_6 = new System.Windows.Forms.Label();
+            TB_AssetPosConfigLat_6 = new System.Windows.Forms.TextBox();
+            TB_AssetPosConfigLng_6 = new System.Windows.Forms.TextBox();
+            LBL_AssetPosConfig_7 = new System.Windows.Forms.Label();
+            TB_AssetPosConfigLat_7 = new System.Windows.Forms.TextBox();
+            TB_AssetPosConfigLng_7 = new System.Windows.Forms.TextBox();
+            LBL_AssetPosConfig_8 = new System.Windows.Forms.Label();
+            TB_AssetPosConfigLat_8 = new System.Windows.Forms.TextBox();
+            TB_AssetPosConfigLng_8 = new System.Windows.Forms.TextBox();
+            LBL_AssetPosConfig_9 = new System.Windows.Forms.Label();
+            TB_AssetPosConfigLat_9 = new System.Windows.Forms.TextBox();
+            TB_AssetPosConfigLng_9 = new System.Windows.Forms.TextBox();
+            LBL_AssetPosConfig_10 = new System.Windows.Forms.Label();
+            TB_AssetPosConfigLat_10 = new System.Windows.Forms.TextBox();
+            TB_AssetPosConfigLng_10 = new System.Windows.Forms.TextBox();
+            LBL_AssetPosConfig_11 = new System.Windows.Forms.Label();
+            TB_AssetPosConfigLat_11 = new System.Windows.Forms.TextBox();
+            TB_AssetPosConfigLng_11 = new System.Windows.Forms.TextBox();
+            LBL_AssetPosConfig_12 = new System.Windows.Forms.Label();
+            LBL_AssetIp = new System.Windows.Forms.Label();
+            TB_AssetPosConfigLat_12 = new System.Windows.Forms.TextBox();
+            TB_AssetPosConfigLng_12 = new System.Windows.Forms.TextBox();
+            TB_AssetPosConfigAlt_1 = new System.Windows.Forms.TextBox();
+            TB_AssetPosConfigAlt_2 = new System.Windows.Forms.TextBox();
+            TB_AssetPosConfigAlt_3 = new System.Windows.Forms.TextBox();
+            TB_AssetPosConfigAlt_4 = new System.Windows.Forms.TextBox();
+            TB_AssetPosConfigAlt_5 = new System.Windows.Forms.TextBox();
+            TB_AssetPosConfigAlt_6 = new System.Windows.Forms.TextBox();
+            TB_AssetPosConfigAlt_7 = new System.Windows.Forms.TextBox();
+            TB_AssetPosConfigAlt_8 = new System.Windows.Forms.TextBox();
+            TB_AssetPosConfigAlt_9 = new System.Windows.Forms.TextBox();
+            TB_AssetPosConfigAlt_10 = new System.Windows.Forms.TextBox();
+            TB_AssetPosConfigAlt_11 = new System.Windows.Forms.TextBox();
+            TB_AssetPosConfigAlt_12 = new System.Windows.Forms.TextBox();
             BUT_GenerateMap = new MissionPlanner.Controls.MyButton();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -313,6 +368,10 @@ namespace MissionPlanner.GCSViews
             assetAlt = new MissionPlanner.Controls.QuickView();
             assetSeqNum = new MissionPlanner.Controls.QuickView();
             this.updateAssetBtn = new System.Windows.Forms.Button();
+            updateAssetPosBtn = new System.Windows.Forms.Button();
+            TB_AssetIp = new System.Windows.Forms.TextBox();
+            TB_MoveDist = new System.Windows.Forms.TextBox();
+            TB_MoveSpeed = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.MainH)).BeginInit();
             this.MainH.Panel1.SuspendLayout();
             this.MainH.Panel2.SuspendLayout();
@@ -327,6 +386,7 @@ namespace MissionPlanner.GCSViews
             this.tabControlactions.SuspendLayout();
             this.tabAsset.SuspendLayout();
             this.tabDf.SuspendLayout();
+            this.tabPos.SuspendLayout();
             this.tabQuick.SuspendLayout();
             this.tableLayoutPanelAsset.SuspendLayout();
             this.tableLayoutPanelQuick.SuspendLayout();
@@ -668,6 +728,7 @@ namespace MissionPlanner.GCSViews
             // tabControlactions
             // 
             this.tabControlactions.ContextMenuStrip = this.contextMenuStripactionstab;
+            this.tabControlactions.Controls.Add(this.tabPos);
             this.tabControlactions.Controls.Add(this.tabDf);
             this.tabControlactions.Controls.Add(this.tabAsset);
             this.tabControlactions.Controls.Add(this.tabQuick);
@@ -705,6 +766,8 @@ namespace MissionPlanner.GCSViews
             this.tableLayoutPanelAsset.Controls.Add(assetAlt, 0, 1);
             this.tableLayoutPanelAsset.Controls.Add(assetLon, 1, 0);
             this.tableLayoutPanelAsset.Controls.Add(assetLat, 0, 0);
+            this.tableLayoutPanelAsset.Controls.Add(TB_AssetIp, 1, 2);
+            //this.tableLayoutPanelAsset.Controls.Add(LBL_AssetIp, 1, 2);
 
             this.tableLayoutPanelAsset.Name = "tableLayoutPanelAsset";
 
@@ -741,6 +804,61 @@ namespace MissionPlanner.GCSViews
             this.tabDf.Controls.Add(TB_DFCloseTime2);
             this.tabDf.Name = "tabDf";
             this.tabDf.UseVisualStyleBackColor = true;
+            //
+            // tabPos
+            //
+            resources.ApplyResources(this.tabPos, "tabPos");
+            this.tabPos.Controls.Add(LBL_AssetPosConfig_1);
+            this.tabPos.Controls.Add(TB_AssetPosConfigLat_1);
+            this.tabPos.Controls.Add(TB_AssetPosConfigLng_1);
+            this.tabPos.Controls.Add(TB_AssetPosConfigAlt_1);
+            this.tabPos.Controls.Add(LBL_AssetPosConfig_2);
+            this.tabPos.Controls.Add(TB_AssetPosConfigLat_2);
+            this.tabPos.Controls.Add(TB_AssetPosConfigLng_2);
+            this.tabPos.Controls.Add(TB_AssetPosConfigAlt_2);
+            this.tabPos.Controls.Add(LBL_AssetPosConfig_3);
+            this.tabPos.Controls.Add(TB_AssetPosConfigLat_3);
+            this.tabPos.Controls.Add(TB_AssetPosConfigLng_3);
+            this.tabPos.Controls.Add(TB_AssetPosConfigAlt_3);
+            this.tabPos.Controls.Add(LBL_AssetPosConfig_4);
+            this.tabPos.Controls.Add(TB_AssetPosConfigLat_4);
+            this.tabPos.Controls.Add(TB_AssetPosConfigLng_4);
+            this.tabPos.Controls.Add(TB_AssetPosConfigAlt_4);
+            this.tabPos.Controls.Add(LBL_AssetPosConfig_5);
+            this.tabPos.Controls.Add(TB_AssetPosConfigLat_5);
+            this.tabPos.Controls.Add(TB_AssetPosConfigLng_5);
+            this.tabPos.Controls.Add(TB_AssetPosConfigAlt_5);
+            this.tabPos.Controls.Add(LBL_AssetPosConfig_6);
+            this.tabPos.Controls.Add(TB_AssetPosConfigLat_6);
+            this.tabPos.Controls.Add(TB_AssetPosConfigLng_6);
+            this.tabPos.Controls.Add(TB_AssetPosConfigAlt_6);
+            this.tabPos.Controls.Add(LBL_AssetPosConfig_7);
+            this.tabPos.Controls.Add(TB_AssetPosConfigLat_7);
+            this.tabPos.Controls.Add(TB_AssetPosConfigLng_7);
+            this.tabPos.Controls.Add(TB_AssetPosConfigAlt_7);
+            this.tabPos.Controls.Add(LBL_AssetPosConfig_8);
+            this.tabPos.Controls.Add(TB_AssetPosConfigLat_8);
+            this.tabPos.Controls.Add(TB_AssetPosConfigLng_8);
+            this.tabPos.Controls.Add(TB_AssetPosConfigAlt_8);
+            this.tabPos.Controls.Add(LBL_AssetPosConfig_9);
+            this.tabPos.Controls.Add(TB_AssetPosConfigLat_9);
+            this.tabPos.Controls.Add(TB_AssetPosConfigLng_9);
+            this.tabPos.Controls.Add(TB_AssetPosConfigAlt_9);
+            this.tabPos.Controls.Add(LBL_AssetPosConfig_10);
+            this.tabPos.Controls.Add(TB_AssetPosConfigLat_10);
+            this.tabPos.Controls.Add(TB_AssetPosConfigLng_10);
+            this.tabPos.Controls.Add(TB_AssetPosConfigAlt_10);
+            this.tabPos.Controls.Add(LBL_AssetPosConfig_11);
+            this.tabPos.Controls.Add(TB_AssetPosConfigLat_11);
+            this.tabPos.Controls.Add(TB_AssetPosConfigLng_11);
+            this.tabPos.Controls.Add(TB_AssetPosConfigAlt_11);
+            this.tabPos.Controls.Add(LBL_AssetPosConfig_12);
+            this.tabPos.Controls.Add(TB_AssetPosConfigLat_12);
+            this.tabPos.Controls.Add(TB_AssetPosConfigLng_12);
+            this.tabPos.Controls.Add(TB_AssetPosConfigAlt_12);
+            this.tabPos.Controls.Add(updateAssetPosBtn);
+            this.tabPos.Name = "tabPos";
+            this.tabPos.UseVisualStyleBackColor = true;
             //
             // assetLat
             //
@@ -793,6 +911,25 @@ namespace MissionPlanner.GCSViews
             this.updateAssetBtn.Name = "updateAssetBtn";
             this.updateAssetBtn.UseVisualStyleBackColor = true;
             this.updateAssetBtn.Click += new System.EventHandler(updateAssetBtn_Click);
+            //
+            // updateAssetPosBtn
+            //
+            resources.ApplyResources(updateAssetPosBtn, "updateAssetPosBtn");
+            updateAssetPosBtn.Text = "Update";
+            updateAssetPosBtn.Name = "updateAssetPosBtn";
+            updateAssetPosBtn.UseVisualStyleBackColor = true;
+            updateAssetPosBtn.Click += new System.EventHandler(updateAssetPosBtn_Click);
+            //
+            // TB_AssetIp
+            //
+            resources.ApplyResources(TB_AssetIp, "TB_AssetIp");
+            TB_AssetIp.Name = "TB_AssetIp";
+            TB_AssetIp.ReadOnly = false;
+            //
+            // LBL_AssetIp
+            //
+            resources.ApplyResources(LBL_AssetIp, "LBL_AssetIp");
+            LBL_AssetIp.Name = "LBL_AssetIp";
             // 
             // tabQuick
             // 
@@ -2701,6 +2838,13 @@ namespace MissionPlanner.GCSViews
             this.splitContainer1.Panel2.Controls.Add(BUT_Down);
             this.splitContainer1.Panel2.Controls.Add(BUT_Hov);
             this.splitContainer1.Panel2.Controls.Add(BUT_Align);
+            this.splitContainer1.Panel2.Controls.Add(BUT_Cal);
+            this.splitContainer1.Panel2.Controls.Add(TB_MoveDist);
+            this.splitContainer1.Panel2.Controls.Add(TB_MoveSpeed);
+            this.splitContainer1.Panel2.Controls.Add(buttonType_lbl);
+            this.splitContainer1.Panel2.Controls.Add(CMB_buttonType);
+            this.splitContainer1.Panel2.Controls.Add(buttonDist_lbl);
+            this.splitContainer1.Panel2.Controls.Add(buttonSpeed_lbl);
             this.splitContainer1.Panel2.Controls.Add(crosshairs_lbl);
             this.splitContainer1.Panel2.Controls.Add(crosshairs_tb);
             this.splitContainer1.Panel2.Controls.Add(this.label6);
@@ -3070,13 +3214,13 @@ namespace MissionPlanner.GCSViews
             //
             // CMB_mission
             //
-            resources.ApplyResources(this.CMB_mission, "CMB_mission");
-            this.CMB_mission.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.CMB_mission.DropDownWidth = 250;
-            this.CMB_mission.FormattingEnabled = true;
-            this.CMB_mission.Name = "CMB_mission";
-            this.CMB_mission.DataSource = new string[] { "None", "Marked Asset", "FOB", "Pos #1", "Pos #2", "Pos #3", "Pos #4", "Pos #5", "Pos #6", "Pos #7", "Pos #8", "Pos #9", "Pos #10", "Pos #11", "Pos #12" };
-            this.CMB_mission.SelectedIndexChanged += MissionSelectionChanged;
+            resources.ApplyResources(CMB_mission, "CMB_mission");
+            CMB_mission.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            CMB_mission.DropDownWidth = 250;
+            CMB_mission.FormattingEnabled = true;
+            CMB_mission.Name = "CMB_mission";
+            CMB_mission.DataSource = new string[] { "None", "Marked Asset", "FOB", "Pos #1", "Pos #2", "Pos #3", "Pos #4", "Pos #5", "Pos #6", "Pos #7", "Pos #8", "Pos #9", "Pos #10", "Pos #11", "Pos #12" };
+            CMB_mission.SelectedIndexChanged += MissionSelectionChanged;
             //
             // BUT_LoadMission
             //
@@ -3255,6 +3399,54 @@ namespace MissionPlanner.GCSViews
             BUT_Align.UseVisualStyleBackColor = true;
             BUT_Align.Click += new System.EventHandler(BUT_Align_Click);
             //
+            // BUT_Cal
+            //
+            BUT_Cal.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            BUT_Cal.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            BUT_Cal.TextColor = Color.Black;
+            resources.ApplyResources(BUT_Cal, "BUT_Cal");
+            BUT_Cal.Name = "BUT_Cal";
+            BUT_Cal.TextColorNotEnabled = Color.Black;
+            BUT_Cal.UseVisualStyleBackColor = true;
+            BUT_Cal.Click += new System.EventHandler(BUT_Cal_Click);
+            //
+            // TB_MoveDist
+            //
+            resources.ApplyResources(TB_MoveDist, "TB_MoveDist");
+            TB_MoveDist.Name = "TB_MoveDist";
+            TB_MoveDist.ReadOnly = false;
+            //
+            // TB_MoveSpeed
+            //
+            resources.ApplyResources(TB_MoveSpeed, "TB_MoveSpeed");
+            TB_MoveSpeed.Name = "TB_MoveSpeed";
+            TB_MoveSpeed.ReadOnly = false;
+            //
+            // buttonType_lbl
+            //
+            resources.ApplyResources(this.buttonType_lbl, "buttonType_lbl");
+            this.buttonType_lbl.Name = "buttonType_lbl";
+            //
+            // CMB_buttonType
+            //
+            resources.ApplyResources(CMB_buttonType, "CMB_buttonType");
+            CMB_buttonType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            CMB_buttonType.DropDownWidth = 250;
+            CMB_buttonType.FormattingEnabled = true;
+            CMB_buttonType.Name = "CMB_buttonType";
+            CMB_buttonType.DataSource = new string[] { "Start/Stop", "Set Distance" };
+            CMB_buttonType.SelectedIndexChanged += ButtonTypeSelectionChanged;
+            //
+            // buttonDist_lbl
+            //
+            resources.ApplyResources(this.buttonDist_lbl, "buttonDist_lbl");
+            this.buttonDist_lbl.Name = "buttonDist_lbl";
+            //
+            // buttonSpeed_lbl
+            //
+            resources.ApplyResources(this.buttonSpeed_lbl, "buttonSpeed_lbl");
+            this.buttonSpeed_lbl.Name = "buttonSpeed_lbl";
+            //
             // crosshairs_lbl
             //
             resources.ApplyResources(this.crosshairs_lbl, "crosshairs_lbl");
@@ -3280,7 +3472,7 @@ namespace MissionPlanner.GCSViews
             CMB_DFMotor1.FormattingEnabled = true;
             CMB_DFMotor1.Name = "CMB_DFMotor1";
             CMB_DFMotor1.Items.AddRange(new string[] { "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16" });
-            CMB_DFMotor1.SelectedIndex = 0;
+            CMB_DFMotor1.SelectedIndex = 7;
             // 
             // LBL_DFMotor2
             // 
@@ -3295,7 +3487,7 @@ namespace MissionPlanner.GCSViews
             CMB_DFMotor2.FormattingEnabled = true;
             CMB_DFMotor2.Name = "CMB_DFMotor2";
             CMB_DFMotor2.Items.AddRange(new string[] { "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16" });
-            CMB_DFMotor2.SelectedIndex = 1;
+            CMB_DFMotor2.SelectedIndex = 8;
             // 
             // LBL_DFPort1
             // 
@@ -3416,6 +3608,282 @@ namespace MissionPlanner.GCSViews
             resources.ApplyResources(TB_DFCloseTime2, "TB_DFCloseTime2");
             TB_DFCloseTime2.Name = "TB_DFCloseTime2";
             TB_DFCloseTime2.ReadOnly = false;
+            //
+            // LBL_AssetPosConfig_1
+            //
+            resources.ApplyResources(LBL_AssetPosConfig_1, "LBL_AssetPosConfig_1");
+            LBL_AssetPosConfig_1.Name = "LBL_AssetPosConfig_1";
+            //
+            // LBL_AssetPosConfig_2
+            //
+            resources.ApplyResources(LBL_AssetPosConfig_2, "LBL_AssetPosConfig_2");
+            LBL_AssetPosConfig_2.Name = "LBL_AssetPosConfig_2";
+            //
+            // LBL_AssetPosConfig_3
+            //
+            resources.ApplyResources(LBL_AssetPosConfig_3, "LBL_AssetPosConfig_3");
+            LBL_AssetPosConfig_3.Name = "LBL_AssetPosConfig_3";
+            //
+            // LBL_AssetPosConfig_4
+            //
+            resources.ApplyResources(LBL_AssetPosConfig_4, "LBL_AssetPosConfig_4");
+            LBL_AssetPosConfig_4.Name = "LBL_AssetPosConfig_4";
+            //
+            // LBL_AssetPosConfig_5
+            //
+            resources.ApplyResources(LBL_AssetPosConfig_5, "LBL_AssetPosConfig_5");
+            LBL_AssetPosConfig_5.Name = "LBL_AssetPosConfig_5";
+            //
+            // LBL_AssetPosConfig_6
+            //
+            resources.ApplyResources(LBL_AssetPosConfig_6, "LBL_AssetPosConfig_6");
+            LBL_AssetPosConfig_6.Name = "LBL_AssetPosConfig_6";
+            //
+            // LBL_AssetPosConfig_7
+            //
+            resources.ApplyResources(LBL_AssetPosConfig_7, "LBL_AssetPosConfig_7");
+            LBL_AssetPosConfig_7.Name = "LBL_AssetPosConfig_7";
+            //
+            // LBL_AssetPosConfig_8
+            //
+            resources.ApplyResources(LBL_AssetPosConfig_8, "LBL_AssetPosConfig_8");
+            LBL_AssetPosConfig_8.Name = "LBL_AssetPosConfig_8";
+            //
+            // LBL_AssetPosConfig_9
+            //
+            resources.ApplyResources(LBL_AssetPosConfig_9, "LBL_AssetPosConfig_9");
+            LBL_AssetPosConfig_9.Name = "LBL_AssetPosConfig_9";
+            //
+            // LBL_AssetPosConfig_10
+            //
+            resources.ApplyResources(LBL_AssetPosConfig_10, "LBL_AssetPosConfig_10");
+            LBL_AssetPosConfig_10.Name = "LBL_AssetPosConfig_10";
+            //
+            // LBL_AssetPosConfig_11
+            //
+            resources.ApplyResources(LBL_AssetPosConfig_11, "LBL_AssetPosConfig_11");
+            LBL_AssetPosConfig_11.Name = "LBL_AssetPosConfig_11";
+            //
+            // LBL_AssetPosConfig_12
+            //
+            resources.ApplyResources(LBL_AssetPosConfig_12, "LBL_AssetPosConfig_12");
+            LBL_AssetPosConfig_12.Name = "LBL_AssetPosConfig_12";
+            //
+            // TB_AssetPosConfigLat_1
+            //
+            resources.ApplyResources(TB_AssetPosConfigLat_1, "TB_AssetPosConfigLat_1");
+            TB_AssetPosConfigLat_1.Name = "TB_AssetPosConfigLat_1";
+            TB_AssetPosConfigLat_1.ReadOnly = false;
+            //
+            // TB_AssetPosConfigLng_1
+            //
+            resources.ApplyResources(TB_AssetPosConfigLng_1, "TB_AssetPosConfigLng_1");
+            TB_AssetPosConfigLng_1.Name = "TB_AssetPosConfigLng_1";
+            TB_AssetPosConfigLng_1.ReadOnly = false;
+            //
+            // TB_AssetPosConfigLat_2
+            //
+            resources.ApplyResources(TB_AssetPosConfigLat_2, "TB_AssetPosConfigLat_2");
+            TB_AssetPosConfigLat_2.Name = "TB_AssetPosConfigLat_2";
+            TB_AssetPosConfigLat_2.ReadOnly = false;
+            //
+            // TB_AssetPosConfigLng_2
+            //
+            resources.ApplyResources(TB_AssetPosConfigLng_2, "TB_AssetPosConfigLng_2");
+            TB_AssetPosConfigLng_2.Name = "TB_AssetPosConfigLng_1";
+            TB_AssetPosConfigLng_2.ReadOnly = false;
+            //
+            // TB_AssetPosConfigLat_3
+            //
+            resources.ApplyResources(TB_AssetPosConfigLat_3, "TB_AssetPosConfigLat_3");
+            TB_AssetPosConfigLat_3.Name = "TB_AssetPosConfigLat_3";
+            TB_AssetPosConfigLat_3.ReadOnly = false;
+            //
+            // TB_AssetPosConfigLng_3
+            //
+            resources.ApplyResources(TB_AssetPosConfigLng_3, "TB_AssetPosConfigLng_3");
+            TB_AssetPosConfigLng_3.Name = "TB_AssetPosConfigLng_3";
+            TB_AssetPosConfigLng_3.ReadOnly = false;
+            //
+            // TB_AssetPosConfigLat_4
+            //
+            resources.ApplyResources(TB_AssetPosConfigLat_4, "TB_AssetPosConfigLat_4");
+            TB_AssetPosConfigLat_4.Name = "TB_AssetPosConfigLat_4";
+            TB_AssetPosConfigLat_4.ReadOnly = false;
+            //
+            // TB_AssetPosConfigLng_4
+            //
+            resources.ApplyResources(TB_AssetPosConfigLng_4, "TB_AssetPosConfigLng_4");
+            TB_AssetPosConfigLng_4.Name = "TB_AssetPosConfigLng_4";
+            TB_AssetPosConfigLng_4.ReadOnly = false;
+            //
+            // TB_AssetPosConfigLat_5
+            //
+            resources.ApplyResources(TB_AssetPosConfigLat_5, "TB_AssetPosConfigLat_5");
+            TB_AssetPosConfigLat_5.Name = "TB_AssetPosConfigLat_5";
+            TB_AssetPosConfigLat_5.ReadOnly = false;
+            //
+            // TB_AssetPosConfigLng_5
+            //
+            resources.ApplyResources(TB_AssetPosConfigLng_5, "TB_AssetPosConfigLng_5");
+            TB_AssetPosConfigLng_5.Name = "TB_AssetPosConfigLng_5";
+            TB_AssetPosConfigLng_5.ReadOnly = false;
+            //
+            // TB_AssetPosConfigLat_6
+            //
+            resources.ApplyResources(TB_AssetPosConfigLat_6, "TB_AssetPosConfigLat_6");
+            TB_AssetPosConfigLat_6.Name = "TB_AssetPosConfigLat_6";
+            TB_AssetPosConfigLat_6.ReadOnly = false;
+            //
+            // TB_AssetPosConfigLng_6
+            //
+            resources.ApplyResources(TB_AssetPosConfigLng_6, "TB_AssetPosConfigLng_6");
+            TB_AssetPosConfigLng_6.Name = "TB_AssetPosConfigLng_6";
+            TB_AssetPosConfigLng_6.ReadOnly = false;
+            //
+            // TB_AssetPosConfigLat_7
+            //
+            resources.ApplyResources(TB_AssetPosConfigLat_7, "TB_AssetPosConfigLat_7");
+            TB_AssetPosConfigLat_7.Name = "TB_AssetPosConfigLat_7";
+            TB_AssetPosConfigLat_7.ReadOnly = false;
+            //
+            // TB_AssetPosConfigLng_7
+            //
+            resources.ApplyResources(TB_AssetPosConfigLng_7, "TB_AssetPosConfigLng_7");
+            TB_AssetPosConfigLng_7.Name = "TB_AssetPosConfigLng_7";
+            TB_AssetPosConfigLng_7.ReadOnly = false;
+            //
+            // TB_AssetPosConfigLat_8
+            //
+            resources.ApplyResources(TB_AssetPosConfigLat_8, "TB_AssetPosConfigLat_8");
+            TB_AssetPosConfigLat_8.Name = "TB_AssetPosConfigLat_8";
+            TB_AssetPosConfigLat_8.ReadOnly = false;
+            //
+            // TB_AssetPosConfigLng_8
+            //
+            resources.ApplyResources(TB_AssetPosConfigLng_8, "TB_AssetPosConfigLng_8");
+            TB_AssetPosConfigLng_8.Name = "TB_AssetPosConfigLng_8";
+            TB_AssetPosConfigLng_8.ReadOnly = false;
+            //
+            // TB_AssetPosConfigLat_9
+            //
+            resources.ApplyResources(TB_AssetPosConfigLat_9, "TB_AssetPosConfigLat_9");
+            TB_AssetPosConfigLat_9.Name = "TB_AssetPosConfigLat_9";
+            TB_AssetPosConfigLat_9.ReadOnly = false;
+            //
+            // TB_AssetPosConfigLng_9
+            //
+            resources.ApplyResources(TB_AssetPosConfigLng_9, "TB_AssetPosConfigLng_9");
+            TB_AssetPosConfigLng_9.Name = "TB_AssetPosConfigLng_9";
+            TB_AssetPosConfigLng_9.ReadOnly = false;
+            //
+            // TB_AssetPosConfigLat_10
+            //
+            resources.ApplyResources(TB_AssetPosConfigLat_10, "TB_AssetPosConfigLat_10");
+            TB_AssetPosConfigLat_10.Name = "TB_AssetPosConfigLat_10";
+            TB_AssetPosConfigLat_10.ReadOnly = false;
+            //
+            // TB_AssetPosConfigLng_10
+            //
+            resources.ApplyResources(TB_AssetPosConfigLng_10, "TB_AssetPosConfigLng_10");
+            TB_AssetPosConfigLng_10.Name = "TB_AssetPosConfigLng_10";
+            TB_AssetPosConfigLng_10.ReadOnly = false;
+            //
+            // TB_AssetPosConfigLat_11
+            //
+            resources.ApplyResources(TB_AssetPosConfigLat_11, "TB_AssetPosConfigLat_11");
+            TB_AssetPosConfigLat_11.Name = "TB_AssetPosConfigLat_11";
+            TB_AssetPosConfigLat_11.ReadOnly = false;
+            //
+            // TB_AssetPosConfigLng_11
+            //
+            resources.ApplyResources(TB_AssetPosConfigLng_11, "TB_AssetPosConfigLng_11");
+            TB_AssetPosConfigLng_11.Name = "TB_AssetPosConfigLng_11";
+            TB_AssetPosConfigLng_11.ReadOnly = false;
+            //
+            // TB_AssetPosConfigLat_12
+            //
+            resources.ApplyResources(TB_AssetPosConfigLat_12, "TB_AssetPosConfigLat_12");
+            TB_AssetPosConfigLat_12.Name = "TB_AssetPosConfigLat_12";
+            TB_AssetPosConfigLat_12.ReadOnly = false;
+            //
+            // TB_AssetPosConfigLng_12
+            //
+            resources.ApplyResources(TB_AssetPosConfigLng_12, "TB_AssetPosConfigLng_12");
+            TB_AssetPosConfigLng_12.Name = "TB_AssetPosConfigLng_12";
+            TB_AssetPosConfigLng_12.ReadOnly = false;
+            //
+            // TB_AssetPosConfigAlt_1
+            //
+            resources.ApplyResources(TB_AssetPosConfigAlt_1, "TB_AssetPosConfigAlt_1");
+            TB_AssetPosConfigAlt_1.Name = "TB_AssetPosConfigAlt_1";
+            TB_AssetPosConfigAlt_1.ReadOnly = false;
+            //
+            // TB_AssetPosConfigAlt_2
+            //
+            resources.ApplyResources(TB_AssetPosConfigAlt_2, "TB_AssetPosConfigAlt_2");
+            TB_AssetPosConfigAlt_2.Name = "TB_AssetPosConfigAlt_2";
+            TB_AssetPosConfigAlt_2.ReadOnly = false;
+            //
+            // TB_AssetPosConfigAlt_3
+            //
+            resources.ApplyResources(TB_AssetPosConfigAlt_3, "TB_AssetPosConfigAlt_3");
+            TB_AssetPosConfigAlt_3.Name = "TB_AssetPosConfigAlt_3";
+            TB_AssetPosConfigAlt_3.ReadOnly = false;
+            //
+            // TB_AssetPosConfigAlt_4
+            //
+            resources.ApplyResources(TB_AssetPosConfigAlt_4, "TB_AssetPosConfigAlt_4");
+            TB_AssetPosConfigAlt_4.Name = "TB_AssetPosConfigAlt_4";
+            TB_AssetPosConfigAlt_4.ReadOnly = false;
+            //
+            // TB_AssetPosConfigAlt_5
+            //
+            resources.ApplyResources(TB_AssetPosConfigAlt_5, "TB_AssetPosConfigAlt_5");
+            TB_AssetPosConfigAlt_5.Name = "TB_AssetPosConfigAlt_5";
+            TB_AssetPosConfigAlt_5.ReadOnly = false;
+            //
+            // TB_AssetPosConfigAlt_6
+            //
+            resources.ApplyResources(TB_AssetPosConfigAlt_6, "TB_AssetPosConfigAlt_6");
+            TB_AssetPosConfigAlt_6.Name = "TB_AssetPosConfigAlt_6";
+            TB_AssetPosConfigAlt_6.ReadOnly = false;
+            //
+            // TB_AssetPosConfigAlt_7
+            //
+            resources.ApplyResources(TB_AssetPosConfigAlt_7, "TB_AssetPosConfigAlt_7");
+            TB_AssetPosConfigAlt_7.Name = "TB_AssetPosConfigAlt_7";
+            TB_AssetPosConfigAlt_7.ReadOnly = false;
+            //
+            // TB_AssetPosConfigAlt_8
+            //
+            resources.ApplyResources(TB_AssetPosConfigAlt_8, "TB_AssetPosConfigAlt_8");
+            TB_AssetPosConfigAlt_8.Name = "TB_AssetPosConfigAlt_8";
+            TB_AssetPosConfigAlt_8.ReadOnly = false;
+            //
+            // TB_AssetPosConfigAlt_9
+            //
+            resources.ApplyResources(TB_AssetPosConfigAlt_9, "TB_AssetPosConfigAlt_9");
+            TB_AssetPosConfigAlt_9.Name = "TB_AssetPosConfigAlt_9";
+            TB_AssetPosConfigAlt_9.ReadOnly = false;
+            //
+            // TB_AssetPosConfigAlt_10
+            //
+            resources.ApplyResources(TB_AssetPosConfigAlt_10, "TB_AssetPosConfigAlt_10");
+            TB_AssetPosConfigAlt_10.Name = "TB_AssetPosConfigAlt_10";
+            TB_AssetPosConfigAlt_10.ReadOnly = false;
+            //
+            // TB_AssetPosConfigAlt_11
+            //
+            resources.ApplyResources(TB_AssetPosConfigAlt_11, "TB_AssetPosConfigAlt_11");
+            TB_AssetPosConfigAlt_11.Name = "TB_AssetPosConfigAlt_11";
+            TB_AssetPosConfigAlt_11.ReadOnly = false;
+            //
+            // TB_AssetPosConfigAlt_12
+            //
+            resources.ApplyResources(TB_AssetPosConfigAlt_12, "TB_AssetPosConfigAlt_12");
+            TB_AssetPosConfigAlt_12.Name = "TB_AssetPosConfigAlt_12";
+            TB_AssetPosConfigAlt_12.ReadOnly = false;
             // 
             // label6
             // 
@@ -3585,6 +4053,7 @@ namespace MissionPlanner.GCSViews
             this.tabControlactions.ResumeLayout(false);
             this.tabAsset.ResumeLayout(false);
             this.tabDf.ResumeLayout(false);
+            this.tabPos.ResumeLayout(false);
             this.tabQuick.ResumeLayout(false);
             this.tableLayoutPanelAsset.ResumeLayout(false);
             this.tableLayoutPanelQuick.ResumeLayout(false);
@@ -3660,7 +4129,8 @@ namespace MissionPlanner.GCSViews
         private Controls.MyButton BUTrestartmission;
         private System.Windows.Forms.ComboBox CMB_action;
         public System.Windows.Forms.ComboBox CMB_team;
-        public System.Windows.Forms.ComboBox CMB_mission;
+        public static System.Windows.Forms.ComboBox CMB_mission;
+        public static System.Windows.Forms.ComboBox CMB_buttonType;
         private Controls.MyButton BUT_Homealt;
         private System.Windows.Forms.TrackBar tracklog;
         private Controls.MyButton BUT_playlog;
@@ -3700,6 +4170,7 @@ namespace MissionPlanner.GCSViews
         private System.Windows.Forms.ToolStripMenuItem setAspectRatioToolStripMenuItem;
         public System.Windows.Forms.TabPage tabAsset;
         public System.Windows.Forms.TabPage tabDf;
+        public System.Windows.Forms.TabPage tabPos;
         public System.Windows.Forms.TabPage tabQuick;
         private Controls.QuickView quickView3;
         private Controls.QuickView quickView2;
@@ -3763,6 +4234,7 @@ namespace MissionPlanner.GCSViews
         public static Controls.MyButton BUT_Down;
         public static Controls.MyButton BUT_Hov;
         public static Controls.MyButton BUT_Align;
+        public static Controls.MyButton BUT_Cal;
         public static Controls.MyButton BUT_Right;
         public static System.Windows.Forms.Label LBL_DFMotor1;
         public static System.Windows.Forms.ComboBox CMB_DFMotor1;
@@ -3792,6 +4264,58 @@ namespace MissionPlanner.GCSViews
         public static System.Windows.Forms.TextBox TB_DFCloseTime1;
         public static System.Windows.Forms.Label LBL_DFCloseTime2;
         public static System.Windows.Forms.TextBox TB_DFCloseTime2;
+        public static System.Windows.Forms.Label LBL_AssetPosConfig_1;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigLat_1;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigLng_1;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigAlt_1;
+        public static System.Windows.Forms.Label LBL_AssetPosConfig_2;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigLat_2;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigLng_2;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigAlt_2;
+        public static System.Windows.Forms.Label LBL_AssetPosConfig_3;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigLat_3;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigLng_3;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigAlt_3;
+        public static System.Windows.Forms.Label LBL_AssetPosConfig_4;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigLat_4;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigLng_4;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigAlt_4;
+        public static System.Windows.Forms.Label LBL_AssetPosConfig_5;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigLat_5;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigLng_5;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigAlt_5;
+        public static System.Windows.Forms.Label LBL_AssetPosConfig_6;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigLat_6;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigLng_6;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigAlt_6;
+        public static System.Windows.Forms.Label LBL_AssetPosConfig_7;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigLat_7;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigLng_7;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigAlt_7;
+        public static System.Windows.Forms.Label LBL_AssetPosConfig_8;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigLat_8;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigLng_8;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigAlt_8;
+        public static System.Windows.Forms.Label LBL_AssetPosConfig_9;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigLat_9;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigLng_9;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigAlt_9;
+        public static System.Windows.Forms.Label LBL_AssetPosConfig_10;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigLat_10;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigLng_10;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigAlt_10;
+        public static System.Windows.Forms.Label LBL_AssetPosConfig_11;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigLat_11;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigLng_11;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigAlt_11;
+        public static System.Windows.Forms.Label LBL_AssetPosConfig_12;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigLat_12;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigLng_12;
+        public static System.Windows.Forms.TextBox TB_AssetPosConfigAlt_12;
+        public static System.Windows.Forms.Label LBL_AssetIp;
+        public static System.Windows.Forms.TextBox TB_AssetIp;
+        public static System.Windows.Forms.TextBox TB_MoveDist;
+        public static System.Windows.Forms.TextBox TB_MoveSpeed;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label3;
@@ -3912,6 +4436,9 @@ namespace MissionPlanner.GCSViews
         private System.Windows.Forms.Label angDiff_deg_lbl;
         private System.Windows.Forms.Label crosshairs_lbl;
         private System.Windows.Forms.Label mission_lbl;
+        private System.Windows.Forms.Label buttonType_lbl;
+        private System.Windows.Forms.Label buttonDist_lbl;
+        private System.Windows.Forms.Label buttonSpeed_lbl;
         private System.Windows.Forms.TextBox angDiff_deg_tb;
         private static System.Windows.Forms.TextBox crosshairs_tb;
         private ToolStripMenuItem showIconsToolStripMenuItem;
@@ -3947,5 +4474,6 @@ namespace MissionPlanner.GCSViews
         public static Controls.QuickView assetAlt;
         public static Controls.QuickView assetSeqNum;
         private System.Windows.Forms.Button updateAssetBtn;
+        public static System.Windows.Forms.Button updateAssetPosBtn;
     }
 }

@@ -777,9 +777,9 @@ namespace MissionPlanner.GCSViews
         {
             clearMissionToolStripMenuItem_Click(null, null);
 
-            AddTakeoff(4);
-            AddWPDD(lat, lng, 4);
-            AddWPDD(lat, lng, 2);
+            AddTakeoff(FlightData.altZero + 4);
+            AddWPDD(lat, lng, FlightData.altZero + 4);
+            AddWPDD(lat, lng, FlightData.altZero + 2);
 
             BUT_write_Click(null, null);
             readSilent();
