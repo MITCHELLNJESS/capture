@@ -5,7 +5,7 @@ import csv
 from pathlib import Path
 
 # load YOLOv5 model
-model_path = Path("/Users/jfm/A3_system_project/yolov5/runs/train/exp4/weights/best.pt")
+model_path = Path("/Users/jfm/A3_system_project/capture/C2/A3_System/models/yolo/best_may25.pt")
 model = torch.hub.load("ultralytics/yolov5", "custom", path=model_path, force_reload=True)
 model.conf = 0.4
 
