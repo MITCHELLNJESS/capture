@@ -3,7 +3,7 @@
 All of the work was completed within a virtual environment, for work on windows please follow these steps:
 
 
-Install python version: 3.10: https://www.python.org/downloads/release/python-31011/
+Install python version: 3.10.11: https://www.python.org/downloads/release/python-31011/
 
 pip install -r A3_system/requirements.txt
 
@@ -23,7 +23,7 @@ cd yolov5
 
 ### 2. Install Dependencies
 
-Activate your existing A3 environment or create one:
+If using virtual environment: Activate your existing A3 environment or create one:
 
 ```bash
 conda activate A3_system  # or use your existing environment

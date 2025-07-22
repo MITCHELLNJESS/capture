@@ -1,2 +1,3 @@
 /scripts/test/
 *.mp4
+/models/yolo/*.pt
