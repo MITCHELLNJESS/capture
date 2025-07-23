@@ -1370,6 +1370,19 @@ namespace MissionPlanner.GCSViews
                 CMB_mission.DataSource = new string[] { "None", "Marked Asset", "FOB", "Pos #1 (Friendly)", "Pos #2 (Friendly)", "Pos #3 (Friendly)", "Pos #4 (Friendly)", "Pos #5 (Friendly)", "Pos #6 (Friendly)", "Pos #7 (Opponent)", "Pos #8 (Opponent)", "Pos #9 (Opponent)", "Pos #10 (Opponent)", "Pos #11 (Opponent)", "Pos #12 (Opponent)" };
             }
 
+            LBL_AssetPosConfig_1.Text = "Position #1";
+            LBL_AssetPosConfig_2.Text = "Position #2";
+            LBL_AssetPosConfig_3.Text = "Position #3";
+            LBL_AssetPosConfig_4.Text = "Position #4";
+            LBL_AssetPosConfig_5.Text = "Position #5";
+            LBL_AssetPosConfig_6.Text = "Position #6";
+            LBL_AssetPosConfig_7.Text = "Position #7";
+            LBL_AssetPosConfig_8.Text = "Position #8";
+            LBL_AssetPosConfig_9.Text = "Position #9";
+            LBL_AssetPosConfig_10.Text = "Position #10";
+            LBL_AssetPosConfig_11.Text = "Position #11";
+            LBL_AssetPosConfig_12.Text = "Position #12";
+
             if (assetLatMarked != 0 && assetLngMarked != 0)
             {
                 int idx = POI.POIDeleteClosest(new GMapMarkerPOI(new PointLatLng(assetLatMarked, assetLngMarked)));
@@ -1387,7 +1400,7 @@ namespace MissionPlanner.GCSViews
                     case 1:
                         assetLocs[9] = new PointLatLngAlt(assetLatMarked, assetLngMarked, assetAltMarked);
                         POI.POIAdd(assetLocs[9], "Pos #2 (Marked)", 2);
-                        LBL_AssetPosConfig_1.Text = "Position #2 (Marked)";
+                        LBL_AssetPosConfig_2.Text = "Position #2 (Marked)";
                         TB_AssetPosConfigLat_2.Text = assetLocs[9].Lat.ToString();
                         TB_AssetPosConfigLng_2.Text = assetLocs[9].Lng.ToString();
                         TB_AssetPosConfigAlt_2.Text = assetLocs[9].Alt.ToString();
@@ -1395,7 +1408,7 @@ namespace MissionPlanner.GCSViews
                     case 2:
                         assetLocs[10] = new PointLatLngAlt(assetLatMarked, assetLngMarked, assetAltMarked);
                         POI.POIAdd(assetLocs[10], "Pos #3 (Marked)", 2);
-                        LBL_AssetPosConfig_1.Text = "Position #3 (Marked)";
+                        LBL_AssetPosConfig_3.Text = "Position #3 (Marked)";
                         TB_AssetPosConfigLat_3.Text = assetLocs[10].Lat.ToString();
                         TB_AssetPosConfigLng_3.Text = assetLocs[10].Lng.ToString();
                         TB_AssetPosConfigAlt_3.Text = assetLocs[10].Alt.ToString();
@@ -1403,7 +1416,7 @@ namespace MissionPlanner.GCSViews
                     case 3:
                         assetLocs[11] = new PointLatLngAlt(assetLatMarked, assetLngMarked, assetAltMarked);
                         POI.POIAdd(assetLocs[11], "Pos #4 (Marked)", 2);
-                        LBL_AssetPosConfig_1.Text = "Position #4 (Marked)";
+                        LBL_AssetPosConfig_4.Text = "Position #4 (Marked)";
                         TB_AssetPosConfigLat_4.Text = assetLocs[11].Lat.ToString();
                         TB_AssetPosConfigLng_4.Text = assetLocs[11].Lng.ToString();
                         TB_AssetPosConfigAlt_4.Text = assetLocs[11].Alt.ToString();
@@ -1411,7 +1424,7 @@ namespace MissionPlanner.GCSViews
                     case 4:
                         assetLocs[0] = new PointLatLngAlt(assetLatMarked, assetLngMarked, assetAltMarked);
                         POI.POIAdd(assetLocs[0], "Pos #5 (Marked)", 2);
-                        LBL_AssetPosConfig_1.Text = "Position #5 (Marked)";
+                        LBL_AssetPosConfig_5.Text = "Position #5 (Marked)";
                         TB_AssetPosConfigLat_5.Text = assetLocs[0].Lat.ToString();
                         TB_AssetPosConfigLng_5.Text = assetLocs[0].Lng.ToString();
                         TB_AssetPosConfigAlt_5.Text = assetLocs[0].Alt.ToString();
@@ -1419,7 +1432,7 @@ namespace MissionPlanner.GCSViews
                     case 5:
                         assetLocs[1] = new PointLatLngAlt(assetLatMarked, assetLngMarked, assetAltMarked);
                         POI.POIAdd(assetLocs[1], "Pos #6 (Marked)", 2);
-                        LBL_AssetPosConfig_1.Text = "Position #6 (Marked)";
+                        LBL_AssetPosConfig_6.Text = "Position #6 (Marked)";
                         TB_AssetPosConfigLat_6.Text = assetLocs[1].Lat.ToString();
                         TB_AssetPosConfigLng_6.Text = assetLocs[1].Lng.ToString();
                         TB_AssetPosConfigAlt_6.Text = assetLocs[1].Alt.ToString();
@@ -1427,7 +1440,7 @@ namespace MissionPlanner.GCSViews
                     case 6:
                         assetLocs[2] = new PointLatLngAlt(assetLatMarked, assetLngMarked, assetAltMarked);
                         POI.POIAdd(assetLocs[2], "Pos #7 (Marked)", 2);
-                        LBL_AssetPosConfig_1.Text = "Position #7 (Marked)";
+                        LBL_AssetPosConfig_7.Text = "Position #7 (Marked)";
                         TB_AssetPosConfigLat_7.Text = assetLocs[2].Lat.ToString();
                         TB_AssetPosConfigLng_7.Text = assetLocs[2].Lng.ToString();
                         TB_AssetPosConfigAlt_7.Text = assetLocs[2].Alt.ToString();
@@ -1435,7 +1448,7 @@ namespace MissionPlanner.GCSViews
                     case 7:
                         assetLocs[3] = new PointLatLngAlt(assetLatMarked, assetLngMarked, assetAltMarked);
                         POI.POIAdd(assetLocs[3], "Pos #8 (Marked)", 2);
-                        LBL_AssetPosConfig_1.Text = "Position #8 (Marked)";
+                        LBL_AssetPosConfig_8.Text = "Position #8 (Marked)";
                         TB_AssetPosConfigLat_8.Text = assetLocs[3].Lat.ToString();
                         TB_AssetPosConfigLng_8.Text = assetLocs[3].Lng.ToString();
                         TB_AssetPosConfigAlt_8.Text = assetLocs[3].Alt.ToString();
@@ -1443,7 +1456,7 @@ namespace MissionPlanner.GCSViews
                     case 8:
                         assetLocs[4] = new PointLatLngAlt(assetLatMarked, assetLngMarked, assetAltMarked);
                         POI.POIAdd(assetLocs[4], "Pos #9 (Marked)", 2);
-                        LBL_AssetPosConfig_1.Text = "Position #9 (Marked)";
+                        LBL_AssetPosConfig_9.Text = "Position #9 (Marked)";
                         TB_AssetPosConfigLat_9.Text = assetLocs[4].Lat.ToString();
                         TB_AssetPosConfigLng_9.Text = assetLocs[4].Lng.ToString();
                         TB_AssetPosConfigAlt_9.Text = assetLocs[4].Alt.ToString();
@@ -1451,7 +1464,7 @@ namespace MissionPlanner.GCSViews
                     case 9:
                         assetLocs[5] = new PointLatLngAlt(assetLatMarked, assetLngMarked, assetAltMarked);
                         POI.POIAdd(assetLocs[5], "Pos #10 (Marked)", 2);
-                        LBL_AssetPosConfig_1.Text = "Position #10 (Marked)";
+                        LBL_AssetPosConfig_10.Text = "Position #10 (Marked)";
                         TB_AssetPosConfigLat_10.Text = assetLocs[5].Lat.ToString();
                         TB_AssetPosConfigLng_10.Text = assetLocs[5].Lng.ToString();
                         TB_AssetPosConfigAlt_10.Text = assetLocs[5].Alt.ToString();
@@ -1459,7 +1472,7 @@ namespace MissionPlanner.GCSViews
                     case 10:
                         assetLocs[6] = new PointLatLngAlt(assetLatMarked, assetLngMarked, assetAltMarked);
                         POI.POIAdd(assetLocs[6], "Pos #11 (Marked)", 2);
-                        LBL_AssetPosConfig_1.Text = "Position #11 (Marked)";
+                        LBL_AssetPosConfig_11.Text = "Position #11 (Marked)";
                         TB_AssetPosConfigLat_11.Text = assetLocs[6].Lat.ToString();
                         TB_AssetPosConfigLng_11.Text = assetLocs[6].Lng.ToString();
                         TB_AssetPosConfigAlt_11.Text = assetLocs[6].Alt.ToString();
@@ -1467,7 +1480,7 @@ namespace MissionPlanner.GCSViews
                     case 11:
                         assetLocs[7] = new PointLatLngAlt(assetLatMarked, assetLngMarked, assetAltMarked);
                         POI.POIAdd(assetLocs[7], "Pos #12 (Marked)", 2);
-                        LBL_AssetPosConfig_1.Text = "Position #12 (Marked)";
+                        LBL_AssetPosConfig_12.Text = "Position #12 (Marked)";
                         TB_AssetPosConfigLat_12.Text = assetLocs[7].Lat.ToString();
                         TB_AssetPosConfigLng_12.Text = assetLocs[7].Lng.ToString();
                         TB_AssetPosConfigAlt_12.Text = assetLocs[7].Alt.ToString();
@@ -2840,6 +2853,114 @@ namespace MissionPlanner.GCSViews
             }
         }
 
+        private void BUT_Mark1_Click(object sender, EventArgs e)
+        {
+            if (assetLocs.Count > 0)
+            {
+                assetLatMarked = assetLocs[8].Lat;
+                assetLngMarked = assetLocs[8].Lng;
+                AddAssetPois();
+            }
+        }
+        private void BUT_Mark2_Click(object sender, EventArgs e)
+        {
+            if (assetLocs.Count > 0)
+            {
+                assetLatMarked = assetLocs[9].Lat;
+                assetLngMarked = assetLocs[9].Lng;
+                AddAssetPois();
+            }
+        }
+        private void BUT_Mark3_Click(object sender, EventArgs e)
+        {
+            if (assetLocs.Count > 0)
+            {
+                assetLatMarked = assetLocs[10].Lat;
+                assetLngMarked = assetLocs[10].Lng;
+                AddAssetPois();
+            }
+        }
+        private void BUT_Mark4_Click(object sender, EventArgs e)
+        {
+            if (assetLocs.Count > 0)
+            {
+                assetLatMarked = assetLocs[11].Lat;
+                assetLngMarked = assetLocs[11].Lng;
+                AddAssetPois();
+            }
+        }
+        private void BUT_Mark5_Click(object sender, EventArgs e)
+        {
+            if (assetLocs.Count > 0)
+            {
+                assetLatMarked = assetLocs[0].Lat;
+                assetLngMarked = assetLocs[0].Lng;
+                AddAssetPois();
+            }
+        }
+        private void BUT_Mark6_Click(object sender, EventArgs e)
+        {
+            if (assetLocs.Count > 0)
+            {
+                assetLatMarked = assetLocs[1].Lat;
+                assetLngMarked = assetLocs[1].Lng;
+                AddAssetPois();
+            }
+        }
+        private void BUT_Mark7_Click(object sender, EventArgs e)
+        {
+            if (assetLocs.Count > 0)
+            {
+                assetLatMarked = assetLocs[2].Lat;
+                assetLngMarked = assetLocs[2].Lng;
+                AddAssetPois();
+            }
+        }
+        private void BUT_Mark8_Click(object sender, EventArgs e)
+        {
+            if (assetLocs.Count > 0)
+            {
+                assetLatMarked = assetLocs[3].Lat;
+                assetLngMarked = assetLocs[3].Lng;
+                AddAssetPois();
+            }
+        }
+        private void BUT_Mark9_Click(object sender, EventArgs e)
+        {
+            if (assetLocs.Count > 0)
+            {
+                assetLatMarked = assetLocs[4].Lat;
+                assetLngMarked = assetLocs[4].Lng;
+                AddAssetPois();
+            }
+        }
+        private void BUT_Mark10_Click(object sender, EventArgs e)
+        {
+            if (assetLocs.Count > 0)
+            {
+                assetLatMarked = assetLocs[5].Lat;
+                assetLngMarked = assetLocs[5].Lng;
+                AddAssetPois();
+            }
+        }
+        private void BUT_Mark11_Click(object sender, EventArgs e)
+        {
+            if (assetLocs.Count > 0)
+            {
+                assetLatMarked = assetLocs[6].Lat;
+                assetLngMarked = assetLocs[6].Lng;
+                AddAssetPois();
+            }
+        }
+        private void BUT_Mark12_Click(object sender, EventArgs e)
+        {
+            if (assetLocs.Count> 0)
+            {
+                assetLatMarked = assetLocs[7].Lat;
+                assetLngMarked = assetLocs[7].Lng;
+                AddAssetPois();
+            }
+        }
         public void BUT_playlog_Click(object sender, EventArgs e)
         {
             if (MainV2.comPort.logreadmode)
@@ -8991,6 +9112,156 @@ namespace MissionPlanner.GCSViews
                 Convert.ToDouble(TB_AssetPosConfigLat_12.Text),
                 Convert.ToDouble(TB_AssetPosConfigLng_12.Text),
                 Convert.ToDouble(TB_AssetPosConfigAlt_12.Text));
+
+            AddAssetPois();
+        }
+
+        public void SaveToCsv(string[,] data)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "CSV files (*.csv)|*.csv";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = saveFileDialog.FileName;
+
+                using (StreamWriter writer = new StreamWriter(filePath))
+                {
+                    for (int i = 0; i < data.GetLength(0); i++)
+                    {
+                        writer.WriteLine($"{data[i, 0]},{data[i, 1]},{data[i, 2]}");
+                    }
+                }
+            }
+        }
+
+        public string[,] ReadFromCsv(int length, int width)
+        {
+            string[,] data = new string[length, width];
+
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "CSV files (*.csv)|*.csv";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = openFileDialog.FileName;
+
+                try
+                {
+                    using (StreamReader reader = new StreamReader(filePath))
+                    {
+                        string line;
+                        int row = 0;
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            string[] values = line.Split(',');
+                            if (values.Length == 3)
+                            {
+                                data[row, 0] = values[0];
+                                data[row, 1] = values[1];
+                                data[row, 2] = values[2];
+                                row++;
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+
+            return data;
+        }
+
+        public void saveAssetPosBtn_Click(object sender, EventArgs e)
+        {
+            string[,] data = new string[12, 3];
+            data[0, 0] = TB_AssetPosConfigLat_1.Text;
+            data[0, 1] = TB_AssetPosConfigLng_1.Text;
+            data[0, 2] = TB_AssetPosConfigAlt_1.Text;
+            data[1, 0] = TB_AssetPosConfigLat_2.Text;
+            data[1, 1] = TB_AssetPosConfigLng_2.Text;
+            data[1, 2] = TB_AssetPosConfigAlt_2.Text;
+            data[2, 0] = TB_AssetPosConfigLat_3.Text;
+            data[2, 1] = TB_AssetPosConfigLng_3.Text;
+            data[2, 2] = TB_AssetPosConfigAlt_3.Text;
+            data[3, 0] = TB_AssetPosConfigLat_4.Text;
+            data[3, 1] = TB_AssetPosConfigLng_4.Text;
+            data[3, 2] = TB_AssetPosConfigAlt_4.Text;
+            data[4, 0] = TB_AssetPosConfigLat_5.Text;
+            data[4, 1] = TB_AssetPosConfigLng_5.Text;
+            data[4, 2] = TB_AssetPosConfigAlt_5.Text;
+            data[5, 0] = TB_AssetPosConfigLat_6.Text;
+            data[5, 1] = TB_AssetPosConfigLng_6.Text;
+            data[5, 2] = TB_AssetPosConfigAlt_6.Text;
+            data[6, 0] = TB_AssetPosConfigLat_7.Text;
+            data[6, 1] = TB_AssetPosConfigLng_7.Text;
+            data[6, 2] = TB_AssetPosConfigAlt_7.Text;
+            data[7, 0] = TB_AssetPosConfigLat_8.Text;
+            data[7, 1] = TB_AssetPosConfigLng_8.Text;
+            data[7, 2] = TB_AssetPosConfigAlt_8.Text;
+            data[8, 0] = TB_AssetPosConfigLat_9.Text;
+            data[8, 1] = TB_AssetPosConfigLng_9.Text;
+            data[8, 2] = TB_AssetPosConfigAlt_9.Text;
+            data[9, 0] = TB_AssetPosConfigLat_10.Text;
+            data[9, 1] = TB_AssetPosConfigLng_10.Text;
+            data[9, 2] = TB_AssetPosConfigAlt_10.Text;
+            data[10, 0] = TB_AssetPosConfigLat_11.Text;
+            data[10, 1] = TB_AssetPosConfigLng_11.Text;
+            data[10, 2] = TB_AssetPosConfigAlt_11.Text;
+            data[11, 0] = TB_AssetPosConfigLat_12.Text;
+            data[11, 1] = TB_AssetPosConfigLng_12.Text;
+            data[11, 2] = TB_AssetPosConfigAlt_12.Text;
+
+            SaveToCsv(data);
+        }
+
+        public void loadAssetPosBtn_Click(object sender, EventArgs e)
+        {
+            assetLatMarked = 0;
+            assetLngMarked = 0;
+            assetAltMarked = 0;
+
+            // Read in file
+            string[,] data = ReadFromCsv(12, 3);
+            if (data.GetLength(0) == 12 && data.GetLength(1) == 3)
+            {
+                TB_AssetPosConfigLat_1.Text = data[0, 0];
+                TB_AssetPosConfigLng_1.Text = data[0, 1];
+                TB_AssetPosConfigAlt_1.Text = data[0, 2];
+                TB_AssetPosConfigLat_2.Text = data[1, 0];
+                TB_AssetPosConfigLng_2.Text = data[1, 1];
+                TB_AssetPosConfigAlt_2.Text = data[1, 2];
+                TB_AssetPosConfigLat_3.Text = data[2, 0];
+                TB_AssetPosConfigLng_3.Text = data[2, 1];
+                TB_AssetPosConfigAlt_3.Text = data[2, 2];
+                TB_AssetPosConfigLat_4.Text = data[3, 0];
+                TB_AssetPosConfigLng_4.Text = data[3, 1];
+                TB_AssetPosConfigAlt_4.Text = data[3, 2];
+                TB_AssetPosConfigLat_5.Text = data[4, 0];
+                TB_AssetPosConfigLng_5.Text = data[4, 1];
+                TB_AssetPosConfigAlt_5.Text = data[4, 2];
+                TB_AssetPosConfigLat_6.Text = data[5, 0];
+                TB_AssetPosConfigLng_6.Text = data[5, 1];
+                TB_AssetPosConfigAlt_6.Text = data[5, 2];
+                TB_AssetPosConfigLat_7.Text = data[6, 0];
+                TB_AssetPosConfigLng_7.Text = data[6, 1];
+                TB_AssetPosConfigAlt_7.Text = data[6, 2];
+                TB_AssetPosConfigLat_8.Text = data[7, 0];
+                TB_AssetPosConfigLng_8.Text = data[7, 1];
+                TB_AssetPosConfigAlt_8.Text = data[7, 2];
+                TB_AssetPosConfigLat_9.Text = data[8, 0];
+                TB_AssetPosConfigLng_9.Text = data[8, 1];
+                TB_AssetPosConfigAlt_9.Text = data[8, 2];
+                TB_AssetPosConfigLat_10.Text = data[9, 0];
+                TB_AssetPosConfigLng_10.Text = data[9, 1];
+                TB_AssetPosConfigAlt_10.Text = data[9, 2];
+                TB_AssetPosConfigLat_11.Text = data[10, 0];
+                TB_AssetPosConfigLng_11.Text = data[10, 1];
+                TB_AssetPosConfigAlt_11.Text = data[10, 2];
+                TB_AssetPosConfigLat_12.Text = data[11, 0];
+                TB_AssetPosConfigLng_12.Text = data[11, 1];
+                TB_AssetPosConfigAlt_12.Text = data[11, 2];
+            }
 
             AddAssetPois();
         }

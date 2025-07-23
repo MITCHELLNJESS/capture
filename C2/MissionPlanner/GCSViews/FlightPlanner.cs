@@ -756,7 +756,10 @@ namespace MissionPlanner.GCSViews
 
         public void BUT_ToAssetCreate_Click(object sender, EventArgs e)
         {
-            FlightData.instance.updateAssetBtn_Click(null, null);
+            if ((FlightData.assetLatMarked == 0) && (FlightData.assetLngMarked == 0))
+            {
+                FlightData.instance.updateAssetBtn_Click(null, null);
+            }
             clearMissionToolStripMenuItem_Click(null, null);
 
             Console.Write("Asset position from data window - lat: ");
@@ -765,9 +768,9 @@ namespace MissionPlanner.GCSViews
             Console.Write(FlightData.assetLon.number);
             Console.Write(" alt: ");
             Console.WriteLine(FlightData.assetAlt.number);
-            AddTakeoff(4);
-            AddWPDD(FlightData.assetLat.number, FlightData.assetLon.number, 4);
-            AddWPDD(FlightData.assetLat.number, FlightData.assetLon.number, 2);
+            AddTakeoff(FlightData.altZero + 4);
+            AddWPDD(FlightData.assetLatMarked, FlightData.assetLngMarked, FlightData.altZero + 4);
+            AddWPDD(FlightData.assetLatMarked, FlightData.assetLngMarked, FlightData.altZero + 2);
 
             BUT_write_Click(null, null);
             readSilent();

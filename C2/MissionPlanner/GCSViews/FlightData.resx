@@ -7091,7 +7091,7 @@
     <value>22</value>
   </data>
   <data name="LBL_AssetPosConfig_1.Text" xml:space="preserve">
-    <value>Postion #1</value>
+    <value>Position #1</value>
   </data>
   <data name="&gt;&gt;LBL_AssetPosConfig_1.Name" xml:space="preserve">
     <value>LBL_AssetPosConfig_1</value>
@@ -7121,7 +7121,7 @@
     <value>22</value>
   </data>
   <data name="LBL_AssetPosConfig_2.Text" xml:space="preserve">
-    <value>Postion #2</value>
+    <value>Position #2</value>
   </data>
   <data name="&gt;&gt;LBL_AssetPosConfig_2.Name" xml:space="preserve">
     <value>LBL_AssetPosConfig_2</value>
@@ -7151,7 +7151,7 @@
     <value>22</value>
   </data>
   <data name="LBL_AssetPosConfig_3.Text" xml:space="preserve">
-    <value>Postion #3</value>
+    <value>Position #3</value>
   </data>
   <data name="&gt;&gt;LBL_AssetPosConfig_3.Name" xml:space="preserve">
     <value>LBL_AssetPosConfig_3</value>
@@ -7181,7 +7181,7 @@
     <value>22</value>
   </data>
   <data name="LBL_AssetPosConfig_4.Text" xml:space="preserve">
-    <value>Postion #4</value>
+    <value>Position #4</value>
   </data>
   <data name="&gt;&gt;LBL_AssetPosConfig_4.Name" xml:space="preserve">
     <value>LBL_AssetPosConfig_4</value>
@@ -7211,7 +7211,7 @@
     <value>22</value>
   </data>
   <data name="LBL_AssetPosConfig_5.Text" xml:space="preserve">
-    <value>Postion #5</value>
+    <value>Position #5</value>
   </data>
   <data name="&gt;&gt;LBL_AssetPosConfig_5.Name" xml:space="preserve">
     <value>LBL_AssetPosConfig_5</value>
@@ -7241,7 +7241,7 @@
     <value>22</value>
   </data>
   <data name="LBL_AssetPosConfig_6.Text" xml:space="preserve">
-    <value>Postion #6</value>
+    <value>Position #6</value>
   </data>
   <data name="&gt;&gt;LBL_AssetPosConfig_6.Name" xml:space="preserve">
     <value>LBL_AssetPosConfig_6</value>
@@ -7271,7 +7271,7 @@
     <value>22</value>
   </data>
   <data name="LBL_AssetPosConfig_7.Text" xml:space="preserve">
-    <value>Postion #7</value>
+    <value>Position #7</value>
   </data>
   <data name="&gt;&gt;LBL_AssetPosConfig_7.Name" xml:space="preserve">
     <value>LBL_AssetPosConfig_7</value>
@@ -7301,7 +7301,7 @@
     <value>22</value>
   </data>
   <data name="LBL_AssetPosConfig_8.Text" xml:space="preserve">
-    <value>Postion #8</value>
+    <value>Position #8</value>
   </data>
   <data name="&gt;&gt;LBL_AssetPosConfig_8.Name" xml:space="preserve">
     <value>LBL_AssetPosConfig_8</value>
@@ -7331,7 +7331,7 @@
     <value>22</value>
   </data>
   <data name="LBL_AssetPosConfig_9.Text" xml:space="preserve">
-    <value>Postion #9</value>
+    <value>Position #9</value>
   </data>
   <data name="&gt;&gt;LBL_AssetPosConfig_9.Name" xml:space="preserve">
     <value>LBL_AssetPosConfig_9</value>
@@ -7361,7 +7361,7 @@
     <value>22</value>
   </data>
   <data name="LBL_AssetPosConfig_10.Text" xml:space="preserve">
-    <value>Postion #10</value>
+    <value>Position #10</value>
   </data>
   <data name="&gt;&gt;LBL_AssetPosConfig_10.Name" xml:space="preserve">
     <value>LBL_AssetPosConfig_10</value>
@@ -7391,7 +7391,7 @@
     <value>22</value>
   </data>
   <data name="LBL_AssetPosConfig_11.Text" xml:space="preserve">
-    <value>Postion #11</value>
+    <value>Position #11</value>
   </data>
   <data name="&gt;&gt;LBL_AssetPosConfig_11.Name" xml:space="preserve">
     <value>LBL_AssetPosConfig_11</value>
@@ -7421,7 +7421,7 @@
     <value>22</value>
   </data>
   <data name="LBL_AssetPosConfig_12.Text" xml:space="preserve">
-    <value>Postion #12</value>
+    <value>Position #12</value>
   </data>
   <data name="&gt;&gt;LBL_AssetPosConfig_12.Name" xml:space="preserve">
     <value>LBL_AssetPosConfig_12</value>
@@ -8461,6 +8461,330 @@
   <data name="TB_AssetPosConfigAlt_12.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 12pt</value>
   </data>
+  <data name="BUT_Mark1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_Mark1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>490, 5</value>
+  </data>
+  <data name="BUT_Mark1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 20</value>
+  </data>
+  <data name="BUT_Mark1.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="BUT_Mark1.Text" xml:space="preserve">
+    <value>Mark</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark1.Name" xml:space="preserve">
+    <value>BUT_Mark1</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark1.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark1.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark1.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="BUT_Mark2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_Mark2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>490, 25</value>
+  </data>
+  <data name="BUT_Mark2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 20</value>
+  </data>
+  <data name="BUT_Mark2.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="BUT_Mark2.Text" xml:space="preserve">
+    <value>Mark</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark2.Name" xml:space="preserve">
+    <value>BUT_Mark2</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark2.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_MBUT_Mark2ark1.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark2.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="BUT_Mark3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_Mark3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>490, 45</value>
+  </data>
+  <data name="BUT_Mark3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 20</value>
+  </data>
+  <data name="BUT_Mark3.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="BUT_Mark3.Text" xml:space="preserve">
+    <value>Mark</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark3.Name" xml:space="preserve">
+    <value>BUT_Mark3</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark3.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark3.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark3.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="BUT_Mark4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_Mark4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>490, 65</value>
+  </data>
+  <data name="BUT_Mark4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 20</value>
+  </data>
+  <data name="BUT_Mark4.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="BUT_Mark4.Text" xml:space="preserve">
+    <value>Mark</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark4.Name" xml:space="preserve">
+    <value>BUT_Mark4</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark4.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark4.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark4.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="BUT_Mark5.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_Mark5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>490, 85</value>
+  </data>
+  <data name="BUT_Mark5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 20</value>
+  </data>
+  <data name="BUT_Mark5.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="BUT_Mark5.Text" xml:space="preserve">
+    <value>Mark</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark5.Name" xml:space="preserve">
+    <value>BUT_Mark5</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark5.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark5.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark5.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="BUT_Mark6.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_Mark6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>490, 105</value>
+  </data>
+  <data name="BUT_Mark6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 20</value>
+  </data>
+  <data name="BUT_Mark6.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="BUT_Mark6.Text" xml:space="preserve">
+    <value>Mark</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark6.Name" xml:space="preserve">
+    <value>BUT_Mark6</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark6.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark6.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark6.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="BUT_Mark7.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_Mark7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>490, 125</value>
+  </data>
+  <data name="BUT_Mark7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 20</value>
+  </data>
+  <data name="BUT_Mark7.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="BUT_Mark7.Text" xml:space="preserve">
+    <value>Mark</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark7.Name" xml:space="preserve">
+    <value>BUT_Mark7</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark7.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark7.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark7.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="BUT_Mark8.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_Mark8.Location" type="System.Drawing.Point, System.Drawing">
+    <value>490, 145</value>
+  </data>
+  <data name="BUT_Mark8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 20</value>
+  </data>
+  <data name="BUT_Mark8.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="BUT_Mark8.Text" xml:space="preserve">
+    <value>Mark</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark8.Name" xml:space="preserve">
+    <value>BUT_Mark8</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark8.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark8.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark8.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="BUT_Mark9.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_Mark9.Location" type="System.Drawing.Point, System.Drawing">
+    <value>490, 165</value>
+  </data>
+  <data name="BUT_Mark9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 20</value>
+  </data>
+  <data name="BUT_Mark9.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="BUT_Mark9.Text" xml:space="preserve">
+    <value>Mark</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark9.Name" xml:space="preserve">
+    <value>BUT_Mark9</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark9.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark9.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark9.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="BUT_Mark10.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_Mark10.Location" type="System.Drawing.Point, System.Drawing">
+    <value>490, 185</value>
+  </data>
+  <data name="BUT_Mark10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 20</value>
+  </data>
+  <data name="BUT_Mark10.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="BUT_Mark10.Text" xml:space="preserve">
+    <value>Mark</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark10.Name" xml:space="preserve">
+    <value>BUT_Mark10</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark10.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark10.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark10.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="BUT_Mark11.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_Mark11.Location" type="System.Drawing.Point, System.Drawing">
+    <value>490, 205</value>
+  </data>
+  <data name="BUT_Mark11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 20</value>
+  </data>
+  <data name="BUT_Mark11.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="BUT_Mark11.Text" xml:space="preserve">
+    <value>Mark</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark11.Name" xml:space="preserve">
+    <value>BUT_Mark11</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark11.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark11.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark11.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="BUT_Mark12.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_Mark12.Location" type="System.Drawing.Point, System.Drawing">
+    <value>490, 225</value>
+  </data>
+  <data name="BUT_Mark12.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 20</value>
+  </data>
+  <data name="BUT_Mark12.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="BUT_Mark12.Text" xml:space="preserve">
+    <value>Mark</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark12.Name" xml:space="preserve">
+    <value>BUT_Mark12</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark12.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark12.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;BUT_Mark12.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
   <data name="updateAssetPosBtn.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -8486,6 +8810,60 @@
     <value>tabPos</value>
   </data>
   <data name="&gt;&gt;updateAssetPosBtn.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="saveAssetPosBtn.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="saveAssetPosBtn.Location" type="System.Drawing.Point, System.Drawing">
+    <value>145, 245</value>
+  </data>
+  <data name="saveAssetPosBtn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 40</value>
+  </data>
+  <data name="saveAssetPosBtn.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="saveAssetPosBtn.Text" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="&gt;&gt;saveAssetPosBtn.Name" xml:space="preserve">
+    <value>saveAssetPosBtn</value>
+  </data>
+  <data name="&gt;&gt;saveAssetPosBtn.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;saveAssetPosBtn.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="&gt;&gt;saveAssetPosBtn.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="loadAssetPosBtn.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="loadAssetPosBtn.Location" type="System.Drawing.Point, System.Drawing">
+    <value>285, 245</value>
+  </data>
+  <data name="loadAssetPosBtn.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 40</value>
+  </data>
+  <data name="loadAssetPosBtn.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="loadAssetPosBtn.Text" xml:space="preserve">
+    <value>Load</value>
+  </data>
+  <data name="&gt;&gt;loadAssetPosBtn.Name" xml:space="preserve">
+    <value>loadAssetPosBtn</value>
+  </data>
+  <data name="&gt;&gt;loadAssetPosBtn.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;loadAssetPosBtn.Parent" xml:space="preserve">
+    <value>tabPos</value>
+  </data>
+  <data name="&gt;&gt;loadAssetPosBtn.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
   <data name="BUT_DFClose.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">

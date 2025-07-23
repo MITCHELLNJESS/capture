@@ -330,6 +330,18 @@ namespace MissionPlanner.GCSViews
             TB_AssetPosConfigLat_11 = new System.Windows.Forms.TextBox();
             TB_AssetPosConfigLng_11 = new System.Windows.Forms.TextBox();
             LBL_AssetPosConfig_12 = new System.Windows.Forms.Label();
+            BUT_Mark1 = new MissionPlanner.Controls.MyButton();
+            BUT_Mark2 = new MissionPlanner.Controls.MyButton();
+            BUT_Mark3 = new MissionPlanner.Controls.MyButton();
+            BUT_Mark4 = new MissionPlanner.Controls.MyButton();
+            BUT_Mark5 = new MissionPlanner.Controls.MyButton();
+            BUT_Mark6 = new MissionPlanner.Controls.MyButton();
+            BUT_Mark7 = new MissionPlanner.Controls.MyButton();
+            BUT_Mark8 = new MissionPlanner.Controls.MyButton();
+            BUT_Mark9 = new MissionPlanner.Controls.MyButton();
+            BUT_Mark10 = new MissionPlanner.Controls.MyButton();
+            BUT_Mark11 = new MissionPlanner.Controls.MyButton();
+            BUT_Mark12 = new MissionPlanner.Controls.MyButton();
             LBL_AssetIp = new System.Windows.Forms.Label();
             TB_AssetPosConfigLat_12 = new System.Windows.Forms.TextBox();
             TB_AssetPosConfigLng_12 = new System.Windows.Forms.TextBox();
@@ -369,6 +381,8 @@ namespace MissionPlanner.GCSViews
             assetSeqNum = new MissionPlanner.Controls.QuickView();
             this.updateAssetBtn = new System.Windows.Forms.Button();
             updateAssetPosBtn = new System.Windows.Forms.Button();
+            saveAssetPosBtn = new System.Windows.Forms.Button();
+            loadAssetPosBtn = new System.Windows.Forms.Button();
             TB_AssetIp = new System.Windows.Forms.TextBox();
             TB_MoveDist = new System.Windows.Forms.TextBox();
             TB_MoveSpeed = new System.Windows.Forms.TextBox();
@@ -812,51 +826,65 @@ namespace MissionPlanner.GCSViews
             this.tabPos.Controls.Add(TB_AssetPosConfigLat_1);
             this.tabPos.Controls.Add(TB_AssetPosConfigLng_1);
             this.tabPos.Controls.Add(TB_AssetPosConfigAlt_1);
+            this.tabPos.Controls.Add(BUT_Mark1);
             this.tabPos.Controls.Add(LBL_AssetPosConfig_2);
             this.tabPos.Controls.Add(TB_AssetPosConfigLat_2);
             this.tabPos.Controls.Add(TB_AssetPosConfigLng_2);
             this.tabPos.Controls.Add(TB_AssetPosConfigAlt_2);
+            this.tabPos.Controls.Add(BUT_Mark2);
             this.tabPos.Controls.Add(LBL_AssetPosConfig_3);
             this.tabPos.Controls.Add(TB_AssetPosConfigLat_3);
             this.tabPos.Controls.Add(TB_AssetPosConfigLng_3);
             this.tabPos.Controls.Add(TB_AssetPosConfigAlt_3);
+            this.tabPos.Controls.Add(BUT_Mark3);
             this.tabPos.Controls.Add(LBL_AssetPosConfig_4);
             this.tabPos.Controls.Add(TB_AssetPosConfigLat_4);
             this.tabPos.Controls.Add(TB_AssetPosConfigLng_4);
             this.tabPos.Controls.Add(TB_AssetPosConfigAlt_4);
+            this.tabPos.Controls.Add(BUT_Mark4);
             this.tabPos.Controls.Add(LBL_AssetPosConfig_5);
             this.tabPos.Controls.Add(TB_AssetPosConfigLat_5);
             this.tabPos.Controls.Add(TB_AssetPosConfigLng_5);
             this.tabPos.Controls.Add(TB_AssetPosConfigAlt_5);
+            this.tabPos.Controls.Add(BUT_Mark5);
             this.tabPos.Controls.Add(LBL_AssetPosConfig_6);
             this.tabPos.Controls.Add(TB_AssetPosConfigLat_6);
             this.tabPos.Controls.Add(TB_AssetPosConfigLng_6);
             this.tabPos.Controls.Add(TB_AssetPosConfigAlt_6);
+            this.tabPos.Controls.Add(BUT_Mark6);
             this.tabPos.Controls.Add(LBL_AssetPosConfig_7);
             this.tabPos.Controls.Add(TB_AssetPosConfigLat_7);
             this.tabPos.Controls.Add(TB_AssetPosConfigLng_7);
             this.tabPos.Controls.Add(TB_AssetPosConfigAlt_7);
+            this.tabPos.Controls.Add(BUT_Mark7);
             this.tabPos.Controls.Add(LBL_AssetPosConfig_8);
             this.tabPos.Controls.Add(TB_AssetPosConfigLat_8);
             this.tabPos.Controls.Add(TB_AssetPosConfigLng_8);
             this.tabPos.Controls.Add(TB_AssetPosConfigAlt_8);
+            this.tabPos.Controls.Add(BUT_Mark8);
             this.tabPos.Controls.Add(LBL_AssetPosConfig_9);
             this.tabPos.Controls.Add(TB_AssetPosConfigLat_9);
             this.tabPos.Controls.Add(TB_AssetPosConfigLng_9);
             this.tabPos.Controls.Add(TB_AssetPosConfigAlt_9);
+            this.tabPos.Controls.Add(BUT_Mark9);
             this.tabPos.Controls.Add(LBL_AssetPosConfig_10);
             this.tabPos.Controls.Add(TB_AssetPosConfigLat_10);
             this.tabPos.Controls.Add(TB_AssetPosConfigLng_10);
             this.tabPos.Controls.Add(TB_AssetPosConfigAlt_10);
+            this.tabPos.Controls.Add(BUT_Mark10);
             this.tabPos.Controls.Add(LBL_AssetPosConfig_11);
             this.tabPos.Controls.Add(TB_AssetPosConfigLat_11);
             this.tabPos.Controls.Add(TB_AssetPosConfigLng_11);
             this.tabPos.Controls.Add(TB_AssetPosConfigAlt_11);
+            this.tabPos.Controls.Add(BUT_Mark11);
             this.tabPos.Controls.Add(LBL_AssetPosConfig_12);
             this.tabPos.Controls.Add(TB_AssetPosConfigLat_12);
             this.tabPos.Controls.Add(TB_AssetPosConfigLng_12);
             this.tabPos.Controls.Add(TB_AssetPosConfigAlt_12);
+            this.tabPos.Controls.Add(BUT_Mark12);
             this.tabPos.Controls.Add(updateAssetPosBtn);
+            this.tabPos.Controls.Add(saveAssetPosBtn);
+            this.tabPos.Controls.Add(loadAssetPosBtn);
             this.tabPos.Name = "tabPos";
             this.tabPos.UseVisualStyleBackColor = true;
             //
@@ -919,6 +947,22 @@ namespace MissionPlanner.GCSViews
             updateAssetPosBtn.Name = "updateAssetPosBtn";
             updateAssetPosBtn.UseVisualStyleBackColor = true;
             updateAssetPosBtn.Click += new System.EventHandler(updateAssetPosBtn_Click);
+            //
+            // saveAssetPosBtn
+            //
+            resources.ApplyResources(saveAssetPosBtn, "saveAssetPosBtn");
+            saveAssetPosBtn.Text = "Save";
+            saveAssetPosBtn.Name = "saveAssetPosBtn";
+            saveAssetPosBtn.UseVisualStyleBackColor = true;
+            saveAssetPosBtn.Click += new System.EventHandler(saveAssetPosBtn_Click);
+            //
+            // loadAssetPosBtn
+            //
+            resources.ApplyResources(loadAssetPosBtn, "loadAssetPosBtn");
+            loadAssetPosBtn.Text = "Load";
+            loadAssetPosBtn.Name = "loadAssetPosBtn";
+            loadAssetPosBtn.UseVisualStyleBackColor = true;
+            loadAssetPosBtn.Click += new System.EventHandler(loadAssetPosBtn_Click);
             //
             // TB_AssetIp
             //
@@ -3884,6 +3928,138 @@ namespace MissionPlanner.GCSViews
             resources.ApplyResources(TB_AssetPosConfigAlt_12, "TB_AssetPosConfigAlt_12");
             TB_AssetPosConfigAlt_12.Name = "TB_AssetPosConfigAlt_12";
             TB_AssetPosConfigAlt_12.ReadOnly = false;
+            //
+            // BUT_Mark1
+            //
+            BUT_Mark1.ColorMouseDown = System.Drawing.Color.Empty;
+            BUT_Mark1.ColorMouseOver = System.Drawing.Color.Empty;
+            BUT_Mark1.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(BUT_Mark1, "BUT_Mark1");
+            BUT_Mark1.Name = "BUT_Mark1";
+            BUT_Mark1.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            BUT_Mark1.UseVisualStyleBackColor = true;
+            BUT_Mark1.Click += new System.EventHandler(BUT_Mark1_Click);
+            //
+            // BUT_Mark2
+            //
+            BUT_Mark2.ColorMouseDown = System.Drawing.Color.Empty;
+            BUT_Mark2.ColorMouseOver = System.Drawing.Color.Empty;
+            BUT_Mark2.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(BUT_Mark2, "BUT_Mark2");
+            BUT_Mark2.Name = "BUT_Mark2";
+            BUT_Mark2.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            BUT_Mark2.UseVisualStyleBackColor = true;
+            BUT_Mark2.Click += new System.EventHandler(BUT_Mark2_Click);
+            //
+            // BUT_Mark3
+            //
+            BUT_Mark3.ColorMouseDown = System.Drawing.Color.Empty;
+            BUT_Mark3.ColorMouseOver = System.Drawing.Color.Empty;
+            BUT_Mark3.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(BUT_Mark3, "BUT_Mark3");
+            BUT_Mark3.Name = "BUT_Mark3";
+            BUT_Mark3.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            BUT_Mark3.UseVisualStyleBackColor = true;
+            BUT_Mark3.Click += new System.EventHandler(BUT_Mark3_Click);
+            //
+            // BUT_Mark4
+            //
+            BUT_Mark4.ColorMouseDown = System.Drawing.Color.Empty;
+            BUT_Mark4.ColorMouseOver = System.Drawing.Color.Empty;
+            BUT_Mark4.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(BUT_Mark4, "BUT_Mark4");
+            BUT_Mark4.Name = "BUT_Mark4";
+            BUT_Mark4.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            BUT_Mark4.UseVisualStyleBackColor = true;
+            BUT_Mark4.Click += new System.EventHandler(BUT_Mark4_Click);
+            //
+            // BUT_Mark5
+            //
+            BUT_Mark5.ColorMouseDown = System.Drawing.Color.Empty;
+            BUT_Mark5.ColorMouseOver = System.Drawing.Color.Empty;
+            BUT_Mark5.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(BUT_Mark5, "BUT_Mark5");
+            BUT_Mark5.Name = "BUT_Mark5";
+            BUT_Mark5.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            BUT_Mark5.UseVisualStyleBackColor = true;
+            BUT_Mark5.Click += new System.EventHandler(BUT_Mark5_Click);
+            //
+            // BUT_Mark6
+            //
+            BUT_Mark6.ColorMouseDown = System.Drawing.Color.Empty;
+            BUT_Mark6.ColorMouseOver = System.Drawing.Color.Empty;
+            BUT_Mark6.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(BUT_Mark6, "BUT_Mark6");
+            BUT_Mark6.Name = "BUT_Mark6";
+            BUT_Mark6.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            BUT_Mark6.UseVisualStyleBackColor = true;
+            BUT_Mark6.Click += new System.EventHandler(BUT_Mark6_Click);
+            //
+            // BUT_Mark7
+            //
+            BUT_Mark7.ColorMouseDown = System.Drawing.Color.Empty;
+            BUT_Mark7.ColorMouseOver = System.Drawing.Color.Empty;
+            BUT_Mark7.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(BUT_Mark7, "BUT_Mark7");
+            BUT_Mark7.Name = "BUT_Mark7";
+            BUT_Mark7.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            BUT_Mark7.UseVisualStyleBackColor = true;
+            BUT_Mark7.Click += new System.EventHandler(BUT_Mark7_Click);
+            //
+            // BUT_Mark8
+            //
+            BUT_Mark8.ColorMouseDown = System.Drawing.Color.Empty;
+            BUT_Mark8.ColorMouseOver = System.Drawing.Color.Empty;
+            BUT_Mark8.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(BUT_Mark8, "BUT_Mark8");
+            BUT_Mark8.Name = "BUT_Mark8";
+            BUT_Mark8.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            BUT_Mark8.UseVisualStyleBackColor = true;
+            BUT_Mark8.Click += new System.EventHandler(BUT_Mark8_Click);
+            //
+            // BUT_Mark9
+            //
+            BUT_Mark9.ColorMouseDown = System.Drawing.Color.Empty;
+            BUT_Mark9.ColorMouseOver = System.Drawing.Color.Empty;
+            BUT_Mark9.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(BUT_Mark9, "BUT_Mark9");
+            BUT_Mark9.Name = "BUT_Mark9";
+            BUT_Mark9.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            BUT_Mark9.UseVisualStyleBackColor = true;
+            BUT_Mark9.Click += new System.EventHandler(BUT_Mark9_Click);
+            //
+            // BUT_Mark10
+            //
+            BUT_Mark10.ColorMouseDown = System.Drawing.Color.Empty;
+            BUT_Mark10.ColorMouseOver = System.Drawing.Color.Empty;
+            BUT_Mark10.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(BUT_Mark10, "BUT_Mark10");
+            BUT_Mark10.Name = "BUT_Mark10";
+            BUT_Mark10.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            BUT_Mark10.UseVisualStyleBackColor = true;
+            BUT_Mark10.Click += new System.EventHandler(BUT_Mark10_Click);
+            //
+            // BUT_Mark11
+            //
+            BUT_Mark11.ColorMouseDown = System.Drawing.Color.Empty;
+            BUT_Mark11.ColorMouseOver = System.Drawing.Color.Empty;
+            BUT_Mark11.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(BUT_Mark11, "BUT_Mark11");
+            BUT_Mark11.Name = "BUT_Mark11";
+            BUT_Mark11.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            BUT_Mark11.UseVisualStyleBackColor = true;
+            BUT_Mark11.Click += new System.EventHandler(BUT_Mark11_Click);
+            //
+            // BUT_Mark12
+            //
+            BUT_Mark12.ColorMouseDown = System.Drawing.Color.Empty;
+            BUT_Mark12.ColorMouseOver = System.Drawing.Color.Empty;
+            BUT_Mark12.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(BUT_Mark12, "BUT_Mark12");
+            BUT_Mark12.Name = "BUT_Mark12";
+            BUT_Mark12.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            BUT_Mark12.UseVisualStyleBackColor = true;
+            BUT_Mark12.Click += new System.EventHandler(BUT_Mark12_Click);
             // 
             // label6
             // 
@@ -4312,6 +4488,18 @@ namespace MissionPlanner.GCSViews
         public static System.Windows.Forms.TextBox TB_AssetPosConfigLat_12;
         public static System.Windows.Forms.TextBox TB_AssetPosConfigLng_12;
         public static System.Windows.Forms.TextBox TB_AssetPosConfigAlt_12;
+        public static Controls.MyButton BUT_Mark1;
+        public static Controls.MyButton BUT_Mark2;
+        public static Controls.MyButton BUT_Mark3;
+        public static Controls.MyButton BUT_Mark4;
+        public static Controls.MyButton BUT_Mark5;
+        public static Controls.MyButton BUT_Mark6;
+        public static Controls.MyButton BUT_Mark7;
+        public static Controls.MyButton BUT_Mark8;
+        public static Controls.MyButton BUT_Mark9;
+        public static Controls.MyButton BUT_Mark10;
+        public static Controls.MyButton BUT_Mark11;
+        public static Controls.MyButton BUT_Mark12;
         public static System.Windows.Forms.Label LBL_AssetIp;
         public static System.Windows.Forms.TextBox TB_AssetIp;
         public static System.Windows.Forms.TextBox TB_MoveDist;
@@ -4475,5 +4663,7 @@ namespace MissionPlanner.GCSViews
         public static Controls.QuickView assetSeqNum;
         private System.Windows.Forms.Button updateAssetBtn;
         public static System.Windows.Forms.Button updateAssetPosBtn;
+        public static System.Windows.Forms.Button saveAssetPosBtn;
+        public static System.Windows.Forms.Button loadAssetPosBtn;
     }
 }
