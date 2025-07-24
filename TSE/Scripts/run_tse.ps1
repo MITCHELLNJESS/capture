@@ -1,24 +1,14 @@
-# Add docker command to environment PATH
-$env:Path += ";C:\Program Files\Docker\Docker\resources\bin"
-
-# Run the Docker gstreamer container
-$containerId = docker run --name airsim-gstreamer -d --rm -p 41451:41451 -p 5600:5600/udp airsim-gstreamer
-
-Write-Host "AirSim-gstreamer container started with ID: $containerId"
-
 # Launch Mission Planner
 Write-Host "Launching Mission Planner..."
 Start-Process "C:\Users\Brian\Dev\capture\C2\MissionPlanner\bin\Debug\net461\MissionPlanner.exe"
 
-Write-Host "Press Ctrl+C to stop (only press once)..."
+# Launch A3
+Write-Host "Launching A3..."
+Start-Process -FilePath "powershell" -ArgumentList "-NoExit", "-Command", "& { & 'C:\Users\Brian\miniconda3\Scripts\activate.bat' 'a3-venv'; & 'C:\Users\Brian\miniconda3\envs\a3-venv\python.exe' 'C:\Users\Brian\Dev\capture\C2\A3_System\scripts\yolo_live_inference.py' }" -WorkingDirectory "C:\Users\Brian\Dev\capture\C2\A3_System\scripts"
 
-# Trap Ctrl+C or script exit
-try {
-    while ($true) {
-        Start-Sleep -Seconds 1
-    }
-}
-finally {
-    Write-Host "`nStopping container (do not break while this is executing)..."
-    docker stop $containerId
-}
+# Add docker command to environment PATH
+$env:Path += ";C:\Program Files\Docker\Docker\resources\bin"
+
+# Run the Docker gstreamer container
+Write-Host "Launching AirSim-gstreamer container..."
+docker run --name airsim-gstreamer -it --rm -p 41451:41451 -p 5600:5600/udp airsim-gstreamer
