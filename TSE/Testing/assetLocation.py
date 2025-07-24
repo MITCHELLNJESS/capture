@@ -29,7 +29,8 @@ start_lon = -77.49721299979501
 dist_m = 21.8
 
 # Bearing in degrees (azimuth: 0° is north, 90° is east, etc.)
-bearings = [60, 90, 120, 150, 180, 210]
+# bearings = [60, 90, 120, 150, 180, 210]
+bearings = [30, 0, 330, 300, 270, 240]
 assets = []
 
 # Calculate destination points
