@@ -5,6 +5,8 @@ import time
 client = airsim.MultirotorClient()
 client.confirmConnection()
 client.enableApiControl(True)
+client.reset()
+"""
 client.armDisarm(True)
 
 # Take off
@@ -25,5 +27,6 @@ client.landAsync().join()
 
 # Disarm and disable API control
 client.armDisarm(False)
+"""
 client.enableApiControl(False)
 print("Done!")
