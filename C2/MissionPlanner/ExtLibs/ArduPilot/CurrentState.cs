@@ -194,6 +194,8 @@ namespace MissionPlanner
         //It is true when we got a VFR_HUD message, so it can be used to get climbrate, instead of calculating it from time and alt change.
         private bool gotVFR = false;
 
+        public static CurrentState instance { get; set; }
+
         static CurrentState()
         {
             // set default telemrates
@@ -222,6 +224,8 @@ namespace MissionPlanner
 
         public CurrentState()
         {
+            instance = this;
+
             ResetInternals();
 
             var t = Type.GetType("Mono.Runtime");
@@ -748,6 +752,8 @@ namespace MissionPlanner
         [DisplayText("hygrohumi2 (c%)")]
         [GroupText("Sensor")]
         public ushort hygrohumi2 { get; set; }
+
+        public static float ch3in_Static { get; set; }
 
         //radio
         [GroupText("RadioIn")] public float ch1in { get; set; }
@@ -3399,6 +3405,8 @@ namespace MissionPlanner
                             ch7in = rcin.chan7_raw;
                             ch8in = rcin.chan8_raw;
 
+                            ch3in_Static = ch3in;
+
                             //percent
                             rxrssi = (int)(rcin.rssi / 255.0 * 100.0);
 
@@ -3428,6 +3436,8 @@ namespace MissionPlanner
                             ch14in = rcin.chan14_raw;
                             ch15in = rcin.chan15_raw;
                             ch16in = rcin.chan16_raw;
+
+                            ch3in_Static = ch3in;
 
                             // As per mavlink, rcin.rssi is 0-254, 0 being the worst and 254 being the best and 255 invalid/unknown
                             // get the percentage

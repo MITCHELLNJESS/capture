@@ -61,7 +61,9 @@ namespace MissionPlanner.GCSViews
             this.TXT_loiterrad = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.panelDD = new System.Windows.Forms.Panel();
             this.but_writewpfast = new MissionPlanner.Controls.MyButton();
+            this.BUT_ToAssetCreate = new MissionPlanner.Controls.MyButton();
             this.BUT_write = new MissionPlanner.Controls.MyButton();
             this.BUT_read = new MissionPlanner.Controls.MyButton();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -226,6 +228,7 @@ namespace MissionPlanner.GCSViews
             this.zoomToHomeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gDALOpacityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel5.SuspendLayout();
+            this.panelDD.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panelWaypoints.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Commands)).BeginInit();
@@ -317,6 +320,21 @@ namespace MissionPlanner.GCSViews
             this.BUT_read.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
             this.BUT_read.UseVisualStyleBackColor = true;
             this.BUT_read.Click += new System.EventHandler(this.BUT_read_Click);
+            // 
+            // panelDD
+            // 
+            this.panelDD.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelDD.Controls.Add(this.BUT_ToAssetCreate);
+            resources.ApplyResources(this.panelDD, "panelDD");
+            this.panelDD.Name = "panelDD";
+            // 
+            // BUT_ToAssetCreate
+            // 
+            resources.ApplyResources(this.BUT_ToAssetCreate, "BUT_ToAssetCreate");
+            this.BUT_ToAssetCreate.Name = "BUT_ToAssetCreate";
+            this.BUT_ToAssetCreate.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            this.BUT_ToAssetCreate.UseVisualStyleBackColor = true;
+            this.BUT_ToAssetCreate.Click += new System.EventHandler(this.BUT_ToAssetCreate_Click);
             // 
             // panel1
             // 
@@ -687,6 +705,7 @@ namespace MissionPlanner.GCSViews
             this.flowLayoutPanel1.Controls.Add(this.panel2);
             this.flowLayoutPanel1.Controls.Add(this.panel5);
             this.flowLayoutPanel1.Controls.Add(this.panel1);
+            this.flowLayoutPanel1.Controls.Add(this.panelDD);
             resources.ApplyResources(this.flowLayoutPanel1, "flowLayoutPanel1");
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             // 
@@ -1552,6 +1571,7 @@ namespace MissionPlanner.GCSViews
             this.Load += new System.EventHandler(this.FlightPlanner_Load);
             this.Resize += new System.EventHandler(this.Planner_Resize);
             this.panel5.ResumeLayout(false);
+            this.panelDD.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panelWaypoints.ResumeLayout(false);
@@ -1591,6 +1611,7 @@ namespace MissionPlanner.GCSViews
         public MyButton BUT_read;
         public MyButton BUT_write;
         public Panel panel5;
+        public Panel panelDD;
         public Panel panel1;
         public LinkLabel label4;
         public Label label3;
@@ -1680,6 +1701,7 @@ namespace MissionPlanner.GCSViews
         public ToolStripMenuItem setHomeHereToolStripMenuItem;
         public ToolStripMenuItem currentPositionToolStripMenuItem;
         public MyButton but_writewpfast;
+        public MyButton BUT_ToAssetCreate;
         public ComboBox cmb_missiontype;
         public ContextMenuStrip contextMenuStripPoly;
         public ToolStripMenuItem drawAPolygonToolStripMenuItem;

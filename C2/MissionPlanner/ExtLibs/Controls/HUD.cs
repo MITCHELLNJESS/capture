@@ -17,6 +17,12 @@ using OpenTK.Graphics.OpenGL;
 using System.Linq;
 using System.Runtime.InteropServices;
 using MissionPlanner.Utilities;
+//using MissionPlanner.ArduPilot;
+using MissionPlanner.Controls;
+using MissionPlanner.GeoRef;
+//using MissionPlanner.Joystick;
+using MissionPlanner.Log;
+//using MissionPlanner.Maps;
 #if !LIB
 using SvgNet.SvgGdi;
 #endif
@@ -24,6 +30,9 @@ using MathHelper = MissionPlanner.Utilities.MathHelper;
 using PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat;
 using SkiaSharp.Views.Desktop;
 using SkiaSharp;
+using A3MP_Shared;
+using static alglib;
+using System.Security.Cryptography.X509Certificates;
 
 
 // Control written by Michael Oborne 2011
@@ -329,6 +338,12 @@ namespace MissionPlanner.Controls
         private string _mode = "Manual";
         private DateTime _modechanged = DateTime.MinValue;
         private int _wpno = 0;
+        private int _boundingBoxWidth = 0;
+        private int _boundingBoxHeight = 0;
+        private int _boundingBoxLeft = 0;
+        private int _boundingBoxTop = 0;
+        public int[] _command = { -9999, -9999, -9999, -9999 };
+        public int _crosshairsOffset = 0;
 
         float _AOA = 0;
         float _SSA = 0;
@@ -924,8 +939,95 @@ namespace MissionPlanner.Controls
             }
         }
 
+        public int boundingBoxWidth
+        {
+            get { return _boundingBoxWidth;  }
+            set
+            {
+                if (boundingBoxWidth != value)
+                {
+                    _boundingBoxWidth = value;
+                    this.Invalidate();
+                }
+            }
+        }
+
+        public int boundingBoxHeight
+        {
+            get { return _boundingBoxHeight; }
+            set
+            {
+                if (boundingBoxHeight != value)
+                {
+                    _boundingBoxHeight = value;
+                    this.Invalidate();
+                }
+            }
+        }
+
+        public int boundingBoxLeft
+        {
+            get { return _boundingBoxLeft; }
+            set
+            {
+                if (boundingBoxLeft != value)
+                {
+                    _boundingBoxLeft = value;
+                    this.Invalidate();
+                }
+            }
+        }
+
+        public int boundingBoxTop
+        {
+            get { return _boundingBoxTop; }
+            set
+            {
+                if (boundingBoxTop != value)
+                {
+                    _boundingBoxTop = value;
+                    this.Invalidate();
+                }
+            }
+        }
+
+        public int[] command
+        {
+            get { return _command; }
+            set
+            {
+                if (command != value)
+                {
+                    _command = value;
+                    this.Invalidate();
+                }
+            }
+        }
+
+        public int crosshairsOffset
+        {
+            get { return _crosshairsOffset; }
+            set
+            {
+                if (crosshairsOffset != value)
+                {
+                    _crosshairsOffset = value;
+                    this.Invalidate();
+                }
+            }
+        }
+
         private bool statuslast = false;
         private DateTime armedtimer = DateTime.MinValue;
+
+        public static int alignX = 0;
+        public static int alignY = 0;
+        public static int cameraWidth = 0;
+        public static int cameraHeight = 0;
+        internal static int lastCenterX = 0;
+        internal static int lastCenterY = 0;
+        internal static int boxTimeout = 4;
+        internal static int boxTimeoutCount = 0;
 
         public struct Custom
         {
@@ -2184,16 +2286,98 @@ namespace MissionPlanner.Controls
                         new Pen(Color.FromArgb(200, this._redPen.Color.R, this._redPen.Color.G, this._redPen.Color.B),
                             4.0f))
                     {
-                        // left
-                        graphicsObject.DrawLine(redtemp, centercircle.Left - halfwidth / 5, 0, centercircle.Left, 0);
-                        // right
-                        graphicsObject.DrawLine(redtemp, centercircle.Right, 0, centercircle.Right + halfwidth / 5, 0);
-                        // center point
-                        graphicsObject.DrawLine(redtemp, 0 - 1, 0, centercircle.Right - halfwidth / 3,
-                            0 + halfheight / 10);
-                        graphicsObject.DrawLine(redtemp, 0 + 1, 0, centercircle.Left + halfwidth / 3,
-                            0 + halfheight / 10);
+                        // Get the center coordinates of the centercircle
+                        float centerX = (centercircle.Left + centercircle.Right) / 2;
+                        float centerY = (centercircle.Top + centercircle.Bottom) / 2 + this._crosshairsOffset;
+
+                        // Set the length of the crosshairs
+                        float crosshairLength = Math.Min(halfwidth, halfheight) / 5;
+
+                        // Horizontal line (left to right)
+                        graphicsObject.DrawLine(redtemp,
+                            centerX - crosshairLength, centerY,
+                            centerX + crosshairLength, centerY);
+
+                        // Vertical line (top to bottom)
+                        graphicsObject.DrawLine(redtemp,
+                            centerX, centerY - crosshairLength,
+                            centerX, centerY + crosshairLength);
+
+                        int boxWidth = 0;
+                        int boxHeight = 0;
+                        int boxLeft = 0;
+                        int boxTop = 0;
+
+                        if (boxTimeoutCount++ == boxTimeout)
+                        {
+                            boxWidth = 0;
+                            boxHeight = 0;
+                            boxLeft = 0;
+                            boxTop = 0;
+                            boxTimeoutCount = 0;
+                        }
+
+                        if ((_command[0] != -9999) && (_command[1] != -9999))
+                        {
+                            Console.Write("HUD width/height: (");
+                            Console.Write(this.Width);
+                            Console.Write(", ");
+                            Console.Write(this.Height);
+                            Console.WriteLine(")");
+
+                            Console.Write("Box coordinates from A3: (");
+                            Console.Write(_command[0]);
+                            Console.Write(", ");
+                            Console.Write(_command[1]);
+                            Console.WriteLine(")");
+
+                            double leftOffsetA3 = Convert.ToDouble(_command[0]) - (Convert.ToDouble(cameraWidth) / 2.0);
+                            double topOffsetA3 = Convert.ToDouble(_command[1]) - (Convert.ToDouble(cameraHeight) / 2.0);
+
+                            Console.Write("Box coordinates from A3 (Relative to Center): (");
+                            Console.Write(leftOffsetA3);
+                            Console.Write(", ");
+                            Console.Write(topOffsetA3);
+                            Console.WriteLine(")");
+
+                            double cameraToHudX = Convert.ToDouble(this.Width) / Convert.ToDouble(cameraWidth);
+                            double cameraToHudY = Convert.ToDouble(this.Height) / Convert.ToDouble(cameraHeight);
+
+                            Console.Write("Box coordinates on HUD (Relative to Center): (");
+                            Console.Write(leftOffsetA3 * cameraToHudX);
+                            Console.Write(", ");
+                            Console.Write(topOffsetA3 * cameraToHudY);
+                            Console.WriteLine(")");
+
+                            boxWidth = Convert.ToInt32(Convert.ToDouble(_command[2]) * cameraToHudX);
+                            boxHeight = Convert.ToInt32(Convert.ToDouble(_command[3]) * cameraToHudY);
+
+                            Console.Write("Box width/height on HUD: (");
+                            Console.Write(boxWidth);
+                            Console.Write(", ");
+                            Console.Write(boxHeight);
+                            Console.WriteLine(")");
+
+                            boxLeft = Convert.ToInt32((leftOffsetA3 * cameraToHudX) - (Convert.ToDouble(boxWidth) / 2.0));
+                            boxTop = Convert.ToInt32((topOffsetA3 * cameraToHudY) - (Convert.ToDouble(boxHeight) / 2.0));
+
+                            Console.Write("Box left/top offsets on HUD: (");
+                            Console.Write(boxLeft);
+                            Console.Write(", ");
+                            Console.Write(boxTop);
+                            Console.WriteLine(")");
+
+                            boxTimeoutCount = 0;
+                        }
+
+                        // Create bounding box
+                        Rectangle boundingBox = new Rectangle(boxLeft, boxTop, boxWidth, boxHeight);
+
+                        graphicsObject.DrawRectangle(redtemp, boundingBox);
+
                     }
+
+                    
                 }
 
                 // Flight Path vector
@@ -3778,6 +3962,26 @@ namespace MissionPlanner.Controls
 
             Refresh();
         }
+
+        // Draw Bounding Box
+
+        //public class MyDrawingHelper
+        //{
+        //    public void DrawBoundingBox(Graphics graphics, Pen pen, Point center, int width, int height)
+        //    {
+        //        // Calculate top-left corner
+        //        int topLeftX = center.X - width / 2;
+        //        int topLeftY = center.Y - height / 2;
+
+        //        // Draw the rectangle
+        //        graphics.DrawRectangle(pen, topLeftX, topLeftY, width, height);
+        //    }
+        //}
+        //private void MyControl_Paint(object sender, PaintEventArgs e)
+        //{
+        //    var drawer = new MyDrawingHelper();
+        //    drawer.DrawBoundingBox(e.Graphics, new Pen(Color.Red, 2), new Point(150, 150), 80, 50);
+        //}
 
         [Browsable(false)]
         public new bool VSync

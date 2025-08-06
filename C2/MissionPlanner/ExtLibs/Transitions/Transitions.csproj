@@ -9,6 +9,7 @@
     <DebugType>portable</DebugType>
     <DebugSymbols>True</DebugSymbols>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Platforms>AnyCPU;x64</Platforms>
 
   </PropertyGroup>
 

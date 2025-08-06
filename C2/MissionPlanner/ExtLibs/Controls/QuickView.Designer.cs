@@ -50,6 +50,6 @@ namespace MissionPlanner.Controls
 
         #endregion
 
-        private System.Windows.Forms.ToolTip toolTip1;
+        public System.Windows.Forms.ToolTip toolTip1;
     }
 }

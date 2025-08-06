@@ -1,0 +1,14 @@
+C:\Users\barre\git\drakos-dynamics-c2-tse\C2\TcpTest\C2Test\MockAsset\bin\Debug\net8.0\MockAsset.exe
+C:\Users\barre\git\drakos-dynamics-c2-tse\C2\TcpTest\C2Test\MockAsset\bin\Debug\net8.0\MockAsset.deps.json
+C:\Users\barre\git\drakos-dynamics-c2-tse\C2\TcpTest\C2Test\MockAsset\bin\Debug\net8.0\MockAsset.runtimeconfig.json
+C:\Users\barre\git\drakos-dynamics-c2-tse\C2\TcpTest\C2Test\MockAsset\bin\Debug\net8.0\MockAsset.dll
+C:\Users\barre\git\drakos-dynamics-c2-tse\C2\TcpTest\C2Test\MockAsset\bin\Debug\net8.0\MockAsset.pdb
+C:\Users\barre\git\drakos-dynamics-c2-tse\C2\TcpTest\C2Test\MockAsset\obj\Debug\net8.0\MockAsset.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\barre\git\drakos-dynamics-c2-tse\C2\TcpTest\C2Test\MockAsset\obj\Debug\net8.0\MockAsset.AssemblyInfoInputs.cache
+C:\Users\barre\git\drakos-dynamics-c2-tse\C2\TcpTest\C2Test\MockAsset\obj\Debug\net8.0\MockAsset.AssemblyInfo.cs
+C:\Users\barre\git\drakos-dynamics-c2-tse\C2\TcpTest\C2Test\MockAsset\obj\Debug\net8.0\MockAsset.csproj.CoreCompileInputs.cache
+C:\Users\barre\git\drakos-dynamics-c2-tse\C2\TcpTest\C2Test\MockAsset\obj\Debug\net8.0\MockAsset.dll
+C:\Users\barre\git\drakos-dynamics-c2-tse\C2\TcpTest\C2Test\MockAsset\obj\Debug\net8.0\refint\MockAsset.dll
+C:\Users\barre\git\drakos-dynamics-c2-tse\C2\TcpTest\C2Test\MockAsset\obj\Debug\net8.0\MockAsset.pdb
+C:\Users\barre\git\drakos-dynamics-c2-tse\C2\TcpTest\C2Test\MockAsset\obj\Debug\net8.0\MockAsset.genruntimeconfig.cache
+C:\Users\barre\git\drakos-dynamics-c2-tse\C2\TcpTest\C2Test\MockAsset\obj\Debug\net8.0\ref\MockAsset.dll

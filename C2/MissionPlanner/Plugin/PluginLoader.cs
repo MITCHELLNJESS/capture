@@ -206,6 +206,8 @@ namespace MissionPlanner.Plugin
                           Path.DirectorySeparatorChar;
 
             log.Info("Plugin path: "+path);
+            //System.Windows.Forms.MessageBox.Show($"Plugin folder: {path}");
+
 
             if (!Directory.Exists(path))
                 return;
@@ -303,7 +305,8 @@ namespace MissionPlanner.Plugin
 
             String[] files = Directory.GetFiles(path, "*.dll");
             foreach (var s in files)
-                Load(Path.Combine(Environment.CurrentDirectory, s));
+                //Load(Path.Combine(Environment.CurrentDirectory, s));
+                Load(s);
 
             InitPlugin(Assembly.GetAssembly(typeof(PluginLoader)), "self");
 

@@ -10,11 +10,18 @@
     <DebugSymbols>true</DebugSymbols>
     <Description />
     <NeutralLanguage>en</NeutralLanguage>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>TRACE;DEBUG;MONO;NETSTANDARD2_0</DefineConstants>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <DefineConstants>TRACE;DEBUG;MONO;NETSTANDARD2_0</DefineConstants>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>TRACE;MONO;RELEASE;NETSTANDARD2_0;RELEASE;NETSTANDARD2_0;RELEASE;NETSTANDARD2_0;MONO;RELEASE;NETSTANDARD2_0;RELEASE;NETSTANDARD2_0;RELEASE;NETSTANDARD2_0;RELEASE;NETSTANDARD2_0</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <DefineConstants>TRACE;MONO;RELEASE;NETSTANDARD2_0;RELEASE;NETSTANDARD2_0;RELEASE;NETSTANDARD2_0;MONO;RELEASE;NETSTANDARD2_0;RELEASE;NETSTANDARD2_0;RELEASE;NETSTANDARD2_0;RELEASE;NETSTANDARD2_0</DefineConstants>
   </PropertyGroup>
   <ItemGroup>

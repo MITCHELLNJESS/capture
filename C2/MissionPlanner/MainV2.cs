@@ -1986,6 +1986,8 @@ namespace MissionPlanner
 
             log.Info("MainV2_FormClosing");
 
+            GCSViews.FlightData.mbRunning = false;
+
             log.Info("GMaps write cache");
             // speed up tile saving on exit
             GMap.NET.GMaps.Instance.CacheOnIdleRead = false;
