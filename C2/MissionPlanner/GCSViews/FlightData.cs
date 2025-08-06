@@ -1,8 +1,11 @@
 using DirectShowLib;
+using Dowding.Model;
 using GMap.NET;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
 using log4net;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.Scripting.Utils;
 using MissionPlanner.ArduPilot;
 using MissionPlanner.Controls;
 using MissionPlanner.GeoRef;
@@ -20,23 +23,52 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Dowding.Model;
-using Microsoft.Scripting.Utils;
 using WebCamService;
 using ZedGraph;
+using static IronPython.Modules._ast;
+using static MissionPlanner.GCSViews.FlightPlanner;
 using LogAnalyzer = MissionPlanner.Utilities.LogAnalyzer;
 using TableLayoutPanelCellPosition = System.Windows.Forms.TableLayoutPanelCellPosition;
 using UnauthorizedAccessException = System.UnauthorizedAccessException;
+using System.Web.SessionState;
+using A3MP_Shared;
 
 // written by michael oborne
 
 namespace MissionPlanner.GCSViews
 {
+    public enum teMission
+    {
+        eeNone,
+        eeMarked,
+        eeFob,
+        eeAssetOne,
+        eeAssetTwo,
+        eeAssetThree,
+        eeAssetFour,
+        eeAssetFive,
+        eeAssetSix,
+        eeAssetSeven,
+        eeAssetEight,
+        eeAssetNine,
+        eeAssetTen,
+        eeAssetEleven,
+        eeAssetTwelve
+    }
+
+    public enum teButtonType
+    {
+        eeNone,
+        eeStartStop,
+        eeSetDistance
+    }
     public partial class FlightData : MyUserControl, IActivate, IDeactivate
     {
         public static FlightData instance;
@@ -53,6 +85,100 @@ namespace MissionPlanner.GCSViews
         internal static GMapOverlay rallypointoverlay;
         internal static GMapOverlay tfrpolygons;
         internal GMapMarker CurrentGMapMarker;
+        internal static GMapOverlay demoFieldOverlay;
+
+        internal static Color colorNW = Color.FromArgb(50, 255, 0, 0);
+        internal static Color colorSE = Color.FromArgb(50, 0, 0, 255);
+        internal static bool isRedTeam = true;
+        internal static bool isNWHome = true;
+        internal static bool isNWRed = true;
+        internal static double fieldCenterLat = 0;
+        internal static double fieldCenterLng = 0;
+        internal static double adjustAngle_deg = 0;
+        internal static GMapPolygon outerBoundNW_Red;
+        internal static GMapPolygon outerBoundNW_Blue;
+        internal static GMapPolygon outerBoundSE_Red;
+        internal static GMapPolygon outerBoundSE_Blue;
+        internal static GMapPolygon outerBound;
+        internal static GMapPolygon innerBound;
+        internal static GMapRoute boundaryLine;
+        internal static GMapPolygon FOBNW_Red;
+        internal static GMapPolygon FOBNW_Blue;
+        internal static GMapPolygon FOBSE_Red;
+        internal static GMapPolygon FOBSE_Blue;
+        internal static GMapPolygon assetsNW_red_1;
+        internal static GMapPolygon assetsNW_red_2;
+        internal static GMapPolygon assetsNW_red_3;
+        internal static GMapPolygon assetsNW_red_4;
+        internal static GMapPolygon assetsNW_red_5;
+        internal static GMapPolygon assetsNW_red_6;
+        internal static GMapPolygon assetsNW_blue_1;
+        internal static GMapPolygon assetsNW_blue_2;
+        internal static GMapPolygon assetsNW_blue_3;
+        internal static GMapPolygon assetsNW_blue_4;
+        internal static GMapPolygon assetsNW_blue_5;
+        internal static GMapPolygon assetsNW_blue_6;
+        internal static GMapPolygon assetsSE_red_1;
+        internal static GMapPolygon assetsSE_red_2;
+        internal static GMapPolygon assetsSE_red_3;
+        internal static GMapPolygon assetsSE_red_4;
+        internal static GMapPolygon assetsSE_red_5;
+        internal static GMapPolygon assetsSE_red_6;
+        internal static GMapPolygon assetsSE_blue_1;
+        internal static GMapPolygon assetsSE_blue_2;
+        internal static GMapPolygon assetsSE_blue_3;
+        internal static GMapPolygon assetsSE_blue_4;
+        internal static GMapPolygon assetsSE_blue_5;
+        internal static GMapPolygon assetsSE_blue_6;
+        internal static bool isDemoFieldShown = false;
+        internal static bool isDemoFieldGenerated = false;
+        internal static bool isFlightPlanReady = false;
+        internal static bool isFlightPlannerReady = false;
+        internal static double fobLatNW = 0;
+        internal static double fobLngNW = 0;
+        internal static double fobLatSE = 0;
+        internal static double fobLngSE = 0;
+        internal static List<PointLatLngAlt> assetLocs = new List<PointLatLngAlt>();
+        internal static double assetLatMarked = 0;
+        internal static double assetLngMarked = 0;
+        internal static double assetAltMarked = 0;
+        internal static int assetMarkedIdx = 12;
+        internal static teMission mission = teMission.eeNone;
+        internal static teButtonType buttonType = teButtonType.eeStartStop;
+
+        internal static PointLatLng redFob = new PointLatLng(0, 0);
+        internal static PointLatLng blueFob = new PointLatLng(0, 0);
+
+        internal static bool mbA3Land = false;
+
+        internal bool mbGoingForward = false;
+        internal bool mbGoingBackward = false;
+        internal bool mbGoingLeft = false;
+        internal bool mbGoingRight = false;
+        internal bool mbGoingUp = false;
+        internal bool mbGoingDown = false;
+
+        public static int alignX = 0;
+        public static int alignY = 0;
+        public static int boundingBoxWidth = 0;
+        public static int boundingBoxHeight = 0;
+        public static int boundingBoxLeft = 0;
+        public static int boundingBoxTop = 0;
+        public static int cameraWidth = 640;
+        public static int cameraHeight = 480;
+        //public static int cameraWidth = 1920;
+        //public static int cameraHeight = 1080;
+        internal static int lastCenterX = 0;
+        internal static int lastCenterY = 0;
+        internal static int alignTimeout = 4;
+        internal static int alignTimeoutCount = 0;
+        internal static int alignGate = 50;
+        internal static bool doAlign = false;
+        internal static bool doMove = false;
+        internal static double lastAlignDist = -1;
+        public static int altZero = 0;
+
+        public static bool mbRunning = true;
 
         internal PointLatLng MouseDownStart;
 
@@ -178,6 +304,12 @@ namespace MissionPlanner.GCSViews
 
         string updateBindingSourceThreadName = "";
 
+        private MyButton BUT_close;
+
+        public static bool isAligned;
+        public int [] receivedA3Output; //check continuously for this - see HUD.cs test log
+
+
         public enum actions
         {
             Loiter_Unlim,
@@ -232,11 +364,1908 @@ namespace MissionPlanner.GCSViews
 
         private bool transponderNeverConnected = true;
 
+        static void AlignThread()
+        {
+            try
+            {
+                MoveDirection(
+                    Convert.ToInt32(alignX),
+                    Convert.ToInt32(alignY),
+                    0,
+                    Convert.ToDouble(TB_MoveDist.Text),
+                    Convert.ToSingle(TB_MoveSpeed.Text));
+            }
+            catch
+            {
+                doAlign = false;
+                CustomMessageBox.Show("Please enter valid speed and distance.", Strings.ERROR);
+            }
+            Console.WriteLine("Aligning!");
+
+            while (doAlign && mbRunning)
+            {
+                double currAlignDist = Math.Sqrt((alignX * alignX) + (alignY * alignY));
+                // If we are aligned
+                if ((currAlignDist < alignGate) && !((alignX == 0) && (alignY == 0)))
+                {
+                    Console.WriteLine("Aligned!");
+                    AlignStop();
+                    doAlign = false;
+                    lastAlignDist = -1;
+                    if (mbA3Land)
+                    {
+                        MainV2.comPort.setMode("LAND");
+                    }
+                }
+                // Retarget asset
+                try
+                {
+                    MoveDirection(
+                        Convert.ToInt32(alignX),
+                        Convert.ToInt32(alignY),
+                        0,
+                        Convert.ToDouble(TB_MoveDist.Text),
+                        Convert.ToSingle(TB_MoveSpeed.Text));
+                }
+                catch
+                {
+                    doAlign = false;
+                    CustomMessageBox.Show("Please enter valid speed and distance.", Strings.ERROR);
+                }
+                lastAlignDist = currAlignDist;
+            }
+
+            AlignStop();
+            BUT_Align.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            BUT_Align.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            BUT_Align.ColorMouseDown = BUT_Align.BGGradBot;
+            BUT_Align.ColorMouseOver = BUT_Align.BGGradBot;
+            doAlign = false;
+            return;
+        }
+
+        //static void MoveThread(int anX, int anY)
+        //{
+        //    while (doMove)
+        //    {
+        //        try
+        //        {
+        //            MoveDirection(anX, anY, 0, Convert.ToDouble(TB_MoveDist.Text), Convert.ToSingle(TB_MoveSpeed.Text));
+        //        }
+        //        catch
+        //        {
+        //            doMove = false;
+        //            CustomMessageBox.Show("Please enter valid speed and distance.", Strings.ERROR);
+        //        }
+
+        //        System.Threading.Thread.Sleep(500);
+        //    }
+        //}
+
+        static void UpdateThrottleThread()
+        {
+            while(true && mbRunning)
+            {
+                int targetX = cameraWidth / 2;
+                int targetY = cameraHeight / 2; //cross hair x/y - 'center of screen'
+                int[] command = A3MP_MessageBus.GetCommandSnapshot();
+
+                Console.Write("Flight Data Received: ");
+                Console.Write(command[0]);
+                Console.Write(" ");
+                Console.Write(command[1]);
+                Console.Write(" ");
+                Console.Write(command[2]);
+                Console.Write(" ");
+                Console.WriteLine(command[3]);
+
+                myhud.command = command;
+                Console.Write("Crosshairs offset: ");
+                try
+                {
+                    Console.WriteLine(Convert.ToInt32(crosshairs_tb.Text));
+                    myhud.crosshairsOffset = Convert.ToInt32(crosshairs_tb.Text);
+                }
+                catch
+                {
+                    myhud.crosshairsOffset = 0;
+                }
+
+                if (alignTimeoutCount == alignTimeout)
+                {
+                    alignX = 0;
+                    alignY = 0;
+                }
+
+                if (
+                    (command[0] != -9999) &&
+                    (command[1] != -9999) &&
+                    (command[0] != lastCenterX) &&
+                    (command[1] != lastCenterY) &&
+                    (command[0] < 3000) &&
+                    (command[0] > -3000) &&
+                    (command[1] < 3000) &&
+                    (command[1] > -3000)
+                )
+                {
+                    Console.Write("command[0] = ");
+                    Console.WriteLine(command[0]);
+                    Console.Write("command[1] = ");
+                    Console.WriteLine(command[1]);
+                    Console.Write("targetX = ");
+                    Console.WriteLine(targetX);
+                    Console.Write("targetY = ");
+                    Console.WriteLine(targetY);
+                    alignX = command[0] - targetX;
+                    alignY = targetY - command[1] + myhud.crosshairsOffset;
+                    alignTimeoutCount = 0;
+                }
+                else
+                {
+                    alignTimeoutCount++;
+                }
+
+                lastCenterX = command[0];
+                lastCenterY = command[1];
+
+                Console.Write("alignX = ");
+                Console.WriteLine(alignX);
+                Console.Write("alignY = ");
+                Console.WriteLine(alignY);
+
+                throttleLevel.number = MissionPlanner.CurrentState.ch3in_Static;
+                Console.Write("Throttle: ");
+                Console.WriteLine(throttleLevel.number);
+
+                if (throttleLevel.number >= 1000 && throttleLevel.number <= 2000)
+                {
+                    double percentage = ((throttleLevel.number - 1000) / 1000);
+                    int red = Convert.ToInt32(255 * percentage);
+                    int green = Convert.ToInt32(255 * (1 - percentage));
+                    int blue = 0;
+                    throttleLevel.numberColor = System.Drawing.Color.FromArgb(red, green, blue);
+                }
+
+                //if ((MainV2.comPort.MAV.cs.mode != "Guided") && (FlightData.instance.checkBoxAug.Checked))
+                //{
+                //    FlightData.instance.checkBoxAug.Checked = false;
+                //}
+
+                System.Threading.Thread.Sleep(500);
+            }
+        }
+        static void PrintUavCoordsThread()
+        {
+            while (true && mbRunning)
+            {
+                System.Threading.Thread.Sleep(500);
+
+                if (FlightData.coords1.Lat == 0 && FlightData.coords1.Lng == 0)
+                {
+                    FlightData.labelInBounds.Text = "ARV Position: Awaiting Data";
+                    FlightData.labelInBounds.BackColor = System.Drawing.Color.Black;
+                    FlightData.labelInBounds.ForeColor = System.Drawing.Color.White;
+                }
+                else
+                {
+                    if (IsPointInCircle(FlightData.coords1.Lat, FlightData.coords1.Lng, fieldCenterLat, fieldCenterLng, 72.5))
+                    {
+                        if (IsInNorthwestTerritory(FlightData.coords1.Lat, FlightData.coords1.Lng, fieldCenterLat, fieldCenterLng, 72.5))
+                        {
+                            if (FlightData.isNWHome)
+                            {
+                                FlightData.labelInBounds.Text = "ARV Position: In Friendly Territory";
+                                FlightData.labelInBounds.BackColor = System.Drawing.Color.Green;
+                                FlightData.labelInBounds.ForeColor = System.Drawing.Color.White;
+                                Console.WriteLine("In Friendly Territory");
+                            }
+                            else
+                            {
+                                FlightData.labelInBounds.Text = "ARV Position: In Opponents' Territory";
+                                FlightData.labelInBounds.BackColor = System.Drawing.Color.Yellow;
+                                FlightData.labelInBounds.ForeColor = System.Drawing.Color.Black;
+                                Console.WriteLine("In Opponents' Territory");
+                            }
+                        }
+                        else
+                        {
+                            if (!FlightData.isNWHome)
+                            {
+                                FlightData.labelInBounds.Text = "ARV Position: In Friendly Territory";
+                                FlightData.labelInBounds.BackColor = System.Drawing.Color.Green;
+                                FlightData.labelInBounds.ForeColor = System.Drawing.Color.White;
+                                Console.WriteLine("In Friendly Territory");
+                            }
+                            else
+                            {
+                                FlightData.labelInBounds.Text = "ARV Position: In Opponents' Territory";
+                                FlightData.labelInBounds.BackColor = System.Drawing.Color.Yellow;
+                                FlightData.labelInBounds.ForeColor = System.Drawing.Color.Black;
+                                Console.WriteLine("In Opponents' Territory");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        FlightData.labelInBounds.Text = "ARV Position: Outside Demo Boundaries";
+                        FlightData.labelInBounds.BackColor = System.Drawing.Color.Red;
+                        FlightData.labelInBounds.ForeColor = System.Drawing.Color.White;
+                        Console.WriteLine("Outside demo field");
+                    }
+                }
+            }
+        }
+
+        private void SetServo(int anServoNum, int anPwm)
+        {
+            try
+            {
+                if (MainV2.comPort.doCommand((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, MAVLink.MAV_CMD.DO_SET_SERVO, anServoNum, anPwm, 0, 0, 0, 0, 0))
+                {
+                    //TXT_rcchannel.BackColor = Color.Red;
+                }
+                else
+                {
+                    CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
+                }
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox.Show(Strings.CommandFailed + ex.ToString(), Strings.ERROR);
+            }
+        }
+
+        private void DFThread(int anMotor, int anPwm, int anPwmStop, double arTime_s)
+        {
+            // Activate motor 
+            SetServo(anMotor, anPwm);
+
+            // Wait for motor to move to open position
+            System.Threading.Thread.Sleep(Convert.ToInt32(arTime_s * 1000));
+
+            // Stop motor
+            SetServo(anMotor, anPwmStop);
+        }
+
+        private void BUT_DFClose_Click(object sender, EventArgs e)
+        {
+            // Initiate close procedure
+            Thread thread1 = new Thread(() => DFThread(
+                Convert.ToInt32(CMB_DFMotor1.Text),
+                Convert.ToInt32(TB_DFClosePwm1.Text),
+                Convert.ToInt32(TB_DFStopPwm1.Text),
+                Convert.ToDouble(TB_DFCloseTime1.Text)));
+            Thread thread2 = new Thread(() => DFThread(
+                Convert.ToInt32(CMB_DFMotor2.Text),
+                Convert.ToInt32(TB_DFClosePwm2.Text),
+                Convert.ToInt32(TB_DFStopPwm2.Text),
+                Convert.ToDouble(TB_DFCloseTime2.Text)));
+            thread1.IsBackground = true;
+            thread2.IsBackground = true;
+            thread1.Start();
+            thread2.Start();
+        }
+
+        private void BUT_DFOpen_Click(object sender, EventArgs e)
+        {
+            // Initiate open procedure
+            Thread thread1 = new Thread(() => DFThread(
+                Convert.ToInt32(CMB_DFMotor1.Text),
+                Convert.ToInt32(TB_DFOpenPwm1.Text),
+                Convert.ToInt32(TB_DFStopPwm1.Text),
+                Convert.ToDouble(TB_DFOpenTime1.Text)));
+            Thread thread2 = new Thread(() => DFThread(
+                Convert.ToInt32(CMB_DFMotor2.Text),
+                Convert.ToInt32(TB_DFOpenPwm2.Text),
+                Convert.ToInt32(TB_DFStopPwm2.Text),
+                Convert.ToDouble(TB_DFOpenTime2.Text)));
+            thread1.IsBackground = true;
+            thread2.IsBackground = true;
+            thread1.Start();
+            thread2.Start();
+        }
+
+        static void ConnectToAssetThread()
+        {
+            int port = 23;
+
+            // Create a new TcpClient object
+            TcpClient client = new TcpClient();
+
+            try
+            {
+                // Connect to the Telnet server
+                client.Connect(TB_AssetIp.Text, port);
+                //client.Connect("192.168.0.100", port);
+            }
+            catch (Exception ex)
+            {
+                // Print any errors
+                Console.WriteLine("Error: " + ex.Message);
+            }
+
+            try
+            {
+                if (client.Connected)
+                {
+                    // Get the network stream
+                    NetworkStream stream = client.GetStream();
+
+                    // Create request for asset position data
+                    char[] positionRequest = new char[] { 'P', 'O', 'S', '\n' };
+                    byte[] positionRequestBytes = Encoding.ASCII.GetBytes(positionRequest);
+                    stream.Write(positionRequestBytes, 0, positionRequestBytes.Length);
+
+                    byte[] buffer = new byte[32];
+                    stream.Read(buffer, 0, buffer.Length);
+
+                    // Arduino zero-pads the int to match the size of the doubles
+                    int latOffset = sizeof(double);
+                    int lonOffset = latOffset + sizeof(double);
+                    int altOffset = lonOffset + sizeof(double);
+
+                    byte[] seqNumBytes = buffer.Take(sizeof(int)).ToArray();
+                    byte[] latBytes = buffer.Skip(latOffset).Take(sizeof(double)).ToArray();
+                    byte[] lonBytes = buffer.Skip(lonOffset).Take(sizeof(double)).ToArray();
+                    byte[] altBytes = buffer.Skip(altOffset).Take(sizeof(double)).ToArray();
+
+                    PositionData positionData = new PositionData();
+                    positionData.seqNum = BitConverter.ToInt32(buffer, 0);
+                    positionData.lat = BitConverter.ToDouble(latBytes, 0);
+                    positionData.lon = BitConverter.ToDouble(lonBytes, 0);
+                    positionData.alt = BitConverter.ToDouble(altBytes, 0);
+
+                    Console.WriteLine("SeqNum: " + positionData.seqNum + " Lat: " + positionData.lat + " Lon: " + positionData.lon + " Alt: " + positionData.alt);
+
+                    if ((positionData.lat == 0) && (positionData.lon == 0) && (positionData.alt == 0))
+                    {
+                        assetLat.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(254)))), ((int)(((byte)(86)))));
+                        assetLon.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(254)))), ((int)(((byte)(86)))));
+                        assetAlt.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(254)))), ((int)(((byte)(86)))));
+                        assetSeqNum.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(254)))), ((int)(((byte)(86)))));
+                        CustomMessageBox.Show("Connection to asset successful, no position data available.");
+                    }
+                    else
+                    {
+                        assetLat.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(83)))));
+                        assetLon.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(83)))));
+                        assetAlt.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(83)))));
+                        assetSeqNum.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(83)))));
+                    }
+
+                    assetLat.number = positionData.lat;
+                    assetLon.number = positionData.lon;
+                    assetAlt.number = positionData.alt;
+                    assetSeqNum.number = positionData.seqNum;
+
+                    assetLatMarked = positionData.lat;
+                    assetLngMarked = positionData.lon;
+                    assetAltMarked = positionData.alt;
+
+                    // Close the connection
+                    stream.Close();
+                }
+                else
+                {
+                    assetLat.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(96)))), ((int)(((byte)(91)))));
+                    assetLon.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(96)))), ((int)(((byte)(91)))));
+                    assetAlt.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(96)))), ((int)(((byte)(91)))));
+                    assetSeqNum.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(96)))), ((int)(((byte)(91)))));
+                    CustomMessageBox.Show("Connection to asset unsuccessful.");
+                    Console.WriteLine("Client failed to connect!");
+                }
+
+                // Close the connection
+                client.Close();
+
+            }
+            catch (Exception ex)
+            {
+                assetLat.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(96)))), ((int)(((byte)(91)))));
+                assetLon.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(96)))), ((int)(((byte)(91)))));
+                assetAlt.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(96)))), ((int)(((byte)(91)))));
+                assetSeqNum.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(96)))), ((int)(((byte)(91)))));
+
+                CustomMessageBox.Show("Connection to asset unsuccessful.");
+
+                // Print any errors
+                Console.WriteLine("Error: " + ex.Message);
+            }
+
+            AddAssetPois();
+        }
+
+        //static void GenerateMapThread()
+        //{
+
+        //}
+
+        private void CheckBoxAug_CheckStateChanged(object sender, EventArgs e)
+        {
+            // This code will execute when the checkbox's checked state changes (checked or unchecked).
+            if (!checkBoxAug.Checked)
+            {
+                Color dark = Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
+                BUT_Forward.BGGradTop = dark;
+                BUT_Forward.BGGradBot = dark;
+                BUT_Backward.BGGradTop = dark;
+                BUT_Backward.BGGradBot = dark;
+                BUT_Left.BGGradTop = dark;
+                BUT_Left.BGGradBot = dark;
+                BUT_Right.BGGradTop = dark;
+                BUT_Right.BGGradBot = dark;
+                BUT_Up.BGGradTop = dark;
+                BUT_Up.BGGradBot = dark;
+                BUT_Down.BGGradTop = dark;
+                BUT_Down.BGGradBot = dark;
+                BUT_Hov.BGGradTop = dark;
+                BUT_Hov.BGGradBot = dark;
+                BUT_Align.BGGradTop = dark;
+                BUT_Align.BGGradBot = dark;
+                BUT_Forward.ColorMouseDown = BUT_Forward.BGGradBot;
+                BUT_Forward.ColorMouseOver = BUT_Forward.BGGradBot;
+                BUT_Backward.ColorMouseDown = BUT_Backward.BGGradBot;
+                BUT_Backward.ColorMouseOver = BUT_Backward.BGGradBot;
+                BUT_Left.ColorMouseDown = BUT_Left.BGGradBot;
+                BUT_Left.ColorMouseOver = BUT_Left.BGGradBot;
+                BUT_Right.ColorMouseDown = BUT_Right.BGGradBot;
+                BUT_Right.ColorMouseOver = BUT_Right.BGGradBot;
+                BUT_Up.ColorMouseDown = BUT_Up.BGGradBot;
+                BUT_Up.ColorMouseOver = BUT_Up.BGGradBot;
+                BUT_Down.ColorMouseDown = BUT_Down.BGGradBot;
+                BUT_Down.ColorMouseOver = BUT_Down.BGGradBot;
+                BUT_Hov.ColorMouseDown = BUT_Hov.BGGradBot;
+                BUT_Hov.ColorMouseOver = BUT_Hov.BGGradBot;
+                BUT_Align.ColorMouseDown = BUT_Align.BGGradBot;
+                BUT_Align.ColorMouseOver = BUT_Align.BGGradBot;
+            }
+            else
+            {
+                if (MainV2.comPort.MAV.cs.mode != "Guided")
+                {
+                    if (CustomMessageBox.Show("Enter GUIDED Mode?", "", CustomMessageBox.MessageBoxButtons.YesNo) == CustomMessageBox.DialogResult.Yes)
+                    {
+                        MainV2.comPort.setMode("GUIDED");
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+
+                BUT_Forward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Forward.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Backward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Backward.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Left.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Left.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Right.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Right.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Up.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Up.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Down.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Down.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Hov.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Hov.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Align.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Align.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Forward.ColorMouseDown = BUT_Forward.BGGradBot;
+                BUT_Forward.ColorMouseOver = BUT_Forward.BGGradBot;
+                BUT_Backward.ColorMouseDown = BUT_Backward.BGGradBot;
+                BUT_Backward.ColorMouseOver = BUT_Backward.BGGradBot;
+                BUT_Left.ColorMouseDown = BUT_Left.BGGradBot;
+                BUT_Left.ColorMouseOver = BUT_Left.BGGradBot;
+                BUT_Right.ColorMouseDown = BUT_Right.BGGradBot;
+                BUT_Right.ColorMouseOver = BUT_Right.BGGradBot;
+                BUT_Up.ColorMouseDown = BUT_Up.BGGradBot;
+                BUT_Up.ColorMouseOver = BUT_Up.BGGradBot;
+                BUT_Down.ColorMouseDown = BUT_Down.BGGradBot;
+                BUT_Down.ColorMouseOver = BUT_Down.BGGradBot;
+                BUT_Hov.ColorMouseDown = BUT_Hov.BGGradBot;
+                BUT_Hov.ColorMouseOver = BUT_Hov.BGGradBot;
+                BUT_Align.ColorMouseDown = BUT_Align.BGGradBot;
+                BUT_Align.ColorMouseOver = BUT_Align.BGGradBot;
+            }
+        }
+
+        private void CheckBoxLand_CheckStateChanged(object sender, EventArgs e)
+        {
+            // This code will execute when the checkbox's checked state changes (checked or unchecked).
+            if (!checkBoxLand.Checked)
+            {
+                mbA3Land = false;
+            }
+            else
+            {
+                mbA3Land = true;
+            }
+        }
+
+        static bool IsPointInCircle(double uav_lat, double uav_lon, double center_lat, double center_lon, double radius)
+        {
+            double earth_radius_m = 6371000;
+            double lat_dist_rad = (center_lat - uav_lat) * Math.PI / 180;
+            double lon_dist_rad = (center_lon - uav_lon) * Math.PI / 180;
+            double uav_lat_rad = uav_lat * Math.PI / 180;
+            double center_lat_rad = center_lat * Math.PI / 180;
+
+            double a = Math.Sin(lat_dist_rad / 2) * Math.Sin(lat_dist_rad / 2) + Math.Sin(lon_dist_rad / 2) * Math.Sin(lon_dist_rad / 2) * Math.Cos(uav_lat_rad) * Math.Cos(center_lat_rad);
+            double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+            double distance_m = earth_radius_m * c;
+            double distance_ft = distance_m * 3.28084;
+
+            return distance_ft <= radius;
+        }
+
+        static bool IsInNorthwestTerritory(double uav_lat, double uav_lon, double center_lat, double center_lon, double radius)
+        {
+            double lon_dist_rad = (center_lon - uav_lon) * Math.PI / 180;
+            double uav_lat_rad = uav_lat * Math.PI / 180;
+            double center_lat_rad = center_lat * Math.PI / 180;
+
+            double y = Math.Sin(lon_dist_rad) * Math.Cos(center_lat_rad);
+            double x = Math.Cos(uav_lat_rad) * Math.Sin(center_lat_rad) - Math.Sin(uav_lat_rad) * Math.Cos(center_lat_rad) * Math.Cos(lon_dist_rad);
+
+            double bearing_deg = Math.Atan2(y, x) * 180 / Math.PI;
+
+            if (bearing_deg < 0)
+            {
+                bearing_deg += 360;
+            }
+
+            return bearing_deg >= (45 + adjustAngle_deg  ) && bearing_deg <= (225 + adjustAngle_deg   );
+        }
+
+        public static List<PointLatLng> GenerateCirclePointsSE(double lat, double lng, double rad, int numPoints)
+        {
+            List<PointLatLng> points = new List<PointLatLng>();
+
+            double angleIncrement = 2 * Math.PI / numPoints;
+
+            for (int i = 0; i < numPoints; i++)
+            {
+                double angle = i * angleIncrement;
+
+                if ((angle * 180 / Math.PI) >= (45 + adjustAngle_deg   ) && (angle * 180 / Math.PI) < (225 + adjustAngle_deg   ))
+                {
+                    double metersPerDegreeLat = 111319.491;
+                    double metersPerDegreeLng = 111319.491 * Math.Cos(lat * Math.PI / 180);
+
+                    double latOffset = rad * Math.Cos(angle) / metersPerDegreeLat;
+                    double lngOFfset = rad * Math.Sin(angle) / metersPerDegreeLng;
+
+                    double pointLat = lat + latOffset;
+                    double pointLng = lng + lngOFfset;
+
+                    points.Add(new PointLatLng(pointLat, pointLng));
+                }
+            }
+
+            return points;
+        }
+
+        public static List<PointLatLng> GenerateCirclePointsNW(double lat, double lng, double rad, int numPoints)
+        {
+            List<PointLatLng> points = new List<PointLatLng>();
+
+            double angleIncrement = 2 * Math.PI / numPoints;
+
+            for (int i = 0; i < numPoints; i++)
+            {
+                double angle = i * angleIncrement;
+
+                if ((angle * 180 / Math.PI) >= (225 + adjustAngle_deg) || (angle * 180 / Math.PI) < (45 + adjustAngle_deg))
+                {
+                    double metersPerDegreeLat = 111319.491;
+                    double metersPerDegreeLng = 111319.491 * Math.Cos(lat * Math.PI / 180);
+
+                    double latOffset = rad * Math.Cos(angle) / metersPerDegreeLat;
+                    double lngOFfset = rad * Math.Sin(angle) / metersPerDegreeLng;
+
+                    double pointLat = lat + latOffset;
+                    double pointLng = lng + lngOFfset;
+
+                    points.Add(new PointLatLng(pointLat, pointLng));
+                }
+            }
+
+            return points;
+        }
+
+        public static List<PointLatLng> GenerateCirclePointsBounds(double lat, double lng, double rad, int numPoints)
+        {
+            List<PointLatLng> points = new List<PointLatLng>();
+
+            double angleIncrement = 2 * Math.PI / numPoints;
+
+            for (int i = 0; i < numPoints; i++)
+            {
+                double angle = i * angleIncrement;
+
+                double metersPerDegreeLat = 111319.491;
+                double metersPerDegreeLng = 111319.491 * Math.Cos(lat * Math.PI / 180);
+
+                double latOffset = rad * Math.Cos(angle) / metersPerDegreeLat;
+                double lngOFfset = rad * Math.Sin(angle) / metersPerDegreeLng;
+
+                double pointLat = lat + latOffset;
+                double pointLng = lng + lngOFfset;
+
+                points.Add(new PointLatLng(pointLat, pointLng));
+            }
+
+            return points;
+        }
+
+        public static List<PointLatLng> GenerateBoundaryLine(double lat, double lng, double rad)
+        {
+            List<PointLatLng> points = new List<PointLatLng>();
+
+            double metersPerDegreeLat = 111319.491;
+            double metersPerDegreeLng = 111319.491 * Math.Cos(lat * Math.PI / 180);
+            double radiusInDegreesLat = rad / metersPerDegreeLat;
+            double radiusInDegreesLng = rad / metersPerDegreeLng;
+
+            double deltaLatNE = radiusInDegreesLat * Math.Cos((45 + adjustAngle_deg   ) * Math.PI / 180);
+            double deltaLngNE = radiusInDegreesLng * Math.Sin((45 + adjustAngle_deg   ) * Math.PI / 180);
+            double deltaLatSW = radiusInDegreesLat * Math.Cos((225 + adjustAngle_deg   ) * Math.PI / 180);
+            double deltaLngSW = radiusInDegreesLng * Math.Sin((225 + adjustAngle_deg   ) * Math.PI / 180);
+
+            points.Add(new PointLatLng(deltaLatNE + lat, deltaLngNE + lng));
+            points.Add(new PointLatLng(deltaLatSW + lat, deltaLngSW + lng));
+
+            return points;
+        }
+
+        public static List<PointLatLng> GenerateFOB(double lat, double lng, double rad, double angle_deg)
+        {
+            double innerRadius = rad - 6.1;
+            double angle_rad = angle_deg * Math.PI / 180;
+            double metersPerDegreeLat = 111319.491;
+            double metersPerDegreeLng = 111319.491 * Math.Cos(lat * Math.PI / 180);
+            double OuterCenterLat = lat + innerRadius * Math.Cos(angle_rad) / metersPerDegreeLat;
+            double OuterCenterLng = lng + innerRadius * Math.Sin(angle_rad) / metersPerDegreeLng;
+            double InnerCenterLat = lat + (innerRadius - 1.2192) * Math.Cos(angle_rad) / metersPerDegreeLat;
+            double InnerCenterLng = lng + (innerRadius - 1.2192) * Math.Sin(angle_rad) / metersPerDegreeLng;
+
+            double perpendicularAngle = angle_rad + Math.PI / 2;
+
+            double FOBWidth_m = 8 * 0.3048;
+
+            double lineLength_degLat = FOBWidth_m / 2 / metersPerDegreeLat;
+            double lineLength_degLng = FOBWidth_m / 2 / metersPerDegreeLng;
+
+            double lat1 = OuterCenterLat + lineLength_degLat * Math.Cos(perpendicularAngle);
+            double lng1 = OuterCenterLng + lineLength_degLng * Math.Sin(perpendicularAngle);
+            double lat2 = OuterCenterLat - lineLength_degLat * Math.Cos(perpendicularAngle);
+            double lng2 = OuterCenterLng - lineLength_degLng * Math.Sin(perpendicularAngle);
+            double lat4 = InnerCenterLat + lineLength_degLat * Math.Cos(perpendicularAngle);
+            double lng4 = InnerCenterLng + lineLength_degLng * Math.Sin(perpendicularAngle);
+            double lat3 = InnerCenterLat - lineLength_degLat * Math.Cos(perpendicularAngle);
+            double lng3 = InnerCenterLng - lineLength_degLng * Math.Sin(perpendicularAngle);
+
+            PointLatLng point1 = new PointLatLng(lat1, lng1);
+            PointLatLng point2 = new PointLatLng(lat2, lng2);
+            PointLatLng point3 = new PointLatLng(lat3, lng3);
+            PointLatLng point4 = new PointLatLng(lat4, lng4);
+
+            return new List<PointLatLng> { point1, point2, point3, point4 };
+        }
+
+        public static List<PointLatLng> GenerateAsset(double lat, double lng, double rad, double angle_deg)
+        {
+            double innerRadius = rad - 0.2286;
+            double angle_rad = angle_deg * Math.PI / 180;
+            double metersPerDegreeLat = 111319.491;
+            double metersPerDegreeLng = 111319.491 * Math.Cos(lat * Math.PI / 180);
+            double OuterCenterLat = lat + innerRadius * Math.Cos(angle_rad) / metersPerDegreeLat;
+            double OuterCenterLng = lng + innerRadius * Math.Sin(angle_rad) / metersPerDegreeLng;
+            double InnerCenterLat = lat + (innerRadius - 0.3048) * Math.Cos(angle_rad) / metersPerDegreeLat;
+            double InnerCenterLng = lng + (innerRadius - 0.3048) * Math.Sin(angle_rad) / metersPerDegreeLng;
+
+            double perpendicularAngle = angle_rad + Math.PI / 2;
+
+            double FOBWidth_m = 1 * 0.3048;
+
+            double lineLength_degLat = FOBWidth_m / 2 / metersPerDegreeLat;
+            double lineLength_degLng = FOBWidth_m / 2 / metersPerDegreeLng;
+
+            double lat1 = OuterCenterLat + lineLength_degLat * Math.Cos(perpendicularAngle);
+            double lng1 = OuterCenterLng + lineLength_degLng * Math.Sin(perpendicularAngle);
+            double lat2 = OuterCenterLat - lineLength_degLat * Math.Cos(perpendicularAngle);
+            double lng2 = OuterCenterLng - lineLength_degLng * Math.Sin(perpendicularAngle);
+            double lat4 = InnerCenterLat + lineLength_degLat * Math.Cos(perpendicularAngle);
+            double lng4 = InnerCenterLng + lineLength_degLng * Math.Sin(perpendicularAngle);
+            double lat3 = InnerCenterLat - lineLength_degLat * Math.Cos(perpendicularAngle);
+            double lng3 = InnerCenterLng - lineLength_degLng * Math.Sin(perpendicularAngle);
+
+            PointLatLng point1 = new PointLatLng(lat1, lng1);
+            PointLatLng point2 = new PointLatLng(lat2, lng2);
+            PointLatLng point3 = new PointLatLng(lat3, lng3);
+            PointLatLng point4 = new PointLatLng(lat4, lng4);
+
+            return new List<PointLatLng> { point1, point2, point3, point4 };
+        }
+
+        public void GenerateDemoFieldOverlay(double lat, double lng)
+        {
+            if (!isFlightPlannerReady)
+            {
+                flightPlannerToolStripMenuItem_Click(null, null);
+                but_Click(BUT_close, null);
+                isFlightPlannerReady = true;
+            }
+
+            int numPoints = 300;
+
+            // Outer Bound NW
+            List<PointLatLng> outerBoundNWPoints = GenerateCirclePointsNW(lat, lng, 22.098, numPoints);
+            outerBoundNW_Red = new GMapPolygon(outerBoundNWPoints, "outerBoundNW_Red");
+            outerBoundNW_Red.Stroke = new Pen(Color.Transparent, 2);
+            outerBoundNW_Red.Fill = new SolidBrush(Color.FromArgb(50, 255, 0, 0));
+            outerBoundNW_Blue = new GMapPolygon(outerBoundNWPoints, "outerBoundNW_Blue");
+            outerBoundNW_Blue.Stroke = new Pen(Color.Transparent, 2);
+            outerBoundNW_Blue.Fill = new SolidBrush(Color.FromArgb(50, 0, 0, 255));
+
+            // Outer Bound SE
+            List<PointLatLng> outerBoundSEPoints = GenerateCirclePointsSE(lat, lng, 22.098, numPoints);
+            outerBoundSE_Red = new GMapPolygon(outerBoundSEPoints, "outerBoundSE_Red");
+            outerBoundSE_Red.Stroke = new Pen(Color.Transparent, 2);
+            outerBoundSE_Red.Fill = new SolidBrush(Color.FromArgb(50, 255, 0, 0));
+            outerBoundSE_Blue = new GMapPolygon(outerBoundSEPoints, "outerBoundSE_Blue");
+            outerBoundSE_Blue.Stroke = new Pen(Color.Transparent, 2);
+            outerBoundSE_Blue.Fill = new SolidBrush(Color.FromArgb(50, 0, 0, 255));
+
+            // Outer Bound Full
+            List<PointLatLng> outerBoundPoints = GenerateCirclePointsBounds(lat, lng, 22.098, numPoints);
+            outerBound = new GMapPolygon(outerBoundPoints, "outerBound");
+            outerBound.Fill = new SolidBrush(Color.Transparent);
+            outerBound.Stroke = new Pen(Color.Black, 2);
+
+            // Inner Bound
+            List<PointLatLng> innerBoundPoints = GenerateCirclePointsBounds(lat, lng, 21.336, numPoints);
+            innerBound = new GMapPolygon(innerBoundPoints, "innerBound");
+            innerBound.Fill = new SolidBrush(Color.Transparent);
+            innerBound.Stroke = new Pen(Color.Black, 2) { DashStyle = DashStyle.Dot };
+
+            // Boundary Line
+            List<PointLatLng> boundaryLinePoints = GenerateBoundaryLine(lat, lng, 22.098);
+            boundaryLine = new GMapRoute(boundaryLinePoints, "boundaryLine");
+            boundaryLine.Stroke = new Pen(Color.Yellow, 5) { DashStyle = DashStyle.Dot };
+
+            // NW FOB
+            List<PointLatLng> FOBNWPoints = GenerateFOB(lat, lng, 21.336, 315 + adjustAngle_deg);
+            double sumLat = FOBNWPoints.Sum(p => p.Lat);
+            double sumLng = FOBNWPoints.Sum(p => p.Lng);
+            fobLatNW = sumLat / FOBNWPoints.Count;
+            fobLngNW = sumLng / FOBNWPoints.Count;
+            FOBNW_Red = new GMapPolygon(FOBNWPoints, "FOBNW_Red");
+            FOBNW_Red.Stroke = new Pen(Color.Black, 2);
+            FOBNW_Red.Fill = new SolidBrush(Color.Red);
+            FOBNW_Blue = new GMapPolygon(FOBNWPoints, "FOBNW_Blue");
+            FOBNW_Blue.Stroke = new Pen(Color.Black, 2);
+            FOBNW_Blue.Fill = new SolidBrush(Color.Blue);
+
+            // SE FOB
+            List<PointLatLng> FOBSEPoints = GenerateFOB(lat, lng, 21.336, 135 + adjustAngle_deg);
+            sumLat = FOBSEPoints.Sum(p => p.Lat);
+            sumLng = FOBSEPoints.Sum(p => p.Lng);
+            fobLatSE = sumLat / FOBSEPoints.Count;
+            fobLngSE = sumLng / FOBSEPoints.Count;
+            FOBSE_Red = new GMapPolygon(FOBSEPoints, "FOBSE_Red");
+            FOBSE_Red.Stroke = new Pen(Color.Black, 2);
+            FOBSE_Red.Fill = new SolidBrush(Color.Red);
+            FOBSE_Blue = new GMapPolygon(FOBSEPoints, "FOBSE_Blue");
+            FOBSE_Blue.Stroke = new Pen(Color.Black, 2);
+            FOBSE_Blue.Fill = new SolidBrush(Color.Blue);
+
+            // Asset locations
+            int angleOffset = 30;
+            assetLocs.Clear();
+            for (int angle = 0; angle < 360; angle += angleOffset)
+            {
+                List<PointLatLng> assetLocPoints = GenerateAsset(lat, lng, 22.098, angle + adjustAngle_deg);
+                double sumLatAsset = assetLocPoints.Sum(p => p.Lat);
+                double sumLngAsset = assetLocPoints.Sum(p => p.Lng);
+                assetLocs.Add(new PointLatLngAlt(sumLatAsset / assetLocPoints.Count, sumLngAsset / assetLocPoints.Count, 0));
+            }
+
+            TB_AssetPosConfigLat_1.Text = assetLocs[8].Lat.ToString();
+            TB_AssetPosConfigLng_1.Text = assetLocs[8].Lng.ToString();
+            TB_AssetPosConfigAlt_1.Text = Convert.ToString(0);
+            TB_AssetPosConfigLat_2.Text = assetLocs[9].Lat.ToString();
+            TB_AssetPosConfigLng_2.Text = assetLocs[9].Lng.ToString();
+            TB_AssetPosConfigAlt_2.Text = Convert.ToString(0);
+            TB_AssetPosConfigLat_3.Text = assetLocs[10].Lat.ToString();
+            TB_AssetPosConfigLng_3.Text = assetLocs[10].Lng.ToString();
+            TB_AssetPosConfigAlt_3.Text = Convert.ToString(0);
+            TB_AssetPosConfigLat_4.Text = assetLocs[11].Lat.ToString();
+            TB_AssetPosConfigLng_4.Text = assetLocs[11].Lng.ToString();
+            TB_AssetPosConfigAlt_4.Text = Convert.ToString(0);
+            TB_AssetPosConfigLat_5.Text = assetLocs[0].Lat.ToString();
+            TB_AssetPosConfigLng_5.Text = assetLocs[0].Lng.ToString();
+            TB_AssetPosConfigAlt_5.Text = Convert.ToString(0);
+            TB_AssetPosConfigLat_6.Text = assetLocs[1].Lat.ToString();
+            TB_AssetPosConfigLng_6.Text = assetLocs[1].Lng.ToString();
+            TB_AssetPosConfigAlt_6.Text = Convert.ToString(0);
+            TB_AssetPosConfigLat_7.Text = assetLocs[2].Lat.ToString();
+            TB_AssetPosConfigLng_7.Text = assetLocs[2].Lng.ToString();
+            TB_AssetPosConfigAlt_7.Text = Convert.ToString(0);
+            TB_AssetPosConfigLat_8.Text = assetLocs[3].Lat.ToString();
+            TB_AssetPosConfigLng_8.Text = assetLocs[3].Lng.ToString();
+            TB_AssetPosConfigAlt_8.Text = Convert.ToString(0);
+            TB_AssetPosConfigLat_9.Text = assetLocs[4].Lat.ToString();
+            TB_AssetPosConfigLng_9.Text = assetLocs[4].Lng.ToString();
+            TB_AssetPosConfigAlt_9.Text = Convert.ToString(0);
+            TB_AssetPosConfigLat_10.Text = assetLocs[5].Lat.ToString();
+            TB_AssetPosConfigLng_10.Text = assetLocs[5].Lng.ToString();
+            TB_AssetPosConfigAlt_10.Text = Convert.ToString(0);
+            TB_AssetPosConfigLat_11.Text = assetLocs[6].Lat.ToString();
+            TB_AssetPosConfigLng_11.Text = assetLocs[6].Lng.ToString();
+            TB_AssetPosConfigAlt_11.Text = Convert.ToString(0);
+            TB_AssetPosConfigLat_12.Text = assetLocs[7].Lat.ToString();
+            TB_AssetPosConfigLng_12.Text = assetLocs[7].Lng.ToString();
+            TB_AssetPosConfigAlt_12.Text = Convert.ToString(0);
+
+            List<PointLatLng> assetLocNWPoints_5 = GenerateAsset(lat, lng, 22.098, 0 + adjustAngle_deg);
+            assetsNW_red_5 = new GMapPolygon(assetLocNWPoints_5, "assetLoc_red_5");
+            assetsNW_red_5.Stroke = new Pen(Color.Black, 2);
+            assetsNW_red_5.Fill = new SolidBrush(Color.Red);
+            assetsNW_blue_5 = new GMapPolygon(assetLocNWPoints_5, "assetsNW_blue_5");
+            assetsNW_blue_5.Stroke = new Pen(Color.Black, 2);
+            assetsNW_blue_5.Fill = new SolidBrush(Color.Blue);
+
+            List<PointLatLng> assetLocNWPoints_6 = GenerateAsset(lat, lng, 22.098, 30 + adjustAngle_deg);
+            assetsNW_red_6 = new GMapPolygon(assetLocNWPoints_6, "assetsNW_red_6");
+            assetsNW_red_6.Stroke = new Pen(Color.Black, 2);
+            assetsNW_red_6.Fill = new SolidBrush(Color.Red);
+            assetsNW_blue_6 = new GMapPolygon(assetLocNWPoints_6, "assetsNW_blue_6");
+            assetsNW_blue_6.Stroke = new Pen(Color.Black, 2);
+            assetsNW_blue_6.Fill = new SolidBrush(Color.Blue);
+
+            List<PointLatLng> assetLocSEPoints_1 = GenerateAsset(lat, lng, 22.098, 60 + adjustAngle_deg);
+            assetsSE_red_1 = new GMapPolygon(assetLocSEPoints_1, "assetLoc_red_1");
+            assetsSE_red_1.Stroke = new Pen(Color.Black, 2);
+            assetsSE_red_1.Fill = new SolidBrush(Color.Red);
+            assetsSE_blue_1 = new GMapPolygon(assetLocSEPoints_1, "assetsSE_blue_1");
+            assetsSE_blue_1.Stroke = new Pen(Color.Black, 2);
+            assetsSE_blue_1.Fill = new SolidBrush(Color.Blue);
+
+            List<PointLatLng> assetLocSEPoints_2 = GenerateAsset(lat, lng, 22.098, 90 + adjustAngle_deg);
+            assetsSE_red_2 = new GMapPolygon(assetLocSEPoints_2, "assetsSE_red_2");
+            assetsSE_red_2.Stroke = new Pen(Color.Black, 2);
+            assetsSE_red_2.Fill = new SolidBrush(Color.Red);
+            assetsSE_blue_2 = new GMapPolygon(assetLocSEPoints_2, "assetsSE_blue_2");
+            assetsSE_blue_2.Stroke = new Pen(Color.Black, 2);
+            assetsSE_blue_2.Fill = new SolidBrush(Color.Blue);
+
+            List<PointLatLng> assetLocSEPoints_3 = GenerateAsset(lat, lng, 22.098, 120 + adjustAngle_deg);
+            assetsSE_red_3 = new GMapPolygon(assetLocSEPoints_3, "assetsSE_red_3");
+            assetsSE_red_3.Stroke = new Pen(Color.Black, 2);
+            assetsSE_red_3.Fill = new SolidBrush(Color.Red);
+            assetsSE_blue_3 = new GMapPolygon(assetLocSEPoints_3, "assetsSE_blue_3");
+            assetsSE_blue_3.Stroke = new Pen(Color.Black, 2);
+            assetsSE_blue_3.Fill = new SolidBrush(Color.Blue);
+
+            List<PointLatLng> assetLocSEPoints_4 = GenerateAsset(lat, lng, 22.098, 150 + adjustAngle_deg);
+            assetsSE_red_4 = new GMapPolygon(assetLocSEPoints_4, "assetsSE_red_4");
+            assetsSE_red_4.Stroke = new Pen(Color.Black, 2);
+            assetsSE_red_4.Fill = new SolidBrush(Color.Red);
+            assetsSE_blue_4 = new GMapPolygon(assetLocSEPoints_4, "assetsSE_blue_4");
+            assetsSE_blue_4.Stroke = new Pen(Color.Black, 2);
+            assetsSE_blue_4.Fill = new SolidBrush(Color.Blue);
+
+            List<PointLatLng> assetLocSEPoints_5 = GenerateAsset(lat, lng, 22.098, 180 + adjustAngle_deg);
+            assetsSE_red_5 = new GMapPolygon(assetLocSEPoints_5, "assetsSE_red_5");
+            assetsSE_red_5.Stroke = new Pen(Color.Black, 2);
+            assetsSE_red_5.Fill = new SolidBrush(Color.Red);
+            assetsSE_blue_5 = new GMapPolygon(assetLocSEPoints_5, "assetsSE_blue_5");
+            assetsSE_blue_5.Stroke = new Pen(Color.Black, 2);
+            assetsSE_blue_5.Fill = new SolidBrush(Color.Blue);
+
+            List<PointLatLng> assetLocSEPoints_6 = GenerateAsset(lat, lng, 22.098, 210 + adjustAngle_deg);
+            assetsSE_red_6 = new GMapPolygon(assetLocSEPoints_6, "assetsSE_red_6");
+            assetsSE_red_6.Stroke = new Pen(Color.Black, 2);
+            assetsSE_red_6.Fill = new SolidBrush(Color.Red);
+            assetsSE_blue_6 = new GMapPolygon(assetLocSEPoints_6, "assetsSE_blue_6");
+            assetsSE_blue_6.Stroke = new Pen(Color.Black, 2);
+            assetsSE_blue_6.Fill = new SolidBrush(Color.Blue);
+
+            List<PointLatLng> assetLocNWPoints_1 = GenerateAsset(lat, lng, 22.098, 240 + adjustAngle_deg);
+            assetsNW_red_1 = new GMapPolygon(assetLocNWPoints_1, "assetsNW_red_1");
+            assetsNW_red_1.Stroke = new Pen(Color.Black, 2);
+            assetsNW_red_1.Fill = new SolidBrush(Color.Red);
+            assetsNW_blue_1 = new GMapPolygon(assetLocNWPoints_1, "assetsNW_blue_1");
+            assetsNW_blue_1.Stroke = new Pen(Color.Black, 2);
+            assetsNW_blue_1.Fill = new SolidBrush(Color.Blue);
+
+            List<PointLatLng> assetLocNWPoints_2 = GenerateAsset(lat, lng, 22.098, 270 + adjustAngle_deg);
+            assetsNW_red_2 = new GMapPolygon(assetLocNWPoints_2, "assetsNW_red_2");
+            assetsNW_red_2.Stroke = new Pen(Color.Black, 2);
+            assetsNW_red_2.Fill = new SolidBrush(Color.Red);
+            assetsNW_blue_2 = new GMapPolygon(assetLocNWPoints_2, "assetsNW_blue_2");
+            assetsNW_blue_2.Stroke = new Pen(Color.Black, 2);
+            assetsNW_blue_2.Fill = new SolidBrush(Color.Blue);
+
+            List<PointLatLng> assetLocNWPoints_3 = GenerateAsset(lat, lng, 22.098, 300 + adjustAngle_deg);
+            assetsNW_red_3 = new GMapPolygon(assetLocNWPoints_3, "assetsNW_red_3");
+            assetsNW_red_3.Stroke = new Pen(Color.Black, 2);
+            assetsNW_red_3.Fill = new SolidBrush(Color.Red);
+            assetsNW_blue_3 = new GMapPolygon(assetLocNWPoints_3, "assetsNW_blue_3");
+            assetsNW_blue_3.Stroke = new Pen(Color.Black, 2);
+            assetsNW_blue_3.Fill = new SolidBrush(Color.Blue);
+
+            List<PointLatLng> assetLocNWPoints_4 = GenerateAsset(lat, lng, 22.098, 330 + adjustAngle_deg);
+            assetsNW_red_4 = new GMapPolygon(assetLocNWPoints_4, "assetsNW_red_4");
+            assetsNW_red_4.Stroke = new Pen(Color.Black, 2);
+            assetsNW_red_4.Fill = new SolidBrush(Color.Red);
+            assetsNW_blue_4 = new GMapPolygon(assetLocNWPoints_4, "assetsNW_blue_4");
+            assetsNW_blue_4.Stroke = new Pen(Color.Black, 2);
+            assetsNW_blue_4.Fill = new SolidBrush(Color.Blue);
+
+            // GeoFence
+            FlightPlanner.instance.cmb_missiontype.Text = "FENCE";
+            FlightPlanner.instance.clearMissionToolStripMenuItem_Click(null, null);
+            FlightPlanner.instance.BUT_write_Click(null, null);
+            List<PointLatLng> fencePoints = GenerateCirclePointsBounds(lat, lng, 27, 32/*numPoints*/);
+            FlightPlanner.instance.AddPolygonPoint(fencePoints[0]);
+            int count = 0;
+            fencePoints.ForEach(a => FlightPlanner.instance.AddCommand(MAVLink.MAV_CMD.FENCE_POLYGON_VERTEX_INCLUSION, fencePoints.Count, 0, 0, 0, a.Lng, a.Lat, count++));
+            FlightPlanner.instance.BUT_write_Click(null, null);
+            FlightPlanner.instance.readSilent();
+            FlightPlanner.instance.cmb_missiontype.Text = "MISSION";
+
+            isDemoFieldGenerated = true;
+
+            AddAssetPois();
+        }
+
+        private static void AddAssetPois()
+        {
+            POI.POIClear();
+
+            if (assetLocs.Count < 12)
+            {
+                return;
+            }
+
+            if (isNWHome)
+            {
+                if (isNWRed)
+                {
+                    POI.POIAdd(assetLocs[8], "Pos #1 (Opponent)", 1);
+                    POI.POIAdd(assetLocs[9], "Pos #2 (Opponent)", 1);
+                    POI.POIAdd(assetLocs[10], "Pos #3 (Opponent)", 1);
+                    POI.POIAdd(assetLocs[11], "Pos #4 (Opponent)", 1);
+                    POI.POIAdd(assetLocs[0], "Pos #5 (Opponent)", 1);
+                    POI.POIAdd(assetLocs[1], "Pos #6 (Opponent)", 1);
+                    POI.POIAdd(assetLocs[2], "Pos #7 (Friendly)", 0);
+                    POI.POIAdd(assetLocs[3], "Pos #8 (Friendly)", 0);
+                    POI.POIAdd(assetLocs[4], "Pos #9 (Friendly)", 0);
+                    POI.POIAdd(assetLocs[5], "Pos #10 (Friendly)", 0);
+                    POI.POIAdd(assetLocs[6], "Pos #11 (Friendly)", 0);
+                    POI.POIAdd(assetLocs[7], "Pos #12 (Friendly)", 0);
+                }
+                else
+                {
+                    POI.POIAdd(assetLocs[8], "Pos #1 (Opponent)", 0);
+                    POI.POIAdd(assetLocs[9], "Pos #2 (Opponent)", 0);
+                    POI.POIAdd(assetLocs[10], "Pos #3 (Opponent)", 0);
+                    POI.POIAdd(assetLocs[11], "Pos #4 (Opponent)", 0);
+                    POI.POIAdd(assetLocs[0], "Pos #5 (Opponent)", 0);
+                    POI.POIAdd(assetLocs[1], "Pos #6 (Opponent)", 0);
+                    POI.POIAdd(assetLocs[2], "Pos #7 (Friendly)", 1);
+                    POI.POIAdd(assetLocs[3], "Pos #8 (Friendly)", 1);
+                    POI.POIAdd(assetLocs[4], "Pos #9 (Friendly)", 1);
+                    POI.POIAdd(assetLocs[5], "Pos #10 (Friendly)", 1);
+                    POI.POIAdd(assetLocs[6], "Pos #11 (Friendly)", 1);
+                    POI.POIAdd(assetLocs[7], "Pos #12 (Friendly)", 1);
+                }
+                CMB_mission.DataSource = new string[] { "None", "Marked Asset", "FOB", "Pos #1 (Opponent)", "Pos #2 (Opponent)", "Pos #3 (Opponent)", "Pos #4 (Opponent)", "Pos #5 (Opponent)", "Pos #6 (Opponent)", "Pos #7 (Friendly)", "Pos #8 (Friendly)", "Pos #9 (Friendly)", "Pos #10 (Friendly)", "Pos #11 (Friendly)", "Pos #12 (Friendly)" };
+            }
+            else
+            {
+                if (isNWRed)
+                {
+                    POI.POIAdd(assetLocs[8], "Pos #1 (Friendly)", 1);
+                    POI.POIAdd(assetLocs[9], "Pos #2 (Friendly)", 1);
+                    POI.POIAdd(assetLocs[10], "Pos #3 (Friendly)", 1);
+                    POI.POIAdd(assetLocs[11], "Pos #4 (Friendly)", 1);
+                    POI.POIAdd(assetLocs[0], "Pos #5 (Friendly)", 1);
+                    POI.POIAdd(assetLocs[1], "Pos #6 (Friendly)", 1);
+                    POI.POIAdd(assetLocs[2], "Pos #7 (Opponent)", 0);
+                    POI.POIAdd(assetLocs[3], "Pos #8 (Opponent)", 0);
+                    POI.POIAdd(assetLocs[4], "Pos #9 (Opponent)", 0);
+                    POI.POIAdd(assetLocs[5], "Pos #10 (Opponent)", 0);
+                    POI.POIAdd(assetLocs[6], "Pos #11 (Opponent)", 0);
+                    POI.POIAdd(assetLocs[7], "Pos #12 (Opponent)", 0);
+                }
+                else
+                {
+                    POI.POIAdd(assetLocs[8], "Pos #1 (Friendly)", 0);
+                    POI.POIAdd(assetLocs[9], "Pos #2 (Friendly)", 0);
+                    POI.POIAdd(assetLocs[10], "Pos #3 (Friendly)", 0);
+                    POI.POIAdd(assetLocs[11], "Pos #4 (Friendly)", 0);
+                    POI.POIAdd(assetLocs[0], "Pos #5 (Friendly)", 0);
+                    POI.POIAdd(assetLocs[1], "Pos #6 (Friendly)", 0);
+                    POI.POIAdd(assetLocs[2], "Pos #7 (Opponent)", 1);
+                    POI.POIAdd(assetLocs[3], "Pos #8 (Opponent)", 1);
+                    POI.POIAdd(assetLocs[4], "Pos #9 (Opponent)", 1);
+                    POI.POIAdd(assetLocs[5], "Pos #10 (Opponent)", 1);
+                    POI.POIAdd(assetLocs[6], "Pos #11 (Opponent)", 1);
+                    POI.POIAdd(assetLocs[7], "Pos #12 (Opponent)", 1);
+                }
+                CMB_mission.DataSource = new string[] { "None", "Marked Asset", "FOB", "Pos #1 (Friendly)", "Pos #2 (Friendly)", "Pos #3 (Friendly)", "Pos #4 (Friendly)", "Pos #5 (Friendly)", "Pos #6 (Friendly)", "Pos #7 (Opponent)", "Pos #8 (Opponent)", "Pos #9 (Opponent)", "Pos #10 (Opponent)", "Pos #11 (Opponent)", "Pos #12 (Opponent)" };
+            }
+
+            LBL_AssetPosConfig_1.Text = "Position #1";
+            LBL_AssetPosConfig_2.Text = "Position #2";
+            LBL_AssetPosConfig_3.Text = "Position #3";
+            LBL_AssetPosConfig_4.Text = "Position #4";
+            LBL_AssetPosConfig_5.Text = "Position #5";
+            LBL_AssetPosConfig_6.Text = "Position #6";
+            LBL_AssetPosConfig_7.Text = "Position #7";
+            LBL_AssetPosConfig_8.Text = "Position #8";
+            LBL_AssetPosConfig_9.Text = "Position #9";
+            LBL_AssetPosConfig_10.Text = "Position #10";
+            LBL_AssetPosConfig_11.Text = "Position #11";
+            LBL_AssetPosConfig_12.Text = "Position #12";
+
+            if (assetLatMarked != 0 && assetLngMarked != 0)
+            {
+                int idx = POI.POIDeleteClosest(new GMapMarkerPOI(new PointLatLng(assetLatMarked, assetLngMarked)));
+
+                switch (idx)
+                {
+                    case 0:
+                        assetLocs[8] = new PointLatLngAlt(assetLatMarked, assetLngMarked, assetAltMarked);
+                        POI.POIAdd(assetLocs[8], "Pos #1 (Marked)", 2);
+                        LBL_AssetPosConfig_1.Text = "Position #1 (Marked)";
+                        TB_AssetPosConfigLat_1.Text = assetLocs[8].Lat.ToString();
+                        TB_AssetPosConfigLng_1.Text = assetLocs[8].Lng.ToString();
+                        TB_AssetPosConfigAlt_1.Text = assetLocs[8].Alt.ToString();
+                        break;
+                    case 1:
+                        assetLocs[9] = new PointLatLngAlt(assetLatMarked, assetLngMarked, assetAltMarked);
+                        POI.POIAdd(assetLocs[9], "Pos #2 (Marked)", 2);
+                        LBL_AssetPosConfig_2.Text = "Position #2 (Marked)";
+                        TB_AssetPosConfigLat_2.Text = assetLocs[9].Lat.ToString();
+                        TB_AssetPosConfigLng_2.Text = assetLocs[9].Lng.ToString();
+                        TB_AssetPosConfigAlt_2.Text = assetLocs[9].Alt.ToString();
+                        break;
+                    case 2:
+                        assetLocs[10] = new PointLatLngAlt(assetLatMarked, assetLngMarked, assetAltMarked);
+                        POI.POIAdd(assetLocs[10], "Pos #3 (Marked)", 2);
+                        LBL_AssetPosConfig_3.Text = "Position #3 (Marked)";
+                        TB_AssetPosConfigLat_3.Text = assetLocs[10].Lat.ToString();
+                        TB_AssetPosConfigLng_3.Text = assetLocs[10].Lng.ToString();
+                        TB_AssetPosConfigAlt_3.Text = assetLocs[10].Alt.ToString();
+                        break;
+                    case 3:
+                        assetLocs[11] = new PointLatLngAlt(assetLatMarked, assetLngMarked, assetAltMarked);
+                        POI.POIAdd(assetLocs[11], "Pos #4 (Marked)", 2);
+                        LBL_AssetPosConfig_4.Text = "Position #4 (Marked)";
+                        TB_AssetPosConfigLat_4.Text = assetLocs[11].Lat.ToString();
+                        TB_AssetPosConfigLng_4.Text = assetLocs[11].Lng.ToString();
+                        TB_AssetPosConfigAlt_4.Text = assetLocs[11].Alt.ToString();
+                        break;
+                    case 4:
+                        assetLocs[0] = new PointLatLngAlt(assetLatMarked, assetLngMarked, assetAltMarked);
+                        POI.POIAdd(assetLocs[0], "Pos #5 (Marked)", 2);
+                        LBL_AssetPosConfig_5.Text = "Position #5 (Marked)";
+                        TB_AssetPosConfigLat_5.Text = assetLocs[0].Lat.ToString();
+                        TB_AssetPosConfigLng_5.Text = assetLocs[0].Lng.ToString();
+                        TB_AssetPosConfigAlt_5.Text = assetLocs[0].Alt.ToString();
+                        break;
+                    case 5:
+                        assetLocs[1] = new PointLatLngAlt(assetLatMarked, assetLngMarked, assetAltMarked);
+                        POI.POIAdd(assetLocs[1], "Pos #6 (Marked)", 2);
+                        LBL_AssetPosConfig_6.Text = "Position #6 (Marked)";
+                        TB_AssetPosConfigLat_6.Text = assetLocs[1].Lat.ToString();
+                        TB_AssetPosConfigLng_6.Text = assetLocs[1].Lng.ToString();
+                        TB_AssetPosConfigAlt_6.Text = assetLocs[1].Alt.ToString();
+                        break;
+                    case 6:
+                        assetLocs[2] = new PointLatLngAlt(assetLatMarked, assetLngMarked, assetAltMarked);
+                        POI.POIAdd(assetLocs[2], "Pos #7 (Marked)", 2);
+                        LBL_AssetPosConfig_7.Text = "Position #7 (Marked)";
+                        TB_AssetPosConfigLat_7.Text = assetLocs[2].Lat.ToString();
+                        TB_AssetPosConfigLng_7.Text = assetLocs[2].Lng.ToString();
+                        TB_AssetPosConfigAlt_7.Text = assetLocs[2].Alt.ToString();
+                        break;
+                    case 7:
+                        assetLocs[3] = new PointLatLngAlt(assetLatMarked, assetLngMarked, assetAltMarked);
+                        POI.POIAdd(assetLocs[3], "Pos #8 (Marked)", 2);
+                        LBL_AssetPosConfig_8.Text = "Position #8 (Marked)";
+                        TB_AssetPosConfigLat_8.Text = assetLocs[3].Lat.ToString();
+                        TB_AssetPosConfigLng_8.Text = assetLocs[3].Lng.ToString();
+                        TB_AssetPosConfigAlt_8.Text = assetLocs[3].Alt.ToString();
+                        break;
+                    case 8:
+                        assetLocs[4] = new PointLatLngAlt(assetLatMarked, assetLngMarked, assetAltMarked);
+                        POI.POIAdd(assetLocs[4], "Pos #9 (Marked)", 2);
+                        LBL_AssetPosConfig_9.Text = "Position #9 (Marked)";
+                        TB_AssetPosConfigLat_9.Text = assetLocs[4].Lat.ToString();
+                        TB_AssetPosConfigLng_9.Text = assetLocs[4].Lng.ToString();
+                        TB_AssetPosConfigAlt_9.Text = assetLocs[4].Alt.ToString();
+                        break;
+                    case 9:
+                        assetLocs[5] = new PointLatLngAlt(assetLatMarked, assetLngMarked, assetAltMarked);
+                        POI.POIAdd(assetLocs[5], "Pos #10 (Marked)", 2);
+                        LBL_AssetPosConfig_10.Text = "Position #10 (Marked)";
+                        TB_AssetPosConfigLat_10.Text = assetLocs[5].Lat.ToString();
+                        TB_AssetPosConfigLng_10.Text = assetLocs[5].Lng.ToString();
+                        TB_AssetPosConfigAlt_10.Text = assetLocs[5].Alt.ToString();
+                        break;
+                    case 10:
+                        assetLocs[6] = new PointLatLngAlt(assetLatMarked, assetLngMarked, assetAltMarked);
+                        POI.POIAdd(assetLocs[6], "Pos #11 (Marked)", 2);
+                        LBL_AssetPosConfig_11.Text = "Position #11 (Marked)";
+                        TB_AssetPosConfigLat_11.Text = assetLocs[6].Lat.ToString();
+                        TB_AssetPosConfigLng_11.Text = assetLocs[6].Lng.ToString();
+                        TB_AssetPosConfigAlt_11.Text = assetLocs[6].Alt.ToString();
+                        break;
+                    case 11:
+                        assetLocs[7] = new PointLatLngAlt(assetLatMarked, assetLngMarked, assetAltMarked);
+                        POI.POIAdd(assetLocs[7], "Pos #12 (Marked)", 2);
+                        LBL_AssetPosConfig_12.Text = "Position #12 (Marked)";
+                        TB_AssetPosConfigLat_12.Text = assetLocs[7].Lat.ToString();
+                        TB_AssetPosConfigLng_12.Text = assetLocs[7].Lng.ToString();
+                        TB_AssetPosConfigAlt_12.Text = assetLocs[7].Alt.ToString();
+                        break;
+                }
+            }
+        }
+
+        public void ClearDemoFieldOverlay()
+        {
+            isDemoFieldShown = false;
+            demoFieldOverlay.Polygons.Clear();
+            demoFieldOverlay.Routes.Clear();
+        }
+
+        public void ShowDemoFieldOverlay()
+        {
+            if (!isDemoFieldGenerated) {
+                GenerateDemoFieldOverlay(fieldCenterLat, fieldCenterLng);
+            }
+
+            if (!isDemoFieldShown)
+            {
+                if (isNWRed)
+                {
+                    demoFieldOverlay.Polygons.Add(outerBoundNW_Red);
+                    demoFieldOverlay.Polygons.Add(outerBoundSE_Blue);
+                    demoFieldOverlay.Polygons.Add(FOBNW_Red);
+                    demoFieldOverlay.Polygons.Add(FOBSE_Blue);
+                    demoFieldOverlay.Polygons.Add(assetsNW_blue_1);
+                    demoFieldOverlay.Polygons.Add(assetsNW_blue_2);
+                    demoFieldOverlay.Polygons.Add(assetsNW_blue_3);
+                    demoFieldOverlay.Polygons.Add(assetsNW_blue_4);
+                    demoFieldOverlay.Polygons.Add(assetsNW_blue_5);
+                    demoFieldOverlay.Polygons.Add(assetsNW_blue_6);
+                    demoFieldOverlay.Polygons.Add(assetsSE_red_1);
+                    demoFieldOverlay.Polygons.Add(assetsSE_red_2);
+                    demoFieldOverlay.Polygons.Add(assetsSE_red_3);
+                    demoFieldOverlay.Polygons.Add(assetsSE_red_4);
+                    demoFieldOverlay.Polygons.Add(assetsSE_red_5);
+                    demoFieldOverlay.Polygons.Add(assetsSE_red_6);
+                }
+                else
+                {
+                    demoFieldOverlay.Polygons.Add(outerBoundNW_Blue);
+                    demoFieldOverlay.Polygons.Add(outerBoundSE_Red);
+                    demoFieldOverlay.Polygons.Add(FOBNW_Blue);
+                    demoFieldOverlay.Polygons.Add(FOBSE_Red);
+                    demoFieldOverlay.Polygons.Add(assetsNW_red_1);
+                    demoFieldOverlay.Polygons.Add(assetsNW_red_2);
+                    demoFieldOverlay.Polygons.Add(assetsNW_red_3);
+                    demoFieldOverlay.Polygons.Add(assetsNW_red_4);
+                    demoFieldOverlay.Polygons.Add(assetsNW_red_5);
+                    demoFieldOverlay.Polygons.Add(assetsNW_red_6);
+                    demoFieldOverlay.Polygons.Add(assetsSE_blue_1);
+                    demoFieldOverlay.Polygons.Add(assetsSE_blue_2);
+                    demoFieldOverlay.Polygons.Add(assetsSE_blue_3);
+                    demoFieldOverlay.Polygons.Add(assetsSE_blue_4);
+                    demoFieldOverlay.Polygons.Add(assetsSE_blue_5);
+                    demoFieldOverlay.Polygons.Add(assetsSE_blue_6);
+                }
+                isDemoFieldShown = true;
+                demoFieldOverlay.Polygons.Add(outerBound);
+                demoFieldOverlay.Polygons.Add(innerBound);
+                demoFieldOverlay.Routes.Add(boundaryLine);
+            }
+        }
+
+        private static double DegToRad(double deg)
+        {
+            return deg * Math.PI / 180;
+        }
+
+        private static double RadToDeg(double rad)
+        {
+            return rad * 180 / Math.PI;
+        }
+
+        private static void MoveDirection(int anX, int anY, int anZ, double arDist, float arSpeed)
+        {
+            MainV2.comPort.setMode("GUIDED");
+
+            Console.Write("Moving ");
+            Console.Write(arDist);
+            Console.WriteLine("m");
+
+            try
+            {
+                MainV2.comPort.doCommand(MainV2.comPort.MAV.sysid, MainV2.comPort.MAV.compid,
+                        MAVLink.MAV_CMD.DO_CHANGE_SPEED, 0, arSpeed, 0, 0, 0, 0, 0);
+            }
+            catch
+            {
+                CustomMessageBox.Show(Strings.ErrorCommunicating, Strings.ERROR);
+            }
+
+            const double lrEarthRadius = 6371000;
+
+            double lrUavLatRad = DegToRad(FlightData.coords1.Lat);
+            double lrUavLngRad = DegToRad(FlightData.coords1.Lng);
+
+            double lrBearingRad = 0;
+            double lrDeltaLatRad = 0;
+            double lrDeltaLngRad = 0;
+
+            // Only calculate a new lat/lng if we are moving laterally
+            if (Math.Sqrt((anX * anX) + (anY * anY)) != 0)
+            {
+                lrBearingRad = DegToRad(Convert.ToDouble(MainV2.comPort.MAV.cs.nav_bearing)) + Math.Atan2(anX, anY);
+
+                lrDeltaLatRad = (arDist / lrEarthRadius) * Math.Cos(lrBearingRad);
+                lrDeltaLngRad = (arDist / lrEarthRadius) * Math.Sin(lrBearingRad) / Math.Cos(lrUavLatRad);
+            }
+
+            double lrLatRad = lrUavLatRad + lrDeltaLatRad;
+            double lrLngRad = lrUavLngRad + lrDeltaLngRad;
+            int lnAlt = Convert.ToInt32(FlightData.coords1.Alt);
+
+            if (lnAlt == 0)
+            {
+                lnAlt = 1;
+            }
+
+            if (anZ > 0)
+            {
+                if (buttonType == teButtonType.eeStartStop)
+                {
+                    lnAlt = 10;
+                }
+                else
+                {
+                    lnAlt += anZ;
+                }
+            }
+            else if (anZ < 0)
+            {
+                if (buttonType == teButtonType.eeStartStop)
+                {
+                    lnAlt = -1;
+                }
+                else
+                {
+                    lnAlt += anZ;
+                    if (lnAlt == 0)
+                    {
+                        lnAlt = -1;
+                    }
+                }
+            }
+
+            double lrLatDeg = RadToDeg(lrLatRad);
+            double lrLngDeg = RadToDeg(lrLngRad);
+
+            MoveTo(lrLatDeg, lrLngDeg, Convert.ToInt32(lnAlt));
+        }
+
+        private static void AlignStop()
+        {
+            MainV2.comPort.setMode("GUIDED");
+
+            MAVLink.MAV_FRAME frame = MAVLink.MAV_FRAME.GLOBAL_TERRAIN_ALT;
+
+            Settings.Instance["guided_alt"] = Convert.ToString(FlightData.coords1.Alt);
+            Settings.Instance["guided_alt_frame"] = ((byte)frame).ToString();
+
+            int intalt = Convert.ToInt32(FlightData.coords1.Alt);
+
+            MainV2.comPort.MAV.GuidedMode.z = intalt / CurrentState.multiplieralt;
+            MainV2.comPort.MAV.GuidedMode.x = Convert.ToInt32(FlightData.coords1.Lat * 1e7);
+            MainV2.comPort.MAV.GuidedMode.y = Convert.ToInt32(FlightData.coords1.Lng * 1e7);
+            MainV2.comPort.MAV.GuidedMode.frame = (byte)frame;
+
+            if (MainV2.comPort.MAV.cs.mode == "Guided")
+            {
+                MainV2.comPort.setGuidedModeWP(new Locationwp
+                {
+                    alt = MainV2.comPort.MAV.GuidedMode.z,
+                    lat = MainV2.comPort.MAV.GuidedMode.x / 1e7,
+                    lng = MainV2.comPort.MAV.GuidedMode.y / 1e7,
+                    frame = (byte)frame
+                });
+            }
+        }
+
+        private void BUT_Forward_Click(object sender, EventArgs e)
+        {
+            if (!checkBoxAug.Checked)
+            {
+                return;
+            }
+
+            switch (buttonType)
+            {
+                case teButtonType.eeSetDistance:
+                    try
+                    {
+                        MoveDirection(0, 1, 0, Convert.ToDouble(TB_MoveDist.Text), Convert.ToSingle(TB_MoveSpeed.Text));
+                    }
+                    catch
+                    {
+                        CustomMessageBox.Show("Please enter valid speed and distance.", Strings.ERROR);
+                    }
+                    break;
+
+                case teButtonType.eeStartStop:
+
+                    if (mbGoingForward)
+                    {
+                        BUT_Forward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Forward.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Forward.ColorMouseDown = BUT_Forward.BGGradBot;
+                        BUT_Forward.ColorMouseOver = BUT_Forward.BGGradBot;
+                        mbGoingForward = false;
+                        AlignStop();
+                    }
+                    else
+                    {
+                        BUT_Forward.BGGradTop = Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(13)))));
+                        BUT_Forward.BGGradBot = Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(255)))), ((int)(((byte)(136)))));
+                        BUT_Backward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Backward.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Left.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Left.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Right.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Right.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Up.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Up.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Down.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Down.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Forward.ColorMouseDown = BUT_Forward.BGGradBot;
+                        BUT_Forward.ColorMouseOver = BUT_Forward.BGGradBot;
+                        BUT_Backward.ColorMouseDown = BUT_Backward.BGGradBot;
+                        BUT_Backward.ColorMouseOver = BUT_Backward.BGGradBot;
+                        BUT_Left.ColorMouseDown = BUT_Left.BGGradBot;
+                        BUT_Left.ColorMouseOver = BUT_Left.BGGradBot;
+                        BUT_Right.ColorMouseDown = BUT_Right.BGGradBot;
+                        BUT_Right.ColorMouseOver = BUT_Right.BGGradBot;
+                        BUT_Up.ColorMouseDown = BUT_Up.BGGradBot;
+                        BUT_Up.ColorMouseOver = BUT_Up.BGGradBot;
+                        BUT_Down.ColorMouseDown = BUT_Down.BGGradBot;
+                        BUT_Down.ColorMouseOver = BUT_Down.BGGradBot;
+
+                        mbGoingForward = true;
+                        mbGoingBackward = false;
+                        mbGoingLeft = false;
+                        mbGoingRight = false;
+                        mbGoingUp = false;
+                        mbGoingDown = false;
+                        try
+                        {
+                            MoveDirection(0, 1, 0, Convert.ToDouble(TB_MoveDist.Text), Convert.ToSingle(TB_MoveSpeed.Text));
+                        }
+                        catch
+                        {
+                            CustomMessageBox.Show("Please enter valid speed and distance.", Strings.ERROR);
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void BUT_Backward_Click(object sender, EventArgs e)
+        {
+            if (!checkBoxAug.Checked)
+            {
+                return;
+            }
+
+            switch (buttonType)
+            {
+                case teButtonType.eeSetDistance:
+                    try
+                    {
+                        MoveDirection(0, -1, 0, Convert.ToDouble(TB_MoveDist.Text), Convert.ToSingle(TB_MoveSpeed.Text));
+                    }
+                    catch
+                    {
+                        CustomMessageBox.Show("Please enter valid speed and distance.", Strings.ERROR);
+                    }
+                    break;
+
+                case teButtonType.eeStartStop:
+
+                    if (mbGoingBackward)
+                    {
+                        BUT_Backward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Backward.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Backward.ColorMouseDown = BUT_Backward.BGGradBot;
+                        BUT_Backward.ColorMouseOver = BUT_Backward.BGGradBot;
+                        mbGoingBackward = false;
+                        AlignStop();
+                    }
+                    else
+                    {
+                        BUT_Forward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Forward.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Backward.BGGradTop = Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(13)))));
+                        BUT_Backward.BGGradBot = Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(255)))), ((int)(((byte)(136)))));
+                        BUT_Left.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Left.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Right.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Right.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Up.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Up.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Down.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Down.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Forward.ColorMouseDown = BUT_Forward.BGGradBot;
+                        BUT_Forward.ColorMouseOver = BUT_Forward.BGGradBot;
+                        BUT_Backward.ColorMouseDown = BUT_Backward.BGGradBot;
+                        BUT_Backward.ColorMouseOver = BUT_Backward.BGGradBot;
+                        BUT_Left.ColorMouseDown = BUT_Left.BGGradBot;
+                        BUT_Left.ColorMouseOver = BUT_Left.BGGradBot;
+                        BUT_Right.ColorMouseDown = BUT_Right.BGGradBot;
+                        BUT_Right.ColorMouseOver = BUT_Right.BGGradBot;
+                        BUT_Up.ColorMouseDown = BUT_Up.BGGradBot;
+                        BUT_Up.ColorMouseOver = BUT_Up.BGGradBot;
+                        BUT_Down.ColorMouseDown = BUT_Down.BGGradBot;
+                        BUT_Down.ColorMouseOver = BUT_Down.BGGradBot;
+
+                        mbGoingForward = false;
+                        mbGoingBackward = true;
+                        mbGoingLeft = false;
+                        mbGoingRight = false;
+                        mbGoingUp = false;
+                        mbGoingDown = false;
+                        try
+                        {
+                            MoveDirection(0, -1, 0, Convert.ToDouble(TB_MoveDist.Text), Convert.ToSingle(TB_MoveSpeed.Text));
+                        }
+                        catch
+                        {
+                            CustomMessageBox.Show("Please enter valid speed and distance.", Strings.ERROR);
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void BUT_Left_Click(object sender, EventArgs e)
+        {
+            if (!checkBoxAug.Checked)
+            {
+                return;
+            }
+
+            switch (buttonType)
+            {
+                case teButtonType.eeSetDistance:
+                    try
+                    {
+                        MoveDirection(-1, 0, 0, Convert.ToDouble(TB_MoveDist.Text), Convert.ToSingle(TB_MoveSpeed.Text));
+                    }
+                    catch
+                    {
+                        CustomMessageBox.Show("Please enter valid speed and distance.", Strings.ERROR);
+                    }
+                    break;
+
+                case teButtonType.eeStartStop:
+
+                    if (mbGoingLeft)
+                    {
+                        BUT_Left.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Left.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Left.ColorMouseDown = BUT_Left.BGGradBot;
+                        BUT_Left.ColorMouseOver = BUT_Left.BGGradBot;
+                        mbGoingLeft = false;
+                        AlignStop();
+                    }
+                    else
+                    {
+                        BUT_Forward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Forward.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Backward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Backward.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Left.BGGradTop = Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(13)))));
+                        BUT_Left.BGGradBot = Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(255)))), ((int)(((byte)(136)))));
+                        BUT_Right.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Right.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Up.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Up.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Down.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Down.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Forward.ColorMouseDown = BUT_Forward.BGGradBot;
+                        BUT_Forward.ColorMouseOver = BUT_Forward.BGGradBot;
+                        BUT_Backward.ColorMouseDown = BUT_Backward.BGGradBot;
+                        BUT_Backward.ColorMouseOver = BUT_Backward.BGGradBot;
+                        BUT_Left.ColorMouseDown = BUT_Left.BGGradBot;
+                        BUT_Left.ColorMouseOver = BUT_Left.BGGradBot;
+                        BUT_Right.ColorMouseDown = BUT_Right.BGGradBot;
+                        BUT_Right.ColorMouseOver = BUT_Right.BGGradBot;
+                        BUT_Up.ColorMouseDown = BUT_Up.BGGradBot;
+                        BUT_Up.ColorMouseOver = BUT_Up.BGGradBot;
+                        BUT_Down.ColorMouseDown = BUT_Down.BGGradBot;
+                        BUT_Down.ColorMouseOver = BUT_Down.BGGradBot;
+
+                        mbGoingForward = false;
+                        mbGoingBackward = false;
+                        mbGoingLeft = true;
+                        mbGoingRight = false;
+                        mbGoingUp = false;
+                        mbGoingDown = false;
+                        try
+                        {
+                            MoveDirection(-1, 0, 0, Convert.ToDouble(TB_MoveDist.Text), Convert.ToSingle(TB_MoveSpeed.Text));
+                        }
+                        catch
+                        {
+                            CustomMessageBox.Show("Please enter valid speed and distance.", Strings.ERROR);
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void BUT_Right_Click(object sender, EventArgs e)
+        {
+            if (!checkBoxAug.Checked)
+            {
+                return;
+            }
+
+            switch (buttonType)
+            {
+                case teButtonType.eeSetDistance:
+                    try
+                    {
+                        MoveDirection(1, 0, 0, Convert.ToDouble(TB_MoveDist.Text), Convert.ToSingle(TB_MoveSpeed.Text));
+                    }
+                    catch
+                    {
+                        CustomMessageBox.Show("Please enter valid speed and distance.", Strings.ERROR);
+                    }
+                    break;
+
+                case teButtonType.eeStartStop:
+
+                    if (mbGoingRight)
+                    {
+                        BUT_Right.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Right.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Right.ColorMouseDown = BUT_Right.BGGradBot;
+                        BUT_Right.ColorMouseOver = BUT_Right.BGGradBot;
+                        mbGoingRight = false;
+                        AlignStop();
+                    }
+                    else
+                    {
+                        BUT_Forward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Forward.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Backward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Backward.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Left.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Left.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Right.BGGradTop = Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(13)))));
+                        BUT_Right.BGGradBot = Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(255)))), ((int)(((byte)(136)))));
+                        BUT_Up.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Up.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Down.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Down.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Forward.ColorMouseDown = BUT_Forward.BGGradBot;
+                        BUT_Forward.ColorMouseOver = BUT_Forward.BGGradBot;
+                        BUT_Backward.ColorMouseDown = BUT_Backward.BGGradBot;
+                        BUT_Backward.ColorMouseOver = BUT_Backward.BGGradBot;
+                        BUT_Left.ColorMouseDown = BUT_Left.BGGradBot;
+                        BUT_Left.ColorMouseOver = BUT_Left.BGGradBot;
+                        BUT_Right.ColorMouseDown = BUT_Right.BGGradBot;
+                        BUT_Right.ColorMouseOver = BUT_Right.BGGradBot;
+                        BUT_Up.ColorMouseDown = BUT_Up.BGGradBot;
+                        BUT_Up.ColorMouseOver = BUT_Up.BGGradBot;
+                        BUT_Down.ColorMouseDown = BUT_Down.BGGradBot;
+                        BUT_Down.ColorMouseOver = BUT_Down.BGGradBot;
+
+                        mbGoingForward = false;
+                        mbGoingBackward = false;
+                        mbGoingLeft = false;
+                        mbGoingRight = true;
+                        mbGoingUp = false;
+                        mbGoingDown = false;
+                        try
+                        {
+                            MoveDirection(1, 0, 0, Convert.ToDouble(TB_MoveDist.Text), Convert.ToSingle(TB_MoveSpeed.Text));
+                        }
+                        catch
+                        {
+                            CustomMessageBox.Show("Please enter valid speed and distance.", Strings.ERROR);
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void BUT_Up_Click(object sender, EventArgs e)
+        {
+            if (!checkBoxAug.Checked)
+            {
+                return;
+            }
+
+            switch (buttonType)
+            {
+                case teButtonType.eeSetDistance:
+                    try
+                    {
+                        MoveDirection(0, 0, 1, Convert.ToDouble(TB_MoveDist.Text), Convert.ToSingle(TB_MoveSpeed.Text));
+                    }
+                    catch
+                    {
+                        CustomMessageBox.Show("Please enter valid speed and distance.", Strings.ERROR);
+                    }
+                    break;
+
+                case teButtonType.eeStartStop:
+
+                    if (mbGoingUp)
+                    {
+                        BUT_Up.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Up.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Up.ColorMouseDown = BUT_Up.BGGradBot;
+                        BUT_Up.ColorMouseOver = BUT_Up.BGGradBot;
+                        mbGoingUp = false;
+                        AlignStop();
+                    }
+                    else
+                    {
+                        BUT_Forward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Forward.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Backward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Backward.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Left.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Left.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Right.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Right.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Up.BGGradTop = Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(13)))));
+                        BUT_Up.BGGradBot = Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(255)))), ((int)(((byte)(136)))));
+                        BUT_Down.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Down.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Forward.ColorMouseDown = BUT_Forward.BGGradBot;
+                        BUT_Forward.ColorMouseOver = BUT_Forward.BGGradBot;
+                        BUT_Backward.ColorMouseDown = BUT_Backward.BGGradBot;
+                        BUT_Backward.ColorMouseOver = BUT_Backward.BGGradBot;
+                        BUT_Left.ColorMouseDown = BUT_Left.BGGradBot;
+                        BUT_Left.ColorMouseOver = BUT_Left.BGGradBot;
+                        BUT_Right.ColorMouseDown = BUT_Right.BGGradBot;
+                        BUT_Right.ColorMouseOver = BUT_Right.BGGradBot;
+                        BUT_Up.ColorMouseDown = BUT_Up.BGGradBot;
+                        BUT_Up.ColorMouseOver = BUT_Up.BGGradBot;
+                        BUT_Down.ColorMouseDown = BUT_Down.BGGradBot;
+                        BUT_Down.ColorMouseOver = BUT_Down.BGGradBot;
+
+                        mbGoingForward = false;
+                        mbGoingBackward = false;
+                        mbGoingLeft = false;
+                        mbGoingRight = false;
+                        mbGoingUp = true;
+                        mbGoingDown = false;
+                        try
+                        {
+                            MoveDirection(0, 0, 1, Convert.ToDouble(TB_MoveDist.Text), Convert.ToSingle(TB_MoveSpeed.Text));
+                        }
+                        catch
+                        {
+                            CustomMessageBox.Show("Please enter valid speed and distance.", Strings.ERROR);
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void BUT_Down_Click(object sender, EventArgs e)
+        {
+            if (!checkBoxAug.Checked)
+            {
+                return;
+            }
+
+            switch (buttonType)
+            {
+                case teButtonType.eeSetDistance:
+                    try
+                    {
+                        MoveDirection(0, 0, -1, Convert.ToDouble(TB_MoveDist.Text), Convert.ToSingle(TB_MoveSpeed.Text));
+                    }
+                    catch
+                    {
+                        CustomMessageBox.Show("Please enter valid speed and distance.", Strings.ERROR);
+                    }
+                    break;
+
+                case teButtonType.eeStartStop:
+
+                    if (mbGoingDown)
+                    {
+                        BUT_Down.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Down.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Down.ColorMouseDown = BUT_Down.BGGradBot;
+                        BUT_Down.ColorMouseOver = BUT_Down.BGGradBot;
+                        mbGoingDown = false;
+                        AlignStop();
+                    }
+                    else
+                    {
+                        BUT_Forward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Forward.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Backward.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Backward.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Left.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Left.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Right.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Right.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Up.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                        BUT_Up.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                        BUT_Down.BGGradTop = Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(13)))));
+                        BUT_Down.BGGradBot = Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(255)))), ((int)(((byte)(136)))));
+                        BUT_Forward.ColorMouseDown = BUT_Forward.BGGradBot;
+                        BUT_Forward.ColorMouseOver = BUT_Forward.BGGradBot;
+                        BUT_Backward.ColorMouseDown = BUT_Backward.BGGradBot;
+                        BUT_Backward.ColorMouseOver = BUT_Backward.BGGradBot;
+                        BUT_Left.ColorMouseDown = BUT_Left.BGGradBot;
+                        BUT_Left.ColorMouseOver = BUT_Left.BGGradBot;
+                        BUT_Right.ColorMouseDown = BUT_Right.BGGradBot;
+                        BUT_Right.ColorMouseOver = BUT_Right.BGGradBot;
+                        BUT_Up.ColorMouseDown = BUT_Up.BGGradBot;
+                        BUT_Up.ColorMouseOver = BUT_Up.BGGradBot;
+                        BUT_Down.ColorMouseDown = BUT_Down.BGGradBot;
+                        BUT_Down.ColorMouseOver = BUT_Down.BGGradBot;
+
+                        mbGoingForward = false;
+                        mbGoingBackward = false;
+                        mbGoingLeft = false;
+                        mbGoingRight = false;
+                        mbGoingUp = false;
+                        mbGoingDown = true;
+                        try
+                        {
+                            MoveDirection(0, 0, -1, Convert.ToDouble(TB_MoveDist.Text), Convert.ToSingle(TB_MoveSpeed.Text));
+                        }
+                        catch
+                        {
+                            CustomMessageBox.Show("Please enter valid speed and distance.", Strings.ERROR);
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void BUT_Hov_Click(object sender, EventArgs e)
+        {
+            if (!checkBoxAug.Checked)
+            {
+                return;
+            }
+
+            MainV2.comPort.setMode("GUIDED");
+
+            if (!MainV2.comPort.MAV.cs.armed)
+            {
+                BUT_ARM_Click(null, null);
+                TakeOffSilent(FlightData.altZero + 1);
+            }
+            else
+            {
+                MoveTo(FlightData.coords1.Lat, FlightData.coords1.Lng, FlightData.altZero + 1);
+            }
+        }
+
+        private static void MoveTo(double arLat, double arLng, int anAlt)
+        {
+            string lcAltStr = Convert.ToString(anAlt);
+
+            MAVLink.MAV_FRAME frame = MAVLink.MAV_FRAME.GLOBAL_TERRAIN_ALT;
+
+            Settings.Instance["guided_alt"] = lcAltStr;
+            Settings.Instance["guided_alt_frame"] = ((byte)frame).ToString();
+
+            MainV2.comPort.MAV.GuidedMode.z = anAlt / CurrentState.multiplieralt;
+            MainV2.comPort.MAV.GuidedMode.x = Convert.ToInt32(arLat * 1e7);
+            MainV2.comPort.MAV.GuidedMode.y = Convert.ToInt32(arLng * 1e7);
+            MainV2.comPort.MAV.GuidedMode.frame = (byte)frame;
+
+            FlightPlanner.instance.TXT_WPRad.Text = "0.0";
+
+            MainV2.comPort.setMode("GUIDED");
+
+            if (MainV2.comPort.MAV.cs.mode == "Guided")
+            {
+                MainV2.comPort.setGuidedModeWP(new Locationwp
+                {
+                    alt = MainV2.comPort.MAV.GuidedMode.z,
+                    lat = MainV2.comPort.MAV.GuidedMode.x / 1e7,
+                    lng = MainV2.comPort.MAV.GuidedMode.y / 1e7,
+                    frame = (byte)frame
+                });
+            }
+        }
+
+        private void BUT_Align_Click(object sender, EventArgs e)
+        {
+            if (!checkBoxAug.Checked)
+            {
+                return;
+            }
+
+            if (!doAlign)
+            {
+                BUT_Align.BGGradTop = Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(13)))));
+                BUT_Align.BGGradBot = Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(255)))), ((int)(((byte)(136)))));
+                BUT_Align.ColorMouseDown = BUT_Align.BGGradBot;
+                BUT_Align.ColorMouseOver = BUT_Align.BGGradBot;
+                doAlign = true;
+                Thread thread2 = new Thread(AlignThread);
+                thread2.IsBackground = true;
+                thread2.Start();
+            }
+            else
+            {
+                BUT_Align.BGGradTop = Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+                BUT_Align.BGGradBot = Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+                BUT_Align.ColorMouseDown = BUT_Align.BGGradBot;
+                BUT_Align.ColorMouseOver = BUT_Align.BGGradBot;
+                doAlign = false;
+            }
+        }
+
+        private void BUT_Cal_Click(object sender, EventArgs e)
+        {
+            altZero = Convert.ToInt32(FlightData.coords1.Alt);
+            CustomMessageBox.Show("Altitude calibrated successfully.");
+        }
+
         public FlightData()
         {
             log.Info("Ctor Start");
 
             InitializeComponent();
+            Thread thread = new Thread(PrintUavCoordsThread);
+            thread.IsBackground = true;
+            thread.Start();
+
+            Thread thread1 = new Thread(UpdateThrottleThread);
+            thread1.IsBackground = true;
+            thread1.Start();
+
+            HUD.cameraHeight = cameraHeight;
+            HUD.cameraWidth = cameraWidth;
 
             log.Info("Components Done");
 
@@ -401,6 +2430,10 @@ namespace MissionPlanner.GCSViews
 
             gMapControl1.Overlays.Add(poioverlay);
 
+            demoFieldOverlay = new GMapOverlay("demoFieldOverlay");
+
+            gMapControl1.Overlays.Insert(0, demoFieldOverlay);
+
             float gspeedMax = Settings.Instance.GetFloat("GspeedMAX");
             if (gspeedMax != 0)
             {
@@ -420,6 +2453,17 @@ namespace MissionPlanner.GCSViews
 
             tabControlactions.Multiline = Settings.Instance.GetBoolean("tabControlactions_Multiline", false);
 
+            BUT_close = new MyButton
+            {
+                Location = new Point(splitContainer1.Panel2.Width / 2, 0),
+                Text = "Close"
+            };
+            BUT_close.Click += but_Click;
+
+            isAligned = false; //A3MPCommandPublisher will keep updating this
+            receivedA3Output = A3MP_MessageBus.GetCommand(); //Will start with the latest A3 output, may need updating
+                                                             ////(A3 Center X, A3 Center Y)
+            Console.WriteLine("^^^^^^^****RECEIVED A3 OUTPUT FROM A3MP BUS*****^^^^^^^: " + receivedA3Output);
         }
 
         public void Activate()
@@ -545,6 +2589,406 @@ namespace MissionPlanner.GCSViews
             hud1.doResize();
         }
 
+        private void BUT_SwitchColors_Click(object sender, EventArgs e)
+        {
+            isNWHome = !isNWHome;
+            isNWRed = !isNWRed;
+
+            ClearDemoFieldOverlay();
+            ShowDemoFieldOverlay();
+            AddAssetPois();
+        }
+
+        private void BUT_GenerateMap_Click(object sender, EventArgs e)
+        {
+            ClearDemoFieldOverlay();
+
+            NumberFormatInfo provider = new NumberFormatInfo();
+            provider.NumberDecimalSeparator = ".";
+
+            double dist = 14.6304;
+            double latOffset = 0;
+            double lngOffset = 0;
+            adjustAngle_deg = Convert.ToDouble(this.angDiff_deg_tb.Text, provider);
+
+            // Calibrating from the NW FOB
+            if (isNWHome)
+            {
+                Console.WriteLine("Calibrating from NW");
+                double angle = (315 - adjustAngle_deg) * Math.PI / 180;
+
+                latOffset = dist * Math.Sin(angle) / 111319.491;
+                lngOffset = dist * Math.Cos(angle) / (111319.491 * Math.Cos(FlightData.coords1.Lat * Math.PI / 180));
+            }
+            // Calibrating from the SE FOB
+            else
+            {
+                Console.WriteLine("Calibrating from SE");
+                double angle = (135 - adjustAngle_deg) * Math.PI / 180;
+
+                latOffset = dist * Math.Sin(angle) / 111319.491;
+                lngOffset = dist * Math.Cos(angle) / (111319.491 * Math.Cos(FlightData.coords1.Lat * Math.PI / 180));
+            }
+
+            fieldCenterLat = FlightData.coords1.Lat + latOffset;
+            fieldCenterLng = FlightData.coords1.Lng + lngOffset;
+
+            isDemoFieldGenerated = false;
+            ShowDemoFieldOverlay();
+        }
+
+        private void BUT_ToggleDemoFieldOverlay_Click(object sender, EventArgs e)
+        {
+            if (isDemoFieldShown)
+            {
+                ClearDemoFieldOverlay();
+            }
+            else
+            {
+                ShowDemoFieldOverlay();
+            }
+        }
+
+        private void BUT_LoadMission_Click(object sender, EventArgs e)
+        {
+            // Regain control to stop any currently running autonomous mission
+            MainV2.comPort.setMode("GUIDED");
+
+            // Set home position to current ARV position
+            setHomeSilent();
+
+            if (!isFlightPlannerReady)
+            {
+                flightPlannerToolStripMenuItem_Click(null, null);
+                but_Click(BUT_close, null);
+                isFlightPlannerReady = true;
+            }
+
+            if (mission == teMission.eeMarked)
+            {
+                FlightPlanner.instance.BUT_ToAssetCreate_Click(null, null);
+            }
+            else if (mission == teMission.eeFob)
+            {
+                if (isDemoFieldGenerated)
+                {
+                    if (isNWHome)
+                    {
+                        FlightPlanner.instance.ToPoint(fobLatNW, fobLngNW);
+                    }
+                    else
+                    {
+                        FlightPlanner.instance.ToPoint(fobLatSE, fobLngSE);
+                    }
+                }
+                else
+                {
+                    CustomMessageBox.Show("Please generate the demo field overlay first.", Strings.ERROR);
+                    return;
+                }
+            }
+            else if (mission == teMission.eeAssetOne)
+            {
+                if (isDemoFieldGenerated)
+                {
+                    FlightPlanner.instance.ToPoint(assetLocs[8].Lat, assetLocs[8].Lng);
+                }
+                else
+                {
+                    CustomMessageBox.Show("Please generate the demo field overlay first.", Strings.ERROR);
+                    return;
+                }
+            }
+            else if (mission == teMission.eeAssetTwo)
+            {
+                if (isDemoFieldGenerated)
+                {
+                    FlightPlanner.instance.ToPoint(assetLocs[9].Lat, assetLocs[9].Lng);
+                }
+                else
+                {
+                    CustomMessageBox.Show("Please generate the demo field overlay first.", Strings.ERROR);
+                    return;
+                }
+            }
+            else if (mission == teMission.eeAssetThree)
+            {
+                if (isDemoFieldGenerated)
+                {
+                    FlightPlanner.instance.ToPoint(assetLocs[10].Lat, assetLocs[10].Lng);
+                }
+                else
+                {
+                    CustomMessageBox.Show("Please generate the demo field overlay first.", Strings.ERROR);
+                    return;
+                }
+            }
+            else if (mission == teMission.eeAssetFour)
+            {
+                if (isDemoFieldGenerated)
+                {
+                    FlightPlanner.instance.ToPoint(assetLocs[11].Lat, assetLocs[11].Lng);
+                }
+                else
+                {
+                    CustomMessageBox.Show("Please generate the demo field overlay first.", Strings.ERROR);
+                    return;
+                }
+            }
+            else if (mission == teMission.eeAssetFive)
+            {
+                if (isDemoFieldGenerated)
+                {
+                    FlightPlanner.instance.ToPoint(assetLocs[0].Lat, assetLocs[0].Lng);
+                }
+                else
+                {
+                    CustomMessageBox.Show("Please generate the demo field overlay first.", Strings.ERROR);
+                    return;
+                }
+            }
+            else if (mission == teMission.eeAssetSix)
+            {
+                if (isDemoFieldGenerated)
+                {
+                    FlightPlanner.instance.ToPoint(assetLocs[1].Lat, assetLocs[1].Lng);
+                }
+                else
+                {
+                    CustomMessageBox.Show("Please generate the demo field overlay first.", Strings.ERROR);
+                    return;
+                }
+            }
+            else if (mission == teMission.eeAssetSeven)
+            {
+                if (isDemoFieldGenerated)
+                {
+                    FlightPlanner.instance.ToPoint(assetLocs[2].Lat, assetLocs[2].Lng);
+                }
+                else
+                {
+                    CustomMessageBox.Show("Please generate the demo field overlay first.", Strings.ERROR);
+                    return;
+                }
+            }
+            else if (mission == teMission.eeAssetEight)
+            {
+                if (isDemoFieldGenerated)
+                {
+                    FlightPlanner.instance.ToPoint(assetLocs[3].Lat, assetLocs[3].Lng);
+                }
+                else
+                {
+                    CustomMessageBox.Show("Please generate the demo field overlay first.", Strings.ERROR);
+                    return;
+                }
+            }
+            else if (mission == teMission.eeAssetNine)
+            {
+                if (isDemoFieldGenerated)
+                {
+                    FlightPlanner.instance.ToPoint(assetLocs[4].Lat, assetLocs[4].Lng);
+                }
+                else
+                {
+                    CustomMessageBox.Show("Please generate the demo field overlay first.", Strings.ERROR);
+                    return;
+                }
+            }
+            else if (mission == teMission.eeAssetTen)
+            {
+                if (isDemoFieldGenerated)
+                {
+                    FlightPlanner.instance.ToPoint(assetLocs[5].Lat, assetLocs[5].Lng);
+                }
+                else
+                {
+                    CustomMessageBox.Show("Please generate the demo field overlay first.", Strings.ERROR);
+                    return;
+                }
+            }
+            else if (mission == teMission.eeAssetEleven)
+            {
+                if (isDemoFieldGenerated)
+                {
+                    FlightPlanner.instance.ToPoint(assetLocs[6].Lat, assetLocs[6].Lng);
+                }
+                else
+                {
+                    CustomMessageBox.Show("Please generate the demo field overlay first.", Strings.ERROR);
+                    return;
+                }
+            }
+            else if (mission == teMission.eeAssetTwelve)
+            {
+                if (isDemoFieldGenerated)
+                {
+                    FlightPlanner.instance.ToPoint(assetLocs[7].Lat, assetLocs[7].Lng);
+                }
+                else
+                {
+                    CustomMessageBox.Show("Please generate the demo field overlay first.", Strings.ERROR);
+                    return;
+                }
+            }
+            else
+            {
+                CustomMessageBox.Show("Please select a mission to execute first.", Strings.ERROR);
+                return;
+            }
+
+            isFlightPlanReady = true;
+        }
+
+        private void BUT_Execute_Click(object sender, EventArgs e)
+        {
+            if (isFlightPlanReady)
+            {
+                FlightPlanner.instance.CMB_altmode.SelectedValue = altmode.Terrain;
+                MainV2.comPort.setMode("GUIDED");
+                CMB_action.Text = actions.Mission_Start.ToString();
+                if (!MainV2.comPort.MAV.cs.armed)
+                {
+                    BUT_ARM_Click(null, null);
+                }
+                actiondoSilent(BUTactiondo);
+                isFlightPlanReady = false;
+            }
+            else
+            {
+                CustomMessageBox.Show("Please load a flight plan first.", Strings.ERROR);
+                return;
+            }
+
+        }
+
+        private void BUT_StopMission_Click(object sender, EventArgs e)
+        {
+            MainV2.comPort.setMode("GUIDED");
+        }
+
+        private void BUT_Land_Click(object sender, EventArgs e)
+        {
+            CMB_modes.Text = "Land";
+            BUT_setmode_Click(null, null);
+        }
+
+        private void BUT_Kill_Click(object sender, EventArgs e)
+        {
+            if (MainV2.comPort.MAV.cs.armed)
+            {
+                BUT_ARM_Click_Silent();
+            }
+        }
+
+        private void BUT_Mark1_Click(object sender, EventArgs e)
+        {
+            if (assetLocs.Count > 0)
+            {
+                assetLatMarked = assetLocs[8].Lat;
+                assetLngMarked = assetLocs[8].Lng;
+                AddAssetPois();
+            }
+        }
+        private void BUT_Mark2_Click(object sender, EventArgs e)
+        {
+            if (assetLocs.Count > 0)
+            {
+                assetLatMarked = assetLocs[9].Lat;
+                assetLngMarked = assetLocs[9].Lng;
+                AddAssetPois();
+            }
+        }
+        private void BUT_Mark3_Click(object sender, EventArgs e)
+        {
+            if (assetLocs.Count > 0)
+            {
+                assetLatMarked = assetLocs[10].Lat;
+                assetLngMarked = assetLocs[10].Lng;
+                AddAssetPois();
+            }
+        }
+        private void BUT_Mark4_Click(object sender, EventArgs e)
+        {
+            if (assetLocs.Count > 0)
+            {
+                assetLatMarked = assetLocs[11].Lat;
+                assetLngMarked = assetLocs[11].Lng;
+                AddAssetPois();
+            }
+        }
+        private void BUT_Mark5_Click(object sender, EventArgs e)
+        {
+            if (assetLocs.Count > 0)
+            {
+                assetLatMarked = assetLocs[0].Lat;
+                assetLngMarked = assetLocs[0].Lng;
+                AddAssetPois();
+            }
+        }
+        private void BUT_Mark6_Click(object sender, EventArgs e)
+        {
+            if (assetLocs.Count > 0)
+            {
+                assetLatMarked = assetLocs[1].Lat;
+                assetLngMarked = assetLocs[1].Lng;
+                AddAssetPois();
+            }
+        }
+        private void BUT_Mark7_Click(object sender, EventArgs e)
+        {
+            if (assetLocs.Count > 0)
+            {
+                assetLatMarked = assetLocs[2].Lat;
+                assetLngMarked = assetLocs[2].Lng;
+                AddAssetPois();
+            }
+        }
+        private void BUT_Mark8_Click(object sender, EventArgs e)
+        {
+            if (assetLocs.Count > 0)
+            {
+                assetLatMarked = assetLocs[3].Lat;
+                assetLngMarked = assetLocs[3].Lng;
+                AddAssetPois();
+            }
+        }
+        private void BUT_Mark9_Click(object sender, EventArgs e)
+        {
+            if (assetLocs.Count > 0)
+            {
+                assetLatMarked = assetLocs[4].Lat;
+                assetLngMarked = assetLocs[4].Lng;
+                AddAssetPois();
+            }
+        }
+        private void BUT_Mark10_Click(object sender, EventArgs e)
+        {
+            if (assetLocs.Count > 0)
+            {
+                assetLatMarked = assetLocs[5].Lat;
+                assetLngMarked = assetLocs[5].Lng;
+                AddAssetPois();
+            }
+        }
+        private void BUT_Mark11_Click(object sender, EventArgs e)
+        {
+            if (assetLocs.Count > 0)
+            {
+                assetLatMarked = assetLocs[6].Lat;
+                assetLngMarked = assetLocs[6].Lng;
+                AddAssetPois();
+            }
+        }
+        private void BUT_Mark12_Click(object sender, EventArgs e)
+        {
+            if (assetLocs.Count> 0)
+            {
+                assetLatMarked = assetLocs[7].Lat;
+                assetLngMarked = assetLocs[7].Lng;
+                AddAssetPois();
+            }
+        }
         public void BUT_playlog_Click(object sender, EventArgs e)
         {
             if (MainV2.comPort.logreadmode)
@@ -692,6 +3136,10 @@ namespace MissionPlanner.GCSViews
         private void updateDisplayTabControlActions()
         {
             TabListDisplay.Clear();
+
+            TabListDisplay.Add(tabAsset.Name, MainV2.DisplayConfiguration.displayAssetTab);
+
+            TabListDisplay.Add(tabDf.Name, MainV2.DisplayConfiguration.displayAssetTab);
 
             TabListDisplay.Add(tabQuick.Name, MainV2.DisplayConfiguration.displayQuickTab);
 
@@ -1010,6 +3458,41 @@ namespace MissionPlanner.GCSViews
             catch
             {
                 CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
+            }
+        }
+
+        private void BUT_ARM_Click_Silent()
+        {
+            if (!MainV2.comPort.BaseStream.IsOpen)
+                return;
+
+            // arm the MAV
+            try
+            {
+                var isitarmed = MainV2.comPort.MAV.cs.armed;
+                var action = MainV2.comPort.MAV.cs.armed ? "Disarm" : "Arm";
+
+                StringBuilder sb = new StringBuilder();
+                var sub = MainV2.comPort.SubscribeToPacketType(MAVLink.MAVLINK_MSG_ID.STATUSTEXT, message =>
+                {
+                    sb.AppendLine(Encoding.ASCII.GetString(((MAVLink.mavlink_statustext_t)message.data).text)
+                        .TrimEnd('\0'));
+                    return true;
+                }, (byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent);
+                bool ans = MainV2.comPort.doARM(!isitarmed);
+                MainV2.comPort.UnSubscribeToPacketType(sub);
+                if (ans == false)
+                {
+                    ans = MainV2.comPort.doARM(!isitarmed, true);
+                    if (ans == false)
+                    {
+                        CustomMessageBox.Show(Strings.ErrorRejectedByMAV, Strings.ERROR);
+                    }
+                }
+            }
+            catch
+            {
+                CustomMessageBox.Show(Strings.ErrorNoResponce, Strings.ERROR);
             }
         }
 
@@ -1659,6 +4142,101 @@ namespace MissionPlanner.GCSViews
             lbl_playbackspeed.Text = "x " + LogPlayBackSpeed;
         }
 
+        private void TeamSelectionChanged(object sender, EventArgs e)
+        {
+            if ((string)CMB_team.SelectedItem == "Red Team")
+            {
+                isRedTeam = true;
+                isNWHome = isNWRed;
+            }
+            else
+            {
+                isRedTeam = false;
+                isNWHome = !isNWRed;
+            }
+            AddAssetPois();
+        }
+
+        private void MissionSelectionChanged(object sender, EventArgs e)
+        {
+            if ((string)CMB_mission.SelectedItem == "Marked Asset")
+            {
+                mission = teMission.eeMarked;
+            }
+            else if ((string)CMB_mission.SelectedItem == "FOB")
+            {
+                mission = teMission.eeFob;
+            }
+            else if (((string)CMB_mission.SelectedItem == "Pos #1 (Friendly)") || ((string)CMB_mission.SelectedItem == "Pos #1 (Opponent)"))
+            {
+                mission = teMission.eeAssetOne;
+            }
+            else if (((string)CMB_mission.SelectedItem == "Pos #2 (Friendly)") || ((string)CMB_mission.SelectedItem == "Pos #2 (Opponent)"))
+            {
+                mission = teMission.eeAssetTwo;
+            }
+            else if (((string)CMB_mission.SelectedItem == "Pos #3 (Friendly)") || ((string)CMB_mission.SelectedItem == "Pos #3 (Opponent)"))
+            {
+                mission = teMission.eeAssetThree;
+            }
+            else if (((string)CMB_mission.SelectedItem == "Pos #4 (Friendly)") || ((string)CMB_mission.SelectedItem == "Pos #4 (Opponent)"))
+            {
+                mission = teMission.eeAssetFour;
+            }
+            else if (((string)CMB_mission.SelectedItem == "Pos #5 (Friendly)") || ((string)CMB_mission.SelectedItem == "Pos #5 (Opponent)"))
+            {
+                mission = teMission.eeAssetFive;
+            }
+            else if (((string)CMB_mission.SelectedItem == "Pos #6 (Friendly)") || ((string)CMB_mission.SelectedItem == "Pos #6 (Opponent)"))
+            {
+                mission = teMission.eeAssetSix;
+            }
+            else if (((string)CMB_mission.SelectedItem == "Pos #7 (Friendly)") || ((string)CMB_mission.SelectedItem == "Pos #7 (Opponent)"))
+            {
+                mission = teMission.eeAssetSeven;
+            }
+            else if (((string)CMB_mission.SelectedItem == "Pos #8 (Friendly)") || ((string)CMB_mission.SelectedItem == "Pos #8 (Opponent)"))
+            {
+                mission = teMission.eeAssetEight;
+            }
+            else if (((string)CMB_mission.SelectedItem == "Pos #9 (Friendly)") || ((string)CMB_mission.SelectedItem == "Pos #9 (Opponent)"))
+            {
+                mission = teMission.eeAssetNine;
+            }
+            else if (((string)CMB_mission.SelectedItem == "Pos #10 (Friendly)") || ((string)CMB_mission.SelectedItem == "Pos #10 (Opponent)"))
+            {
+                mission = teMission.eeAssetTen;
+            }
+            else if (((string)CMB_mission.SelectedItem == "Pos #11 (Friendly)") || ((string)CMB_mission.SelectedItem == "Pos #11 (Opponent)"))
+            {
+                mission = teMission.eeAssetEleven;
+            }
+            else if (((string)CMB_mission.SelectedItem == "Pos #12 (Friendly)") || ((string)CMB_mission.SelectedItem == "Pos #12 (Opponent)"))
+            {
+                mission = teMission.eeAssetTwelve;
+            }
+            else
+            {
+                mission = teMission.eeNone;
+            }
+        }
+
+        private void ButtonTypeSelectionChanged(object sender, EventArgs e)
+        {
+            if ((string)CMB_buttonType.SelectedItem == "Start/Stop")
+            {
+                buttonType = teButtonType.eeStartStop;
+            }
+            else if ((string)CMB_buttonType.SelectedItem == "Set Distance")
+            {
+                buttonType = teButtonType.eeSetDistance;
+            }
+            else
+            {
+                buttonType = teButtonType.eeNone;
+            }
+        }
+
         private void BUTactiondo_Click(object sender, EventArgs e)
         {
             try
@@ -1820,6 +4398,165 @@ namespace MissionPlanner.GCSViews
 
                 ((Control) sender).Enabled = true;
             }
+        }
+
+        private void actiondoSilent(object sender)
+        {
+            try
+            {
+                if (CMB_action.Text == actions.Trigger_Camera.ToString())
+                {
+                    MainV2.comPort.setDigicamControl(true);
+                    return;
+                }
+            }
+            catch
+            {
+                CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
+                return;
+            }
+
+            if (CMB_action.Text == actions.Scripting_cmd_stop_and_restart.ToString())
+            {
+                try
+                {
+                    MainV2.comPort.doCommandInt(MainV2.comPort.MAV.sysid, MainV2.comPort.MAV.compid, MAVLink.MAV_CMD.SCRIPTING, (int)MAVLink.SCRIPTING_CMD.STOP_AND_RESTART, 0, 0, 0, 0, 0, 0);
+                    return;
+                }
+                catch
+                {
+                    CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
+                    return;
+                }
+            }
+
+            if (CMB_action.Text == actions.Scripting_cmd_stop.ToString())
+            {
+                try
+                {
+                    MainV2.comPort.doCommandInt(MainV2.comPort.MAV.sysid, MainV2.comPort.MAV.compid, MAVLink.MAV_CMD.SCRIPTING, (int)MAVLink.SCRIPTING_CMD.STOP, 0, 0, 0, 0, 0, 0);
+                    return;
+                }
+                catch
+                {
+                    CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
+                    return;
+                }
+            }
+
+            if (CMB_action.Text == actions.System_Time.ToString())
+            {
+                var now = DateTime.UtcNow;
+                var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+                ulong time_unix_us = Convert.ToUInt64((now - epoch).TotalMilliseconds * 1000);
+                try
+                {
+                    MainV2.comPort.sendPacket(
+                        new MAVLink.mavlink_system_time_t() { time_unix_usec = time_unix_us, time_boot_ms = 0 },
+                        MainV2.comPort.sysidcurrent, MainV2.comPort.compidcurrent);
+                }
+                catch
+                {
+                    CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
+                }
+
+                return;
+            }
+
+            try
+            {
+                ((Control)sender).Enabled = false;
+
+                int param1 = 0;
+                int param2 = 0;
+                int param3 = 1;
+
+                // request gyro
+                if (CMB_action.Text == actions.Preflight_Calibration.ToString())
+                {
+                    if (MainV2.comPort.MAV.cs.firmware == Firmwares.ArduCopter2)
+                        param1 = 1; // gyro
+                    param3 = 1; // baro / airspeed
+                }
+
+                if (CMB_action.Text == actions.Preflight_Reboot_Shutdown.ToString())
+                {
+                    MainV2.comPort.doReboot();
+                    ((Control)sender).Enabled = true;
+                    return;
+                }
+                if (CMB_action.Text == actions.HighLatency_Enable.ToString())
+                {
+                    MainV2.comPort.doHighLatency(true);
+                    ((Control)sender).Enabled = true;
+                    return;
+                }
+                if (CMB_action.Text == actions.HighLatency_Disable.ToString())
+                {
+                    MainV2.comPort.doHighLatency(false);
+                    ((Control)sender).Enabled = true;
+                    return;
+                }
+                if (CMB_action.Text == actions.Toggle_Safety_Switch.ToString())
+                {
+                    var target_system = (byte)MainV2.comPort.sysidcurrent;
+                    if (target_system == 0)
+                    {
+                        log.Info("Not toggling safety on sysid 0");
+                        return;
+                    }
+                    var custom_mode = (MainV2.comPort.MAV.cs.sensors_enabled.motor_control && MainV2.comPort.MAV.cs.sensors_enabled.seen) ? 1u : 0u;
+                    var mode = new MAVLink.mavlink_set_mode_t() { custom_mode = custom_mode, target_system = target_system };
+                    MainV2.comPort.setMode(mode, MAVLink.MAV_MODE_FLAG.SAFETY_ARMED);
+                    ((Control)sender).Enabled = true;
+                    return;
+                }
+                if (CMB_action.Text == actions.Engine_Start.ToString())
+                {
+                    MainV2.comPort.doEngineControl((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, true);
+                    ((Control)sender).Enabled = true;
+                    return;
+                }
+                if (CMB_action.Text == actions.Engine_Stop.ToString())
+                {
+                    MainV2.comPort.doEngineControl((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent, false);
+                    ((Control)sender).Enabled = true;
+                    return;
+                }
+
+                if (CMB_action.Text == actions.Battery_Reset.ToString())
+                {
+                    param1 = 0xff; // batt 1
+                    param2 = 100; // 100%
+                    param3 = 0;
+                }
+
+                MAVLink.MAV_CMD cmd;
+                try
+                {
+                    cmd = (MAVLink.MAV_CMD)Enum.Parse(typeof(MAVLink.MAV_CMD), CMB_action.Text.ToUpper(CultureInfo.InvariantCulture));
+                }
+                catch (ArgumentException ex)
+                {
+                    cmd = (MAVLink.MAV_CMD)Enum.Parse(typeof(MAVLink.MAV_CMD),
+                        "DO_START_" + CMB_action.Text.ToUpper(CultureInfo.InvariantCulture));
+                }
+
+                if (MainV2.comPort.doCommand(cmd, param1, param2, param3, 0, 0, 0, 0))
+                {
+
+                }
+                else
+                {
+                    CustomMessageBox.Show(Strings.CommandFailed + " " + cmd, Strings.ERROR);
+                }
+            }
+            catch
+            {
+                CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
+            }
+
+            ((Control)sender).Enabled = true;
         }
 
         private void BUTrestartmission_Click(object sender, EventArgs e)
@@ -2823,14 +5560,7 @@ namespace MissionPlanner.GCSViews
             {
                 if (sc.Name == "FlightPlanner")
                 {
-                    MyButton but = new MyButton
-                    {
-                        Location = new Point(splitContainer1.Panel2.Width / 2, 0),
-                        Text = "Close"
-                    };
-                    but.Click += but_Click;
-
-                    splitContainer1.Panel2.Controls.Add(but);
+                    splitContainer1.Panel2.Controls.Add(BUT_close);
                     splitContainer1.Panel2.Controls.Add(sc.Control);
                     ThemeManager.ApplyThemeTo(sc.Control);
                     ThemeManager.ApplyThemeTo(this);
@@ -2843,7 +5573,7 @@ namespace MissionPlanner.GCSViews
                         ((IActivate) (sc.Control)).Activate();
                     }
 
-                    but.BringToFront();
+                    BUT_close.BringToFront();
                     break;
                 }
             }
@@ -2851,8 +5581,18 @@ namespace MissionPlanner.GCSViews
 
         private void flyToHereAltToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            try
+            {
+                MainV2.comPort.doCommand(MainV2.comPort.MAV.sysid, MainV2.comPort.MAV.compid,
+                        MAVLink.MAV_CMD.DO_CHANGE_SPEED, 0, 1.0f, 0, 0, 0, 0, 0);
+            }
+            catch
+            {
+                CustomMessageBox.Show(Strings.ErrorCommunicating, Strings.ERROR);
+            }
+
             string alt = "100";
-            MAVLink.MAV_FRAME frame = MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT;
+            MAVLink.MAV_FRAME frame = MAVLink.MAV_FRAME.GLOBAL_TERRAIN_ALT;
 
             if (MainV2.comPort.MAV.cs.firmware == Firmwares.ArduCopter2)
             {
@@ -3020,6 +5760,16 @@ namespace MissionPlanner.GCSViews
 
         private void goHereToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            try
+            {
+                MainV2.comPort.doCommand(MainV2.comPort.MAV.sysid, MainV2.comPort.MAV.compid,
+                        MAVLink.MAV_CMD.DO_CHANGE_SPEED, 0, 1.0f, 0, 0, 0, 0, 0);
+            }
+            catch
+            {
+                CustomMessageBox.Show(Strings.ErrorCommunicating, Strings.ERROR);
+            }
+
             if (!MainV2.comPort.BaseStream.IsOpen)
             {
                 CustomMessageBox.Show(Strings.PleaseConnect, Strings.ERROR);
@@ -4823,6 +7573,35 @@ namespace MissionPlanner.GCSViews
             }
         }
 
+        private async void setHomeSilent()
+        {
+            if (MainV2.comPort.BaseStream.IsOpen)
+            {
+                try
+                {
+                    var alt = srtm.getAltitude(coords1.Lat, coords1.Lng);
+
+                    if (alt.currenttype != srtm.tiletype.valid && alt.currenttype != srtm.tiletype.ocean)
+                    {
+                        CustomMessageBox.Show("No SRTM data for this area", Strings.ERROR);
+                        return;
+                    }
+
+                    MainV2.comPort.doCommandInt((byte)MainV2.comPort.sysidcurrent,
+                        (byte)MainV2.comPort.compidcurrent,
+                        MAVLink.MAV_CMD.DO_SET_HOME, 0, 0, 0, 0, (int)(coords1.Lat * 1e7),
+                        (int)(coords1.Lng * 1e7), (float)(alt.alt));
+
+                    await MainV2.comPort.getHomePositionAsync((byte)MainV2.comPort.sysidcurrent,
+                        (byte)MainV2.comPort.compidcurrent);
+                }
+                catch
+                {
+                    CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
+                }
+            }
+        }
+
         private void setMapBearing()
         {
             BeginInvoke((Action) delegate { gMapControl1.Bearing = (int) ((MainV2.comPort.MAV.cs.yaw + 360) % 360); });
@@ -5244,6 +8023,30 @@ namespace MissionPlanner.GCSViews
                 try
                 {
                     MainV2.comPort.doCommand((byte) MainV2.comPort.sysidcurrent, (byte) MainV2.comPort.compidcurrent,
+                        MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, altf);
+                }
+                catch
+                {
+                    CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
+                }
+            }
+        }
+
+        private void TakeOffSilent(int anAlt)
+        {
+            if (MainV2.comPort.BaseStream.IsOpen)
+            {
+                string alt = Convert.ToString(anAlt);
+
+                var altf = float.Parse(alt, CultureInfo.InvariantCulture);
+
+                Settings.Instance["takeoff_alt"] = altf.ToString();
+
+                MainV2.comPort.setMode("GUIDED");
+
+                try
+                {
+                    MainV2.comPort.doCommand((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent,
                         MAVLink.MAV_CMD.TAKEOFF, 0, 0, 0, 0, 0, 0, altf);
                 }
                 catch
@@ -6251,6 +9054,244 @@ namespace MissionPlanner.GCSViews
             STBY_btn.Font = new Font(STBY_btn.Font, FontStyle.Regular);
             ON_btn.Font = new Font(ON_btn.Font, FontStyle.Bold);
             ALT_btn.Font = new Font(ALT_btn.Font, FontStyle.Regular);
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct PositionData
+        {
+            public int seqNum;
+            public double lat;
+            public double lon;
+            public double alt;
+        }
+
+        public void updateAssetBtn_Click(object sender, EventArgs e)
+        {
+            // Initiate asset update procedure
+            Thread thread1 = new Thread(() => ConnectToAssetThread());
+            thread1.IsBackground = true;
+            thread1.Start();
+        }
+
+        public void updateAssetPosBtn_Click(object sender, EventArgs e)
+        {
+            LBL_AssetPosConfig_1.Text = "Position #1";
+            LBL_AssetPosConfig_2.Text = "Position #2";
+            LBL_AssetPosConfig_3.Text = "Position #3";
+            LBL_AssetPosConfig_4.Text = "Position #4";
+            LBL_AssetPosConfig_5.Text = "Position #5";
+            LBL_AssetPosConfig_6.Text = "Position #6";
+            LBL_AssetPosConfig_7.Text = "Position #7";
+            LBL_AssetPosConfig_8.Text = "Position #8";
+            LBL_AssetPosConfig_9.Text = "Position #9";
+            LBL_AssetPosConfig_10.Text = "Position #10";
+            LBL_AssetPosConfig_11.Text = "Position #11";
+            LBL_AssetPosConfig_12.Text = "Position #12";
+
+            assetLatMarked = 0;
+            assetLngMarked = 0;
+            assetAltMarked = 0;
+
+            assetLocs[8] = new PointLatLngAlt(
+                Convert.ToDouble(TB_AssetPosConfigLat_1.Text),
+                Convert.ToDouble(TB_AssetPosConfigLng_1.Text),
+                Convert.ToDouble(TB_AssetPosConfigAlt_1.Text));
+            assetLocs[9] = new PointLatLngAlt(
+                Convert.ToDouble(TB_AssetPosConfigLat_2.Text),
+                Convert.ToDouble(TB_AssetPosConfigLng_2.Text),
+                Convert.ToDouble(TB_AssetPosConfigAlt_2.Text));
+            assetLocs[10] = new PointLatLngAlt(
+                Convert.ToDouble(TB_AssetPosConfigLat_3.Text),
+                Convert.ToDouble(TB_AssetPosConfigLng_3.Text),
+                Convert.ToDouble(TB_AssetPosConfigAlt_3.Text));
+            assetLocs[11] = new PointLatLngAlt(
+                Convert.ToDouble(TB_AssetPosConfigLat_4.Text),
+                Convert.ToDouble(TB_AssetPosConfigLng_4.Text),
+                Convert.ToDouble(TB_AssetPosConfigAlt_4.Text));
+            assetLocs[0] = new PointLatLngAlt(
+                Convert.ToDouble(TB_AssetPosConfigLat_5.Text),
+                Convert.ToDouble(TB_AssetPosConfigLng_5.Text),
+                Convert.ToDouble(TB_AssetPosConfigAlt_5.Text));
+            assetLocs[1] = new PointLatLngAlt(
+                Convert.ToDouble(TB_AssetPosConfigLat_6.Text),
+                Convert.ToDouble(TB_AssetPosConfigLng_6.Text),
+                Convert.ToDouble(TB_AssetPosConfigAlt_6.Text));
+            assetLocs[2] = new PointLatLngAlt(
+                Convert.ToDouble(TB_AssetPosConfigLat_7.Text),
+                Convert.ToDouble(TB_AssetPosConfigLng_7.Text),
+                Convert.ToDouble(TB_AssetPosConfigAlt_7.Text));
+            assetLocs[3] = new PointLatLngAlt(
+                Convert.ToDouble(TB_AssetPosConfigLat_8.Text),
+                Convert.ToDouble(TB_AssetPosConfigLng_8.Text),
+                Convert.ToDouble(TB_AssetPosConfigAlt_8.Text));
+            assetLocs[4] = new PointLatLngAlt(
+                Convert.ToDouble(TB_AssetPosConfigLat_9.Text),
+                Convert.ToDouble(TB_AssetPosConfigLng_9.Text),
+                Convert.ToDouble(TB_AssetPosConfigAlt_9.Text));
+            assetLocs[5] = new PointLatLngAlt(
+                Convert.ToDouble(TB_AssetPosConfigLat_10.Text),
+                Convert.ToDouble(TB_AssetPosConfigLng_10.Text),
+                Convert.ToDouble(TB_AssetPosConfigAlt_10.Text));
+            assetLocs[6] = new PointLatLngAlt(
+                Convert.ToDouble(TB_AssetPosConfigLat_11.Text),
+                Convert.ToDouble(TB_AssetPosConfigLng_11.Text),
+                Convert.ToDouble(TB_AssetPosConfigAlt_11.Text));
+            assetLocs[7] = new PointLatLngAlt(
+                Convert.ToDouble(TB_AssetPosConfigLat_12.Text),
+                Convert.ToDouble(TB_AssetPosConfigLng_12.Text),
+                Convert.ToDouble(TB_AssetPosConfigAlt_12.Text));
+
+            AddAssetPois();
+        }
+
+        public void SaveToCsv(string[,] data)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "CSV files (*.csv)|*.csv";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = saveFileDialog.FileName;
+
+                using (StreamWriter writer = new StreamWriter(filePath))
+                {
+                    for (int i = 0; i < data.GetLength(0); i++)
+                    {
+                        writer.WriteLine($"{data[i, 0]},{data[i, 1]},{data[i, 2]}");
+                    }
+                }
+            }
+        }
+
+        public string[,] ReadFromCsv(int length, int width)
+        {
+            string[,] data = new string[length, width];
+
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "CSV files (*.csv)|*.csv";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = openFileDialog.FileName;
+
+                try
+                {
+                    using (StreamReader reader = new StreamReader(filePath))
+                    {
+                        string line;
+                        int row = 0;
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            string[] values = line.Split(',');
+                            if (values.Length == 3)
+                            {
+                                data[row, 0] = values[0];
+                                data[row, 1] = values[1];
+                                data[row, 2] = values[2];
+                                row++;
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+
+            return data;
+        }
+
+        public void saveAssetPosBtn_Click(object sender, EventArgs e)
+        {
+            string[,] data = new string[12, 3];
+            data[0, 0] = TB_AssetPosConfigLat_1.Text;
+            data[0, 1] = TB_AssetPosConfigLng_1.Text;
+            data[0, 2] = TB_AssetPosConfigAlt_1.Text;
+            data[1, 0] = TB_AssetPosConfigLat_2.Text;
+            data[1, 1] = TB_AssetPosConfigLng_2.Text;
+            data[1, 2] = TB_AssetPosConfigAlt_2.Text;
+            data[2, 0] = TB_AssetPosConfigLat_3.Text;
+            data[2, 1] = TB_AssetPosConfigLng_3.Text;
+            data[2, 2] = TB_AssetPosConfigAlt_3.Text;
+            data[3, 0] = TB_AssetPosConfigLat_4.Text;
+            data[3, 1] = TB_AssetPosConfigLng_4.Text;
+            data[3, 2] = TB_AssetPosConfigAlt_4.Text;
+            data[4, 0] = TB_AssetPosConfigLat_5.Text;
+            data[4, 1] = TB_AssetPosConfigLng_5.Text;
+            data[4, 2] = TB_AssetPosConfigAlt_5.Text;
+            data[5, 0] = TB_AssetPosConfigLat_6.Text;
+            data[5, 1] = TB_AssetPosConfigLng_6.Text;
+            data[5, 2] = TB_AssetPosConfigAlt_6.Text;
+            data[6, 0] = TB_AssetPosConfigLat_7.Text;
+            data[6, 1] = TB_AssetPosConfigLng_7.Text;
+            data[6, 2] = TB_AssetPosConfigAlt_7.Text;
+            data[7, 0] = TB_AssetPosConfigLat_8.Text;
+            data[7, 1] = TB_AssetPosConfigLng_8.Text;
+            data[7, 2] = TB_AssetPosConfigAlt_8.Text;
+            data[8, 0] = TB_AssetPosConfigLat_9.Text;
+            data[8, 1] = TB_AssetPosConfigLng_9.Text;
+            data[8, 2] = TB_AssetPosConfigAlt_9.Text;
+            data[9, 0] = TB_AssetPosConfigLat_10.Text;
+            data[9, 1] = TB_AssetPosConfigLng_10.Text;
+            data[9, 2] = TB_AssetPosConfigAlt_10.Text;
+            data[10, 0] = TB_AssetPosConfigLat_11.Text;
+            data[10, 1] = TB_AssetPosConfigLng_11.Text;
+            data[10, 2] = TB_AssetPosConfigAlt_11.Text;
+            data[11, 0] = TB_AssetPosConfigLat_12.Text;
+            data[11, 1] = TB_AssetPosConfigLng_12.Text;
+            data[11, 2] = TB_AssetPosConfigAlt_12.Text;
+
+            SaveToCsv(data);
+        }
+
+        public void loadAssetPosBtn_Click(object sender, EventArgs e)
+        {
+            assetLatMarked = 0;
+            assetLngMarked = 0;
+            assetAltMarked = 0;
+
+            // Read in file
+            string[,] data = ReadFromCsv(12, 3);
+            if (data.GetLength(0) == 12 && data.GetLength(1) == 3)
+            {
+                TB_AssetPosConfigLat_1.Text = data[0, 0];
+                TB_AssetPosConfigLng_1.Text = data[0, 1];
+                TB_AssetPosConfigAlt_1.Text = data[0, 2];
+                TB_AssetPosConfigLat_2.Text = data[1, 0];
+                TB_AssetPosConfigLng_2.Text = data[1, 1];
+                TB_AssetPosConfigAlt_2.Text = data[1, 2];
+                TB_AssetPosConfigLat_3.Text = data[2, 0];
+                TB_AssetPosConfigLng_3.Text = data[2, 1];
+                TB_AssetPosConfigAlt_3.Text = data[2, 2];
+                TB_AssetPosConfigLat_4.Text = data[3, 0];
+                TB_AssetPosConfigLng_4.Text = data[3, 1];
+                TB_AssetPosConfigAlt_4.Text = data[3, 2];
+                TB_AssetPosConfigLat_5.Text = data[4, 0];
+                TB_AssetPosConfigLng_5.Text = data[4, 1];
+                TB_AssetPosConfigAlt_5.Text = data[4, 2];
+                TB_AssetPosConfigLat_6.Text = data[5, 0];
+                TB_AssetPosConfigLng_6.Text = data[5, 1];
+                TB_AssetPosConfigAlt_6.Text = data[5, 2];
+                TB_AssetPosConfigLat_7.Text = data[6, 0];
+                TB_AssetPosConfigLng_7.Text = data[6, 1];
+                TB_AssetPosConfigAlt_7.Text = data[6, 2];
+                TB_AssetPosConfigLat_8.Text = data[7, 0];
+                TB_AssetPosConfigLng_8.Text = data[7, 1];
+                TB_AssetPosConfigAlt_8.Text = data[7, 2];
+                TB_AssetPosConfigLat_9.Text = data[8, 0];
+                TB_AssetPosConfigLng_9.Text = data[8, 1];
+                TB_AssetPosConfigAlt_9.Text = data[8, 2];
+                TB_AssetPosConfigLat_10.Text = data[9, 0];
+                TB_AssetPosConfigLng_10.Text = data[9, 1];
+                TB_AssetPosConfigAlt_10.Text = data[9, 2];
+                TB_AssetPosConfigLat_11.Text = data[10, 0];
+                TB_AssetPosConfigLng_11.Text = data[10, 1];
+                TB_AssetPosConfigAlt_11.Text = data[10, 2];
+                TB_AssetPosConfigLat_12.Text = data[11, 0];
+                TB_AssetPosConfigLng_12.Text = data[11, 1];
+                TB_AssetPosConfigAlt_12.Text = data[11, 2];
+            }
+
+            AddAssetPois();
         }
 
         private void ALT_btn_Click(object sender, EventArgs e)
