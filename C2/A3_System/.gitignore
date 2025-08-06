@@ -2,3 +2,4 @@
 *.mp4
 /scripts/*.csv
 /scripts/__pycache__
+/models/yolo/*.pt

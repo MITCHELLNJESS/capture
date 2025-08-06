@@ -13,7 +13,7 @@ temp = pathlib.PosixPath
 pathlib.PosixPath = pathlib.WindowsPath
 
 # load YOLOv5 model
-model_path = pathlib.PosixPath("C:\\Users\\barre\\git\\capture-2\\C2\\A3_System\\best.pt")
+model_path = pathlib.PosixPath("C:\\Users\\barre\\git\\capture-2\\C2\\A3_System\\best_may25.pt")
 model = torch.hub.load("ultralytics/yolov5", "custom", path=model_path, force_reload=True)
 model.conf = 0.4
 

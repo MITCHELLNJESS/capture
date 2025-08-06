@@ -102,3 +102,6 @@ desktop.ini
 
 bounding_box_yolo_log.csv
 A3
+
+*.pyc
+/C2/a3_env

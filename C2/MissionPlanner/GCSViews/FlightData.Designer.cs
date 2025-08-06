@@ -168,6 +168,7 @@ namespace MissionPlanner.GCSViews
             this.tabScripts = new System.Windows.Forms.TabPage();
             this.checkBoxRedirectOutput = new System.Windows.Forms.CheckBox();
             this.checkBoxAug = new System.Windows.Forms.CheckBox();
+            this.checkBoxLand = new System.Windows.Forms.CheckBox();
             this.BUT_edit_selected = new MissionPlanner.Controls.MyButton();
             this.labelSelectedScript = new System.Windows.Forms.Label();
             this.BUT_run_script = new MissionPlanner.Controls.MyButton();
@@ -895,7 +896,7 @@ namespace MissionPlanner.GCSViews
             resources.ApplyResources(assetLat, "assetLat");
             assetLat.Name = "assetLat";
             assetLat.number = 0D;
-            assetLat.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(254)))), ((int)(((byte)(86)))));
+            assetLat.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             assetLat.numberColorBackup = System.Drawing.Color.Empty;
             assetLat.numberformat = "0.0000";
             //
@@ -906,7 +907,7 @@ namespace MissionPlanner.GCSViews
             resources.ApplyResources(assetLon, "assetLon");
             assetLon.Name = "assetLon";
             assetLon.number = 0D;
-            assetLon.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(254)))), ((int)(((byte)(86)))));
+            assetLon.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             assetLon.numberColorBackup = System.Drawing.Color.Empty;
             assetLon.numberformat = "0.0000";
             //
@@ -917,7 +918,7 @@ namespace MissionPlanner.GCSViews
             resources.ApplyResources(assetAlt, "assetAlt");
             assetAlt.Name = "assetAlt";
             assetAlt.number = 0D;
-            assetAlt.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(254)))), ((int)(((byte)(86)))));
+            assetAlt.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             assetAlt.numberColorBackup = System.Drawing.Color.Empty;
             assetAlt.numberformat = "0.0000";
             //
@@ -928,7 +929,7 @@ namespace MissionPlanner.GCSViews
             resources.ApplyResources(assetSeqNum, "assetSeqNum");
             assetSeqNum.Name = "assetSeqNum";
             assetSeqNum.number = 0D;
-            assetSeqNum.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(254)))), ((int)(((byte)(86)))));
+            assetSeqNum.numberColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             assetSeqNum.numberColorBackup = System.Drawing.Color.Empty;
             assetSeqNum.numberformat = "000000";
             //
@@ -2891,6 +2892,7 @@ namespace MissionPlanner.GCSViews
             this.splitContainer1.Panel2.Controls.Add(buttonSpeed_lbl);
             this.splitContainer1.Panel2.Controls.Add(crosshairs_lbl);
             this.splitContainer1.Panel2.Controls.Add(crosshairs_tb);
+            this.splitContainer1.Panel2.Controls.Add(checkBoxLand);
             this.splitContainer1.Panel2.Controls.Add(this.label6);
             this.splitContainer1.Panel2.Controls.Add(this.label5);
             this.splitContainer1.Panel2.Controls.Add(this.label3);
@@ -3352,6 +3354,16 @@ namespace MissionPlanner.GCSViews
             this.checkBoxAug.UseVisualStyleBackColor = true;
             this.checkBoxAug.Visible = true;
             this.checkBoxAug.CheckStateChanged += CheckBoxAug_CheckStateChanged;
+            //
+            // checkBoxLand
+            //
+            resources.ApplyResources(this.checkBoxLand, "checkBoxLand");
+            this.checkBoxLand.Checked = false;
+            this.checkBoxLand.CheckState = System.Windows.Forms.CheckState.Unchecked;
+            this.checkBoxLand.Name = "checkBoxLand";
+            this.checkBoxLand.UseVisualStyleBackColor = true;
+            this.checkBoxLand.Visible = true;
+            this.checkBoxLand.CheckStateChanged += CheckBoxLand_CheckStateChanged;
             //
             // BUT_Forward
             //
@@ -4519,6 +4531,7 @@ namespace MissionPlanner.GCSViews
         private System.Windows.Forms.Timer scriptChecker;
         private System.Windows.Forms.CheckBox checkBoxRedirectOutput;
         private System.Windows.Forms.CheckBox checkBoxAug;
+        private System.Windows.Forms.CheckBox checkBoxLand;
         private System.Windows.Forms.ToolStripMenuItem russianHudToolStripMenuItem;
         public System.Windows.Forms.ContextMenuStrip contextMenuStripMap;
         public System.Windows.Forms.ContextMenuStrip contextMenuStripHud;

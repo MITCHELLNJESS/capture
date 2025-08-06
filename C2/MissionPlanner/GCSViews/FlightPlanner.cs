@@ -54,6 +54,7 @@ using MissionPlanner.ArduPilot.Mavlink;
 using System.Drawing.Imaging;
 using SharpKml.Engine;
 using MissionPlanner.Controls.Waypoints;
+using static IronPython.Modules._ast;
 
 namespace MissionPlanner.GCSViews
 {
@@ -768,8 +769,11 @@ namespace MissionPlanner.GCSViews
             Console.Write(FlightData.assetLon.number);
             Console.Write(" alt: ");
             Console.WriteLine(FlightData.assetAlt.number);
-            AddTakeoff(FlightData.altZero + 4);
-            AddWPDD(FlightData.assetLatMarked, FlightData.assetLngMarked, FlightData.altZero + 4);
+            AddTakeoff(FlightData.altZero + 5);
+            double latTotal = FlightData.coords1.Lat + FlightData.assetLatMarked;
+            double lngTotal = FlightData.coords1.Lng + FlightData.assetLngMarked;
+            AddWPDD((latTotal / 2), (lngTotal / 2), FlightData.altZero + 5);
+            AddWPDD(FlightData.assetLatMarked, FlightData.assetLngMarked, FlightData.altZero + 5);
             AddWPDD(FlightData.assetLatMarked, FlightData.assetLngMarked, FlightData.altZero + 2);
 
             BUT_write_Click(null, null);
@@ -780,8 +784,13 @@ namespace MissionPlanner.GCSViews
         {
             clearMissionToolStripMenuItem_Click(null, null);
 
-            AddTakeoff(FlightData.altZero + 4);
-            AddWPDD(lat, lng, FlightData.altZero + 4);
+            AddTakeoff(FlightData.altZero + 5);
+
+            double latTotal = FlightData.coords1.Lat + lat;
+            double lngTotal = FlightData.coords1.Lng + lng;
+
+            AddWPDD((latTotal / 2), (lngTotal / 2), FlightData.altZero + 5);
+            AddWPDD(lat, lng, FlightData.altZero + 5);
             AddWPDD(lat, lng, FlightData.altZero + 2);
 
             BUT_write_Click(null, null);

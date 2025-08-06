@@ -9082,7 +9082,7 @@
   <data name="&gt;&gt;BUT_Up.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="BUT_Down.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <!-- <data name="BUT_Down.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="BUT_Down.Location" type="System.Drawing.Point, System.Drawing">
@@ -9108,7 +9108,7 @@
   </data>
   <data name="&gt;&gt;BUT_Down.ZOrder" xml:space="preserve">
     <value>2</value>
-  </data>
+  </data> -->
   <data name="BUT_Hov.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -9384,6 +9384,33 @@
   </data>
   <data name="crosshairs_tb.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 12pt</value>
+  </data>
+  <data name="checkBoxLand.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkBoxLand.Location" type="System.Drawing.Point, System.Drawing">
+    <value>5, 530</value>
+  </data>
+  <data name="checkBoxLand.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 17</value>
+  </data>
+  <data name="checkBoxLand.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="checkBoxLand.Text" xml:space="preserve">
+    <value>A3 Trigger Land</value>
+  </data>
+  <data name="&gt;&gt;checkBoxLand.Name" xml:space="preserve">
+    <value>checkBoxLand</value>
+  </data>
+  <data name="&gt;&gt;checkBoxLand.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxLand.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;checkBoxLand.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="crosshairs_lbl.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 12pt</value>

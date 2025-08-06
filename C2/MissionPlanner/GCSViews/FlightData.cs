@@ -149,6 +149,8 @@ namespace MissionPlanner.GCSViews
         internal static PointLatLng redFob = new PointLatLng(0, 0);
         internal static PointLatLng blueFob = new PointLatLng(0, 0);
 
+        internal static bool mbA3Land = false;
+
         internal bool mbGoingForward = false;
         internal bool mbGoingBackward = false;
         internal bool mbGoingLeft = false;
@@ -164,15 +166,19 @@ namespace MissionPlanner.GCSViews
         public static int boundingBoxTop = 0;
         public static int cameraWidth = 640;
         public static int cameraHeight = 480;
+        //public static int cameraWidth = 1920;
+        //public static int cameraHeight = 1080;
         internal static int lastCenterX = 0;
         internal static int lastCenterY = 0;
         internal static int alignTimeout = 4;
         internal static int alignTimeoutCount = 0;
-        internal static int alignGate = 70;
+        internal static int alignGate = 50;
         internal static bool doAlign = false;
         internal static bool doMove = false;
         internal static double lastAlignDist = -1;
         public static int altZero = 0;
+
+        public static bool mbRunning = true;
 
         internal PointLatLng MouseDownStart;
 
@@ -376,7 +382,7 @@ namespace MissionPlanner.GCSViews
             }
             Console.WriteLine("Aligning!");
 
-            while (doAlign)
+            while (doAlign && mbRunning)
             {
                 double currAlignDist = Math.Sqrt((alignX * alignX) + (alignY * alignY));
                 // If we are aligned
@@ -386,7 +392,10 @@ namespace MissionPlanner.GCSViews
                     AlignStop();
                     doAlign = false;
                     lastAlignDist = -1;
-                    MainV2.comPort.setMode("LAND");
+                    if (mbA3Land)
+                    {
+                        MainV2.comPort.setMode("LAND");
+                    }
                 }
                 // Retarget asset
                 try
@@ -435,7 +444,7 @@ namespace MissionPlanner.GCSViews
 
         static void UpdateThrottleThread()
         {
-            while(true)
+            while(true && mbRunning)
             {
                 int targetX = cameraWidth / 2;
                 int targetY = cameraHeight / 2; //cross hair x/y - 'center of screen'
@@ -527,7 +536,7 @@ namespace MissionPlanner.GCSViews
         }
         static void PrintUavCoordsThread()
         {
-            while (true)
+            while (true && mbRunning)
             {
                 System.Threading.Thread.Sleep(500);
 
@@ -666,7 +675,8 @@ namespace MissionPlanner.GCSViews
             try
             {
                 // Connect to the Telnet server
-                client.Connect(LBL_AssetIp.Text, port);
+                client.Connect(TB_AssetIp.Text, port);
+                //client.Connect("192.168.0.100", port);
             }
             catch (Exception ex)
             {
@@ -765,6 +775,11 @@ namespace MissionPlanner.GCSViews
             AddAssetPois();
         }
 
+        //static void GenerateMapThread()
+        //{
+
+        //}
+
         private void CheckBoxAug_CheckStateChanged(object sender, EventArgs e)
         {
             // This code will execute when the checkbox's checked state changes (checked or unchecked).
@@ -850,6 +865,19 @@ namespace MissionPlanner.GCSViews
                 BUT_Hov.ColorMouseOver = BUT_Hov.BGGradBot;
                 BUT_Align.ColorMouseDown = BUT_Align.BGGradBot;
                 BUT_Align.ColorMouseOver = BUT_Align.BGGradBot;
+            }
+        }
+
+        private void CheckBoxLand_CheckStateChanged(object sender, EventArgs e)
+        {
+            // This code will execute when the checkbox's checked state changes (checked or unchecked).
+            if (!checkBoxLand.Checked)
+            {
+                mbA3Land = false;
+            }
+            else
+            {
+                mbA3Land = true;
             }
         }
 

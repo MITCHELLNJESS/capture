@@ -1,68 +1,93 @@
-# Instruction for installing content:
+# A3 SYSTEM (Offline Inference Version)
 
-All of the work was completed within a virtual environment, for work on windows please follow these steps:
+**Working as of: 22 July 2025**
 
+## Folder Structure
 
-Install python version: 3.10: https://www.python.org/downloads/release/python-31011/
-
-pip install -r A3_system/requirements.txt
-
-
-Troubleshooting:
-
-if the initial requirements.txt install does not work with torch attempt this command
-
-pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu
-
-### 1. Clone YOLOv5 Repository
-
-```bash
-git clone https://github.com/ultralytics/yolov5
-cd yolov5
+```
+capture/
+└── C2/
+    └── A3_System/
+        ├── scripts/
+        │   └── yolo_offline_inference.py
+        ├── models/
+        │   └── yolo/
+        │       └── best.pt  # Trained YOLOv5 checkpoint
+        └── yolov5/          # Cloned yolov5 repo
 ```
 
-### 2. Install Dependencies
+## Installation Instructions (Windows & Mac)
 
-Activate your existing A3 environment or create one:
+### 1. Set up Python
+
+Install Python 3.10.11 (recommended):  
+https://www.python.org/downloads/release/python-31011/
+
+### 2. Create a Virtual Environment
+
+From the root A3_System folder:
 
 ```bash
-conda activate A3_system  # or use your existing environment
+python -m venv a3_env
+```
+
+Activate it:
+
+- Windows: `a3_env\Scripts\activate`
+- Mac/Linux: `source a3_env/bin/activate`
+
+### 3. Install Dependencies
+
+Install from the provided requirements file:
+
+```bash
 pip install -r requirements.txt
 ```
-## Trained Model Weights
-Final YOLOv5s model after 100 epochs:
-- Download: https://drive.google.com/file/d/17j6hJ9RH1YQsoj40kcSW2N2lGlsUUZ3j/view?usp=sharing
-- File: best.pt (14.3MB)
 
-
-
-> If `best.pt` is not located here, update the path inside `yolo_live_inference.py`.
-
----
-
-## Running the Inference Script
+Note: If torch fails to install, manually install the CPU version (Windows):
 
 ```bash
-python yolo_live_inference.py
+pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu
 ```
 
-The script will:
-- Open the webcam
-- Run real-time inference with bounding boxes and center points
-- Print bounding box data and latency to terminal
-- Write results to `logs/bounding_box_log_yolo.csv`
+### 4. Clone YOLOv5 Repo
 
-Press `q` to quit the video window.
+From inside A3_System:
 
----
-
-##  Output Format (Sample Log)
-
-```
-2025-05-19 14:22:01 | Label: friendly_asset | X: 152, Y: 104, W: 62, H: 62, Center: (183, 135)
-Latency: 141.23 ms
+```bash
+git clone https://github.com/ultralytics/yolov5.git
+cd yolov5
+pip install -r requirements.txt
 ```
 
----
+## Running the Inference Script Offline
 
+Make sure you're inside the virtual environment, then run:
 
+```bash
+python scripts/yolo_offline_inference.py
+```
+
+This script will:
+- Load your webcam
+- Run YOLOv5 inference using the local models/yolo/best.pt
+- Draw bounding boxes, label confidence, and center point
+- Log output to a CSV file with the following headers:
+
+```
+Timestamp, Label, BBox_X, BBox_Y, BBox_Width, BBox_Height, Center_X, Center_Y, Latency
+```
+
+## Notes & Troubleshooting
+
+- yolo_offline_inference.py is designed to avoid any need for internet access.
+- If using a Mac with a Continuity Camera, ignore AVCaptureDeviceTypeExternal warnings.
+- If the webcam fails to open or bounding boxes don't show, check that the model path is correct and weights are valid.
+
+## Development Notes for Contributors
+
+- All changes for offline support are in yolo_offline_inference.py.
+- yolo_live_inference.py is older and may rely on online dependencies.
+- Keep the YOLOv5 repo inside the A3_System directory.
+- Model checkpoints are expected at:
+  models/yolo/best.pt
