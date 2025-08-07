@@ -44,7 +44,7 @@ from utils.augmentations import letterbox
 
 # Load model
 device = select_device("")
-model_path = Path("/Users/jfm/A3_system_project/capture/C2/A3_System/models/yolo/best_may25.pt")
+model_path = Path("~/A3_system_project/capture/C2/A3_System/models/yolo/best_may25.pt")
 model = DetectMultiBackend(str(model_path), device=device)
 model.eval()
 
