@@ -3,14 +3,14 @@ import random
 import shutil
 
 # Source folders
-image_dir = "/Users/jfm/A3_system_project/capture/C2/A3_System/data/raw_combined"
-label_dir = "/Users/jfm/A3_system_project/capture/C2/A3_System/labels"
+image_dir = "~/A3_system_project/capture/C2/A3_System/data/raw_combined"
+label_dir = "~/A3_system_project/capture/C2/A3_System/labels"
 
 # Target folders
-train_img_dir = "/Users/jfm/A3_system_project/capture/C2/A3_System/data/train"
-val_img_dir = "/Users/jfm/A3_system_project/capture/C2/A3_System/data/val"
-train_lbl_dir = "/Users/jfm/A3_system_project/capture/C2/A3_System/labels/train"
-val_lbl_dir = "/Users/jfm/A3_system_project/capture/C2/A3_System/labels/val"
+train_img_dir = "~/A3_system_project/capture/C2/A3_System/data/train"
+val_img_dir = "~/A3_system_project/capture/C2/A3_System/data/val"
+train_lbl_dir = "~/A3_system_project/capture/C2/A3_System/labels/train"
+val_lbl_dir = "~/A3_system_project/capture/C2/A3_System/labels/val"
 
 # Create target folders if they don't exist
 for d in [train_img_dir, val_img_dir, train_lbl_dir, val_lbl_dir]:
