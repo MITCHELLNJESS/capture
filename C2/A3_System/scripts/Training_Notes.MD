@@ -32,7 +32,7 @@ This document summarizes the process and key details for training the YOLOv5 mod
     --img 416 \
     --batch 2 \
     --epochs 100 \
-    --data /Users/jfm/A3_system_project/capture/C2/A3_System/yolo_train.yaml \
+    --data / ~/A3_system_project/capture/C2/A3_System/yolo_train.yaml \
     --weights yolov5s.pt
   ```
 
