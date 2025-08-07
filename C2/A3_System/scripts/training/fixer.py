@@ -1,9 +1,9 @@
 import os
 import shutil
 
-label_val_dir = "/Users/jfm/A3_system_project/capture/C2/A3_System/labels/val"
-image_source_dir = "/Users/jfm/A3_system_project/capture/C2/A3_System/data/raw_combined"
-image_val_dir = "/Users/jfm/A3_system_project/capture/C2/A3_System/data/val"
+label_val_dir = "~/A3_system_project/capture/C2/A3_System/labels/val"
+image_source_dir = "~/A3_system_project/capture/C2/A3_System/data/raw_combined"
+image_val_dir = "~/A3_system_project/capture/C2/A3_System/data/val"
 
 os.makedirs(image_val_dir, exist_ok=True)
 
@@ -18,6 +18,6 @@ for label_file in os.listdir(label_val_dir):
                 copied += 1
                 break
         else:
-            print(f"⚠️ Missing image for label: {label_file}")
+            print(f"Missing image for label: {label_file}")
 
-print(f"✅ Copied {copied} validation images to data/val/")
+print(f"Copied {copied} validation images to data/val/")
